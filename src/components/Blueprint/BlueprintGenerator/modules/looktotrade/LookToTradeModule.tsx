@@ -1,6 +1,7 @@
 import {useRef} from 'react';
 import styles from './LookToTradeModule.module.css';
 import {usePlayerData} from '../../../../../hooks/hooks';
+import ExportButton from '../../shared/ExportButton';
 
 export default function LookToTradeModule() {
     const componentRef = useRef(null);
@@ -39,5 +40,15 @@ export default function LookToTradeModule() {
         return <div className={styles.title}>LOOK TO TRADE:</div>;
     }
 
-    return <>{graphicComponent()}</>;
+    return (
+        <>
+            {graphicComponent()}
+            {
+                <ExportButton
+                    className={styles.graphicComponent}
+                    pngName={'TODO_looktotrade.png'}
+                />
+            }
+        </>
+    );
 }

@@ -8,11 +8,10 @@ import {
     FormControl,
     MenuItem,
     Select,
-    Button,
 } from '@mui/material';
 import {sortBySearchRank} from '../../../../Player/Search/PlayerSearch';
 import {Player, Roster, User} from '../../../../../sleeper-api/sleeper-api';
-import {toPng} from 'html-to-image';
+import ExportButton from '../../shared/ExportButton';
 
 export default function CornerstoneModule(props: {
     roster?: Roster;
@@ -122,37 +121,6 @@ export default function CornerstoneModule(props: {
             </FormControl>
         );
     }
-    function exportButton() {
-        return (
-            <Button
-                variant="outlined"
-                onClick={() =>
-                    toPng(
-                        document.getElementsByClassName(
-                            styles.graphicComponent
-                        )[0] as HTMLElement,
-                        {backgroundColor: 'rgba(0, 0, 0, 0)'}
-                    ).then(dataUrl => {
-                        const link = document.createElement('a');
-                        link.href = dataUrl;
-                        link.download = `${
-                            specifiedUser?.metadata?.team_name ??
-                            specifiedUser?.display_name
-                        }_cornerstones.png`;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    })
-                }
-                style={{
-                    margin: '8px',
-                }}
-                className={styles.button}
-            >
-                Export As PNG
-            </Button>
-        );
-    }
 
     function allPositionalSelectors() {
         return FANTASY_POSITIONS.map(pos =>
@@ -177,7 +145,15 @@ export default function CornerstoneModule(props: {
     return (
         <>
             {graphicComponent()}
-            {exportButton()}
+            {
+                <ExportButton
+                    className={styles.graphicComponent}
+                    pngName={`${
+                        specifiedUser?.metadata?.team_name ??
+                        specifiedUser?.display_name
+                    }_cornerstones.png`}
+                />
+            }
             {allPositionalSelectors()}
         </>
     );
