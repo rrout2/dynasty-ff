@@ -52,7 +52,7 @@ export default function CornerstoneModule(props: {
                 ])
             )
         );
-    }, [roster]);
+    }, [roster, playerData]);
 
     function graphicComponent() {
         if (!playerData) return <></>;

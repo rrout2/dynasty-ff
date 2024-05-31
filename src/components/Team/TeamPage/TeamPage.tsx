@@ -9,7 +9,7 @@ import {
     CircularProgress,
 } from '@mui/material';
 import styles from './TeamPage.module.css';
-import {useEffect, useState} from 'react';
+import {CSSProperties, useEffect, useState} from 'react';
 import {
     League,
     Roster,
@@ -188,10 +188,11 @@ export function teamSelectComponent(
     teamId: string,
     setTeamId: (value: React.SetStateAction<string>) => void,
     allUsers?: User[],
-    specifiedUser?: User
+    specifiedUser?: User,
+    style?: CSSProperties
 ) {
     return (
-        <FormControl>
+        <FormControl style={style}>
             <InputLabel>Team</InputLabel>
             <Select
                 value={teamId}

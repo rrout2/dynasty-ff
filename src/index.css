@@ -11,3 +11,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'Prohibition Test';
+  src: local('Prohibition Test'), local('Prohibition-Test'),
+      url("fonts/ProhibitionTest-Regular.otf") format("opentype"),;
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Antarctican Headline';
+  src: local('Antarctican Headline Bold'), local('Antarctican-Headline-Bold'),
+      url('fonts/AntarcticanHeadline-Bold.woff2') format('woff2'),
+      url('fonts/AntarcticanHeadline-Bold.woff') format('woff'),
+      url('fonts/AntarcticanHeadline-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Erbaum';
+  src: url('fonts/Erbaum-Medium.eot');
+  src: local('Erbaum Medium'), local('Erbaum-Medium'),
+      url('fonts/Erbaum-Medium.eot?#iefix') format('embedded-opentype'),
+      url('fonts/Erbaum-Medium.woff2') format('woff2'),
+      url('fonts/Erbaum-Medium.woff') format('woff'),
+      url('fonts/Erbaum-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
