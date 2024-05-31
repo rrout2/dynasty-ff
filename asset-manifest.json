@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/dynasty-ff/static/css/main.50cc4339.css",
-    "main.js": "/dynasty-ff/static/js/main.1cf45112.js",
+    "main.js": "/dynasty-ff/static/js/main.0a1319f5.js",
     "static/js/453.e52469b7.chunk.js": "/dynasty-ff/static/js/453.e52469b7.chunk.js",
     "static/media/AntarcticanHeadline-Bold.ttf": "/dynasty-ff/static/media/AntarcticanHeadline-Bold.343a0741960e61ec6c27.ttf",
     "static/media/AntarcticanHeadline-Bold.woff": "/dynasty-ff/static/media/AntarcticanHeadline-Bold.3120d021064b68691b73.woff",
@@ -9,11 +9,11 @@
     "static/media/ProhibitionTest-Regular.otf": "/dynasty-ff/static/media/ProhibitionTest-Regular.01a1bc4e03d19fe3a733.otf",
     "index.html": "/dynasty-ff/index.html",
     "main.50cc4339.css.map": "/dynasty-ff/static/css/main.50cc4339.css.map",
-    "main.1cf45112.js.map": "/dynasty-ff/static/js/main.1cf45112.js.map",
+    "main.0a1319f5.js.map": "/dynasty-ff/static/js/main.0a1319f5.js.map",
     "453.e52469b7.chunk.js.map": "/dynasty-ff/static/js/453.e52469b7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.50cc4339.css",
-    "static/js/main.1cf45112.js"
+    "static/js/main.0a1319f5.js"
   ]
 }
