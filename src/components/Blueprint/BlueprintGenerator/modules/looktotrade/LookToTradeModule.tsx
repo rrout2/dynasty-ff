@@ -11,7 +11,7 @@ export default function LookToTradeModule() {
         if (!playerData) return <></>;
         return (
             <div className={styles.graphicComponent} ref={componentRef}>
-                {title()}
+                <div className={styles.title}>LOOK TO TRADE:</div>
                 {tradeSuggestion('KYLE PITTS', 'ELITE TE', '#3CB6E9')}
                 {tradeSuggestion('TYJAE SPEARS', 'WR', '#EC336D')}
                 {tradeSuggestion('COOPER KUPP', 'YOUNGER ASSET', '#8AC73E')}
@@ -34,10 +34,6 @@ export default function LookToTradeModule() {
                 </div>
             </div>
         );
-    }
-
-    function title() {
-        return <div className={styles.title}>LOOK TO TRADE:</div>;
     }
 
     return (
