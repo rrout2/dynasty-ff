@@ -1,52 +1,24 @@
-import {useEffect, useRef, useState} from 'react';
+import {Fragment, useEffect, useRef, useState} from 'react';
 import {usePlayerData, useTitle} from '../../../../../hooks/hooks';
 import styles from './PlayersToTargetModule.module.css';
 import ExportButton from '../../shared/ExportButton';
 import {teamLogos} from '../../../../../consts/images';
 import {Autocomplete, FormControl, TextField} from '@mui/material';
 import {Player} from '../../../../../sleeper-api/sleeper-api';
-
-enum NFLTeam {
-    ARI = 'ARI',
-    ATL = 'ATL',
-    BAL = 'BAL',
-    BUF = 'BUF',
-    CAR = 'CAR',
-    CHI = 'CHI',
-    CIN = 'CIN',
-    CLE = 'CLE',
-    DAL = 'DAL',
-    DEN = 'DEN',
-    DET = 'DET',
-    GB = 'GB',
-    HOU = 'HOU',
-    IND = 'IND',
-    JAX = 'JAX',
-    KC = 'KC',
-    LAC = 'LAC',
-    LAR = 'LAR',
-    LV = 'LV',
-    MIA = 'MIA',
-    MIN = 'MIN',
-    NE = 'NE',
-    NO = 'NO',
-    NYG = 'NYG',
-    NYJ = 'NYJ',
-    PHI = 'PHI',
-    PIT = 'PIT',
-    SF = 'SF',
-    SEA = 'SEA',
-    TB = 'TB',
-    TEN = 'TEN',
-    WAS = 'WAS',
-}
+import {sortBySearchRank} from '../../../../Player/Search/PlayerSearch';
 
 export default function PlayersToTargetModule() {
     const playerData = usePlayerData();
     const componentRef = useRef(null);
     const [playerSuggestions, setPlayerSuggestions] = useState<string[]>([
-        'NONE_PLAYER_ID',
+        '10229',
+        '5849',
+        '4866',
+        '10859',
     ]);
+    const inputStateList = playerSuggestions.map(suggestionId => {
+        return useState(suggestionId);
+    });
     const [allPlayers, setAllPlayers] = useState<Player[]>([]);
 
     useEffect(() => {
@@ -58,19 +30,24 @@ export default function PlayersToTargetModule() {
         setAllPlayers(players);
     }, [playerData]);
 
-    useEffect(() => {
-        console.log(playerSuggestions);
-    }, [playerSuggestions]);
-
     useTitle('Players to Target - Blueprint Generator');
 
-    function logoImage(team: NFLTeam) {
+    function logoImage(team: string) {
         return <img src={teamLogos.get(team)} className={styles.teamLogo} />;
     }
 
-    function playerTarget(pos: string, name: string, team: NFLTeam) {
+    function playerTarget(playerId: string, idx: number) {
+        if (!playerData) {
+            return <></>;
+        }
+
+        const player = playerData[playerId];
+        const pos = player.position;
+        const name = `${player.first_name} ${player.last_name}`;
+        const team = player.team;
+
         return (
-            <div key={name}>
+            <div key={idx}>
                 <div className={styles.playerTargetBody}>
                     <div className={`${styles.positionChip} ${styles[pos]}`}>
                         {pos}
@@ -87,30 +64,22 @@ export default function PlayersToTargetModule() {
         if (!playerData) return <></>;
         return (
             <div className={styles.graphicComponent} ref={componentRef}>
-                {playerSuggestions.map(playerId => {
-                    if (playerId === 'NONE_PLAYER_ID') {
-                        return;
-                    }
-                    const player = playerData[playerId];
-
-                    return playerTarget(
-                        player.position,
-                        `${player.first_name} ${player.last_name}`,
-                        NFLTeam.GB
-                    );
+                {playerSuggestions.map((playerId, idx) => {
+                    return playerTarget(playerId, idx);
                 })}
-                {playerTarget('WR', 'Jayden Reed', NFLTeam.GB)}
-                {playerTarget('WR', 'Rashee Rice', NFLTeam.KC)}
-                {playerTarget('WR', 'Xavier Legette', NFLTeam.CAR)}
-                {playerTarget('TE', 'Sam LaPorta', NFLTeam.DET)}
             </div>
         );
     }
 
-    function huh(idx: number) {
+    function playerAutocomplete(idx: number) {
         if (!playerData) return <></>;
-        const opts = allPlayers.map(p => p.player_id);
-        opts.push('NONE_PLAYER_ID');
+
+        const opts = allPlayers
+            .filter(p => !!p.team && p.status === 'Active')
+            .sort(sortBySearchRank)
+            .map(p => p.player_id);
+
+        const [inputValue, setInputValue] = inputStateList[idx];
         return (
             <FormControl
                 style={{
@@ -120,38 +89,39 @@ export default function PlayersToTargetModule() {
                 <Autocomplete
                     options={opts}
                     getOptionLabel={option => {
-                        if (option === 'NONE_PLAYER_ID') {
-                            return 'Choose a player:';
-                        }
                         const p = playerData[option];
                         return `${p.first_name} ${p.last_name}`;
                     }}
-                    renderOption={(props, option) => {
-                        const p = playerData[option];
-                        return <div>{`${p?.first_name} ${p?.last_name}`}</div>;
-                    }}
+                    autoHighlight
                     value={playerSuggestions[idx]}
-                    onChange={(_event, newInputValue) => {
-                        playerSuggestions[idx] =
-                            newInputValue || 'NONE_PLAYER_ID';
+                    onChange={(_event, newInputValue, reason) => {
+                        if (reason === 'clear' || newInputValue === null) {
+                            return;
+                        }
+                        playerSuggestions[idx] = newInputValue;
                         setPlayerSuggestions(playerSuggestions);
                     }}
+                    inputValue={inputValue}
+                    onInputChange={(_event, value, _reason) => {
+                        setInputValue(value);
+                    }}
                     renderInput={params => (
-                        <TextField {...params} label="Player" />
+                        <TextField {...params} label="Choose a Player" />
                     )}
                 />
             </FormControl>
         );
     }
-
     return (
         <>
             {graphicComponent()}
-            {huh(0)}
+            {playerSuggestions.map((_, idx) => (
+                <Fragment key={idx}>{playerAutocomplete(idx)}</Fragment>
+            ))}
             {
                 <ExportButton
                     className={styles.graphicComponent}
-                    pngName={'looktotrade.png'}
+                    pngName={'playerstotarget.png'}
                 />
             }
         </>
