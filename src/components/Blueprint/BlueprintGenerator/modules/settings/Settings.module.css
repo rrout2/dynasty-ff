@@ -30,3 +30,37 @@
 .column {
     min-width: 200px;
 }
+
+.graphicComponent {
+    background-color: #005D91;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    gap: 16px;
+
+    color: white;
+    font-size: 30px;
+}
+
+.chip {
+    border-radius: 12px;
+    font-family: 'Acumin Pro Bold';
+    text-align: center;
+    box-shadow: -4px 4px #213965;
+    padding: /* top/bottom = */ 4px /* left/right  = */ 18px;
+    padding-top: 10px; /* bc font is uncentered */
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.red {
+    background-color: #EC336D;
+}
+
+.blue {
+    background-color: #3CB6E9;
+ }

@@ -153,6 +153,7 @@ export default function BlueprintGenerator() {
                     roster={roster}
                     leagueId={leagueId}
                     numRosters={rosters?.length ?? 0}
+                    specifiedUser={specifiedUser}
                 />
             )}
             {hasTeamId() && module === Module.Starters && (
