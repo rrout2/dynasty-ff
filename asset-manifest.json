@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/dynasty-ff/static/css/main.4061f1d1.css",
-    "main.js": "/dynasty-ff/static/js/main.af05f243.js",
+    "main.js": "/dynasty-ff/static/js/main.5e465e6d.js",
     "static/js/453.e52469b7.chunk.js": "/dynasty-ff/static/js/453.e52469b7.chunk.js",
     "static/media/nfl.png": "/dynasty-ff/static/media/nfl.bf6b3a2b388fb9efd71b.png",
     "static/media/AntarcticanHeadline-Bold.ttf": "/dynasty-ff/static/media/AntarcticanHeadline-Bold.343a0741960e61ec6c27.ttf",
@@ -50,11 +50,11 @@
     "static/media/ProhibitionTest-Regular.otf": "/dynasty-ff/static/media/ProhibitionTest-Regular.01a1bc4e03d19fe3a733.otf",
     "index.html": "/dynasty-ff/index.html",
     "main.4061f1d1.css.map": "/dynasty-ff/static/css/main.4061f1d1.css.map",
-    "main.af05f243.js.map": "/dynasty-ff/static/js/main.af05f243.js.map",
+    "main.5e465e6d.js.map": "/dynasty-ff/static/js/main.5e465e6d.js.map",
     "453.e52469b7.chunk.js.map": "/dynasty-ff/static/js/453.e52469b7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4061f1d1.css",
-    "static/js/main.af05f243.js"
+    "static/js/main.5e465e6d.js"
   ]
 }
