@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/dynasty-ff/static/css/main.3b1a37e8.css",
-    "main.js": "/dynasty-ff/static/js/main.2ade7ef2.js",
+    "main.js": "/dynasty-ff/static/js/main.3ff47772.js",
     "static/js/453.e52469b7.chunk.js": "/dynasty-ff/static/js/453.e52469b7.chunk.js",
     "static/media/blankblueprint.jpg": "/dynasty-ff/static/media/blankblueprint.388ad4d615cee3e9de75.jpg",
     "static/media/blueprint2.0.png": "/dynasty-ff/static/media/blueprint2.0.eec910acd36bc583f9ec.png",
@@ -35,12 +35,14 @@
     "static/media/NE.png": "/dynasty-ff/static/media/NE.84304f6905339df04bf7.png",
     "static/media/SEA.png": "/dynasty-ff/static/media/SEA.dee2f04748799c14918f.png",
     "static/media/silhouette.png": "/dynasty-ff/static/media/silhouette.fb2a652ed39cbd384497.png",
+    "static/media/LV.png": "/dynasty-ff/static/media/LV.83fbd6d40f810246de02.png",
     "static/media/AntarcticanHeadline-Bold.ttf": "/dynasty-ff/static/media/AntarcticanHeadline-Bold.343a0741960e61ec6c27.ttf",
     "static/media/jax.png": "/dynasty-ff/static/media/jax.0bb02fcaeb427b1ea393.png",
     "static/media/Erbaum-Medium.eot": "/dynasty-ff/static/media/Erbaum-Medium.932bc6fc727f5ae54558.eot",
     "static/media/Erbaum-Medium.ttf": "/dynasty-ff/static/media/Erbaum-Medium.2cd8662c9ecd3d477382.ttf",
     "static/media/Acumin_Pro_ExtraCondensed.otf": "/dynasty-ff/static/media/Acumin_Pro_ExtraCondensed.edb37b54261fd09ca9eb.otf",
     "static/media/nfl_logo.png": "/dynasty-ff/static/media/nfl_logo.784082009a381ac57120.png",
+    "static/media/LAR.png": "/dynasty-ff/static/media/LAR.b707bf68deba5bf1f029.png",
     "static/media/min.png": "/dynasty-ff/static/media/min.a455b7f7757a465567df.png",
     "static/media/tb.png": "/dynasty-ff/static/media/tb.91bb1ca4a33788413451.png",
     "static/media/cle.png": "/dynasty-ff/static/media/cle.ce8669102a57fe884c2d.png",
@@ -62,10 +64,12 @@
     "static/media/LAC.png": "/dynasty-ff/static/media/LAC.25c17cc57f0a68f4f75b.png",
     "static/media/ten.png": "/dynasty-ff/static/media/ten.6ed441c6abda696beacd.png",
     "static/media/det.png": "/dynasty-ff/static/media/det.7ef2a12965fe402a3965.png",
+    "static/media/ARI.png": "/dynasty-ff/static/media/ARI.c071e13abeebc3060b9a.png",
     "static/media/wsh.png": "/dynasty-ff/static/media/wsh.4f403aa2a70b4c095730.png",
     "static/media/bal.png": "/dynasty-ff/static/media/bal.84cd0be712c2c537a1d5.png",
     "static/media/Erbaum-Medium.woff2": "/dynasty-ff/static/media/Erbaum-Medium.6668f325e679c84cd6f9.woff2",
     "static/media/ind.png": "/dynasty-ff/static/media/ind.5f4f8b1fc39bf507250d.png",
+    "static/media/NYG.png": "/dynasty-ff/static/media/NYG.2ca3ca6567478484f014.png",
     "static/media/buf.png": "/dynasty-ff/static/media/buf.eb3a800a50b51b68827c.png",
     "static/media/lar.png": "/dynasty-ff/static/media/lar.bc156a49e92d0be2d72a.png",
     "static/media/hou.png": "/dynasty-ff/static/media/hou.fa275fc62f95b9f2327d.png",
@@ -85,11 +89,11 @@
     "static/media/ProhibitionTest-Regular.otf": "/dynasty-ff/static/media/ProhibitionTest-Regular.01a1bc4e03d19fe3a733.otf",
     "index.html": "/dynasty-ff/index.html",
     "main.3b1a37e8.css.map": "/dynasty-ff/static/css/main.3b1a37e8.css.map",
-    "main.2ade7ef2.js.map": "/dynasty-ff/static/js/main.2ade7ef2.js.map",
+    "main.3ff47772.js.map": "/dynasty-ff/static/js/main.3ff47772.js.map",
     "453.e52469b7.chunk.js.map": "/dynasty-ff/static/js/453.e52469b7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3b1a37e8.css",
-    "static/js/main.2ade7ef2.js"
+    "static/js/main.3ff47772.js"
   ]
 }
