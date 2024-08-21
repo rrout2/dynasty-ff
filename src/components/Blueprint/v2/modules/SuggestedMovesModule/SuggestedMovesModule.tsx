@@ -83,24 +83,33 @@ export function GraphicComponent({sells, buys}: GraphicComponentProps) {
         const player = playerData[playerId];
         if (!player) return <></>;
         return (
-            <div
-                className={styles.buyTile}
-                style={{
-                    background: positionToColor[player.position],
-                }}
-            >
-                <div className={styles.positionalAdp}>
-                    {player.position}&nbsp;
-                    {getPositionalAdp(
-                        `${player.first_name} ${player.last_name}`
-                    )}
+            <div className={styles.buyTileContainer}>
+                <div className={styles.buyTileColumn}>
+                    <div
+                        className={styles.buyTile}
+                        style={{
+                            background: positionToColor[player.position],
+                        }}
+                    >
+                        <div className={styles.positionalAdp}>
+                            {player.position}&nbsp;
+                            {getPositionalAdp(
+                                `${player.first_name} ${player.last_name}`
+                            )}
+                        </div>
+                        <div className={styles.playerName}>
+                            {player.first_name} {player.last_name}
+                        </div>
+                        <div className={styles.teamName}>
+                            {mapToFullTeamName.get(player.team)}
+                        </div>
+                    </div>
                 </div>
-                <div className={styles.playerName}>
-                    {player.first_name} {player.last_name}
-                </div>
-                <div className={styles.teamName}>
-                    {mapToFullTeamName.get(player.team)}
-                </div>
+                <img
+                    className={styles.playerImg}
+                    src={`https://sleepercdn.com/content/nfl/players/${player.player_id}.jpg`}
+                />
+                <div className={styles.buyLabel}>BUY</div>
             </div>
         );
     }
@@ -121,7 +130,6 @@ export interface InputComponentProps {
 }
 export function InputComponent(props: InputComponentProps) {
     const {playerIds, sells, setSells, buys, setBuys} = props;
-    const playerData = usePlayerData();
 
     return (
         <div style={{display: 'flex', flexDirection: 'column'}}>
