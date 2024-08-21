@@ -20,12 +20,14 @@ import RosterModule from './modules/RosterModule/RosterModule';
 import SettingsModule from './modules/SettingsModule/SettingsModule';
 import CornerstonesModule from './modules/CornerstonesModule/CornerstonesModule';
 import UnifiedModule from './modules/UnifiedModule/UnifiedModule';
+import SuggestedMovesModule from './modules/SuggestedMovesModule/SuggestedMovesModule';
 
 export enum Module {
     Unspecified = 'unspecified',
     Roster = 'roster',
     Settings = 'settings',
     Cornerstones = 'cornerstones',
+    SuggestedMoves = 'suggestedmoves',
     Unified = 'unified',
 }
 
@@ -113,6 +115,12 @@ export default function NewGenerator() {
                     <MenuItem value={Module.Unified} key={Module.Unified}>
                         Unified
                     </MenuItem>
+                    <MenuItem
+                        value={Module.SuggestedMoves}
+                        key={Module.SuggestedMoves}
+                    >
+                        Suggested Moves
+                    </MenuItem>
                 </Select>
             </FormControl>
         );
@@ -157,6 +165,15 @@ export default function NewGenerator() {
                 <UnifiedModule
                     roster={roster}
                     numRosters={rosters?.length}
+                    teamName={
+                        specifiedUser?.metadata?.team_name ??
+                        specifiedUser?.display_name
+                    }
+                />
+            )}
+            {module === Module.SuggestedMoves && (
+                <SuggestedMovesModule
+                    roster={roster}
                     teamName={
                         specifiedUser?.metadata?.team_name ??
                         specifiedUser?.display_name

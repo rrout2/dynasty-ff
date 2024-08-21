@@ -14,6 +14,7 @@ export default function PlayerSelectComponent(props: {
     nonIdPlayerOptions?: string[];
     position?: string;
     label?: string;
+    multiple?: boolean;
 }) {
     const {
         playerIds,
@@ -22,6 +23,7 @@ export default function PlayerSelectComponent(props: {
         position,
         nonIdPlayerOptions,
         label,
+        multiple,
     } = props;
     const {sortByAdp} = useAdpData();
     const playerData = usePlayerData();
@@ -58,7 +60,7 @@ export default function PlayerSelectComponent(props: {
                         typeof value === 'string' ? value.split(',') : value
                     );
                 }}
-                multiple={true}
+                multiple={multiple ?? true}
             >
                 {allPlayerOptions.map((option, idx) => {
                     const player = playerData[option];

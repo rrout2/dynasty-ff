@@ -113,9 +113,14 @@ function GraphicComponent({
 interface inputProps {
     playerSuggestions: string[];
     setPlayerSuggestions: Dispatch<SetStateAction<string[]>>;
+    label?: string;
 }
 
-function InputComponent({playerSuggestions, setPlayerSuggestions}: inputProps) {
+function InputComponent({
+    playerSuggestions,
+    setPlayerSuggestions,
+    label,
+}: inputProps) {
     const inputStateList = playerSuggestions.map(suggestionId => {
         return useState(suggestionId);
     });
@@ -173,7 +178,10 @@ function InputComponent({playerSuggestions, setPlayerSuggestions}: inputProps) {
                         setInputValue(value);
                     }}
                     renderInput={params => (
-                        <TextField {...params} label="Choose a Player" />
+                        <TextField
+                            {...params}
+                            label={label ?? 'Choose a Player'}
+                        />
                     )}
                 />
             </FormControl>
@@ -189,11 +197,11 @@ function InputComponent({playerSuggestions, setPlayerSuggestions}: inputProps) {
     );
 }
 
-function isRookiePickId(id: string) {
+export function isRookiePickId(id: string) {
     return id.substring(0, 3) === 'RP-';
 }
 
-function rookiePickIdToString(rookiePickId: string) {
+export function rookiePickIdToString(rookiePickId: string) {
     if (!isRookiePickId(rookiePickId)) {
         throw new Error(
             `Expected rookie pick ID to begin with 'RP-', instead got '${rookiePickId}'`

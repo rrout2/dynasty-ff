@@ -1,0 +1,88 @@
+.sellTile {
+    width: 622px;
+    height: 140px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .playerName {
+        font-family: 'Prohibition Test';
+        font-size: 52px;
+
+        padding-bottom: 5px;
+        /* bc font is uncentered */
+    }
+
+    .teamName {
+        font-family: 'Erbaum';
+        line-height: 0.9;
+        font-size: 24px;
+    }
+
+    .positionalAdp {
+        font-family: 'Prohibition Test';
+        font-size: 24px;
+        line-height: 0.9;
+    }
+}
+
+.sellTileText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sellLabelCol {
+    font-family: 'Prohibition Test';
+    font-size: 24px;
+    line-height: 0.9;
+
+    width: 70px;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.sellLabel {
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+
+.buyTile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 66px;
+    height: 105px;
+    width: 400px;
+
+
+    .playerName {
+        font-family: 'Prohibition Test';
+        font-size: 44px;
+
+        padding-bottom: 5px;
+        /* bc font is uncentered */
+
+        line-height: 0.9;
+    }
+
+    .teamName {
+        font-family: 'Erbaum';
+        line-height: 0.9;
+        font-size: 18px;
+    }
+
+    .positionalAdp {
+        font-family: 'Prohibition Test';
+        font-size: 20px;
+        line-height: 0.9;
+    }
+}
