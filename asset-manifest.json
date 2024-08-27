@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/dynasty-ff/static/css/main.2457946e.css",
-    "main.js": "/dynasty-ff/static/js/main.c301c0e4.js",
+    "main.css": "/dynasty-ff/static/css/main.879efd1a.css",
+    "main.js": "/dynasty-ff/static/js/main.0602b1ac.js",
     "static/js/453.e52469b7.chunk.js": "/dynasty-ff/static/js/453.e52469b7.chunk.js",
     "static/media/blankblueprint.jpg": "/dynasty-ff/static/media/blankblueprint.388ad4d615cee3e9de75.jpg",
     "static/media/blueprint2.0.png": "/dynasty-ff/static/media/blueprint2.0.eec910acd36bc583f9ec.png",
@@ -88,12 +88,12 @@
     "static/media/dal.png": "/dynasty-ff/static/media/dal.09c61d9042b7fe400c53.png",
     "static/media/ProhibitionTest-Regular.otf": "/dynasty-ff/static/media/ProhibitionTest-Regular.01a1bc4e03d19fe3a733.otf",
     "index.html": "/dynasty-ff/index.html",
-    "main.2457946e.css.map": "/dynasty-ff/static/css/main.2457946e.css.map",
-    "main.c301c0e4.js.map": "/dynasty-ff/static/js/main.c301c0e4.js.map",
+    "main.879efd1a.css.map": "/dynasty-ff/static/css/main.879efd1a.css.map",
+    "main.0602b1ac.js.map": "/dynasty-ff/static/js/main.0602b1ac.js.map",
     "453.e52469b7.chunk.js.map": "/dynasty-ff/static/js/453.e52469b7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2457946e.css",
-    "static/js/main.c301c0e4.js"
+    "static/css/main.879efd1a.css",
+    "static/js/main.0602b1ac.js"
   ]
 }
