@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/dynasty-ff/static/css/main.2457946e.css",
-    "main.js": "/dynasty-ff/static/js/main.f85d2232.js",
+    "main.js": "/dynasty-ff/static/js/main.c301c0e4.js",
     "static/js/453.e52469b7.chunk.js": "/dynasty-ff/static/js/453.e52469b7.chunk.js",
     "static/media/blankblueprint.jpg": "/dynasty-ff/static/media/blankblueprint.388ad4d615cee3e9de75.jpg",
     "static/media/blueprint2.0.png": "/dynasty-ff/static/media/blueprint2.0.eec910acd36bc583f9ec.png",
@@ -89,11 +89,11 @@
     "static/media/ProhibitionTest-Regular.otf": "/dynasty-ff/static/media/ProhibitionTest-Regular.01a1bc4e03d19fe3a733.otf",
     "index.html": "/dynasty-ff/index.html",
     "main.2457946e.css.map": "/dynasty-ff/static/css/main.2457946e.css.map",
-    "main.f85d2232.js.map": "/dynasty-ff/static/js/main.f85d2232.js.map",
+    "main.c301c0e4.js.map": "/dynasty-ff/static/js/main.c301c0e4.js.map",
     "453.e52469b7.chunk.js.map": "/dynasty-ff/static/js/453.e52469b7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2457946e.css",
-    "static/js/main.f85d2232.js"
+    "static/js/main.c301c0e4.js"
   ]
 }
