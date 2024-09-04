@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/dynasty-ff/static/css/main.38413f59.css",
-    "main.js": "/dynasty-ff/static/js/main.282e140e.js",
+    "main.css": "/dynasty-ff/static/css/main.b55358d7.css",
+    "main.js": "/dynasty-ff/static/js/main.8a7f6775.js",
     "static/js/453.e52469b7.chunk.js": "/dynasty-ff/static/js/453.e52469b7.chunk.js",
     "static/media/blueprintredraft_1.png": "/dynasty-ff/static/media/blueprintredraft_1.10b73cd4858cf01989fb.png",
     "static/media/blankblueprint.jpg": "/dynasty-ff/static/media/blankblueprint.388ad4d615cee3e9de75.jpg",
@@ -79,10 +79,12 @@
     "static/media/car.png": "/dynasty-ff/static/media/car.c563b6c95ba30f4646f1.png",
     "static/media/nyj.png": "/dynasty-ff/static/media/nyj.ea0eeeb61538ceaa961b.png",
     "static/media/den.png": "/dynasty-ff/static/media/den.9ad9d7b420f04204079f.png",
+    "static/media/Prohibition-Regular.woff": "/dynasty-ff/static/media/Prohibition-Regular.c938b90b33866560c562.woff",
     "static/media/cin.png": "/dynasty-ff/static/media/cin.f40eb4fc9dc336ee00f3.png",
     "static/media/lac.png": "/dynasty-ff/static/media/lac.7425e07c0e944e5cd331.png",
     "static/media/atl.png": "/dynasty-ff/static/media/atl.a07dc1c19e72b6cad7e5.png",
     "static/media/ne.png": "/dynasty-ff/static/media/ne.0a579d2d670ba06abd8a.png",
+    "static/media/Prohibition-Regular.woff2": "/dynasty-ff/static/media/Prohibition-Regular.01af2f7dffba017f2281.woff2",
     "static/media/sea.png": "/dynasty-ff/static/media/sea.8f7a95588a334a7e09ca.png",
     "static/media/kc.png": "/dynasty-ff/static/media/kc.5510c22a849edc559d34.png",
     "static/media/ari.png": "/dynasty-ff/static/media/ari.f328db94c48e43af00ec.png",
@@ -90,12 +92,12 @@
     "static/media/dal.png": "/dynasty-ff/static/media/dal.09c61d9042b7fe400c53.png",
     "static/media/ProhibitionTest-Regular.otf": "/dynasty-ff/static/media/ProhibitionTest-Regular.01a1bc4e03d19fe3a733.otf",
     "index.html": "/dynasty-ff/index.html",
-    "main.38413f59.css.map": "/dynasty-ff/static/css/main.38413f59.css.map",
-    "main.282e140e.js.map": "/dynasty-ff/static/js/main.282e140e.js.map",
+    "main.b55358d7.css.map": "/dynasty-ff/static/css/main.b55358d7.css.map",
+    "main.8a7f6775.js.map": "/dynasty-ff/static/js/main.8a7f6775.js.map",
     "453.e52469b7.chunk.js.map": "/dynasty-ff/static/js/453.e52469b7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.38413f59.css",
-    "static/js/main.282e140e.js"
+    "static/css/main.b55358d7.css",
+    "static/js/main.8a7f6775.js"
   ]
 }
