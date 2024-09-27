@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/dynasty-ff/static/css/main.f7f68e91.css",
-    "main.js": "/dynasty-ff/static/js/main.65b766d5.js",
+    "main.css": "/dynasty-ff/static/css/main.3a196c68.css",
+    "main.js": "/dynasty-ff/static/js/main.a541a6a0.js",
     "static/js/453.e52469b7.chunk.js": "/dynasty-ff/static/js/453.e52469b7.chunk.js",
     "static/media/blueprintredraft_1.png": "/dynasty-ff/static/media/blueprintredraft_1.10b73cd4858cf01989fb.png",
     "static/media/blankblueprint.jpg": "/dynasty-ff/static/media/blankblueprint.388ad4d615cee3e9de75.jpg",
@@ -58,6 +58,7 @@
     "static/media/Acumin-BdPro.woff": "/dynasty-ff/static/media/Acumin-BdPro.9029d20893677b60fe04.woff",
     "static/media/Acumin-RPro.woff": "/dynasty-ff/static/media/Acumin-RPro.619962d87c184a44be27.woff",
     "static/media/pit.png": "/dynasty-ff/static/media/pit.3a073733d82fedc1d610.png",
+    "static/media/AcuminProCond-Regular.woff": "/dynasty-ff/static/media/AcuminProCond-Regular.4ab66ef85e0935bc2808.woff",
     "static/media/sf.png": "/dynasty-ff/static/media/sf.938111ecdc993856168c.png",
     "static/media/lv.png": "/dynasty-ff/static/media/lv.47ae849480e767bf9760.png",
     "static/media/mia.png": "/dynasty-ff/static/media/mia.81644a07d04ba24af2d7.png",
@@ -95,12 +96,12 @@
     "static/media/dal.png": "/dynasty-ff/static/media/dal.09c61d9042b7fe400c53.png",
     "static/media/ProhibitionTest-Regular.otf": "/dynasty-ff/static/media/ProhibitionTest-Regular.01a1bc4e03d19fe3a733.otf",
     "index.html": "/dynasty-ff/index.html",
-    "main.f7f68e91.css.map": "/dynasty-ff/static/css/main.f7f68e91.css.map",
-    "main.65b766d5.js.map": "/dynasty-ff/static/js/main.65b766d5.js.map",
+    "main.3a196c68.css.map": "/dynasty-ff/static/css/main.3a196c68.css.map",
+    "main.a541a6a0.js.map": "/dynasty-ff/static/js/main.a541a6a0.js.map",
     "453.e52469b7.chunk.js.map": "/dynasty-ff/static/js/453.e52469b7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f7f68e91.css",
-    "static/js/main.65b766d5.js"
+    "static/css/main.3a196c68.css",
+    "static/js/main.a541a6a0.js"
   ]
 }
