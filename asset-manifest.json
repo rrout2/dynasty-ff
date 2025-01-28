@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/dynasty-ff/static/css/main.5a662348.css",
-    "main.js": "/dynasty-ff/static/js/main.90ab3285.js",
+    "main.js": "/dynasty-ff/static/js/main.c56cd1da.js",
     "static/js/453.e52469b7.chunk.js": "/dynasty-ff/static/js/453.e52469b7.chunk.js",
     "static/media/blueprintredraft_1.png": "/dynasty-ff/static/media/blueprintredraft_1.10b73cd4858cf01989fb.png",
     "static/media/Infinite_background.png": "/dynasty-ff/static/media/Infinite_background.cf5e723e99196661e891.png",
@@ -116,11 +116,11 @@
     "static/media/ProhibitionTest-Regular.otf": "/dynasty-ff/static/media/ProhibitionTest-Regular.01a1bc4e03d19fe3a733.otf",
     "index.html": "/dynasty-ff/index.html",
     "main.5a662348.css.map": "/dynasty-ff/static/css/main.5a662348.css.map",
-    "main.90ab3285.js.map": "/dynasty-ff/static/js/main.90ab3285.js.map",
+    "main.c56cd1da.js.map": "/dynasty-ff/static/js/main.c56cd1da.js.map",
     "453.e52469b7.chunk.js.map": "/dynasty-ff/static/js/453.e52469b7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5a662348.css",
-    "static/js/main.90ab3285.js"
+    "static/js/main.c56cd1da.js"
   ]
 }
