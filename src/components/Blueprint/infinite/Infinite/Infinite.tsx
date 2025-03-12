@@ -41,7 +41,7 @@ import {
     useBuySells,
 } from '../BuySellHold/BuySellHold';
 import {QB, SUPER_FLEX} from '../../../../consts/fantasy';
-import {teamSelectComponent} from '../../../Team/TeamPage/TeamPage';
+import {TeamSelectComponent} from '../../../Team/TeamPage/TeamPage';
 import {useEffect, useState} from 'react';
 import {NONE_TEAM_ID} from '../../../../consts/urlParams';
 export default function Infinite() {
@@ -171,17 +171,18 @@ export default function Infinite() {
                     ({player}) => player.first_name === ''
                 )}
             />
-            {leagueId &&
-                teamSelectComponent(
-                    teamId,
-                    setTeamId,
-                    allUsers,
-                    specifiedUser,
-                    {
+            {leagueId && (
+                <TeamSelectComponent
+                    teamId={teamId}
+                    setTeamId={setTeamId}
+                    allUsers={allUsers}
+                    specifiedUser={specifiedUser}
+                    style={{
                         margin: '4px',
                         maxWidth: '800px',
-                    }
-                )}
+                    }}
+                />
+            )}
             <span>{buys.map(b => b.playerId).join(',')}</span>
             <div className={styles.fullBlueprint}>
                 <div className={styles.startersGraphic}>

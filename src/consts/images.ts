@@ -192,6 +192,10 @@ import oneYearReload from '../assets/live/archetypes/One Year Reload.png';
 import wellRounded from '../assets/live/archetypes/Well Rounded.png';
 import wrFactory from '../assets/live/archetypes/WR Factory.png';
 import rbHeavy from '../assets/live/archetypes/RB Heavy.png';
+
+// Rookie Draft BP
+import blankRookie from '../assets/rookieDraft/rookie_bp_blank.png';
+
 const tierLogos: Map<string, string> = new Map([
     ['S', sTier],
     ['A', aTier],
@@ -500,4 +504,5 @@ export {
     oneYearReload,
     wrFactory,
     rbHeavy,
+    blankRookie,
 };

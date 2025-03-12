@@ -8,7 +8,7 @@ import {
     useTeamIdFromUrl,
 } from '../../../hooks/hooks';
 import {User, Roster, getAllUsers} from '../../../sleeper-api/sleeper-api';
-import {teamSelectComponent} from '../../Team/TeamPage/TeamPage';
+import {TeamSelectComponent} from '../../Team/TeamPage/TeamPage';
 import {
     FormControl,
     InputLabel,
@@ -260,15 +260,17 @@ export default function NewGenerator() {
                     >
                         {'New League'}
                     </Button>
-                    {teamSelectComponent(
-                        teamId,
-                        setTeamId,
-                        allUsers,
-                        specifiedUser,
-                        {
-                            margin: '4px',
-                        }
-                    )}
+                    {
+                        <TeamSelectComponent
+                            teamId={teamId}
+                            setTeamId={setTeamId}
+                            allUsers={allUsers}
+                            specifiedUser={specifiedUser}
+                            style={{
+                                margin: '4px',
+                            }}
+                        />
+                    }
                 </>
             )}
             {moduleSelectComponent()}

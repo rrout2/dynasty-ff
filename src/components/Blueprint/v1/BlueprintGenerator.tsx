@@ -14,7 +14,7 @@ import {
 } from '../../../hooks/hooks';
 import {Roster, User, getAllUsers} from '../../../sleeper-api/sleeper-api';
 import styles from './BlueprintGenerator.module.css';
-import {teamSelectComponent} from '../../Team/TeamPage/TeamPage';
+import {TeamSelectComponent} from '../../Team/TeamPage/TeamPage';
 import {LEAGUE_ID, NONE_TEAM_ID} from '../../../consts/urlParams';
 import {
     CornerstoneModule,
@@ -483,16 +483,18 @@ export default function BlueprintGenerator() {
                     >
                         {'New League'}
                     </Button>
-                    {teamSelectComponent(
-                        teamId,
-                        setTeamId,
-                        allUsers,
-                        specifiedUser,
-                        {
-                            margin: '4px',
-                            maxWidth: '800px',
-                        }
-                    )}
+                    {
+                        <TeamSelectComponent
+                            teamId={teamId}
+                            setTeamId={setTeamId}
+                            allUsers={allUsers}
+                            specifiedUser={specifiedUser}
+                            style={{
+                                margin: '4px',
+                                maxWidth: '800px',
+                            }}
+                        />
+                    }
                 </>
             )}
             {moduleSelectComponent()}

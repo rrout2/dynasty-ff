@@ -22,7 +22,7 @@ import {
     Button,
 } from '@mui/material';
 
-const ARCHETYPE_TO_IMAGE: Map<Archetype, string> = new Map([
+export const ARCHETYPE_TO_IMAGE: Map<Archetype, string> = new Map([
     [Archetype.DualEliteQB, dualEliteQb],
     [Archetype.EliteQBTE, eliteQbTe],
     [Archetype.EliteValue, eliteValue],

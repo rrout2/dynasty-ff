@@ -140,13 +140,14 @@ export default function TeamPage() {
                     <div className={styles.flexSpace} />
                     <div className={styles.teamPageContent}>
                         <div className={styles.teamPageRoster}>
-                            {(specifiedUser || allUsers) &&
-                                teamSelectComponent(
-                                    teamId,
-                                    setTeamId,
-                                    allUsers,
-                                    specifiedUser
-                                )}
+                            {(specifiedUser || allUsers) && (
+                                <TeamSelectComponent
+                                    teamId={teamId}
+                                    setTeamId={setTeamId}
+                                    allUsers={allUsers}
+                                    specifiedUser={specifiedUser}
+                                />
+                            )}
                             {hasTeamId() && specifiedUser && rosterComponent()}
                             {!specifiedUser && !allUsers && (
                                 <CircularProgress />
@@ -167,13 +168,21 @@ function getDisplayName(user?: User) {
     return `${user?.metadata?.team_name || user?.display_name}`;
 }
 
-export function teamSelectComponent(
-    teamId: string,
-    setTeamId: (value: React.SetStateAction<string>) => void,
-    allUsers?: User[],
-    specifiedUser?: User,
-    style?: CSSProperties
-) {
+type TeamSelectComponentProps = {
+    teamId: string;
+    setTeamId: (value: React.SetStateAction<string>) => void;
+    allUsers?: User[];
+    specifiedUser?: User;
+    style?: CSSProperties;
+};
+
+export function TeamSelectComponent({
+    teamId,
+    setTeamId,
+    allUsers,
+    specifiedUser,
+    style,
+}: TeamSelectComponentProps) {
     return (
         <FormControl style={style}>
             <InputLabel>Team</InputLabel>

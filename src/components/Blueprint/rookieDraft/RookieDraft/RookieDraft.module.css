@@ -1,0 +1,20 @@
+.formControlInput {
+    width: 200px;
+}
+.rookieDraftGraphic {
+    position: relative;
+    width: fit-content;
+}
+.archetypeImage {
+    position: absolute;
+    top: 325px;
+    right: 50px;
+}
+.teamName {
+    position: absolute;
+    color: white;
+    left: 65px;
+    top: 60px;
+    font-family: 'Cheddar Gothic Rough';
+    font-size: 75px;
+}
