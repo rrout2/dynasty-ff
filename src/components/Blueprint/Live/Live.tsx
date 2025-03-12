@@ -117,7 +117,7 @@ type OutlookProps = {
     className?: string;
 };
 
-function Outlook({outlook, className}: OutlookProps) {
+export function Outlook({outlook, className}: OutlookProps) {
     return (
         <div className={`${styles.outlook} ${className || ''}`}>{outlook}</div>
     );

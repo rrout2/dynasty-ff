@@ -18,3 +18,30 @@
     font-family: 'Cheddar Gothic Rough';
     font-size: 75px;
 }
+
+.year1 {
+    position: absolute;
+    font-size: 59px;
+    width: 198px;
+
+    top: 1190px;
+    left: 1660px;
+}
+
+.year2 {
+    position: absolute;
+    font-size: 59px;
+    width: 198px;
+
+    top: 1190px;
+    left: 1890px;
+}
+
+.year3 {
+    position: absolute;
+    font-size: 59px;
+    width: 198px;
+
+    top: 1190px;
+    left: 2120px;
+}

@@ -9,7 +9,7 @@ import {
     SelectChangeEvent,
     MenuItem,
 } from '@mui/material';
-import {ARCHETYPE_TO_IMAGE} from '../../Live/Live';
+import {ARCHETYPE_TO_IMAGE, Outlook} from '../../Live/Live';
 import {
     useFetchRosters,
     useLeagueIdFromUrl,
@@ -28,6 +28,7 @@ export default function RookieDraft() {
     const {data: rosters} = useFetchRosters(leagueId);
     const [allUsers, setAllUsers] = useState<User[]>([]);
     const [specifiedUser, setSpecifiedUser] = useState<User>();
+    const [outlooks, setOutlooks] = useState<string[]>(['', '', '']);
     useEffect(() => {
         if (!allUsers.length || !hasTeamId() || +teamId >= allUsers.length) {
             return;
@@ -92,10 +93,39 @@ export default function RookieDraft() {
                     ))}
                 </Select>
             </FormControl>
+            {outlooks.map((_, idx) => (
+                <FormControl key={idx} className={styles.formControlInput}>
+                    <InputLabel>Year {idx + 1}</InputLabel>
+                    <Select
+                        label={`Year ${idx + 1}`}
+                        value={outlooks[idx]}
+                        onChange={(event: SelectChangeEvent) => {
+                            const newOutlooks = outlooks.slice();
+                            newOutlooks[idx] = event.target.value;
+                            setOutlooks(newOutlooks);
+                        }}
+                    >
+                        <MenuItem value={''} key={''}>
+                            Choose an outlook:
+                        </MenuItem>
+                        <MenuItem value={'CONTEND'} key={'CONTEND'}>
+                            {'CONTEND'}
+                        </MenuItem>
+                        <MenuItem value={'REBUILD'} key={'REBUILD'}>
+                            {'REBUILD'}
+                        </MenuItem>
+
+                        <MenuItem value={'RELOAD'} key={'RELOAD'}>
+                            {'RELOAD'}
+                        </MenuItem>
+                    </Select>
+                </FormControl>
+            ))}
             {
                 <RookieDraftGraphic
                     archetype={archetype}
                     teamName={getTeamName(specifiedUser)}
+                    outlooks={outlooks}
                 />
             }
         </div>
@@ -105,9 +135,14 @@ export default function RookieDraft() {
 type RookieDraftGraphicProps = {
     archetype: Archetype | '';
     teamName: string;
+    outlooks: string[];
 };
 
-function RookieDraftGraphic({archetype, teamName}: RookieDraftGraphicProps) {
+function RookieDraftGraphic({
+    archetype,
+    teamName,
+    outlooks,
+}: RookieDraftGraphicProps) {
     return (
         <div className={styles.rookieDraftGraphic}>
             <div className={styles.teamName}>{teamName}</div>
@@ -117,6 +152,13 @@ function RookieDraftGraphic({archetype, teamName}: RookieDraftGraphicProps) {
                     className={styles.archetypeImage}
                 />
             )}
+            {outlooks.map((outlook, idx) => (
+                <Outlook
+                    key={idx}
+                    outlook={outlook}
+                    className={styles[`year${idx + 1}`]}
+                />
+            ))}
             <img src={blankRookie} />
         </div>
     );
