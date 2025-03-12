@@ -85,35 +85,6 @@ export function useBuySells(
     const {getAdp} = useAdpData();
     let addedBelow100 = false;
 
-    /**
-     * Sorts the positions (QB, RB, WR, TE) in order of best grade to worst.
-     * @param grades grades for each position
-     * @returns an array of positions, sorted by grade
-     */
-    function getPositionalOrder(grades: {
-        qbGrade: number;
-        rbGrade: number;
-        wrGrade: number;
-        teGrade: number;
-    }) {
-        return Object.entries(grades)
-            .sort((a, b) => a[1] - b[1])
-            .map(([pos]) => {
-                switch (pos) {
-                    case 'qbGrade':
-                        return QB;
-                    case 'rbGrade':
-                        return RB;
-                    case 'wrGrade':
-                        return WR;
-                    case 'teGrade':
-                        return TE;
-                    default:
-                        throw new Error('Unknown position ' + pos);
-                }
-            });
-    }
-
     interface PositionalScores {
         [position: string]: number;
     }
@@ -461,6 +432,35 @@ export function useBuySells(
     }
 
     return {buys, sells, holds};
+}
+
+/**
+ * Sorts the positions (QB, RB, WR, TE) in order of worst grade to best.
+ * @param grades grades for each position
+ * @returns an array of positions, sorted by grade
+ */
+export function getPositionalOrder(grades: {
+    qbGrade: number;
+    rbGrade: number;
+    wrGrade: number;
+    teGrade: number;
+}) {
+    return Object.entries(grades)
+        .sort((a, b) => a[1] - b[1])
+        .map(([pos]) => {
+            switch (pos) {
+                case 'qbGrade':
+                    return QB;
+                case 'rbGrade':
+                    return RB;
+                case 'wrGrade':
+                    return WR;
+                case 'teGrade':
+                    return TE;
+                default:
+                    throw new Error('Unknown position ' + pos);
+            }
+        });
 }
 
 function mapToImgSrc(type: BuySellType) {

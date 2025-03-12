@@ -12,7 +12,10 @@ import {
 import {ARCHETYPE_TO_IMAGE, Outlook} from '../../Live/Live';
 import {
     useFetchRosters,
+    useLeague,
     useLeagueIdFromUrl,
+    useRoster,
+    useRosterSettings,
     useTeamIdFromUrl,
 } from '../../../../hooks/hooks';
 import {
@@ -22,13 +25,27 @@ import {
 } from '../../../../sleeper-api/sleeper-api';
 import {NONE_TEAM_ID} from '../../../../consts/urlParams';
 import {TeamSelectComponent} from '../../../Team/TeamPage/TeamPage';
+import {useRosterTierAndPosGrades} from '../../infinite/RosterTier/RosterTier';
+import {SUPER_FLEX, QB} from '../../../../consts/fantasy';
+import {getPositionalOrder} from '../../infinite/BuySellHold/BuySellHold';
 export default function RookieDraft() {
     const [leagueId] = useLeagueIdFromUrl();
+    const league = useLeague(leagueId);
+    const rosterSettings = useRosterSettings(league);
     const [teamId, setTeamId] = useTeamIdFromUrl();
     const {data: rosters} = useFetchRosters(leagueId);
     const [allUsers, setAllUsers] = useState<User[]>([]);
     const [specifiedUser, setSpecifiedUser] = useState<User>();
+    const {roster} = useRoster(rosters, teamId, leagueId);
     const [outlooks, setOutlooks] = useState<string[]>(['', '', '']);
+    const isSuperFlex =
+        rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1;
+    const {qbGrade, rbGrade, wrGrade, teGrade} = useRosterTierAndPosGrades(
+        isSuperFlex,
+        rosters?.length ?? 0,
+        roster
+    );
+
     useEffect(() => {
         if (!allUsers.length || !hasTeamId() || +teamId >= allUsers.length) {
             return;
@@ -126,6 +143,12 @@ export default function RookieDraft() {
                     archetype={archetype}
                     teamName={getTeamName(specifiedUser)}
                     outlooks={outlooks}
+                    teamNeeds={getPositionalOrder({
+                        qbGrade,
+                        rbGrade,
+                        wrGrade,
+                        teGrade,
+                    })}
                 />
             }
         </div>
@@ -136,12 +159,14 @@ type RookieDraftGraphicProps = {
     archetype: Archetype | '';
     teamName: string;
     outlooks: string[];
+    teamNeeds: ('QB' | 'RB' | 'WR' | 'TE')[];
 };
 
 function RookieDraftGraphic({
     archetype,
     teamName,
     outlooks,
+    teamNeeds,
 }: RookieDraftGraphicProps) {
     return (
         <div className={styles.rookieDraftGraphic}>
@@ -158,6 +183,23 @@ function RookieDraftGraphic({
                     outlook={outlook}
                     className={styles[`year${idx + 1}`]}
                 />
+            ))}
+            {teamNeeds.map((pos, idx) => (
+                <>
+                    <div
+                        key={idx}
+                        className={`${styles.teamNeed} ${
+                            styles[`need${idx + 1}`]
+                        }`}
+                    >
+                        {pos}
+                    </div>
+                    <div
+                        className={`${styles.shadow} ${
+                            styles[`shadow${idx + 1}`]
+                        }`}
+                    />
+                </>
             ))}
             <img src={blankRookie} />
         </div>

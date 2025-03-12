@@ -45,3 +45,63 @@
     top: 1190px;
     left: 2120px;
 }
+
+.teamNeed {
+    position: absolute;
+    bottom: 140px;
+
+    font-size: 69px;
+    font-family: 'Antarctican Headline';
+    font-weight: bold;
+    color: white;
+
+    text-align: center;
+    width: 158px;
+    border: 6px solid;
+    z-index: 2;
+}
+
+.need1 {
+    left: 80px;
+    border-color: #f08b21;
+}
+
+.need2 {
+    left: 315px;
+    border-color: #50c7e0;
+}
+
+.need3 {
+    left: 550px;
+    border-color: #ee4b75;
+}
+
+.need4 {
+    left: 785px;
+    border-color: #a8cf38;
+}
+
+.shadow {
+    z-index: 1;
+    position: absolute;
+    bottom: 131px;
+    border: 6px solid rgba(15, 19, 59, 0.5);
+    width: 158px;
+    height: 90px;
+}
+
+.shadow1 {
+    left: 71px;
+}
+
+.shadow2 {
+    left: 306px;
+}
+
+.shadow3 {
+    left: 541px;
+}
+
+.shadow4 {
+    left: 776px;
+}
