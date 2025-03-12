@@ -105,3 +105,9 @@
 .shadow4 {
     left: 776px;
 }
+
+.draftPickInputRow {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
