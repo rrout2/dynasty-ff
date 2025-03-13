@@ -1,6 +1,6 @@
 import styles from './RookieDraft.module.css';
 import {blankRookie} from '../../../../consts/images';
-import {useEffect, useState} from 'react';
+import {Fragment, useEffect, useState} from 'react';
 import {Archetype} from '../../v1/modules/BigBoy/BigBoy';
 import {
     FormControl,
@@ -29,9 +29,12 @@ import {useRosterTierAndPosGrades} from '../../infinite/RosterTier/RosterTier';
 import {SUPER_FLEX, QB} from '../../../../consts/fantasy';
 import {getPositionalOrder} from '../../infinite/BuySellHold/BuySellHold';
 
-type draftPick = {
+type Verdict = 'downtier' | 'hold' | 'proven asset' | '';
+
+type DraftPick = {
     round: number | '';
     pick: number | '';
+    verdict: Verdict;
 };
 
 export default function RookieDraft() {
@@ -44,11 +47,11 @@ export default function RookieDraft() {
     const [specifiedUser, setSpecifiedUser] = useState<User>();
     const {roster} = useRoster(rosters, teamId, leagueId);
     const [outlooks, setOutlooks] = useState<string[]>(['', '', '']);
-    const [draftPicks, setDraftPicks] = useState<draftPick[]>([
-        {round: '', pick: ''},
-        {round: '', pick: ''},
-        {round: '', pick: ''},
-        {round: '', pick: ''},
+    const [draftPicks, setDraftPicks] = useState<DraftPick[]>([
+        {round: 1, pick: 1, verdict: ''},
+        {round: 2, pick: 2, verdict: ''},
+        {round: 3, pick: 3, verdict: ''},
+        {round: 4, pick: 4, verdict: ''},
     ]);
     const isSuperFlex =
         rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1;
@@ -89,7 +92,7 @@ export default function RookieDraft() {
         return teamId !== '' && teamId !== NONE_TEAM_ID;
     }
 
-    const rounds = [1, 2, 3, 4];
+    const rounds = [1, 2, 3, 4, 5];
     const picks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
     return (
@@ -153,76 +156,122 @@ export default function RookieDraft() {
                     </Select>
                 </FormControl>
             ))}
-            {draftPicks.map((_, idx) => (
-                <div key={idx} className={styles.draftPickInputRow}>
-                    <FormControl key={`${idx} round`} style={{width: '120px'}}>
-                        <InputLabel>Round {idx + 1}</InputLabel>
-                        <Select
-                            label={`Round ${idx + 1}`}
-                            value={draftPicks[idx].round.toString()}
-                            onChange={(event: SelectChangeEvent) => {
-                                const newDraftPicks = draftPicks.slice();
-                                if (event.target.value === '') {
-                                    newDraftPicks[idx].round = '';
-                                } else {
-                                    newDraftPicks[idx].round =
-                                        +event.target.value;
-                                }
-                                setDraftPicks(newDraftPicks);
-                            }}
+            <div className={styles.draftPickInputColumn}>
+                {draftPicks.map((_, idx) => (
+                    <div key={idx} className={styles.draftPickInputRow}>
+                        <FormControl
+                            key={`${idx} round`}
+                            style={{width: '120px'}}
                         >
-                            <MenuItem value={''} key={''}>
-                                Choose a round:
-                            </MenuItem>
-                            {rounds.map(round => (
-                                <MenuItem value={round} key={round}>
-                                    {round}
+                            <InputLabel>Round {idx + 1}</InputLabel>
+                            <Select
+                                label={`Round ${idx + 1}`}
+                                value={draftPicks[idx].round.toString()}
+                                onChange={(event: SelectChangeEvent) => {
+                                    const newDraftPicks = draftPicks.slice();
+                                    if (event.target.value === '') {
+                                        newDraftPicks[idx].round = '';
+                                    } else {
+                                        newDraftPicks[idx].round =
+                                            +event.target.value;
+                                    }
+                                    setDraftPicks(newDraftPicks);
+                                }}
+                            >
+                                <MenuItem value={''} key={''}>
+                                    Choose a round:
                                 </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl key={`${idx} pick`} style={{width: '120px'}}>
-                        <InputLabel>Pick {idx + 1}</InputLabel>
-                        <Select
-                            label={`Pick ${idx + 1}`}
-                            value={draftPicks[idx].pick.toString()}
-                            onChange={(event: SelectChangeEvent) => {
-                                const newDraftPicks = draftPicks.slice();
-                                if (event.target.value === '') {
-                                    newDraftPicks[idx].pick = '';
-                                } else {
-                                    newDraftPicks[idx].pick =
-                                        +event.target.value;
-                                }
-                                setDraftPicks(newDraftPicks);
-                            }}
+                                {rounds.map(round => (
+                                    <MenuItem value={round} key={round}>
+                                        {round}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl
+                            key={`${idx} pick`}
+                            style={{width: '120px'}}
                         >
-                            <MenuItem value={''} key={''}>
-                                Choose a pick:
-                            </MenuItem>
-                            {picks.map(pick => (
-                                <MenuItem value={pick} key={pick}>
-                                    {pick}
+                            <InputLabel>Pick {idx + 1}</InputLabel>
+                            <Select
+                                label={`Pick ${idx + 1}`}
+                                value={draftPicks[idx].pick.toString()}
+                                onChange={(event: SelectChangeEvent) => {
+                                    const newDraftPicks = draftPicks.slice();
+                                    if (event.target.value === '') {
+                                        newDraftPicks[idx].pick = '';
+                                    } else {
+                                        newDraftPicks[idx].pick =
+                                            +event.target.value;
+                                    }
+                                    setDraftPicks(newDraftPicks);
+                                }}
+                            >
+                                <MenuItem value={''} key={''}>
+                                    Choose a pick:
                                 </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </div>
-            ))}
-            {
-                <RookieDraftGraphic
-                    archetype={archetype}
-                    teamName={getTeamName(specifiedUser)}
-                    outlooks={outlooks}
-                    teamNeeds={getPositionalOrder({
-                        qbGrade,
-                        rbGrade,
-                        wrGrade,
-                        teGrade,
-                    })}
-                    draftPicks={draftPicks}
-                />
-            }
+                                {picks.map(pick => (
+                                    <MenuItem value={pick} key={pick}>
+                                        {pick}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl
+                            key={`${idx} verdict`}
+                            style={{width: '140px'}}
+                        >
+                            <InputLabel>Verdict {idx + 1}</InputLabel>
+                            <Select
+                                label={`Verdict ${idx + 1}`}
+                                value={draftPicks[idx].verdict}
+                                onChange={(event: SelectChangeEvent) => {
+                                    const newDraftPicks = draftPicks.slice();
+                                    const newVerdict = event.target.value;
+                                    if (
+                                        newVerdict !== 'downtier' &&
+                                        newVerdict !== 'hold' &&
+                                        newVerdict !== 'proven asset'
+                                    ) {
+                                        newDraftPicks[idx].verdict = '';
+                                    } else {
+                                        newDraftPicks[idx].verdict = newVerdict;
+                                    }
+                                    setDraftPicks(newDraftPicks);
+                                }}
+                            >
+                                <MenuItem value={''} key={''}>
+                                    Choose a verdict:
+                                </MenuItem>
+                                <MenuItem value={'downtier'} key={'downtier'}>
+                                    {'downtier'}
+                                </MenuItem>
+                                <MenuItem value={'hold'} key={'hold'}>
+                                    {'hold'}
+                                </MenuItem>
+                                <MenuItem
+                                    value={'proven asset'}
+                                    key={'proven asset'}
+                                >
+                                    {'proven asset'}
+                                </MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+                ))}
+            </div>
+            <RookieDraftGraphic
+                archetype={archetype}
+                teamName={getTeamName(specifiedUser)}
+                outlooks={outlooks}
+                teamNeeds={getPositionalOrder({
+                    qbGrade,
+                    rbGrade,
+                    wrGrade,
+                    teGrade,
+                })}
+                draftPicks={draftPicks}
+            />
         </div>
     );
 }
@@ -232,7 +281,7 @@ type RookieDraftGraphicProps = {
     teamName: string;
     outlooks: string[];
     teamNeeds: ('QB' | 'RB' | 'WR' | 'TE')[];
-    draftPicks: draftPick[];
+    draftPicks: DraftPick[];
 };
 
 function RookieDraftGraphic({
@@ -240,6 +289,7 @@ function RookieDraftGraphic({
     teamName,
     outlooks,
     teamNeeds,
+    draftPicks,
 }: RookieDraftGraphicProps) {
     return (
         <div className={styles.rookieDraftGraphic}>
@@ -258,9 +308,8 @@ function RookieDraftGraphic({
                 />
             ))}
             {teamNeeds.map((pos, idx) => (
-                <>
+                <Fragment key={idx}>
                     <div
-                        key={idx}
                         className={`${styles.teamNeed} ${
                             styles[`need${idx + 1}`]
                         }`}
@@ -272,7 +321,27 @@ function RookieDraftGraphic({
                             styles[`shadow${idx + 1}`]
                         }`}
                     />
-                </>
+                </Fragment>
+            ))}
+            {draftPicks.map((draftPick, idx) => (
+                <Fragment key={idx}>
+                    <div
+                        className={`${styles.draftPick} ${
+                            styles[`draftPick${idx + 1}`]
+                        }`}
+                    >
+                        {draftPick.round}.
+                        {draftPick.pick && draftPick.pick < 10 ? '0' : ''}
+                        {draftPick.pick}
+                    </div>
+                    <div
+                        className={`${styles.verdict} ${
+                            styles[`verdict${idx + 1}`]
+                        } ${styles[draftPick.verdict.replace(' ', '')]}`}
+                    >
+                        {draftPick.verdict.toUpperCase()}
+                    </div>
+                </Fragment>
             ))}
             <img src={blankRookie} />
         </div>

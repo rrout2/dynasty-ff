@@ -111,3 +111,82 @@
     flex-direction: row;
     gap: 8px;
 }
+
+.draftPickInputColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.draftPick {
+    position: absolute;
+    left: 1080px;
+
+    font-family: 'Prohibition';
+    font-size: 70px;
+    color: white;
+
+    width: 151px;
+    text-align: center;
+}
+
+.draftPick1 {
+    top: 460px;
+}
+
+.draftPick2 {
+    top: 608px;
+}
+
+.draftPick3 {
+    top: 756px;
+}
+
+.draftPick4 {
+    top: 904px;
+}
+
+.verdict {
+    position: absolute;
+    left: 1231px;
+
+    font-size: 50px;
+    font-family: 'Antarctican Headline';
+    font-weight: bold;
+    color: white;
+
+    height: 110px;
+    line-height: 110px;
+    width: 300px;
+    text-align: center;
+
+    box-shadow: rgba(15, 19, 59, 0.5) 9px 9px 0px 0px;
+}
+
+.verdict1 {
+    top: 452px;
+}
+
+.verdict2 {
+    top: 599px;
+}
+
+.verdict3 {
+    top: 746px;
+}
+
+.verdict4 {
+    top: 896px;
+}
+
+.downtier {
+    background-color: #f08b21;
+}
+
+.hold {
+    background-color: #9c509f;
+}
+
+.provenasset {
+    background-color: #50c7e0;
+}
