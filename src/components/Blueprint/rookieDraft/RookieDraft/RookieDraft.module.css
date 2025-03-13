@@ -190,3 +190,35 @@
 .provenasset {
     background-color: #50c7e0;
 }
+
+.target {
+    position: absolute;
+
+    font-family: 'Erbaum';
+    font-weight: bold;
+    font-size: 59px;
+    color: white;
+
+    width: 386px;
+    text-align: center;
+}
+
+.target1 {
+    top: 369px;
+    left: 95px;
+}
+
+.target2 {
+    top: 369px;
+    left: 532px;
+}
+
+.target3 {
+    top: 761px;
+    left: 95px;
+}
+
+.target4 {
+    top: 761px;
+    left: 532px;
+}

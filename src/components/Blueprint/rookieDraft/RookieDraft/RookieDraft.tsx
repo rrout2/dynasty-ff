@@ -323,26 +323,40 @@ function RookieDraftGraphic({
                     />
                 </Fragment>
             ))}
-            {draftPicks.map((draftPick, idx) => (
-                <Fragment key={idx}>
-                    <div
-                        className={`${styles.draftPick} ${
-                            styles[`draftPick${idx + 1}`]
-                        }`}
-                    >
-                        {draftPick.round}.
-                        {draftPick.pick && draftPick.pick < 10 ? '0' : ''}
-                        {draftPick.pick}
-                    </div>
-                    <div
-                        className={`${styles.verdict} ${
-                            styles[`verdict${idx + 1}`]
-                        } ${styles[draftPick.verdict.replace(' ', '')]}`}
-                    >
-                        {draftPick.verdict.toUpperCase()}
-                    </div>
-                </Fragment>
-            ))}
+            {draftPicks.map((draftPick, idx) => {
+                if (!draftPick.round || !draftPick.pick || !draftPick.verdict) {
+                    return null;
+                }
+                return (
+                    <Fragment key={idx}>
+                        <div
+                            className={`${styles.draftPick} ${
+                                styles[`draftPick${idx + 1}`]
+                            }`}
+                        >
+                            {draftPick.round}.
+                            {draftPick.pick && draftPick.pick < 10 ? '0' : ''}
+                            {draftPick.pick}
+                        </div>
+                        <div
+                            className={`${styles.verdict} ${
+                                styles[`verdict${idx + 1}`]
+                            } ${styles[draftPick.verdict.replace(' ', '')]}`}
+                        >
+                            {draftPick.verdict.toUpperCase()}
+                        </div>
+                        <div
+                            className={`${styles.target} ${
+                                styles[`target${idx + 1}`]
+                            }`}
+                        >
+                            {draftPick.round}.
+                            {draftPick.pick && draftPick.pick < 10 ? '0' : ''}
+                            {draftPick.pick}
+                        </div>
+                    </Fragment>
+                );
+            })}
             <img src={blankRookie} />
         </div>
     );
