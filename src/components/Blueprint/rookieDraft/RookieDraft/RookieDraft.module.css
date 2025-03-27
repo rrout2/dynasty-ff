@@ -222,3 +222,129 @@
     top: 761px;
     left: 532px;
 }
+
+.rookieTarget {
+    position: absolute;
+    box-shadow: rgba(15, 19, 59, 0.5) -9px 9px 0px 0px;
+}
+
+.rookieTarget1 {
+    left: 95px;
+}
+
+.rookieTarget3 {
+    left: 95px;
+}
+
+.rookieTarget2 {
+    left: 532px;
+}
+
+.rookieTarget4 {
+    left: 532px;
+}
+
+.rookieTargetRow1 {
+    top: 490px;
+}
+
+.rookieTargetRow2 {
+    top: 575px;
+}
+
+.rookieTargetRow3 {
+    top: 660px;
+}
+
+.rookieTargetRow4 {
+    top: 880px;
+}
+
+.rookieTargetRow5 {
+    top: 965px;
+}
+
+.rookieTargetRow6 {
+    top: 1050px;
+}
+
+.line {
+    position: absolute;
+
+    height: 160px;
+
+    border-left: #FFFFFF 3px solid;
+}
+
+.line1 {
+    top: 550px;
+    left: 286px;
+}
+
+.line2 {
+    top: 550px;
+    left: 724px;
+}
+
+.line3 {
+    top: 940px;
+    left: 286px;
+}
+
+.line4 {
+    top: 940px;
+    left: 724px;
+}
+
+.draftStrategyInputs {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.draftStrategyInputColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.draftStrategyHeader {
+    position: absolute;
+    left: 1050px;
+
+    font-family: 'Prohibition';
+    font-size: 50px;
+    color: white;
+    text-align: center;
+
+    width: 500px;
+}
+
+.draftStrategyHeader1 {
+    top: 1210px;
+}
+
+.draftStrategyHeader2 {
+    top: 1400px;
+}
+
+.draftStrategyBody {
+    position: absolute;
+    left: 1070px;
+
+    font-family: 'Acumin Pro';
+    font-size: 22px;
+    color: white;
+
+    height: 80px;
+    width: 460px;
+}
+
+.draftStrategyBody1 {
+    top: 1297px;
+}
+
+.draftStrategyBody2 {
+    top: 1487px;
+}

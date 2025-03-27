@@ -1,5 +1,5 @@
 import styles from './RookieDraft.module.css';
-import {blankRookie} from '../../../../consts/images';
+import {blankRookie, rookieMap} from '../../../../consts/images';
 import {Fragment, useEffect, useState} from 'react';
 import {Archetype} from '../../v1/modules/BigBoy/BigBoy';
 import {
@@ -8,6 +8,7 @@ import {
     Select,
     SelectChangeEvent,
     MenuItem,
+    TextField,
 } from '@mui/material';
 import {ARCHETYPE_TO_IMAGE, Outlook} from '../../Live/Live';
 import {
@@ -37,6 +38,11 @@ type DraftPick = {
     verdict: Verdict;
 };
 
+type DraftStrategy = {
+    header: string;
+    body: string;
+}[];
+
 export default function RookieDraft() {
     const [leagueId] = useLeagueIdFromUrl();
     const league = useLeague(leagueId);
@@ -60,6 +66,23 @@ export default function RookieDraft() {
         rosters?.length ?? 0,
         roster
     );
+    // 4 picks, 3 targets per pick
+    const [rookieTargets, setRookieTargets] = useState<string[][]>([
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', ''],
+    ]);
+    const [draftStrategy, setDraftStrategy] = useState<DraftStrategy>([
+        {
+            header: '2nd Round Picks',
+            body: 'Draft Strategy Body',
+        },
+        {
+            header: '3rd Round Picks',
+            body: 'Draft Strategy Body',
+        },
+    ]);
 
     useEffect(() => {
         if (!allUsers.length || !hasTeamId() || +teamId >= allUsers.length) {
@@ -92,8 +115,9 @@ export default function RookieDraft() {
         return teamId !== '' && teamId !== NONE_TEAM_ID;
     }
 
-    const rounds = [1, 2, 3, 4, 5];
-    const picks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+    const rounds = [...Array(5).keys()].map(x => x + 1);
+    const picks = [...Array(24).keys()].map(x => x + 1);
+    const rookieOptions = Array.from(rookieMap.keys());
 
     return (
         <div>
@@ -257,6 +281,71 @@ export default function RookieDraft() {
                                 </MenuItem>
                             </Select>
                         </FormControl>
+                        {[0, 1, 2].map(targetIdx => {
+                            return (
+                                <FormControl
+                                    key={`${idx} rookie ${targetIdx}`}
+                                    style={{width: '150px'}}
+                                >
+                                    <InputLabel>
+                                        Pick {idx + 1} Target {targetIdx + 1}
+                                    </InputLabel>
+                                    <Select
+                                        label={`Rookie ${idx + 1} Target ${
+                                            targetIdx + 1
+                                        }`}
+                                        value={rookieTargets[idx][targetIdx]}
+                                        onChange={(
+                                            event: SelectChangeEvent
+                                        ) => {
+                                            const newRookieTargets =
+                                                rookieTargets.slice();
+                                            const newTarget =
+                                                event.target.value;
+                                            newRookieTargets[idx][targetIdx] =
+                                                newTarget;
+                                            setRookieTargets(newRookieTargets);
+                                        }}
+                                    >
+                                        <MenuItem value={''} key={''}>
+                                            Choose a target:
+                                        </MenuItem>
+                                        {rookieOptions.map(rookie => (
+                                            <MenuItem
+                                                value={rookie}
+                                                key={rookie}
+                                            >{`${rookie}`}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            );
+                        })}
+                    </div>
+                ))}
+            </div>
+            <div className={styles.draftStrategyInputs}>
+                {draftStrategy.map((strategy, idx) => (
+                    <div key={idx} className={styles.draftStrategyInputColumn}>
+                        <TextField
+                            value={strategy.header}
+                            onChange={e => {
+                                const newDraftStrategy = draftStrategy.slice();
+                                newDraftStrategy[idx].header = e.target.value;
+                                setDraftStrategy(newDraftStrategy);
+                            }}
+                            key={idx}
+                            label={`Draft Strategy Header ${idx + 1}`}
+                        />
+                        <TextField
+                            value={strategy.body}
+                            onChange={e => {
+                                const newDraftStrategy = draftStrategy.slice();
+                                newDraftStrategy[idx].body = e.target.value;
+                                setDraftStrategy(newDraftStrategy);
+                            }}
+                            key={idx}
+                            label={`Draft Strategy Body ${idx + 1}`}
+                        />
                     </div>
                 ))}
             </div>
@@ -271,6 +360,8 @@ export default function RookieDraft() {
                     teGrade,
                 })}
                 draftPicks={draftPicks}
+                rookieTargets={rookieTargets}
+                draftStrategy={draftStrategy}
             />
         </div>
     );
@@ -282,6 +373,8 @@ type RookieDraftGraphicProps = {
     outlooks: string[];
     teamNeeds: ('QB' | 'RB' | 'WR' | 'TE')[];
     draftPicks: DraftPick[];
+    rookieTargets: string[][];
+    draftStrategy: DraftStrategy;
 };
 
 function RookieDraftGraphic({
@@ -290,6 +383,8 @@ function RookieDraftGraphic({
     outlooks,
     teamNeeds,
     draftPicks,
+    rookieTargets,
+    draftStrategy,
 }: RookieDraftGraphicProps) {
     return (
         <div className={styles.rookieDraftGraphic}>
@@ -357,6 +452,54 @@ function RookieDraftGraphic({
                     </Fragment>
                 );
             })}
+            {[0, 1, 2, 3].map(idx => {
+                return (
+                    <div
+                        key={idx}
+                        className={`${styles.line} ${styles[`line${idx + 1}`]}`}
+                    />
+                );
+            })}
+            {rookieTargets.map((pick, pickIdx) =>
+                pick.map(
+                    (target, targetIdx) =>
+                        target && (
+                            <img
+                                key={`${pickIdx} ${targetIdx}`}
+                                className={`${styles.rookieTarget} ${
+                                    styles[`rookieTarget${pickIdx + 1}`]
+                                } ${
+                                    styles[
+                                        `rookieTargetRow${
+                                            pickIdx < 2
+                                                ? targetIdx + 1
+                                                : targetIdx + 4
+                                        }`
+                                    ]
+                                }`}
+                                src={rookieMap.get(target)}
+                            />
+                        )
+                )
+            )}
+            {draftStrategy.map((strategy, idx) => (
+                <>
+                    <div
+                        className={`${styles.draftStrategyHeader} ${
+                            styles[`draftStrategyHeader${idx + 1}`]
+                        }`}
+                    >
+                        {strategy.header}
+                    </div>
+                    <div
+                        className={`${styles.draftStrategyBody} ${
+                            styles[`draftStrategyBody${idx + 1}`]
+                        }`}
+                    >
+                        {strategy.body}
+                    </div>
+                </>
+            ))}
             <img src={blankRookie} />
         </div>
     );

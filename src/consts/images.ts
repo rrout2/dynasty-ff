@@ -195,6 +195,64 @@ import rbHeavy from '../assets/live/archetypes/RB Heavy.png';
 
 // Rookie Draft BP
 import blankRookie from '../assets/rookieDraft/rookie_bp_blank.png';
+import ashtonJeanty from '../assets/rookieDraft/rookieCards/ashtonJeanty.png';
+import brashardSmith from '../assets/rookieDraft/rookieCards/brashardSmith.png';
+import cadeKlubnik from '../assets/rookieDraft/rookieCards/cadeKlubnik.png';
+import camSkattebo from '../assets/rookieDraft/rookieCards/camSkattebo.png';
+import camWard from '../assets/rookieDraft/rookieCards/camWard.png';
+import carsonBeck from '../assets/rookieDraft/rookieCards/carsonBeck.png';
+import colstonLoveland from '../assets/rookieDraft/rookieCards/colstonLoveland.png';
+import damienMartinez from '../assets/rookieDraft/rookieCards/damienMartinez.png';
+import devinNeal from '../assets/rookieDraft/rookieCards/devinNeal.png';
+import dillonGabriel from '../assets/rookieDraft/rookieCards/dillonGabriel.png';
+import djGiddens from '../assets/rookieDraft/rookieCards/djGiddens.png';
+import dontEThornton from '../assets/rookieDraft/rookieCards/dontEThornton.png';
+import dylanSampson from '../assets/rookieDraft/rookieCards/dylanSampson.png';
+import elicAyomanor from '../assets/rookieDraft/rookieCards/elicAyomanor.png';
+import emekaEgbuka from '../assets/rookieDraft/rookieCards/emekaEgbuka.png';
+import evanStewart from '../assets/rookieDraft/rookieCards/evanStewart.png';
+import gunnarHelm from '../assets/rookieDraft/rookieCards/gunnarHelm.png';
+import haroldFanninJr from '../assets/rookieDraft/rookieCards/haroldFanninJr.png';
+import isaiahBond from '../assets/rookieDraft/rookieCards/isaiahBond.png';
+import jackBech from '../assets/rookieDraft/rookieCards/jackBech.png';
+import jalenMilroe from '../assets/rookieDraft/rookieCards/jalenMilroe.png';
+import jalenRoyals from '../assets/rookieDraft/rookieCards/jalenRoyals.png';
+import jarquezHunter from '../assets/rookieDraft/rookieCards/jarquezHunter.png';
+import jaxsonDart from '../assets/rookieDraft/rookieCards/jaxsonDart.png';
+import jaydenHiggins from '../assets/rookieDraft/rookieCards/jaydenHiggins.png';
+import jaydnOtt from '../assets/rookieDraft/rookieCards/jaydnOtt.png';
+import jaylinNoel from '../assets/rookieDraft/rookieCards/jaylinNoel.png';
+import jordanJames from '../assets/rookieDraft/rookieCards/jordanJames.png';
+import kalebJohnson from '../assets/rookieDraft/rookieCards/kalebJohnson.png';
+import kalelMullings from '../assets/rookieDraft/rookieCards/kalelMullings.png';
+import kurtisRourke from '../assets/rookieDraft/rookieCards/kurtisRourke.png';
+import kyleMonangai from '../assets/rookieDraft/rookieCards/kyleMonangai.png';
+import kyrenLacy from '../assets/rookieDraft/rookieCards/kyrenLacy.png';
+import leVeonMoss from '../assets/rookieDraft/rookieCards/leVeonMoss.png';
+import lukeLachey from '../assets/rookieDraft/rookieCards/lukeLachey.png';
+import lutherBurden from '../assets/rookieDraft/rookieCards/lutherBurden.png';
+import nicSingleton from '../assets/rookieDraft/rookieCards/nicSingleton.png';
+import ollieGordon from '../assets/rookieDraft/rookieCards/ollieGordon.png';
+import omarionHampton from '../assets/rookieDraft/rookieCards/omarionHampton.png';
+import orondeGadsden from '../assets/rookieDraft/rookieCards/orondeGadsden.png';
+import quinnEwers from '../assets/rookieDraft/rookieCards/quinnEwers.png';
+import quinshonJudkins from '../assets/rookieDraft/rookieCards/quinshonJudkins.png';
+import rickyWhite from '../assets/rookieDraft/rookieCards/rickyWhite.png';
+import rjHarvey from '../assets/rookieDraft/rookieCards/rjHarvey.png';
+import shedeurSanders from '../assets/rookieDraft/rookieCards/shedeurSanders.png';
+import tahjBrooks from '../assets/rookieDraft/rookieCards/tahjBrooks.png';
+import taiFelton from '../assets/rookieDraft/rookieCards/taiFelton.png';
+import terranceFerguson from '../assets/rookieDraft/rookieCards/terranceFerguson.png';
+import tetMcmillian from '../assets/rookieDraft/rookieCards/tetMcmillian.png';
+import tezJohnson from '../assets/rookieDraft/rookieCards/tezJohnson.png';
+import toryHorton from '../assets/rookieDraft/rookieCards/toryHorton.png';
+import travisHunter from '../assets/rookieDraft/rookieCards/travisHunter.png';
+import treHarris from '../assets/rookieDraft/rookieCards/treHarris.png';
+import treveyonHenderson from '../assets/rookieDraft/rookieCards/treveyonHenderson.png';
+import trevorEtienne from '../assets/rookieDraft/rookieCards/trevorEtienne.png';
+import tylerWarren from '../assets/rookieDraft/rookieCards/tylerWarren.png';
+import woodyMarks from '../assets/rookieDraft/rookieCards/woodyMarks.png';
+import xavierRestrepo from '../assets/rookieDraft/rookieCards/xavierRestrepo.png';
 
 const tierLogos: Map<string, string> = new Map([
     ['S', sTier],
@@ -422,6 +480,67 @@ const teamSilhouettes: Map<string, string> = new Map([
     ['WAS', wasSilh],
 ]);
 
+const rookieMap: Map<string, string> = new Map([
+    ['Ashton Jeanty', ashtonJeanty],
+    ['Brashard Smith', brashardSmith],
+    ['Cade Klubnik', cadeKlubnik],
+    ['Cam Skattebo', camSkattebo],
+    ['Cam Ward', camWard],
+    ['Carson Beck', carsonBeck],
+    ['Colston Loveland', colstonLoveland],
+    ['Damien Martinez', damienMartinez],
+    ['Devin Neal', devinNeal],
+    ['Dillon Gabriel', dillonGabriel],
+    ['DJ Giddens', djGiddens],
+    ["Dont'e Thornton", dontEThornton],
+    ['Dylan Sampson', dylanSampson],
+    ['Elic Ayomanor', elicAyomanor],
+    ['Emeka Egbuka', emekaEgbuka],
+    ['Evan Stewart', evanStewart],
+    ['Gunnar Helm', gunnarHelm],
+    ['Harold Fannin Jr.', haroldFanninJr],
+    ['Isaiah Bond', isaiahBond],
+    ['Jack Bech', jackBech],
+    ['Jalen Milroe', jalenMilroe],
+    ['Jalen Royals', jalenRoyals],
+    ['Jarquez Hunter', jarquezHunter],
+    ['Jaxson Dart', jaxsonDart],
+    ['Jayden Higgins', jaydenHiggins],
+    ['Jaydn Ott', jaydnOtt],
+    ['Jaylin Noel', jaylinNoel],
+    ['Jordan James', jordanJames],
+    ['Kaleb Johnson', kalebJohnson],
+    ['Kalel Mullings', kalelMullings],
+    ['Kurtis Rourke', kurtisRourke],
+    ['Kyle Monangai', kyleMonangai],
+    ['Kyren Lacy', kyrenLacy],
+    ["Le'Veon Moss", leVeonMoss],
+    ['Luke Lachey', lukeLachey],
+    ['Luther Burden', lutherBurden],
+    ['Nic Singleton', nicSingleton],
+    ['Ollie Gordon', ollieGordon],
+    ['Omarion Hampton', omarionHampton],
+    ['Oronde Gadsden', orondeGadsden],
+    ['Quinn Ewers', quinnEwers],
+    ['Quinshon Judkins', quinshonJudkins],
+    ['Ricky White', rickyWhite],
+    ['RJ Harvey', rjHarvey],
+    ['Shedeur Sanders', shedeurSanders],
+    ['Tahj Brooks', tahjBrooks],
+    ['Tai Felton', taiFelton],
+    ['Terrance Ferguson', terranceFerguson],
+    ['Tet McMillan', tetMcmillian],
+    ['Tez Johnson', tezJohnson],
+    ['Tory Horton', toryHorton],
+    ['Travis Hunter', travisHunter],
+    ['Tre Harris', treHarris],
+    ['Treveyon Henderson', treveyonHenderson],
+    ['Trevor Etienne', trevorEtienne],
+    ['Tyler Warren', tylerWarren],
+    ['Woody Marks', woodyMarks],
+    ['Xavier Restrepo', xavierRestrepo],
+]);
+
 export {
     shortGreen,
     shortRed,
@@ -505,4 +624,63 @@ export {
     wrFactory,
     rbHeavy,
     blankRookie,
+    ashtonJeanty,
+    brashardSmith,
+    cadeKlubnik,
+    camSkattebo,
+    camWard,
+    carsonBeck,
+    colstonLoveland,
+    damienMartinez,
+    devinNeal,
+    dillonGabriel,
+    djGiddens,
+    dontEThornton,
+    dylanSampson,
+    elicAyomanor,
+    emekaEgbuka,
+    evanStewart,
+    gunnarHelm,
+    haroldFanninJr,
+    isaiahBond,
+    jackBech,
+    jalenMilroe,
+    jalenRoyals,
+    jarquezHunter,
+    jaxsonDart,
+    jaydenHiggins,
+    jaydnOtt,
+    jaylinNoel,
+    jordanJames,
+    kalebJohnson,
+    kalelMullings,
+    kurtisRourke,
+    kyleMonangai,
+    kyrenLacy,
+    leVeonMoss,
+    lukeLachey,
+    lutherBurden,
+    nicSingleton,
+    ollieGordon,
+    omarionHampton,
+    orondeGadsden,
+    quinnEwers,
+    quinshonJudkins,
+    rickyWhite,
+    rjHarvey,
+    shedeurSanders,
+    tahjBrooks,
+    taiFelton,
+    terranceFerguson,
+    tetMcmillian,
+    tezJohnson,
+    toryHorton,
+    travisHunter,
+    treHarris,
+    treveyonHenderson,
+    trevorEtienne,
+    tylerWarren,
+    woodyMarks,
+    xavierRestrepo,
+    rookieMap,
 };
