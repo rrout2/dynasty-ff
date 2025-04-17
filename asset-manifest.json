@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/dynasty-ff/static/css/main.861aaa3a.css",
-    "main.js": "/dynasty-ff/static/js/main.190a118c.js",
+    "main.js": "/dynasty-ff/static/js/main.4259343a.js",
     "static/js/453.e52469b7.chunk.js": "/dynasty-ff/static/js/453.e52469b7.chunk.js",
     "static/media/blueprintredraft_1.png": "/dynasty-ff/static/media/blueprintredraft_1.10b73cd4858cf01989fb.png",
     "static/media/blankInfinite_v2.png": "/dynasty-ff/static/media/blankInfinite_v2.f11f033fccc19769abbf.png",
@@ -36,12 +36,14 @@
     "static/media/EV-CCO.png": "/dynasty-ff/static/media/EV-CCO.1ec9ab88c82b4d8f379d.png",
     "static/media/HOU.png": "/dynasty-ff/static/media/HOU.d636f7f24e14828bcb5c.png",
     "static/media/EV-CCC.png": "/dynasty-ff/static/media/EV-CCC.0c5859395ec7e2364c9b.png",
+    "static/media/antwaneWells.png": "/dynasty-ff/static/media/antwaneWells.ebbb2437dfec99006147.png",
     "static/media/PHI.png": "/dynasty-ff/static/media/PHI.2961116da2113bacb44b.png",
     "static/media/ATL.png": "/dynasty-ff/static/media/ATL.28cb2dea51eb18e65e23.png",
     "static/media/DAL.png": "/dynasty-ff/static/media/DAL.6211669c3377988990ae.png",
     "static/media/MIA.png": "/dynasty-ff/static/media/MIA.2d8016c889685cd93460.png",
     "static/media/NO.png": "/dynasty-ff/static/media/NO.3a6d249dfc6503fddd33.png",
     "static/media/CheddarGothicRough-Regular.woff2": "/dynasty-ff/static/media/CheddarGothicRough-Regular.1ff9cfe7add9f3118879.woff2",
+    "static/media/donovanEdwards.png": "/dynasty-ff/static/media/donovanEdwards.2aedd477581cccd8b4b5.png",
     "static/media/DEN.png": "/dynasty-ff/static/media/DEN.02e6190deabef5ccb20c.png",
     "static/media/IND.png": "/dynasty-ff/static/media/IND.2aee0579b60bd2b13bdf.png",
     "static/media/CAR.png": "/dynasty-ff/static/media/CAR.a5c390bcfa9d383fdc56.png",
@@ -58,14 +60,18 @@
     "static/media/raheimSanders.png": "/dynasty-ff/static/media/raheimSanders.3ba789a134d95a5d196d.png",
     "static/media/GB.png": "/dynasty-ff/static/media/GB.43716df6b5e1b439ce03.png",
     "static/media/masonTaylor.png": "/dynasty-ff/static/media/masonTaylor.a7af7011f9ab511c80cc.png",
+    "static/media/jacoreyBrooks.png": "/dynasty-ff/static/media/jacoreyBrooks.91862875ee12fbf533b9.png",
     "static/media/patBryant.png": "/dynasty-ff/static/media/patBryant.56191c4fb3970b53891f.png",
     "static/media/willHoward.png": "/dynasty-ff/static/media/willHoward.72a49462743a8bdb473e.png",
+    "static/media/nickNash.png": "/dynasty-ff/static/media/nickNash.d104a50473726601e391.png",
     "static/media/tylerShough.png": "/dynasty-ff/static/media/tylerShough.48cbcc59588fee7bfb7c.png",
     "static/media/nfl.png": "/dynasty-ff/static/media/nfl.bf6b3a2b388fb9efd71b.png",
     "static/media/NE.png": "/dynasty-ff/static/media/NE.4dd1dc07a61ba7721349.png",
     "static/media/SEA.png": "/dynasty-ff/static/media/SEA.677033df396e7f443253.png",
     "static/media/savionWilliams.png": "/dynasty-ff/static/media/savionWilliams.57afbcb76f7580328d39.png",
     "static/media/matthewGolden.png": "/dynasty-ff/static/media/matthewGolden.e94be50193da84504c78.png",
+    "static/media/marcusYarns.png": "/dynasty-ff/static/media/marcusYarns.c1298513cf58753bd402.png",
+    "static/media/coreyKiner.png": "/dynasty-ff/static/media/coreyKiner.2a9116ac3f96dca77a32.png",
     "static/media/silhouette.png": "/dynasty-ff/static/media/silhouette.fb2a652ed39cbd384497.png",
     "static/media/elijahArroyo.png": "/dynasty-ff/static/media/elijahArroyo.15b4fe72ca8a22b7fed3.png",
     "static/media/bhayshulTuten.png": "/dynasty-ff/static/media/bhayshulTuten.b1ab3f79089601ea60f8.png",
@@ -201,11 +207,11 @@
     "static/media/ProhibitionTest-Regular.otf": "/dynasty-ff/static/media/ProhibitionTest-Regular.01a1bc4e03d19fe3a733.otf",
     "index.html": "/dynasty-ff/index.html",
     "main.861aaa3a.css.map": "/dynasty-ff/static/css/main.861aaa3a.css.map",
-    "main.190a118c.js.map": "/dynasty-ff/static/js/main.190a118c.js.map",
+    "main.4259343a.js.map": "/dynasty-ff/static/js/main.4259343a.js.map",
     "453.e52469b7.chunk.js.map": "/dynasty-ff/static/js/453.e52469b7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.861aaa3a.css",
-    "static/js/main.190a118c.js"
+    "static/js/main.4259343a.js"
   ]
 }
