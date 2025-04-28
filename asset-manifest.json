@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/dynasty-ff/static/css/main.861aaa3a.css",
-    "main.js": "/dynasty-ff/static/js/main.5e0b1f45.js",
+    "main.js": "/dynasty-ff/static/js/main.f9146889.js",
     "static/js/453.e52469b7.chunk.js": "/dynasty-ff/static/js/453.e52469b7.chunk.js",
     "static/media/blueprintredraft_1.png": "/dynasty-ff/static/media/blueprintredraft_1.10b73cd4858cf01989fb.png",
     "static/media/blankInfinite_v2.png": "/dynasty-ff/static/media/blankInfinite_v2.f11f033fccc19769abbf.png",
@@ -61,13 +61,17 @@
     "static/media/GB.png": "/dynasty-ff/static/media/GB.43716df6b5e1b439ce03.png",
     "static/media/masonTaylor.png": "/dynasty-ff/static/media/masonTaylor.a7af7011f9ab511c80cc.png",
     "static/media/jacoreyBrooks.png": "/dynasty-ff/static/media/jacoreyBrooks.91862875ee12fbf533b9.png",
+    "static/media/isaacTeslaa.png": "/dynasty-ff/static/media/isaacTeslaa.790f210f105a00da29ce.png",
     "static/media/patBryant.png": "/dynasty-ff/static/media/patBryant.56191c4fb3970b53891f.png",
+    "static/media/chimereDike.png": "/dynasty-ff/static/media/chimereDike.69d469e5323d33665e70.png",
+    "static/media/arianSmith.png": "/dynasty-ff/static/media/arianSmith.383ec53f245d5e3898a4.png",
     "static/media/willHoward.png": "/dynasty-ff/static/media/willHoward.72a49462743a8bdb473e.png",
     "static/media/nickNash.png": "/dynasty-ff/static/media/nickNash.d104a50473726601e391.png",
     "static/media/tylerShough.png": "/dynasty-ff/static/media/tylerShough.48cbcc59588fee7bfb7c.png",
     "static/media/nfl.png": "/dynasty-ff/static/media/nfl.bf6b3a2b388fb9efd71b.png",
     "static/media/NE.png": "/dynasty-ff/static/media/NE.4dd1dc07a61ba7721349.png",
     "static/media/SEA.png": "/dynasty-ff/static/media/SEA.677033df396e7f443253.png",
+    "static/media/jaylinLane.png": "/dynasty-ff/static/media/jaylinLane.eecaef310379cdaa3f03.png",
     "static/media/savionWilliams.png": "/dynasty-ff/static/media/savionWilliams.57afbcb76f7580328d39.png",
     "static/media/matthewGolden.png": "/dynasty-ff/static/media/matthewGolden.e94be50193da84504c78.png",
     "static/media/marcusYarns.png": "/dynasty-ff/static/media/marcusYarns.c1298513cf58753bd402.png",
@@ -207,11 +211,11 @@
     "static/media/ProhibitionTest-Regular.otf": "/dynasty-ff/static/media/ProhibitionTest-Regular.01a1bc4e03d19fe3a733.otf",
     "index.html": "/dynasty-ff/index.html",
     "main.861aaa3a.css.map": "/dynasty-ff/static/css/main.861aaa3a.css.map",
-    "main.5e0b1f45.js.map": "/dynasty-ff/static/js/main.5e0b1f45.js.map",
+    "main.f9146889.js.map": "/dynasty-ff/static/js/main.f9146889.js.map",
     "453.e52469b7.chunk.js.map": "/dynasty-ff/static/js/453.e52469b7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.861aaa3a.css",
-    "static/js/main.5e0b1f45.js"
+    "static/js/main.f9146889.js"
   ]
 }
