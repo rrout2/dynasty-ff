@@ -60,6 +60,43 @@ import {gradeByPosition} from '../components/Blueprint/v1/modules/PositionalGrad
 import {calculateDepthScore} from '../components/Blueprint/v1/modules/DepthScore/DepthScore';
 
 import {Archetype} from '../components/Blueprint/v1/modules/BigBoy/BigBoy';
+import {FinalPickData, getPicks, GetPicksResult} from '../sleeper-api/picks';
+
+export function useGetPicks(leagueId: string, userId?: string) {
+    const [allPicks, setAllPicks] = useState<GetPicksResult>();
+    const [myPicks, setMyPicks] = useState<FinalPickData[]>([]);
+    const fetchPicks = async () => {
+        const leagueData = await getLeague(leagueId);
+        const users = await getAllUsers(leagueId);
+        if (!leagueData) return;
+        const picks = await getPicks({
+            leagueId,
+            season: leagueData.season,
+            leagueSize: leagueData.total_rosters,
+            users: users.map(user => ({
+                userId: user.user_id,
+                displayName: user.display_name,
+                userName: user.username,
+            })),
+        });
+        setAllPicks(picks);
+    };
+
+    useEffect(() => {
+        if (!leagueId) return;
+        fetchPicks();
+    }, [leagueId]);
+
+    useEffect(() => {
+        if (!allPicks || !allPicks.picks || !userId) return;
+        const myPicks = allPicks.picks[userId];
+        if (!myPicks) {
+            console.warn('no picks found for owner', userId);
+        }
+        setMyPicks(myPicks);
+    }, [allPicks, userId]);
+    return {allPicks, myPicks};
+}
 
 export function useArchetype(
     qbScore: number,

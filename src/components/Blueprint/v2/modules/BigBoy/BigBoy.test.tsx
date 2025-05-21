@@ -82,6 +82,7 @@ describe('BigBoy v2', () => {
                 wrRank={0}
                 teRank={0}
                 isSuperFlex={true}
+                myPicks={[]}
             />
         );
         expect(getAllByText(TEAM_NAME)).toHaveLength(1);
@@ -104,6 +105,7 @@ describe('BigBoy v2', () => {
                     wrRank={0}
                     teRank={0}
                     isSuperFlex={true}
+                    myPicks={[]}
                 />
             );
             const settingTiles = container.querySelectorAll('.settingTile');
@@ -123,6 +125,7 @@ describe('BigBoy v2', () => {
                     wrRank={0}
                     teRank={0}
                     isSuperFlex={true}
+                    myPicks={[]}
                 />
             );
             const otherSettingsInput = getByLabelText('Other Settings');
@@ -146,6 +149,7 @@ describe('BigBoy v2', () => {
                 wrRank={0}
                 teRank={0}
                 isSuperFlex={true}
+                myPicks={[]}
             />
         );
         const rosterGraphic = container.querySelector('.rosterGraphic');
@@ -169,6 +173,7 @@ describe('BigBoy v2', () => {
                     wrRank={0}
                     teRank={0}
                     isSuperFlex={true}
+                    myPicks={[]}
                 />
             );
             const risersFallersGraphic = container.querySelector(
@@ -192,6 +197,7 @@ describe('BigBoy v2', () => {
                     wrRank={0}
                     teRank={0}
                     isSuperFlex={true}
+                    myPicks={[]}
                 />
             );
             expect(window.location.href).not.toContain(CORNERSTONES);
@@ -222,6 +228,7 @@ describe('BigBoy v2', () => {
                     wrRank={0}
                     teRank={0}
                     isSuperFlex={true}
+                    myPicks={[]}
                 />
             );
 
@@ -251,6 +258,7 @@ describe('BigBoy v2', () => {
                     wrRank={0}
                     teRank={0}
                     isSuperFlex={true}
+                    myPicks={[]}
                 />
             );
 
@@ -285,6 +293,7 @@ describe('BigBoy v2', () => {
                     wrRank={0}
                     teRank={0}
                     isSuperFlex={true}
+                    myPicks={[]}
                 />
             );
 
@@ -309,6 +318,7 @@ describe('BigBoy v2', () => {
                         wrRank={0}
                         teRank={0}
                         isSuperFlex={true}
+                        myPicks={[]}
                     />
                 );
 
@@ -341,6 +351,7 @@ describe('BigBoy v2', () => {
                     wrRank={0}
                     teRank={0}
                     isSuperFlex={true}
+                    myPicks={[]}
                 />
             );
             await waitFor(() => {

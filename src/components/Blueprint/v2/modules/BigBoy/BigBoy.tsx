@@ -80,11 +80,14 @@ import {
 } from '../../../../../consts/urlParams';
 import {useSearchParams} from 'react-router-dom';
 import {
+    DraftPick,
     RookieDraftGraphic,
     useRookieDraft,
+    Verdict,
 } from '../../../rookieDraft/RookieDraft/RookieDraft';
 import {getPositionalOrder} from '../../../infinite/BuySellHold/BuySellHold';
 import rookieDraftStyles from '../../../rookieDraft/RookieDraft/RookieDraft.module.css';
+import {CURRENT_SEASON, FinalPickData} from '../../../../../sleeper-api/picks';
 interface BigBoyProps {
     roster?: Roster;
     numRosters?: number;
@@ -94,6 +97,7 @@ interface BigBoyProps {
     wrRank: number;
     teRank: number;
     isSuperFlex: boolean;
+    myPicks: FinalPickData[];
 }
 
 export default function BigBoy({
@@ -105,6 +109,7 @@ export default function BigBoy({
     wrRank,
     teRank,
     isSuperFlex,
+    myPicks,
 }: BigBoyProps) {
     const {cornerstones, setCornerstones} = useCornerstones(roster);
     const {sells, setSells, buys, setBuys, plusMap, setPlusMap} =
@@ -138,6 +143,22 @@ export default function BigBoy({
         setAutoPopulatedDraftStrategy,
         sortByRookieRank,
     } = useRookieDraft();
+    useEffect(() => {
+        if (myPicks.length === 0) return;
+        const picks: DraftPick[] = myPicks
+            .filter(pick => pick.season === CURRENT_SEASON)
+            .map(pick => {
+                return {
+                    round: pick.round,
+                    pick: pick.slot,
+                    verdict: Verdict.None,
+                };
+            });
+        while (picks.length < 4) {
+            picks.push({round: '', pick: '', verdict: Verdict.None});
+        }
+        setDraftPicks(picks);
+    }, [myPicks]);
     useEffect(() => {
         setOverall(
             Math.min(

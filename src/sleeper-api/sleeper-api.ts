@@ -6,6 +6,8 @@ export type League = {
     settings: Settings;
     scoring_settings: ScoringSettings;
     roster_positions: string[];
+    season: string;
+    total_rosters: number;
 };
 
 export type Settings = {
@@ -121,6 +123,10 @@ export type Roster = {
     };
 };
 
+export interface DraftOrder {
+    [userId: string]: number;
+}
+
 export type Draft = {
     type: string;
     status: string;
@@ -147,6 +153,7 @@ export type Draft = {
     league_id: string;
     draft_id: string;
     created: number;
+    draft_order: DraftOrder;
 };
 
 export type Pick = {
@@ -290,6 +297,15 @@ export async function getDraft(draftId: string): Promise<Draft[]> {
 
 export async function getAllPicksFromDraft(draftId: string): Promise<Pick[]> {
     const response = await axios.get(`${BASE_API_URL}/league/${draftId}/picks`);
+    return response.data;
+}
+
+export async function getTradedPicksFromLeague(
+    leagueId: string
+): Promise<TradedPick[]> {
+    const response = await axios.get(
+        `${BASE_API_URL}/league/${leagueId}/traded_picks`
+    );
     return response.data;
 }
 

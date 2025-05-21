@@ -9,6 +9,7 @@ import {
     useTeamIdFromUrl,
     useLeague,
     useRosterSettings,
+    useGetPicks,
 } from '../../../hooks/hooks';
 import {User, Roster, getAllUsers} from '../../../sleeper-api/sleeper-api';
 import {TeamSelectComponent} from '../../Team/TeamPage/TeamPage';
@@ -113,6 +114,7 @@ export default function NewGenerator() {
         rosters,
         roster
     );
+    const {myPicks} = useGetPicks(leagueId, roster?.owner_id);
 
     const {
         nonSleeperIds,
@@ -338,6 +340,7 @@ export default function NewGenerator() {
                     wrRank={wrRank}
                     teRank={teRank}
                     isSuperFlex={isSuperFlex}
+                    myPicks={myPicks}
                 />
             )}
         </div>
