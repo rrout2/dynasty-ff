@@ -314,6 +314,21 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
     }, [archetype]);
     const [additionalDraftNotes, setAdditionalDraftNotes] = useState('');
     useEffect(() => {
+        if (!draftPicks || !setDraftCapitalNotes || myPicks.length === 0)
+            return;
+        const nextYearPicks = myPicks.filter(p => p.season === '2026');
+        const numFirsts = nextYearPicks.filter(p => p.round === 1).length;
+        const numSeconds = nextYearPicks.filter(p => p.round === 2).length;
+        const numThirds = nextYearPicks.filter(p => p.round === 3).length;
+        const numFourths = nextYearPicks.filter(p => p.round === 4).length;
+        const nextYearInfo = `2026: ${numFirsts} 1st${
+            numFirsts !== 1 ? 's' : ''
+        }, ${numSeconds} 2nd${numSeconds !== 1 ? 's' : ''}, ${numThirds} 3rd${
+            numThirds !== 1 ? 's' : ''
+        }, ${numFourths} 4th${numFourths !== 1 ? 's' : ''}`;
+        setAdditionalDraftNotes(nextYearInfo);
+    }, [draftPicks, myPicks]);
+    useEffect(() => {
         const thisYearInfo = draftPicks
             .filter(
                 draftPick => draftPick.round !== '' && draftPick.pick !== ''

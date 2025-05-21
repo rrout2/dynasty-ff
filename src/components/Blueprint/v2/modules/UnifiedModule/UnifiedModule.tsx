@@ -3,6 +3,7 @@ import {Player, Roster} from '../../../../../sleeper-api/sleeper-api';
 import styles from './UnifiedModule.module.css';
 import {
     useAdpData,
+    useGetPicks,
     useLeagueIdFromUrl,
     usePlayerData,
     usePositionalGrades,
@@ -59,6 +60,7 @@ import {
     useRookieDraft,
 } from '../../../rookieDraft/RookieDraft/RookieDraft';
 import {DraftCapitalInput} from '../../../v1/modules/BigBoy/BigBoy';
+import {FinalPickData} from '../../../../../sleeper-api/picks';
 export type UnifiedModuleProps = {
     roster?: Roster;
     numRosters?: number;
@@ -75,6 +77,7 @@ export default function UnifiedModule({
     const [leagueId] = useLeagueIdFromUrl();
     const {sells, setSells, buys, setBuys, plusMap, setPlusMap} =
         useBuySells(roster);
+    const {myPicks} = useGetPicks(leagueId, roster?.owner_id);
     const {holds, setHolds} = useHolds(roster);
     const {
         risers,
@@ -191,6 +194,7 @@ export default function UnifiedModule({
                 setOutlook={setOutlook}
                 rookiePickHeaders={rookiePickHeaders}
                 setRookiePickHeaders={setRookiePickHeaders}
+                myPicks={myPicks}
             />
             <CornerstonesGraphic
                 cornerstones={cornerstones}
@@ -298,6 +302,7 @@ export type UnifiedInputsProps = {
     setRookiePickHeaders: (value: SetStateAction<string[]>) => void;
     suggestionsAndComments?: string[];
     setSuggestionsAndComments?: (suggestionsAndComments: string[]) => void;
+    myPicks: FinalPickData[];
 };
 
 export function UnifiedInputs({
@@ -356,6 +361,7 @@ export function UnifiedInputs({
     setRookiePickHeaders,
     suggestionsAndComments,
     setSuggestionsAndComments,
+    myPicks,
 }: UnifiedInputsProps) {
     useEffect(() => {
         if (!draftPicks || !setRookiePickComments) return;
@@ -370,10 +376,18 @@ export function UnifiedInputs({
                     }${draftPick.pick}`
             )
             .join(', ');
-        setRookiePickComments((oldRookiePickComments: string[]) => {
-            return [thisYearInfo, oldRookiePickComments[1]];
-        });
-    }, [draftPicks]);
+        const nextYearPicks = myPicks.filter(p => p.season === '2026');
+        const numFirsts = nextYearPicks.filter(p => p.round === 1).length;
+        const numSeconds = nextYearPicks.filter(p => p.round === 2).length;
+        const numThirds = nextYearPicks.filter(p => p.round === 3).length;
+        const numFourths = nextYearPicks.filter(p => p.round === 4).length;
+        const nextYearInfo = `${numFirsts} 1st${
+            numFirsts !== 1 ? 's' : ''
+        }, ${numSeconds} 2nd${numSeconds !== 1 ? 's' : ''}, ${numThirds} 3rd${
+            numThirds !== 1 ? 's' : ''
+        }, ${numFourths} 4th${numFourths !== 1 ? 's' : ''}`;
+        setRookiePickComments([thisYearInfo, nextYearInfo]);
+    }, [draftPicks, myPicks]);
 
     return (
         <Grid2

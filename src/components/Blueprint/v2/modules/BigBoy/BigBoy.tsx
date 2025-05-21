@@ -538,6 +538,7 @@ export default function BigBoy({
                 setRookiePickHeaders={setRookiePickHeaders}
                 suggestionsAndComments={suggestionsAndComments}
                 setSuggestionsAndComments={setSuggestionsAndComments}
+                myPicks={myPicks}
             />
             {showPreview && <FullBlueprintWithProps isPreview={true} />}
             {showRookieBP && rookieDraftGraphic}
