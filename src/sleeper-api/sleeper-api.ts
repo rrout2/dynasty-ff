@@ -296,7 +296,7 @@ export async function getDraft(draftId: string): Promise<Draft[]> {
 }
 
 export async function getAllPicksFromDraft(draftId: string): Promise<Pick[]> {
-    const response = await axios.get(`${BASE_API_URL}/league/${draftId}/picks`);
+    const response = await axios.get(`${BASE_API_URL}/draft/${draftId}/picks`);
     return response.data;
 }
 
@@ -313,7 +313,7 @@ export async function getTradedPicksFromDraft(
     draftId: string
 ): Promise<Pick[]> {
     const response = await axios.get(
-        `${BASE_API_URL}/league/${draftId}/traded_picks`
+        `${BASE_API_URL}/draft/${draftId}/traded_picks`
     );
     return response.data;
 }
