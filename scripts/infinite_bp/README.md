@@ -13,3 +13,7 @@
 1) Set up Github Secrets
     1) Run `parse_customer_data.py` to get necessary emails, league IDs, user IDs, etc.
     1) Update https://github.com/rrout2/dynasty-ff/settings/secrets/actions with this output.
+
+## In Case of Error
+1) Download GH artifacts if available.
+1) TODO: describe populating skip list
