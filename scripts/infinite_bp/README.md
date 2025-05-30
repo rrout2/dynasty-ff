@@ -7,6 +7,7 @@
     1) Update `hooks.ts` to use new JSON file.
 1) Set up customer data
     1) Download customer info from sheets.
+    1) Convert CSV to JSON.
     1) Download previous run's `email_to_buys.json`/`league_id_to_buys.json` if not already.
     1) Run `merge_customer_data_with_disallowed_buys.py` to combine the above two datasets. 
 1) Set up Github Secrets
