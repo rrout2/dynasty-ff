@@ -15,8 +15,9 @@
     1) Run `parse_customer_data.py` to get necessary emails, league IDs, user IDs, etc.
     1) Update https://github.com/rrout2/dynasty-ff/settings/secrets/actions with this output.
 1) Run GH Actions
-    1) For dry run, run `Manual Upload to Drive Folder` action
-    1) For real run, run 
+    1) [Update the folder_id](https://github.com/rrout2/dynasty-ff/commit/236198534b2ebde6c975d5855d7fd829ff6c55fe#diff-2c3fc01634b6154784561c396dd83950ebad602b2c9218796e5aa9f3824f9d02R255) to upload to, if necessary. 
+    1) For dry run, run the `Manual Upload to Drive Folder` action.
+    1) For real run, run the `Manual Image Sender` action.
 ## In Case of Error
 1) Download GH artifacts if available.
 1) TODO: describe populating skip list
