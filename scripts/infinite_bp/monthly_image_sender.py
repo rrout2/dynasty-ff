@@ -89,6 +89,7 @@ class ImageEmailSender:
 
         self.email_to_buys = {}
         self.league_id_to_buys = {}
+        self.user_id_to_buys = {}
 
         self.fails = []
         self.fail_indices = []
@@ -203,6 +204,8 @@ class ImageEmailSender:
         buy_ids = driver.find_element(By.CSS_SELECTOR, self.buy_ids_selector).text
         self.email_to_buys[self.email_list[idx]] = buy_ids
         self.league_id_to_buys[self.league_id_list[idx]] = buy_ids
+        if len(self.user_id_list) > 0:
+            self.user_id_to_buys[self.user_id_list[idx]] = buy_ids
 
     def send_email_link(self, recipient_email, drive_link):
         """
@@ -252,7 +255,7 @@ def main():
     try:
         # Authenticate
         uploader.authenticate()
-        folder_id = '1Jctzvj1u_oFs7OBz7MBlBgXGYuSu22Eb' #uploader.create_or_get_folder(args.folder_name)
+        folder_id = '1FHXB8bYJIlvzHc16oKjWwmUZTRCFQEtI' #uploader.create_or_get_folder(args.folder_name)
         print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
         for i in range(len(sender.league_id_list)):
             if sender.league_id_list[i] == '' or sender.league_id_list[i] == None:
@@ -289,6 +292,8 @@ def main():
                     json.dump(sender.email_to_buys, json_file, indent=4)
                 with open("league_id_to_buys.json", "w") as json_file:
                     json.dump(sender.league_id_to_buys, json_file, indent=4)
+                with open("user_id_to_buys.json", "w") as json_file:
+                    json.dump(sender.user_id_to_buys, json_file, indent=4)
                 os.remove(downloaded_file)
             except Exception as e:
                 print(f"\nAn upload/email error occurred: {str(e)}")
