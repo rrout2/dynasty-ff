@@ -274,6 +274,7 @@ def main():
                 print(f"failed indices: {sender.fail_indices}")
                 continue
             try:
+                time.sleep(0.1)
                 print(f"Uploading {downloaded_file}...")
                 file = uploader.upload_image(downloaded_file, folder_id)
 
