@@ -25,10 +25,13 @@ def process_json_files(players_file, ids_file, output_file):
         print(f"Error: Invalid JSON format - {e}")
         return
 
+    ids_to_skip = set('2697') # skip old kaleb johnson
     # Create a dictionary to map full names to IDs
     name_to_id = {}
     name_to_age = {}
     for player_id, info in id_mappings.items():
+        if player_id in ids_to_skip:
+            continue
         full_name = f"{info['first_name']} {info['last_name']}".lower()
         if full_name in name_to_id:
             continue
