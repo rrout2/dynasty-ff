@@ -3,18 +3,18 @@ import os
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-month = 'april2025'
+month = 'may2025'
 
 with open(os.path.join(script_dir, 'email_to_buys', month, 'email_to_buys.json'), 'r') as file:
     email_to_buys = json.load(file)
 
-with open(os.path.join(script_dir, 'email_to_buys', month, 'email_to_buys 5.json'), 'r') as file:
+with open(os.path.join(script_dir, 'email_to_buys', month, 'email_to_buys 1.json'), 'r') as file:
     email_to_buys2 = json.load(file)
 
 # with open(os.path.join(script_dir, 'email_to_buys', month, 'email_to_buys 3.json'), 'r') as file:
 #     email_to_buys3 = json.load(file)
 
-with open(os.path.join(script_dir, 'domain_customer_info_apr07.json'), 'r') as file:
+with open(os.path.join(script_dir, 'domain_customer_info_june_teamids.json'), 'r') as file:
     customer_info = json.load(file)
 
 for customer in customer_info:

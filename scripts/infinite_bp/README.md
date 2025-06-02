@@ -7,13 +7,16 @@
     1) Update `hooks.ts` to use new JSON file.
 1) Set up customer data
     1) Download customer info from sheets.
+        1) May be two sets: one with league IDs, one with user IDs.
     1) Convert CSV to JSON.
     1) Download previous run's `email_to_buys.json`/`league_id_to_buys.json` if not already.
     1) Run `merge_customer_data_with_disallowed_buys.py` to combine the above two datasets. 
 1) Set up Github Secrets
     1) Run `parse_customer_data.py` to get necessary emails, league IDs, user IDs, etc.
     1) Update https://github.com/rrout2/dynasty-ff/settings/secrets/actions with this output.
-
+1) Run GH Actions
+    1) For dry run, run `Manual Upload to Drive Folder` action
+    1) For real run, run 
 ## In Case of Error
 1) Download GH artifacts if available.
 1) TODO: describe populating skip list

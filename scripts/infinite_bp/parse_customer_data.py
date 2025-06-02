@@ -7,9 +7,11 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 # Specify the JSON file name
 json_file_name = 'domain_customer_info_may_teamids.json'
 
+month = 'may2025'
+
 # Construct the full path to the JSON file
 json_file_path = os.path.join(script_dir, json_file_name)
-disallowed_buys_path = os.path.join(script_dir, 'email_to_buys/april2025/april2025_customer_info_disallowed.json')
+disallowed_buys_path = os.path.join(script_dir, f'email_to_buys/{month}/{month}_customer_info_disallowed.json')
 
 league_id_key = "Sleeper ID"
 team_id_key = "Team ID"
