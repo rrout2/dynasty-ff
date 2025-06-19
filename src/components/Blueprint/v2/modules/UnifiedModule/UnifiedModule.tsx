@@ -77,7 +77,7 @@ export default function UnifiedModule({
     const [leagueId] = useLeagueIdFromUrl();
     const {sells, setSells, buys, setBuys, plusMap, setPlusMap} =
         useBuySells(roster);
-    const {myPicks} = useGetPicks(leagueId, roster?.owner_id);
+    const {myPicks, hasDraftOccurred} = useGetPicks(leagueId, roster?.owner_id);
     const {holds, setHolds} = useHolds(roster);
     const {
         risers,
@@ -195,6 +195,7 @@ export default function UnifiedModule({
                 rookiePickHeaders={rookiePickHeaders}
                 setRookiePickHeaders={setRookiePickHeaders}
                 myPicks={myPicks}
+                hasDraftOccurred={hasDraftOccurred}
             />
             <CornerstonesGraphic
                 cornerstones={cornerstones}
@@ -303,6 +304,7 @@ export type UnifiedInputsProps = {
     suggestionsAndComments?: string[];
     setSuggestionsAndComments?: (suggestionsAndComments: string[]) => void;
     myPicks: FinalPickData[];
+    hasDraftOccurred: boolean;
 };
 
 export function UnifiedInputs({
@@ -362,9 +364,60 @@ export function UnifiedInputs({
     suggestionsAndComments,
     setSuggestionsAndComments,
     myPicks,
+    hasDraftOccurred,
 }: UnifiedInputsProps) {
     useEffect(() => {
         if (!draftPicks || !setRookiePickComments) return;
+        const getPicksInfo = (picks: FinalPickData[], year: string) => {
+            if (picks.filter(p => p.season === year).length === 0) {
+                return '';
+            }
+            const numFirsts = picks.filter(
+                p => p.round === 1 && p.season === year
+            ).length;
+            const numSeconds = picks.filter(
+                p => p.round === 2 && p.season === year
+            ).length;
+            const numThirds = picks.filter(
+                p => p.round === 3 && p.season === year
+            ).length;
+            const numFourths = picks.filter(
+                p => p.round === 4 && p.season === year
+            ).length;
+            const firstInfo =
+                numFirsts > 0
+                    ? `${numFirsts === 1 ? '' : numFirsts} 1st${
+                          numFirsts !== 1 ? 's' : ''
+                      }`.trim()
+                    : '';
+            const secondInfo =
+                numSeconds > 0
+                    ? `${numSeconds === 1 ? '' : numSeconds} 2nd${
+                          numSeconds !== 1 ? 's' : ''
+                      }`.trim()
+                    : '';
+            const thirdInfo =
+                numThirds > 0
+                    ? `${numThirds === 1 ? '' : numThirds} 3rd${
+                          numThirds !== 1 ? 's' : ''
+                      }`.trim()
+                    : '';
+            const fourthInfo =
+                numFourths > 0
+                    ? `${numFourths === 1 ? '' : numFourths} 4th${
+                          numFourths !== 1 ? 's' : ''
+                      }`.trim()
+                    : '';
+            const allRoundsInfo = `${[
+                firstInfo,
+                secondInfo,
+                thirdInfo,
+                fourthInfo,
+            ]
+                .filter(info => info !== '')
+                .join(', ')}`;
+            return allRoundsInfo;
+        };
         const thisYearInfo = draftPicks
             .filter(
                 draftPick => draftPick.round !== '' && draftPick.pick !== ''
@@ -376,45 +429,14 @@ export function UnifiedInputs({
                     }${draftPick.pick}`
             )
             .join(', ');
-        const nextYearPicks = myPicks.filter(p => p.season === '2026');
-        const numFirsts = nextYearPicks.filter(p => p.round === 1).length;
-        const numSeconds = nextYearPicks.filter(p => p.round === 2).length;
-        const numThirds = nextYearPicks.filter(p => p.round === 3).length;
-        const numFourths = nextYearPicks.filter(p => p.round === 4).length;
-        const firstInfo =
-            numFirsts > 0
-                ? `${numFirsts === 1 ? '' : numFirsts} 1st${
-                      numFirsts !== 1 ? 's' : ''
-                  }`.trim()
-                : '';
-        const secondInfo =
-            numSeconds > 0
-                ? `${numSeconds === 1 ? '' : numSeconds} 2nd${
-                      numSeconds !== 1 ? 's' : ''
-                  }`.trim()
-                : '';
-        const thirdInfo =
-            numThirds > 0
-                ? `${numThirds === 1 ? '' : numThirds} 3rd${
-                      numThirds !== 1 ? 's' : ''
-                  }`.trim()
-                : '';
-        const fourthInfo =
-            numFourths > 0
-                ? `${numFourths === 1 ? '' : numFourths} 4th${
-                      numFourths !== 1 ? 's' : ''
-                  }`.trim()
-                : '';
-        const nextYearInfo = `2026: ${[
-            firstInfo,
-            secondInfo,
-            thirdInfo,
-            fourthInfo,
-        ]
-            .filter(info => info !== '')
-            .join(', ')}`;
-        setRookiePickComments([thisYearInfo, nextYearInfo]);
-    }, [draftPicks, myPicks]);
+        const nextYearInfo = getPicksInfo(myPicks, '2026');
+        const followingYearInfo = getPicksInfo(myPicks, '2027');
+        if (hasDraftOccurred) {
+            setRookiePickComments([nextYearInfo, followingYearInfo]);
+        } else {
+            setRookiePickComments([thisYearInfo, nextYearInfo]);
+        }
+    }, [draftPicks, myPicks, hasDraftOccurred]);
 
     return (
         <Grid2

@@ -83,6 +83,7 @@ describe('BigBoy v2', () => {
                 teRank={0}
                 isSuperFlex={true}
                 myPicks={[]}
+                hasDraftOccurred={true}
             />
         );
         expect(getAllByText(TEAM_NAME)).toHaveLength(1);
@@ -106,6 +107,7 @@ describe('BigBoy v2', () => {
                     teRank={0}
                     isSuperFlex={true}
                     myPicks={[]}
+                    hasDraftOccurred={true}
                 />
             );
             const settingTiles = container.querySelectorAll('.settingTile');
@@ -126,6 +128,7 @@ describe('BigBoy v2', () => {
                     teRank={0}
                     isSuperFlex={true}
                     myPicks={[]}
+                    hasDraftOccurred={true}
                 />
             );
             const otherSettingsInput = getByLabelText('Other Settings');
@@ -150,6 +153,7 @@ describe('BigBoy v2', () => {
                 teRank={0}
                 isSuperFlex={true}
                 myPicks={[]}
+                hasDraftOccurred={true}
             />
         );
         const rosterGraphic = container.querySelector('.rosterGraphic');
@@ -174,6 +178,7 @@ describe('BigBoy v2', () => {
                     teRank={0}
                     isSuperFlex={true}
                     myPicks={[]}
+                    hasDraftOccurred={true}
                 />
             );
             const risersFallersGraphic = container.querySelector(
@@ -198,6 +203,7 @@ describe('BigBoy v2', () => {
                     teRank={0}
                     isSuperFlex={true}
                     myPicks={[]}
+                    hasDraftOccurred={true}
                 />
             );
             expect(window.location.href).not.toContain(CORNERSTONES);
@@ -229,6 +235,7 @@ describe('BigBoy v2', () => {
                     teRank={0}
                     isSuperFlex={true}
                     myPicks={[]}
+                    hasDraftOccurred={true}
                 />
             );
 
@@ -259,6 +266,7 @@ describe('BigBoy v2', () => {
                     teRank={0}
                     isSuperFlex={true}
                     myPicks={[]}
+                    hasDraftOccurred={true}
                 />
             );
 
@@ -294,6 +302,7 @@ describe('BigBoy v2', () => {
                     teRank={0}
                     isSuperFlex={true}
                     myPicks={[]}
+                    hasDraftOccurred={true}
                 />
             );
 
@@ -319,6 +328,7 @@ describe('BigBoy v2', () => {
                         teRank={0}
                         isSuperFlex={true}
                         myPicks={[]}
+                        hasDraftOccurred={true}
                     />
                 );
 
@@ -352,6 +362,7 @@ describe('BigBoy v2', () => {
                     teRank={0}
                     isSuperFlex={true}
                     myPicks={[]}
+                    hasDraftOccurred={true}
                 />
             );
             await waitFor(() => {

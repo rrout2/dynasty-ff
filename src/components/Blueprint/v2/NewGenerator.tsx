@@ -114,7 +114,7 @@ export default function NewGenerator() {
         rosters,
         roster
     );
-    const {myPicks} = useGetPicks(leagueId, roster?.owner_id);
+    const {myPicks, hasDraftOccurred} = useGetPicks(leagueId, roster?.owner_id);
 
     const {
         nonSleeperIds,
@@ -341,6 +341,7 @@ export default function NewGenerator() {
                     teRank={teRank}
                     isSuperFlex={isSuperFlex}
                     myPicks={myPicks}
+                    hasDraftOccurred={hasDraftOccurred}
                 />
             )}
         </div>

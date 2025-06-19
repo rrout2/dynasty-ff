@@ -3,8 +3,6 @@ import {
     blankRedraftBp,
     blankblueprint,
     circleSlider,
-    draftCapitalBackground,
-    draftCapitalScale,
     outlook1,
     outlook2,
     outlook3,

@@ -99,6 +99,7 @@ interface BigBoyProps {
     teRank: number;
     isSuperFlex: boolean;
     myPicks: FinalPickData[];
+    hasDraftOccurred: boolean;
 }
 
 export default function BigBoy({
@@ -111,6 +112,7 @@ export default function BigBoy({
     teRank,
     isSuperFlex,
     myPicks,
+    hasDraftOccurred,
 }: BigBoyProps) {
     useConsoleLog(myPicks);
     const {cornerstones, setCornerstones} = useCornerstones(roster);
@@ -229,6 +231,12 @@ export default function BigBoy({
     const [searchParams, setSearchParams] = useSearchParams();
 
     const playerData = usePlayerData();
+
+    useEffect(() => {
+        if (hasDraftOccurred) {
+            setRookiePickHeaders(['2026 Rookie Picks', '2027 Rookie Picks']);
+        }
+    }, [hasDraftOccurred]);
 
     useEffect(() => {
         if (!playerData || !searchParams.get(CORNERSTONES)) return;
@@ -541,6 +549,7 @@ export default function BigBoy({
                 suggestionsAndComments={suggestionsAndComments}
                 setSuggestionsAndComments={setSuggestionsAndComments}
                 myPicks={myPicks}
+                hasDraftOccurred={hasDraftOccurred}
             />
             {showPreview && <FullBlueprintWithProps isPreview={true} />}
             {showRookieBP && rookieDraftGraphic}
