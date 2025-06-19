@@ -201,7 +201,7 @@
     left: 205px;
 }
 
-.scaleAndSlider {
+.draftCapRows {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -250,6 +250,15 @@
 }
 
 .draftCapitalGradeGraphic {
+    position: absolute;
+    top: 2414px;
+    left: 1870px;
+
+    font-family: 'Erbaum Medium';
+    font-size: 42px;
+}
+
+.draftCapitalGraphic {
     position: absolute;
     top: 2530px;
     left: 1405px;

@@ -62,13 +62,6 @@ import {calculateDepthScore} from '../components/Blueprint/v1/modules/DepthScore
 import {Archetype} from '../components/Blueprint/v1/modules/BigBoy/BigBoy';
 import {FinalPickData, getPicks, GetPicksResult} from '../sleeper-api/picks';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function useConsoleLog(data: any) {
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
-}
-
 export function useGetPicks(leagueId: string, userId?: string) {
     const [allPicks, setAllPicks] = useState<GetPicksResult>();
     const [myPicks, setMyPicks] = useState<FinalPickData[]>([]);

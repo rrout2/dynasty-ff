@@ -656,6 +656,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                     threeYearOutlookComponent()
                 )}
                 {contendRebuildScaleComponent()}
+                {draftCapitalComponent()}
                 {draftCapitalGradeComponent()}
                 {commentsComponent()}
                 <img
@@ -701,6 +702,14 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
     function draftCapitalGradeComponent() {
         return (
             <div className={styles.draftCapitalGradeGraphic}>
+                {draftCapitalValue}/10
+            </div>
+        );
+    }
+
+    function draftCapitalComponent() {
+        return (
+            <div className={styles.draftCapitalGraphic}>
                 <div
                     className={styles.draftCapBackground}
                     style={{backgroundColor: 'rgb(138, 199, 62)', top: '12px'}}
@@ -709,7 +718,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                     className={styles.draftCapBackground}
                     style={{backgroundColor: '#f38908', top: '122px'}}
                 />
-                <div className={styles.scaleAndSlider}>
+                <div className={styles.draftCapRows}>
                     <div className={styles.draftCapRow}>
                         <div
                             className={styles.draftCapLabel}
@@ -743,6 +752,19 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
         );
     }
 
+    function draftCapitalGradeInput() {
+        return (
+            <StyledNumberInput
+                value={draftCapitalValue}
+                onChange={(_, value) => {
+                    setDraftCapitalValue(value || 0);
+                }}
+                min={0}
+                max={10}
+            />
+        );
+    }
+
     function teamGradeNotesInput() {
         return (
             <TextField
@@ -756,7 +778,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
     function contendRebuildScaleComponent() {
         return (
             <div className={styles.rebuildContendScaleGraphic}>
-                <div className={styles.scaleAndSlider}>
+                <div className={styles.draftCapRows}>
                     <img
                         src={isRedraft ? riskSafetyScale : rebuildContendScale}
                     />
@@ -1118,6 +1140,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                         {isRedraft
                             ? 'Overall Team Grade'
                             : 'Draft Capital Grade'}
+                        <div>{draftCapitalGradeInput()}</div>
                         {!isRedraft && (
                             <DraftCapitalInput
                                 draftPicks={draftPicks}
