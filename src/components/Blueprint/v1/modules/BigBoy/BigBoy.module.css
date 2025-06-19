@@ -203,6 +203,37 @@
 
 .scaleAndSlider {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.draftCapRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+}
+
+.draftCapLabel {
+    font-family: 'Antarctican Headline';
+    font-size: 70px;
+    color: white;
+    color: rgb(138, 199, 62);
+}
+
+.draftCapitalText {
+    font-family: 'Antarctican Headline';
+    font-size: 41px;
+    color: white;
+}
+
+.draftCapBackground {
+    left: 150px;
+    position: absolute;
+    height: 70px;
+    width: 700px;
+    box-shadow: -8px 8px #213965;
 }
 
 .slider {
@@ -228,16 +259,6 @@
     margin-top: 40px;
 }
 
-.draftCapitalText {
-    position: absolute;
-    left: 0;
-    top: 125px;
-    color: white;
-    font-size: 40px;
-    font-family: 'Antarctican Headline';
-    width: 880px;
-    text-align: center;
-}
 
 .commentsGraphic {
     position: absolute;

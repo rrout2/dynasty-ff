@@ -10,6 +10,7 @@ import {
     useRosterSettings,
     usePositionalGrades,
     useArchetype,
+    useConsoleLog,
 } from '../../../../../hooks/hooks';
 import {
     GraphicComponent as CornerstonesGraphic,
@@ -111,6 +112,7 @@ export default function BigBoy({
     isSuperFlex,
     myPicks,
 }: BigBoyProps) {
+    useConsoleLog(myPicks);
     const {cornerstones, setCornerstones} = useCornerstones(roster);
     const {sells, setSells, buys, setBuys, plusMap, setPlusMap} =
         useBuySells(roster);

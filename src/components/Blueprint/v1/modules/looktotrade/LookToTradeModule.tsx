@@ -84,6 +84,7 @@ interface graphicProps {
     inReturn: string[];
     graphicComponentClass?: string;
     transparent?: boolean;
+    hideTitle?: boolean;
 }
 const COLORS = ['#3CB6E9', '#EC336D', '#8AC73E'];
 function GraphicComponent({
@@ -91,6 +92,7 @@ function GraphicComponent({
     inReturn,
     graphicComponentClass,
     transparent,
+    hideTitle,
 }: graphicProps) {
     const playerData = usePlayerData();
     if (!playerData) return <></>;
@@ -174,7 +176,8 @@ function GraphicComponent({
                 graphicComponentClass ?? ''
             } ${transparent ? '' : styles.background}`}
         >
-            <div className={styles.title}>LOOK TO TRADE:</div>
+            {!hideTitle && <div className={styles.title}>LOOK TO TRADE:</div>}
+            {hideTitle && <div className={styles.noTitle} />}
             {[0, 1, 2].map(idx => {
                 const tradeAwayString = playersToTrade[idx].reduce(
                     playerIdReducer,

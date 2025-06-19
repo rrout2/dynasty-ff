@@ -62,9 +62,17 @@ import {calculateDepthScore} from '../components/Blueprint/v1/modules/DepthScore
 import {Archetype} from '../components/Blueprint/v1/modules/BigBoy/BigBoy';
 import {FinalPickData, getPicks, GetPicksResult} from '../sleeper-api/picks';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function useConsoleLog(data: any) {
+    useEffect(() => {
+        console.log(data);
+    }, [data]);
+}
+
 export function useGetPicks(leagueId: string, userId?: string) {
     const [allPicks, setAllPicks] = useState<GetPicksResult>();
     const [myPicks, setMyPicks] = useState<FinalPickData[]>([]);
+    const [hasDraftOccurred, setHasDraftOccurred] = useState(false);
     const fetchPicks = async () => {
         const leagueData = await getLeague(leagueId);
         const users = await getAllUsers(leagueId);
@@ -95,7 +103,12 @@ export function useGetPicks(leagueId: string, userId?: string) {
         }
         setMyPicks(myPicks);
     }, [allPicks, userId]);
-    return {allPicks, myPicks};
+
+    useEffect(() => {
+        if (!allPicks) return;
+        setHasDraftOccurred(allPicks.hasDraftOccurred);
+    }, [allPicks]);
+    return {allPicks, myPicks, hasDraftOccurred};
 }
 
 export function useArchetype(

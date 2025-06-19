@@ -103,7 +103,7 @@ import blankLogo from '../assets/logos/blank.png';
 import blueprint2 from '../assets/blueprint2.0.png';
 import scale from '../assets/scale.png';
 import slider from '../assets/slider.png';
-import blankblueprint from '../assets/blankblueprint.jpg';
+import blankblueprint from '../assets/Blueprint1-bkg.png';
 import blankRedraftBp from '../assets/blueprintredraft_1.png';
 import riskSafetyScale from '../assets/riskSafetyScale.png';
 import silhouette from '../assets/silhouette.png';

@@ -381,11 +381,38 @@ export function UnifiedInputs({
         const numSeconds = nextYearPicks.filter(p => p.round === 2).length;
         const numThirds = nextYearPicks.filter(p => p.round === 3).length;
         const numFourths = nextYearPicks.filter(p => p.round === 4).length;
-        const nextYearInfo = `${numFirsts} 1st${
-            numFirsts !== 1 ? 's' : ''
-        }, ${numSeconds} 2nd${numSeconds !== 1 ? 's' : ''}, ${numThirds} 3rd${
-            numThirds !== 1 ? 's' : ''
-        }, ${numFourths} 4th${numFourths !== 1 ? 's' : ''}`;
+        const firstInfo =
+            numFirsts > 0
+                ? `${numFirsts === 1 ? '' : numFirsts} 1st${
+                      numFirsts !== 1 ? 's' : ''
+                  }`.trim()
+                : '';
+        const secondInfo =
+            numSeconds > 0
+                ? `${numSeconds === 1 ? '' : numSeconds} 2nd${
+                      numSeconds !== 1 ? 's' : ''
+                  }`.trim()
+                : '';
+        const thirdInfo =
+            numThirds > 0
+                ? `${numThirds === 1 ? '' : numThirds} 3rd${
+                      numThirds !== 1 ? 's' : ''
+                  }`.trim()
+                : '';
+        const fourthInfo =
+            numFourths > 0
+                ? `${numFourths === 1 ? '' : numFourths} 4th${
+                      numFourths !== 1 ? 's' : ''
+                  }`.trim()
+                : '';
+        const nextYearInfo = `2026: ${[
+            firstInfo,
+            secondInfo,
+            thirdInfo,
+            fourthInfo,
+        ]
+            .filter(info => info !== '')
+            .join(', ')}`;
         setRookiePickComments([thisYearInfo, nextYearInfo]);
     }, [draftPicks, myPicks]);
 
