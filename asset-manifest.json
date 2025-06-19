@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/dynasty-ff/static/css/main.861aaa3a.css",
-    "main.js": "/dynasty-ff/static/js/main.feaf307f.js",
+    "main.css": "/dynasty-ff/static/css/main.20a6f581.css",
+    "main.js": "/dynasty-ff/static/js/main.96c9fc14.js",
     "static/js/453.e52469b7.chunk.js": "/dynasty-ff/static/js/453.e52469b7.chunk.js",
     "static/media/blueprintredraft_1.png": "/dynasty-ff/static/media/blueprintredraft_1.10b73cd4858cf01989fb.png",
     "static/media/blankInfinite_v2.png": "/dynasty-ff/static/media/blankInfinite_v2.f11f033fccc19769abbf.png",
     "static/media/blankInfinite_v3.png": "/dynasty-ff/static/media/blankInfinite_v3.961efc25648ad448fabd.png",
     "static/media/blankInfinite_v4.png": "/dynasty-ff/static/media/blankInfinite_v4.4e7c0ca3eba14f3a138d.png",
     "static/media/Infinite_background.png": "/dynasty-ff/static/media/Infinite_background.cf5e723e99196661e891.png",
-    "static/media/blankblueprint.jpg": "/dynasty-ff/static/media/blankblueprint.388ad4d615cee3e9de75.jpg",
+    "static/media/Blueprint1-bkg.png": "/dynasty-ff/static/media/Blueprint1-bkg.b805ae1ed87fc92779c8.png",
     "static/media/blueprint2.0.png": "/dynasty-ff/static/media/blueprint2.0.eec910acd36bc583f9ec.png",
     "static/media/2.0_background_update (1).png": "/dynasty-ff/static/media/2.0_background_update (1).1adbcc57c8593d28db45.png",
     "static/media/rookie_bp_blank.png": "/dynasty-ff/static/media/rookie_bp_blank.e18546acc75c39407f5c.png",
@@ -210,12 +210,12 @@
     "static/media/dal.png": "/dynasty-ff/static/media/dal.09c61d9042b7fe400c53.png",
     "static/media/ProhibitionTest-Regular.otf": "/dynasty-ff/static/media/ProhibitionTest-Regular.01a1bc4e03d19fe3a733.otf",
     "index.html": "/dynasty-ff/index.html",
-    "main.861aaa3a.css.map": "/dynasty-ff/static/css/main.861aaa3a.css.map",
-    "main.feaf307f.js.map": "/dynasty-ff/static/js/main.feaf307f.js.map",
+    "main.20a6f581.css.map": "/dynasty-ff/static/css/main.20a6f581.css.map",
+    "main.96c9fc14.js.map": "/dynasty-ff/static/js/main.96c9fc14.js.map",
     "453.e52469b7.chunk.js.map": "/dynasty-ff/static/js/453.e52469b7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.861aaa3a.css",
-    "static/js/main.feaf307f.js"
+    "static/css/main.20a6f581.css",
+    "static/js/main.96c9fc14.js"
   ]
 }
