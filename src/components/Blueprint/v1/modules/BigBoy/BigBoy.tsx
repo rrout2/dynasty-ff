@@ -722,11 +722,18 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                     <div className={styles.draftCapRow}>
                         <div
                             className={styles.draftCapLabel}
-                            style={{color: 'rgb(138, 199, 62)'}}
+                            style={{
+                                color: 'rgb(138, 199, 62)',
+                                paddingBottom: '10px',
+                                borderBottom: '3px solid white',
+                            }}
                         >
                             {!hasDraftOccurred ? '2025' : '2026'}
                         </div>
-                        <div className={styles.draftCapitalText}>
+                        <div
+                            className={styles.draftCapitalText}
+                            style={{paddingBottom: '10px'}}
+                        >
                             {(!hasDraftOccurred
                                 ? draftCapitalNotes2025
                                 : draftCapitalNotes2026
@@ -736,7 +743,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                     <div className={styles.draftCapRow}>
                         <div
                             className={styles.draftCapLabel}
-                            style={{color: '#f38908'}}
+                            style={{color: '#f38908', paddingTop: '10px'}}
                         >
                             {!hasDraftOccurred ? '2026' : '2027'}
                         </div>
