@@ -295,6 +295,13 @@ def main():
                 with open("user_id_to_buys.json", "w") as json_file:
                     json.dump(sender.user_id_to_buys, json_file, indent=4)
                 os.remove(downloaded_file)
+            except smtplib.SMTPDataError as e:
+                print(f"\nAn email error occurred: {str(e)}")
+                logging.exception("SMTPDataError occurred")
+                sender.fails.append(sender.email_list[i])
+                sender.fail_indices.append(i)
+                print("exiting early due to email error")
+                break
             except Exception as e:
                 print(f"\nAn upload/email error occurred: {str(e)}")
                 logging.exception("Exception occurred")
