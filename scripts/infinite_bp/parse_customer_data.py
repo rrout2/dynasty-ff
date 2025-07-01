@@ -5,17 +5,17 @@ import os
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Specify the JSON file name
-json_file_name = 'domain_customer_info_june_userids_pt2.json'
+json_file_name = 'domain_customer_info_july_teamids.json'
 
-last_month = 'may2025'
+last_month = 'june2025'
 
 # Construct the full path to the JSON file
 customer_info_file_path = os.path.join(script_dir, 'customer_info', json_file_name)
-disallowed_buys_path = os.path.join(script_dir, f'email_to_buys/{last_month}/{last_month}_customer_info_disallowed_v2.json')
+disallowed_buys_path = os.path.join(script_dir, f'email_to_buys/{last_month}/{last_month}_customer_info_disallowed_teamids.json')
 
 league_id_key = "League ID"
-# team_id_key = "Team ID"
-user_id_key = "Sleeper ID"
+team_id_key = "Team ID"
+# user_id_key = "Sleeper ID"
 # sub_team_id_key = "\r\n\r\nFIND YOUR TEAM ID HERE\r\nTEAM ID FINDER"
 email_key = "Email"
 # verified_key = 'Column 1\r'
@@ -49,8 +49,8 @@ disallowed_buys = []
 
 for item in verified_customer_data:
     league_id = item[league_id_key]
-    # team_id = item[team_id_key]
-    user_id = item[user_id_key]
+    team_id = item[team_id_key]
+    # user_id = item[user_id_key]
     found_disallowed = False
     for disallowed_item in disallowed_data:
         if league_id == disallowed_item["League ID"] and disallowed_item['disallowed']:
@@ -67,14 +67,14 @@ league_ids = [str(item[league_id_key]) for item in verified_customer_data]
 print(f'League IDs: ({len(league_ids)})')
 print(','.join(league_ids))
 
-# team_ids = [str(item[team_id_key][sub_team_id_key]) for item in verified_data]
-# team_ids = [str(item[team_id_key]) for item in verified_data]
-# print(f'\nTeam IDs: ({len(team_ids)})')
-# print(','.join(team_ids))
+# team_ids = [str(item[team_id_key][sub_team_id_key]) for item in verified_customer_data]
+team_ids = [str(item[team_id_key]) for item in verified_customer_data]
+print(f'\nTeam IDs: ({len(team_ids)})')
+print(','.join(team_ids))
 
-user_ids = [str(item[user_id_key]) for item in verified_customer_data]
-print(f'\nUser IDs: ({len(user_ids)})')
-print(','.join(user_ids))
+# user_ids = [str(item[user_id_key]) for item in verified_customer_data]
+# print(f'\nUser IDs: ({len(user_ids)})')
+# print(','.join(user_ids))
 
 emails = [item[email_key].strip() for item in verified_customer_data]
 print(f'\nEmails: ({len(emails)})')
