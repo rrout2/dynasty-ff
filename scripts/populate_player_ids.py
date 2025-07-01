@@ -107,7 +107,7 @@ def process_json_files(players_file, ids_file, output_file):
 # Example usage
 if __name__ == "__main__":
     process_json_files(
-        '../src/data/buyssellsholds_053025_v2.json',  # First JSON file with player objects
+        '../src/data/buyssellsholds_060125.json',  # First JSON file with player objects
         '../src/data/players.json',  # Second JSON file with ID mappings
-        '../src/data/buyssellsholds_with_ids_053025_v2.json'  # Output file
+        '../src/data/buyssellsholds_with_ids_060125.json'  # Output file
     )
