@@ -20,7 +20,7 @@ with open(os.path.join(script_dir, 'email_to_buys', month, 'league_id_to_buys.js
 # with open(os.path.join(script_dir, 'email_to_buys', month, 'league_id_to_buys 1.json'), 'r') as file:
 #     league_id_to_buys2 = json.load(file)
 
-with open(os.path.join(script_dir, 'customer_info', 'domain_customer_info_july_teamids.json'), 'r') as file:
+with open(os.path.join(script_dir, 'customer_info', 'domain_customer_info_july_userids.json'), 'r') as file:
     customer_info = json.load(file)
 
 for customer in customer_info:
@@ -39,5 +39,5 @@ for customer in customer_info:
     # elif league_id in league_id_to_buys2:
     #     customer['disallowed'] = league_id_to_buys2[league_id].split(',')
 
-with open(os.path.join(script_dir, 'email_to_buys', month, f'{month}_customer_info_disallowed_teamids.json'), 'w') as file:
+with open(os.path.join(script_dir, 'email_to_buys', month, f'{month}_customer_info_disallowed_userids.json'), 'w') as file:
     json.dump(customer_info, file, indent=4)
