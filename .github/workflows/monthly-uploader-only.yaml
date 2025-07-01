@@ -38,6 +38,7 @@ jobs:
                   USER_ID_LIST: ${{ secrets.USER_ID_LIST }}
                   SKIP_LIST: ${{ secrets.SKIP_LIST }}
                   DISALLOWED_BUYS: ${{ secrets.DISALLOWED_BUYS }}
+                  START_IDX: ${{ secrets.START_IDX }}
               run: |
                   echo "email_list: ${EMAIL_LIST}" > config.yaml
                   echo "smtp_server: ${SMTP_SERVER}" >> config.yaml
@@ -50,6 +51,7 @@ jobs:
                   echo "skip_list: ${SKIP_LIST}" >> config.yaml
                   echo "disallowed_buys: ${DISALLOWED_BUYS}" >> config.yaml
                   echo "${SA_CREDENTIALS}" > service-account-credentials.json
+                  echo "start_idx: ${START_IDX}" >> config.yaml
 
             - name: Run image sender
               run: python scripts/infinite_bp/monthly_image_sender.py -s=0
