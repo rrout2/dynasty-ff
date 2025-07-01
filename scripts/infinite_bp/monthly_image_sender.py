@@ -28,7 +28,6 @@ class ImageEmailSender:
         # sender_email: your-email@gmail.com
         # sender_password: your-app-password
         # disallowed_buys: 1-2-3-4,7-4-5-6
-        # start_idx: 0
         # Load configuration
         script_dir = os.path.dirname(os.path.abspath(__file__))
         try:
@@ -73,11 +72,6 @@ class ImageEmailSender:
             self.disallowed_buys = [email.strip() for email in config['disallowed_buys'].split(',')]
         else:
             self.disallowed_buys = config['disallowed_buys']
-        
-        if isinstance(config['start_idx'], str):
-            self.start_idx = int(config['start_idx'])
-        else:
-            self.start_idx = 0
 
         self.smtp_server = config['smtp_server']
         self.smtp_port = int(config['smtp_port'])
@@ -263,7 +257,7 @@ def main():
         uploader.authenticate()
         folder_id = '1Er-QePMGttmQYxdOC8lF9EPuC2FtcE2n' #uploader.create_or_get_folder(args.folder_name)
         print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
-        for i in range(sender.start_idx, len(sender.league_id_list)):
+        for i in range(len(sender.league_id_list)):
             if sender.league_id_list[i] == '' or sender.league_id_list[i] == None:
                 continue
             has_invalid_team_id = i >= len(sender.team_id_list) or sender.team_id_list[i] == '' or sender.team_id_list[i] == None
