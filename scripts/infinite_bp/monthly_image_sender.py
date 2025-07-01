@@ -238,6 +238,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-s', '--send_email', type=int, default=0, help="Whether or not to send emails (0 or 1)")
     parser.add_argument('-f', '--folder_name', type=str, default=str(uuid.uuid4()), help="Name of Google Drive folder to upload to")
+    parser.add_argument('-si', '--start_index', type=int, default=0, help="Start index for processing images")
     args = parser.parse_args()
     if int(args.send_email) != 1 and int(args.send_email) != 0:
         print("--send_email must be 0 or 1")
@@ -245,6 +246,8 @@ def main():
     send_email = bool(int(args.send_email))
     print(f"Sending emails: {send_email}")
     sender = ImageEmailSender(send_email)
+
+    start_idx = int(args.start_index)
 
     # Path to your service account credentials JSON file
     credentials_path = 'service-account-credentials.json'
@@ -257,7 +260,7 @@ def main():
         uploader.authenticate()
         folder_id = '1Er-QePMGttmQYxdOC8lF9EPuC2FtcE2n' #uploader.create_or_get_folder(args.folder_name)
         print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
-        for i in range(len(sender.league_id_list)):
+        for i in range(start_idx, len(sender.league_id_list)):
             if sender.league_id_list[i] == '' or sender.league_id_list[i] == None:
                 continue
             has_invalid_team_id = i >= len(sender.team_id_list) or sender.team_id_list[i] == '' or sender.team_id_list[i] == None
