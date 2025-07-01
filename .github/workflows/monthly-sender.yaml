@@ -59,3 +59,4 @@ jobs:
                   path: |
                       email_to_buys.json
                       league_id_to_buys.json
+                      user_id_to_buys.json
