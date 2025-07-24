@@ -194,16 +194,16 @@ export function useBuySells(
         for (const pos of gradeOrder) {
             switch (pos) {
                 case QB:
-                    buys.push(...calcQbBuys(qbTargets));
+                    buys.unshift(...calcQbBuys(qbTargets));
                     break;
                 case RB:
-                    buys.push(...calcRbBuys(rbTargets));
+                    buys.unshift(...calcRbBuys(rbTargets));
                     break;
                 case WR:
-                    buys.push(...calcWrBuys(wrTargets));
+                    buys.unshift(...calcWrBuys(wrTargets));
                     break;
                 case TE:
-                    buys.push(...calcTeBuys(teTargets));
+                    buys.unshift(...calcTeBuys(teTargets));
                     break;
                 default:
                     throw new Error('Unknown position ' + pos);
