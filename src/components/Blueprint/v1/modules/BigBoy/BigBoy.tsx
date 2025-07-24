@@ -110,7 +110,10 @@ import {
     useRookieDraft,
     Verdict,
 } from '../../../rookieDraft/RookieDraft/RookieDraft';
-import {getPositionalOrder} from '../../../infinite/BuySellHold/BuySellHold';
+import {
+    getPositionalOrder,
+    useBuySells,
+} from '../../../infinite/BuySellHold/BuySellHold';
 import {
     dualEliteQb,
     eliteQbTe,
@@ -187,6 +190,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
     const {myPicks, hasDraftOccurred} = useGetPicks(leagueId, roster?.owner_id);
     const league = useLeague(leagueId);
     const rosterSettings = useRosterSettingsFromId(leagueId);
+    const isSuperFlex = rosterSettings.has(SUPER_FLEX);
     const {sortByAdp, getAdp, getPositionalAdp} = useAdpData();
     const {data: rosters} = useFetchRosters(leagueId);
     const playerData = usePlayerData();
@@ -218,6 +222,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
     const [positionalGradeOverrides, setPositionalGradeOverrides] = useState<
         Map<string, number>
     >(new Map(FANTASY_POSITIONS.map(pos => [pos, -1])));
+    const {buys, sells} = useBuySells(isSuperFlex, numRosters || 0, roster, 3);
     const [playersToTrade, setPlayersToTrade] = useState<string[][]>([
         [],
         [],
@@ -231,11 +236,37 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
     const [cornerstones, setCornerstones] = useState(
         new Map<string, string[]>(FANTASY_POSITIONS.map(pos => [pos, []]))
     );
+    const [searchParams, setSearchParams] = useSearchParams();
+
     function isCornerstone(player?: Player) {
         if (!player) return false;
         const adp = getAdp(`${player.first_name} ${player.last_name}`);
         return adp <= 75 && adp >= 0;
     }
+
+    useEffect(() => {
+        if (!buys || buys.length === 0 || searchParams.get(PLAYERS_TO_TARGET)) {
+            return;
+        }
+
+        const buyIds = buys.map(buy => buy.playerId);
+        setPlayerSuggestions(buyIds);
+    }, [buys]);
+
+    useEffect(() => {
+        if (
+            !sells ||
+            sells.length === 0 ||
+            searchParams.get(`${PLAYERS_TO_TRADE}_${0}`)
+        ) {
+            return;
+        }
+        const sellIds = sells.map(sell => [sell.playerId]);
+        while (sellIds.length < 3) {
+            sellIds.push([]);
+        }
+        setPlayersToTrade(sellIds);
+    }, [sells]);
 
     useEffect(() => {
         if (!roster || !playerData) return;
@@ -271,8 +302,6 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
 
     const [otherSettings, setOtherSettings] = useState('');
     const [waiverTarget, setWaiverTarget] = useState<string>('');
-
-    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         if (!playerData || !searchParams.get(STARTING_LINEUP)) return;
@@ -311,7 +340,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
         }
         setDraftPicks(picks);
     }, [myPicks]);
-    const isSuperFlex = rosterSettings.has(SUPER_FLEX);
+
     const {archetype, setArchetype} = useArchetype(
         qbGrade,
         rbGrade,

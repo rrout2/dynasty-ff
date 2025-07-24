@@ -46,7 +46,8 @@ export type BuySellTileProps = {
 export function useBuySells(
     isSuperFlex: boolean,
     leagueSize: number,
-    roster?: Roster
+    roster?: Roster,
+    maxSells = 2
 ) {
     const {tier, qbGrade, rbGrade, wrGrade, teGrade} =
         useRosterTierAndPosGrades(isSuperFlex, leagueSize, roster);
@@ -404,7 +405,7 @@ export function useBuySells(
                 // No QB sells lower than QB12 in 1QB formats
                 return s.pos_adp <= 12;
             })
-            .slice(0, 2)
+            .slice(0, maxSells)
             .map(sell => ({
                 playerId: sell.player_id,
                 type:
