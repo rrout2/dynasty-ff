@@ -19,6 +19,7 @@ import FindTeamId from './components/FindTeamId/FindTeamId';
 import NonSleeeperInfinite from './components/NonSleeeperInfinite/NonSleeeperInfinite';
 import Live from './components/Blueprint/Live/Live';
 import RookieDraft from './components/Blueprint/rookieDraft/RookieDraft/RookieDraft';
+import WhiteboardBase from './components/Blueprint/whiteboard/Base/Base';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -53,6 +54,7 @@ root.render(
                     />
                     <Route path="live" element={<Live />} />
                     <Route path="/rookie" element={<RookieDraft />} />
+                    <Route path="/whiteboard" element={<WhiteboardBase />} />
                 </Routes>
             </HashRouter>
         </QueryClientProvider>

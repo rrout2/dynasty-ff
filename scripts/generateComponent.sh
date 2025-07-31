@@ -5,4 +5,4 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-npx generate-react-cli component $1 --path=src/components/Blueprint/
+npx generate-react-cli component $1 --path=src/components/Blueprint/whiteboard
