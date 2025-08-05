@@ -258,7 +258,7 @@ def main():
     try:
         # Authenticate
         uploader.authenticate()
-        folder_id = '1Er-QePMGttmQYxdOC8lF9EPuC2FtcE2n' #uploader.create_or_get_folder(args.folder_name)
+        folder_id = '1wCUACY75ORgIDg35YlPRSjfu34QG_mM3' #uploader.create_or_get_folder(args.folder_name)
         print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
         for i in range(start_idx, len(sender.league_id_list)):
             if sender.league_id_list[i] == '' or sender.league_id_list[i] == None:

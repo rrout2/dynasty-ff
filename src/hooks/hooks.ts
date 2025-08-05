@@ -6,8 +6,8 @@ import {
     useState,
 } from 'react';
 import playersJson from '../data/players.json';
-import rankingsJson from '../data/rankings_04292025.json';
-import buySellsData from '../data/buyssellsholds_with_ids_060125.json';
+import rankingsJson from '../data/rankings_08052025.json';
+import buySellsData from '../data/buyssellsholds_with_ids_080525.json';
 import nflScheduleJson from '../data/nfl_schedule.json';
 import sfPickMovesJson from '../data/rookieBP/sf_pick_moves.json';
 import oneQbPickMovesJson from '../data/rookieBP/1qb_pick_moves.json';
@@ -746,7 +746,7 @@ type adpDatum = {
 };
 
 type Rank = {
-    Name: string;
+    Player: string;
     Team: string;
     Position: string;
     Average: number;
@@ -759,7 +759,7 @@ export function useAdpData() {
         setAdpData(
             (rankingsJson as unknown as Rank[]).map((p: Rank) => {
                 return {
-                    player_name: p.Name,
+                    player_name: p.Player,
                     Position: p.Position,
                 };
             })
