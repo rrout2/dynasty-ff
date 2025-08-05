@@ -48,9 +48,11 @@ def check_user_in_league(user_id, league_id):
 		return f"Error: {e}"
 
 # === Step 1: Read usernames and league_ids from CSV ===
-input_file = "/Users/rishavr/Downloads/july_infinite_new_names.csv"
-output_file = "/Users/rishavr/Downloads/july_infinite_new_names_final.csv"
+input_file = "/Users/rishavr/Downloads/august_additions.csv"
+output_file = "/Users/rishavr/Downloads/august_additions_final.csv"
 user_league_pairs = []
+
+print('Step 1: Read usernames and league_ids from CSV...')
 
 with open(input_file, newline='') as csvfile:
 	reader = csv.DictReader(csvfile)
@@ -63,14 +65,15 @@ with open(input_file, newline='') as csvfile:
 		user_league_pairs.append((username, league_id))
 
 # === Step 2: Get user IDs ===
+print('Step 2: Get user IDs...')
 unique_usernames = list(set([u for u, _ in user_league_pairs]))
 user_ids = get_user_ids(unique_usernames)
 
 # === Step 3: Check if users are in the league ===
+print('Step 3: Check if users are in the league...')
 results = []
 for username, league_id in user_league_pairs:
 	user_id = user_ids.get(username, "User not found")
-
 	if "Error" in user_id or "not found" in user_id:
 		in_league = "N/A"
 	else:
@@ -84,6 +87,7 @@ for username, league_id in user_league_pairs:
 	})
 
 # === Step 4: Write results to new CSV ===
+print('Step 4: Write results to new CSV...')
 with open(output_file, "w", newline='') as csvfile:
 	fieldnames = ["sleeper_username", "user_id", "league_id", "in_league"]
 	writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
