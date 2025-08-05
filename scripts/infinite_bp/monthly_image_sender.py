@@ -237,7 +237,6 @@ def censor_email(email):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-s', '--send_email', type=int, default=0, help="Whether or not to send emails (0 or 1)")
-    parser.add_argument('-f', '--folder_name', type=str, default=str(uuid.uuid4()), help="Name of Google Drive folder to upload to")
     parser.add_argument('-si', '--start_index', type=int, default=0, help="Start index for processing images")
     args = parser.parse_args()
     if int(args.send_email) != 1 and int(args.send_email) != 0:
@@ -258,7 +257,7 @@ def main():
     try:
         # Authenticate
         uploader.authenticate()
-        folder_id = '1wCUACY75ORgIDg35YlPRSjfu34QG_mM3' #uploader.create_or_get_folder(args.folder_name)
+        folder_id = '1z1UP_46M8_G9forve9Jsf8LnHFTHnB9Y' #uploader.create_or_get_folder(args.folder_name)
         print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
         for i in range(start_idx, len(sender.league_id_list)):
             if sender.league_id_list[i] == '' or sender.league_id_list[i] == None:
