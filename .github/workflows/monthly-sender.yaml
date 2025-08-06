@@ -52,7 +52,7 @@ jobs:
                   echo "${SA_CREDENTIALS}" > service-account-credentials.json
 
             - name: Run image sender
-              run: python scripts/infinite_bp/monthly_image_sender.py -s=1
+              run: python scripts/infinite_bp/monthly_image_sender.py -s=1 -si=517
 
             - uses: actions/upload-artifact@v4
               with:
