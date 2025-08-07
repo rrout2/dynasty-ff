@@ -3,6 +3,8 @@ import {
     blankRedraftBp,
     blankblueprint,
     circleSlider,
+    draftCapitalBackground,
+    draftCapitalScale,
     outlook1,
     outlook2,
     outlook3,
@@ -685,8 +687,10 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                     threeYearOutlookComponent()
                 )}
                 {contendRebuildScaleComponent()}
-                {draftCapitalComponent()}
-                {draftCapitalGradeComponent()}
+                {!isRedraft && draftCapitalComponent()}
+                {isRedraft
+                    ? redraftGradeComponent()
+                    : draftCapitalGradeComponent()}
                 {commentsComponent()}
                 <img
                     src={isRedraft ? blankRedraftBp : blankblueprint}
@@ -732,6 +736,27 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
         return (
             <div className={styles.draftCapitalGradeGraphic}>
                 {draftCapitalValue}/10
+            </div>
+        );
+    }
+
+    function redraftGradeComponent() {
+        return (
+            <div className={styles.redraftGradeGraphic}>
+                <div className={styles.scaleAndSlider}>
+                    <img src={draftCapitalScale} />
+                    <img
+                        src={circleSlider}
+                        className={styles.otherSlider}
+                        style={{left: `${draftCapitalValue * 78}px`}}
+                    />
+                </div>
+                <div className={styles.redraftBackground}>
+                    <img src={draftCapitalBackground} />
+                </div>
+                <div className={styles.redraftGradeText}>
+                    {teamGradeNotes.toUpperCase()}
+                </div>
             </div>
         );
     }
@@ -970,7 +995,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                     inReturn={inReturn}
                     playersToTrade={playersToTrade}
                     transparent={true}
-                    hideTitle={true}
+                    hideTitle={!isRedraft}
                 />
             </div>
         );

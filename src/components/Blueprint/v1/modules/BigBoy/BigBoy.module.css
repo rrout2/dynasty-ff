@@ -263,10 +263,30 @@
     left: 1405px;
 }
 
-.draftCapitalBackground {
+.redraftGradeGraphic {
+    position: absolute;
+    top: 2530px;
+    left: 1405px;
+}
+
+.scaleAndSlider {
+    position: relative;
+}
+
+.redraftBackground {
     margin-top: 40px;
 }
 
+.redraftGradeText {
+    position: absolute;
+    left: 0;
+    top: 125px;
+    color: white;
+    font-size: 40px;
+    font-family: 'Antarctican Headline';
+    width: 880px;
+    text-align: center;
+}
 
 .commentsGraphic {
     position: absolute;
