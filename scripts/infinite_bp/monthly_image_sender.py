@@ -285,10 +285,10 @@ def main():
 
                 if file:
                     uploader.make_public(file['id'])
-
-                if send_email:
-                    sender.send_email_link(sender.email_list[i], file.get('webViewLink'))
-                    print(f"Successfully sent image to {censor_email(sender.email_list[i])}\n")
+                    uploader.transfer_ownership(file['id'], sender.sender_email)
+                    if send_email:
+                        sender.send_email_link(sender.email_list[i], file.get('webViewLink'))
+                        print(f"Successfully sent image to {censor_email(sender.email_list[i])}\n")
                 
                 with open("email_to_buys.json", "w") as json_file:
                     json.dump(sender.email_to_buys, json_file, indent=4)

@@ -79,6 +79,33 @@ class GoogleDriveUploader:
         except Exception as e:
             print(f"Upload error: {str(e)}")
             return None
+        
+    def transfer_ownership(self, file_id, email):
+        """
+        Transfer ownership of a file to another user.
+
+        Args:
+            file_id (str): The ID of the file to transfer
+            email (str): The email address of the new owner
+        """
+        try:
+            permission = {
+                'type': 'user',
+                'role': 'owner',
+                'emailAddress': email
+            }
+
+            self.service.permissions().create(
+                fileId=file_id,
+                body=permission,
+                transferOwnership=True,
+                sendNotificationEmail=False
+            ).execute()
+
+            print(f"Successfully transferred ownership to {email}")
+
+        except Exception as e:
+            print(f"Ownership transfer error: {str(e)}")
 
     def share_file(self, file_id, email):
         """
