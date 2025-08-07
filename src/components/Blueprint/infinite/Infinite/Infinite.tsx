@@ -380,7 +380,7 @@ const countEmojis = (str: string): number => {
     return (str.match(emojiRegex) || []).length;
 };
 
-const TeamNameComponent = ({teamName}: {teamName?: string}) => {
+export const TeamNameComponent = ({teamName}: {teamName?: string}) => {
     if (!teamName) return <></>;
     // Emojis count as 2 characters since they are wider.
     const teamNameSize = teamName.length + countEmojis(teamName);
@@ -397,7 +397,7 @@ const TeamNameComponent = ({teamName}: {teamName?: string}) => {
     );
 };
 
-const BuySellHoldComponent = ({
+export const BuySellHoldComponent = ({
     isSuperFlex,
     leagueSize,
     roster,

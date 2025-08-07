@@ -20,6 +20,7 @@ import NonSleeeperInfinite from './components/NonSleeeperInfinite/NonSleeeperInf
 import Live from './components/Blueprint/Live/Live';
 import RookieDraft from './components/Blueprint/rookieDraft/RookieDraft/RookieDraft';
 import WhiteboardBase from './components/Blueprint/whiteboard/Base/Base';
+import Weekly from './components/Blueprint/weekly/Weekly/Weekly';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -55,6 +56,7 @@ root.render(
                     <Route path="live" element={<Live />} />
                     <Route path="/rookie" element={<RookieDraft />} />
                     <Route path="/whiteboard" element={<WhiteboardBase />} />
+                    <Route path="/weekly" element={<Weekly />} />
                 </Routes>
             </HashRouter>
         </QueryClientProvider>

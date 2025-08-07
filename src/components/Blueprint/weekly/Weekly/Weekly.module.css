@@ -1,0 +1,164 @@
+.fullBlueprint {
+    position: relative;
+    width: 1400px;
+}
+
+.blankBp {
+    width: inherit;
+}
+
+.startersGraphic {
+    position: absolute;
+    left: 50px;
+    top: 305px;
+    scale: 0.69;
+    transform-origin: top left;
+}
+
+.cornerstoneGraphic {
+    position: absolute;
+    left: 600px;
+    top: 320px;
+    scale: 0.97;
+    transform-origin: top left;
+}
+
+.benchStringGraphic {
+    position: absolute;
+    left: 60px;
+    top: 1090px;
+
+    color: white;
+    font-family: 'Acumin Pro ExtraCondensed';
+    font-size: 25px;
+    text-align: center;
+    width: 450px;
+}
+
+.benchStringGraphicSmaller {
+    font-size: 23px;
+}
+
+.benchStringGraphicSmallest {
+    font-size: 19px;
+}
+
+.positionalGradesGraphic {
+    position: absolute;
+    left: 720px;
+    top: 570px;
+    scale: 0.65;
+    transform-origin: top left;
+}
+
+.rosterTierGraphic {
+    position: absolute;
+
+    right: 390px;
+    top: 88px;
+
+    font-family: 'Prohibition';
+    font-size: 86px;
+}
+
+.buySellHoldGraphic {
+    position: absolute;
+}
+
+.monthYear {
+    position: absolute;
+    right: 60px;
+    top: 220px;
+
+    font-family: 'Erbaum';
+    font-size: 30px;
+    color: white;
+}
+
+.teamNameGraphic {
+    position: absolute;
+    color: white;
+    left: 65px;
+    top: 110px;
+    font-family: 'Cheddar Gothic Rough';
+    font-size: 75px;
+    max-width: 440px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.smallerTeamName {
+    font-size: 55px;
+}
+
+.smallestTeamName {
+    font-size: 45px;
+}
+
+.marketValueAnalysis {
+    font-family: 'Acumin Pro Condensed';
+    font-size: 25px;
+    color: #013049;
+    width: 130px;
+    text-align: center;
+    position: absolute;
+    top: 1390px;
+
+}
+
+.buys {
+    left: 60px;
+}
+
+.sells {
+    left: 212px;
+}
+
+.holds {
+    left: 364px;
+}
+
+.tradeMeterGraphic {
+    position: absolute;
+    bottom: 80px;
+    left: 80px;
+}
+
+.tradeMeter {
+    position: relative;
+    width: 420px;
+    height: 250px;
+}
+
+.tradeMeterButton {
+    position: absolute;
+    bottom: 0px;
+    left: 160px;
+    width: 80px;
+}
+
+.tradeMeterNeedle {
+    position: absolute;
+    bottom: 40px;
+    left: 196px;
+    height: 130px;
+    transform-origin: bottom left;
+}
+
+.domainLogo {
+    position: absolute;
+    bottom: 50px;
+    right: 30px;
+    width: 250px;
+}
+
+.bshComment {
+    position: absolute;
+    top: 1447px;
+
+    font-family: 'Acumin Pro ExtraCondensed';
+    color: white;
+    font-size: 16px;
+    width: 130px;
+    text-align: center;
+}

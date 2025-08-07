@@ -277,6 +277,10 @@ import chimereDike from '../assets/rookieDraft/rookieCards/chimereDike.png';
 import jaylinLane from '../assets/rookieDraft/rookieCards/jaylinLane.png';
 import isaacTeslaa from '../assets/rookieDraft/rookieCards/isaacTeslaa.png';
 import horizontalScale from '../assets/horizontalScale.png';
+
+// Weekly BP
+import blankWeekly from '../assets/weekly/weekly_bp_bkg.png';
+
 const tierLogos: Map<string, string> = new Map([
     ['S', sTier],
     ['A', aTier],
@@ -674,4 +678,5 @@ export {
     blankRookie,
     rookieMap,
     horizontalScale,
+    blankWeekly,
 };
