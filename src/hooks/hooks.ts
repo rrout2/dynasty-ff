@@ -858,6 +858,10 @@ const checkForNickname = (playerName: string) => {
             return 'Brian Thomas Jr.';
         case 'Brian Thomas Jr.':
             return 'Brian Thomas';
+        case 'Cam Ward':
+            return 'Cameron Ward';
+        case 'Cameron Ward':
+            return 'Cam Ward';
         default:
             return playerName;
     }
