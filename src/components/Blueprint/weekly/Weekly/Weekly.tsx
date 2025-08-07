@@ -16,15 +16,10 @@ import {GraphicComponent as PositionalGradesGraphic} from '../../v1/modules/Posi
 import {
     getAllUsers,
     getTeamName,
-    Roster,
     User,
 } from '../../../../sleeper-api/sleeper-api';
 import ExportButton from '../../shared/ExportButton';
-import {
-    BuySellTile,
-    BuySellTileProps,
-    useBuySells,
-} from '../../infinite/BuySellHold/BuySellHold';
+import {BuySellTileProps} from '../../infinite/BuySellHold/BuySellHold';
 import {QB, SUPER_FLEX} from '../../../../consts/fantasy';
 import {TeamSelectComponent} from '../../../Team/TeamPage/TeamPage';
 import {useEffect, useState} from 'react';
@@ -48,7 +43,7 @@ export default function Infinite() {
     const [specifiedUser, setSpecifiedUser] = useState<User>();
     const [isNonSleeper, setIsNonSleeper] = useState(false);
     const [buys, setBuys] = useState<BuySellTileProps[]>([]);
-    const [inSeasonVerdict, setInSeasonVerdict] =
+    const [inSeasonVerdict, _setInSeasonVerdict] =
         useState<InSeasonVerdict>('SOLID');
     useEffect(() => {
         if (!allUsers.length || !hasTeamId() || +teamId >= allUsers.length) {
