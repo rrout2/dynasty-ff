@@ -207,6 +207,32 @@ class ImageEmailSender:
         if len(self.user_id_list) > 0:
             self.user_id_to_buys[self.user_id_list[idx]] = buy_ids
 
+    def send_image_directly(self, recipient_email, image_path):
+        """
+        Send email with image attachment
+
+        Args:
+            recipient_email (str): Email address of the recipient
+            image_path (str): Path to the image file
+        """
+        msg = MIMEMultipart()
+        msg['From'] = self.sender_email
+        msg['To'] = recipient_email
+        msg['Subject'] = f"Your Monthly Blueprint - {datetime.now().strftime('%B %Y')}"
+
+        body = f"Attached is your Infinite Blueprint for {datetime.now().strftime('%B')}. Feel free to ask any questions in the Domain discord. Enjoy!"
+        msg.attach(MIMEText(body, 'plain'))
+
+        with open(image_path, 'rb') as img_file:
+            img = MIMEImage(img_file.read())
+            img.add_header('Content-Disposition', 'attachment', filename=os.path.basename(image_path))
+            msg.attach(img)
+
+        with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
+            server.starttls()
+            server.login(self.sender_email, self.sender_password)
+            server.send_message(msg)
+
     def send_email_link(self, recipient_email, drive_link):
         """
         Send email with drive link
@@ -270,9 +296,9 @@ def main():
             if sender.email_list[i] in sender.skip_list:
                 continue
             print(f"{i + 1}/{len(sender.league_id_list)}")
-            downloaded_file = sender.download_image(i)
+            downloaded_file_path = sender.download_image(i)
 
-            if not downloaded_file:
+            if not downloaded_file_path:
                 print(f"Failed to download image {i + 1}/{len(sender.league_id_list)} for {sender.email_list[i]}")
                 sender.fails.append(sender.email_list[i])
                 sender.fail_indices.append(i)
@@ -280,15 +306,8 @@ def main():
                 continue
             try:
                 time.sleep(0.1)
-                print(f"Uploading {downloaded_file}...")
-                file = uploader.upload_image(downloaded_file, folder_id)
-
-                if file:
-                    uploader.make_public(file['id'])
-                    uploader.transfer_ownership(file['id'], sender.sender_email)
-                    if send_email:
-                        sender.send_email_link(sender.email_list[i], file.get('webViewLink'))
-                        print(f"Successfully sent image to {censor_email(sender.email_list[i])}\n")
+                sender.send_image_directly(sender.email_list[i], downloaded_file_path)
+                print(f"Successfully sent image to {censor_email(sender.email_list[i])}\n")
                 
                 with open("email_to_buys.json", "w") as json_file:
                     json.dump(sender.email_to_buys, json_file, indent=4)
@@ -296,7 +315,7 @@ def main():
                     json.dump(sender.league_id_to_buys, json_file, indent=4)
                 with open("user_id_to_buys.json", "w") as json_file:
                     json.dump(sender.user_id_to_buys, json_file, indent=4)
-                os.remove(downloaded_file)
+                os.remove(downloaded_file_path)
             except smtplib.SMTPDataError as e:
                 print(f"\nAn email error occurred: {str(e)}")
                 logging.exception("SMTPDataError occurred")
