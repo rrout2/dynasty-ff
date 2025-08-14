@@ -80,6 +80,20 @@
     font-size: 86px;
 }
 
+.winLossRecordGraphic {
+    position: absolute;
+    left: 528px;
+    top: 122px;
+
+    width: 160px;
+    text-align: center;
+
+    font-family: 'Prohibition';
+    font-size: 60px;
+    color: white;
+    letter-spacing: 4px;
+}
+
 
 .monthYear {
     position: absolute;

@@ -102,6 +102,7 @@ export default function Infinite() {
     const {sortByAdp} = useAdpData();
     const playerData = usePlayerData();
     const {risers, fallers} = useRisersFallers(roster);
+    const [winLossRecord, setWinLossRecord] = useState<number[]>([0, 0]);
     useEffect(() => {
         setStartingLineup(startingLineup.slice(0, 14));
     }, [startingLineup.length]);
@@ -119,7 +120,11 @@ export default function Infinite() {
         );
     }, [bench]);
 
-    const currentDate = new Date();
+    useEffect(() => {
+        if (!roster || !roster.settings) return;
+        setWinLossRecord([roster.settings.wins, roster.settings.losses]);
+    }, [roster?.settings]);
+
     const isSuperFlex = !isNonSleeper
         ? rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1
         : nonSleeperRosterSettings.has(SUPER_FLEX) ||
@@ -168,6 +173,9 @@ export default function Infinite() {
                             weekly={true}
                         />
                     ))}
+                </div>
+                <div className={styles.winLossRecordGraphic}>
+                    {winLossRecord.join('-')}
                 </div>
                 {playerData && (
                     <>
@@ -223,12 +231,7 @@ export default function Infinite() {
                     roster={roster}
                     setBuys={setBuys}
                 />
-                <div className={styles.monthYear}>
-                    {currentDate.toLocaleDateString(undefined, {
-                        month: 'long',
-                        year: 'numeric',
-                    })}
-                </div>
+                <div className={styles.monthYear}>Week 1</div>
                 <img src={blankWeekly} className={styles.blankBp} />
             </div>
         </>
