@@ -23,7 +23,12 @@ import {
     FLEX_SET,
     SUPER_FLEX_SET,
 } from '../../../../../consts/fantasy';
-import {domainShield} from '../../../../../consts/images';
+import {
+    domainShield,
+    mGreenLight,
+    oRedLight,
+    vYellowLight,
+} from '../../../../../consts/images';
 
 function StartersModule(props: {
     roster?: Roster;
@@ -128,50 +133,15 @@ function StartersGraphic(props: {
     transparent?: boolean;
     graphicComponentClass?: string;
     infinite?: boolean;
+    weekly?: boolean;
 }) {
-    const {startingLineup, transparent, graphicComponentClass, infinite} =
-        props;
-    const {getVerdict} = useBuySellData();
-
-    function playerTarget(player: Player, position: string, idx: number) {
-        let diplayPosition = position;
-        if (position === 'WRRB_FLEX' || position === 'REC_FLEX') {
-            diplayPosition = 'FLEX';
-        }
-        if (position === 'SUPER_FLEX') {
-            diplayPosition = 'SF';
-        }
-
-        const fullName = `${player.first_name} ${player.last_name}`;
-        const displayName =
-            fullName.length >= 19
-                ? `${player.first_name[0]}. ${player.last_name}`
-                : fullName;
-        const team = player.team ?? 'FA';
-
-        return (
-            <div
-                className={styles.playerTargetBody}
-                key={`${player.player_id} ${idx}`}
-            >
-                <div
-                    className={`${styles.positionChip} ${styles[diplayPosition]}`}
-                >
-                    {diplayPosition}
-                </div>
-                {player.player_id && logoImage(team, styles.teamLogo)}
-                <div className={styles.targetName}>{displayName}</div>
-                {!infinite && (
-                    <div
-                        className={styles.subtitle}
-                    >{`${player.position} - ${team}`}</div>
-                )}
-                {infinite && player.player_id && (
-                    <DifferenceChip verdict={getVerdict(fullName)} />
-                )}
-            </div>
-        );
-    }
+    const {
+        startingLineup,
+        transparent,
+        graphicComponentClass,
+        infinite,
+        weekly,
+    } = props;
 
     return (
         <div
@@ -180,8 +150,77 @@ function StartersGraphic(props: {
             } ${transparent ? '' : styles.background}`}
         >
             {startingLineup?.map(({player, position}, idx) => {
-                return playerTarget(player, position, idx);
+                return (
+                    <PlayerRow
+                        key={idx}
+                        player={player}
+                        position={position}
+                        infinite={infinite}
+                        weekly={weekly}
+                    />
+                );
             })}
+        </div>
+    );
+}
+
+export function PlayerRow({
+    player,
+    position,
+    infinite,
+    weekly,
+}: {
+    player: Player;
+    position: string;
+    infinite?: boolean;
+    weekly?: boolean;
+}) {
+    const {getVerdict} = useBuySellData();
+    let diplayPosition = position;
+    if (position === 'WRRB_FLEX' || position === 'REC_FLEX') {
+        diplayPosition = 'FLEX';
+    }
+    if (position === 'SUPER_FLEX') {
+        diplayPosition = 'SF';
+    }
+
+    const fullName = `${player.first_name} ${player.last_name}`;
+    const displayName =
+        fullName.length >= 19
+            ? `${player.first_name[0]}. ${player.last_name}`
+            : fullName;
+    const team = player.team ?? 'FA';
+
+    if (infinite && weekly) {
+        throw new Error('cannot render both infinite and weekly');
+    }
+
+    return (
+        <div className={styles.playerTargetBody}>
+            <div className={`${styles.positionChip} ${styles[diplayPosition]}`}>
+                {diplayPosition}
+            </div>
+            {player.player_id && logoImage(team, styles.teamLogo)}
+            <div className={styles.targetName}>{displayName}</div>
+            {!infinite && !weekly && (
+                <div
+                    className={styles.subtitle}
+                >{`${player.position} - ${team}`}</div>
+            )}
+            {infinite && player.player_id && (
+                <DifferenceChip verdict={getVerdict(fullName)} />
+            )}
+            {weekly && player.player_id && <StopLights />}
+        </div>
+    );
+}
+
+function StopLights() {
+    return (
+        <div className={styles.stopLights}>
+            <img src={mGreenLight} className={styles.stopLight} />
+            <img src={oRedLight} className={styles.stopLight} />
+            <img src={vYellowLight} className={styles.stopLight} />
         </div>
     );
 }

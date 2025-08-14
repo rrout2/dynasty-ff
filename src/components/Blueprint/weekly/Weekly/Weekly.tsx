@@ -1,21 +1,24 @@
 import styles from './Weekly.module.css';
 import {blankWeekly} from '../../../../consts/images';
 import {
+    useAdpData,
     useFetchRosters,
     useLeague,
     useLeagueIdFromUrl,
     useNonSleeper,
+    usePlayerData,
     useProjectedLineup,
     useRoster,
     useRosterSettings,
     useTeamIdFromUrl,
     useUserIdFromUrl,
 } from '../../../../hooks/hooks';
-import {StartersGraphic} from '../../v1/modules/Starters/Starters';
+import {PlayerRow, StartersGraphic} from '../../v1/modules/Starters/Starters';
 import {GraphicComponent as PositionalGradesGraphic} from '../../v1/modules/PositionalGrades/PositionalGrades';
 import {
     getAllUsers,
     getTeamName,
+    Player,
     User,
 } from '../../../../sleeper-api/sleeper-api';
 import ExportButton from '../../shared/ExportButton';
@@ -28,6 +31,10 @@ import {
     BuySellHoldComponent,
     TeamNameComponent,
 } from '../../infinite/Infinite/Infinite';
+import {
+    maybeShortenedName,
+    useRisersFallers,
+} from '../../v2/modules/RisersFallersModule/RisersFallersModule';
 
 type InSeasonVerdict = 'ELITE' | 'SOLID' | 'SHAKY?';
 
@@ -87,10 +94,14 @@ export default function Infinite() {
         teamName: nonSleeperTeamName,
     } = useNonSleeper(rosters, specifiedUser, setRoster);
 
-    const {startingLineup, setStartingLineup} = useProjectedLineup(
+    const {startingLineup, setStartingLineup, bench} = useProjectedLineup(
         isNonSleeper ? nonSleeperRosterSettings : rosterSettings,
         roster?.players
     );
+    const [flexOptions, setFlexOptions] = useState<Player[]>([]);
+    const {sortByAdp} = useAdpData();
+    const playerData = usePlayerData();
+    const {risers, fallers} = useRisersFallers(roster);
     useEffect(() => {
         setStartingLineup(startingLineup.slice(0, 14));
     }, [startingLineup.length]);
@@ -98,6 +109,15 @@ export default function Infinite() {
     useEffect(() => {
         setIsNonSleeper(!leagueId);
     }, [leagueId]);
+
+    useEffect(() => {
+        setFlexOptions(
+            bench
+                .sort(sortByAdp)
+                .filter(p => p.position !== QB)
+                .slice(0, 2)
+        );
+    }, [bench]);
 
     const currentDate = new Date();
     const isSuperFlex = !isNonSleeper
@@ -135,9 +155,48 @@ export default function Infinite() {
                     <StartersGraphic
                         startingLineup={startingLineup}
                         transparent={true}
-                        infinite
+                        weekly
                     />
                 </div>
+                <div className={styles.flexOptionsGraphic}>
+                    {flexOptions.map(player => (
+                        <PlayerRow
+                            key={player.player_id}
+                            player={player}
+                            position={'BN'}
+                            infinite={false}
+                            weekly={true}
+                        />
+                    ))}
+                </div>
+                {playerData && (
+                    <>
+                        <div className={styles.risersGraphic}>
+                            {risers
+                                .map(playerId => playerData[playerId])
+                                .filter(p => !!p)
+                                .map(player => {
+                                    return (
+                                        <div className={styles.riserFallerName}>
+                                            {maybeShortenedName(player)}
+                                        </div>
+                                    );
+                                })}
+                        </div>
+                        <div className={styles.fallersGraphic}>
+                            {fallers
+                                .map(playerId => playerData[playerId])
+                                .filter(p => !!p)
+                                .map(player => {
+                                    return (
+                                        <div className={styles.riserFallerName}>
+                                            {maybeShortenedName(player)}
+                                        </div>
+                                    );
+                                })}
+                        </div>
+                    </>
+                )}
                 <TeamNameComponent
                     teamName={
                         isNonSleeper ? nonSleeperTeamName : getTeamName(user)

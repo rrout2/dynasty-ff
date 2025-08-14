@@ -280,6 +280,9 @@ import horizontalScale from '../assets/horizontalScale.png';
 
 // Weekly BP
 import blankWeekly from '../assets/weekly/weekly_bp_bkg.png';
+import mGreenLight from '../assets/weekly/M-green.png';
+import oRedLight from '../assets/weekly/O-red.png';
+import vYellowLight from '../assets/weekly/V-yellow.png';
 
 const tierLogos: Map<string, string> = new Map([
     ['S', sTier],
@@ -679,4 +682,7 @@ export {
     rookieMap,
     horizontalScale,
     blankWeekly,
+    mGreenLight,
+    oRedLight,
+    vYellowLight,
 };

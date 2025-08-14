@@ -115,14 +115,6 @@ export function GraphicComponent({
 
     if (!playerData) return <></>;
 
-    function maybeShortenedName(player: Player) {
-        const fullName = `${player.first_name} ${player.last_name}`;
-        if (fullName.length >= 15) {
-            return `${player.first_name[0]}. ${player.last_name}`;
-        }
-        return fullName;
-    }
-
     return (
         <div
             className={`${styles.graphicComponent} ${graphicClassName ?? ''}`}
@@ -279,4 +271,12 @@ export function InputComponent({
             })}
         </>
     );
+}
+
+export function maybeShortenedName(player: Player) {
+    const fullName = `${player.first_name} ${player.last_name}`;
+    if (fullName.length >= 15) {
+        return `${player.first_name[0]}. ${player.last_name}`;
+    }
+    return fullName;
 }
