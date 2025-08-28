@@ -13,6 +13,7 @@
 
 .subtitle {
     font-family: 'Acumin Pro Italic';
+    color: white;
     margin-left: 20px;
     font-size: 22px;
     padding-top: 10px; /* bc font is uncentered */
