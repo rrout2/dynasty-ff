@@ -2,11 +2,13 @@ import {Player, Roster} from '../../../../../sleeper-api/sleeper-api';
 import styles from './Starters.module.css';
 import {
     BuySellVerdict,
+    Stoplight,
     useBuySellData,
     useLeagueIdFromUrl,
     usePlayerData,
     useProjectedLineup,
     useRosterSettingsFromId,
+    useStoplights,
     useTitle,
 } from '../../../../../hooks/hooks';
 import ExportButton from '../../../shared/ExportButton';
@@ -26,7 +28,13 @@ import {
 import {
     domainShield,
     mGreenLight,
+    mRedLight,
+    mYellowLight,
+    oGreenLight,
     oRedLight,
+    oYellowLight,
+    vGreenLight,
+    vRedLight,
     vYellowLight,
 } from '../../../../../consts/images';
 
@@ -143,6 +151,8 @@ function StartersGraphic(props: {
         weekly,
     } = props;
 
+    const {findStoplight} = useStoplights();
+
     return (
         <div
             className={`${styles.graphicComponent} ${
@@ -157,6 +167,9 @@ function StartersGraphic(props: {
                         position={position}
                         infinite={infinite}
                         weekly={weekly}
+                        stoplight={findStoplight(
+                            `${player.first_name} ${player.last_name}`
+                        )}
                     />
                 );
             })}
@@ -169,11 +182,13 @@ export function PlayerRow({
     position,
     infinite,
     weekly,
+    stoplight,
 }: {
     player: Player;
     position: string;
     infinite?: boolean;
     weekly?: boolean;
+    stoplight?: Stoplight;
 }) {
     const {getVerdict} = useBuySellData();
     let diplayPosition = position;
@@ -210,17 +225,58 @@ export function PlayerRow({
             {infinite && player.player_id && (
                 <DifferenceChip verdict={getVerdict(fullName)} />
             )}
-            {weekly && player.player_id && <StopLights />}
+            {weekly && player.player_id && <StopLights stoplight={stoplight} />}
         </div>
     );
 }
 
-function StopLights() {
+function StopLights({stoplight}: {stoplight?: Stoplight}) {
+    if (!stoplight) {
+        console.warn('no stoplight found');
+        return <></>;
+    }
+    let matchupSrc = '';
+    let offenseSrc = '';
+    let vegasSrc = '';
+    switch (stoplight.matchup) {
+        case 'GREEN':
+            matchupSrc = mGreenLight;
+            break;
+        case 'RED':
+            matchupSrc = mRedLight;
+            break;
+        case 'YELLOW':
+            matchupSrc = mYellowLight;
+            break;
+    }
+    switch (stoplight.offense) {
+        case 'GREEN':
+            offenseSrc = oGreenLight;
+            break;
+        case 'RED':
+            offenseSrc = oRedLight;
+            break;
+        case 'YELLOW':
+            offenseSrc = oYellowLight;
+            break;
+    }
+    switch (stoplight.vegas) {
+        case 'GREEN':
+            vegasSrc = vGreenLight;
+            break;
+        case 'RED':
+            vegasSrc = vRedLight;
+            break;
+        case 'YELLOW':
+            vegasSrc = vYellowLight;
+            break;
+    }
+
     return (
         <div className={styles.stopLights}>
-            <img src={mGreenLight} className={styles.stopLight} />
-            <img src={oRedLight} className={styles.stopLight} />
-            <img src={vYellowLight} className={styles.stopLight} />
+            <img src={matchupSrc} className={styles.stopLight} />
+            <img src={offenseSrc} className={styles.stopLight} />
+            <img src={vegasSrc} className={styles.stopLight} />
         </div>
     );
 }

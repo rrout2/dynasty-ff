@@ -281,8 +281,14 @@ import horizontalScale from '../assets/horizontalScale.png';
 // Weekly BP
 import blankWeekly from '../assets/weekly/weekly_bp_bkg.png';
 import mGreenLight from '../assets/weekly/M-green.png';
+import mYellowLight from '../assets/weekly/M-yellow.png';
+import mRedLight from '../assets/weekly/M-red.png';
+import oGreenLight from '../assets/weekly/O-green.png';
+import oYellowLight from '../assets/weekly/O-yellow.png';
 import oRedLight from '../assets/weekly/O-red.png';
+import vGreenLight from '../assets/weekly/V-green.png';
 import vYellowLight from '../assets/weekly/V-yellow.png';
+import vRedLight from '../assets/weekly/V-red.png';
 
 const tierLogos: Map<string, string> = new Map([
     ['S', sTier],
@@ -685,4 +691,10 @@ export {
     mGreenLight,
     oRedLight,
     vYellowLight,
+    mYellowLight,
+    mRedLight,
+    oGreenLight,
+    oYellowLight,
+    vGreenLight,
+    vRedLight,
 };

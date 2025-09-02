@@ -13,6 +13,7 @@ import sfPickMovesJson from '../data/rookieBP/sf_pick_moves.json';
 import oneQbPickMovesJson from '../data/rookieBP/1qb_pick_moves.json';
 import sfRookieRankingsJson from '../data/rookieBP/sf_rookie_rankings_and_tiers_apr26.json';
 import oneQbRookieRankingsJson from '../data/rookieBP/1qb_rookie_rankings_and_tiers_apr26.json';
+import playerStoplightsJson from '../data/weekly/playerLightsWeek1.json';
 import {
     League,
     Player,
@@ -61,6 +62,40 @@ import {calculateDepthScore} from '../components/Blueprint/v1/modules/DepthScore
 
 import {Archetype} from '../components/Blueprint/v1/modules/BigBoy/BigBoy';
 import {FinalPickData, getPicks, GetPicksResult} from '../sleeper-api/picks';
+
+export type Stoplight = {
+    name: string;
+    position: string;
+    matchup: string;
+    offense: string;
+    vegas: string;
+};
+
+export function useStoplights() {
+    const [stoplights] = useState(playerStoplightsJson);
+    function findStoplight(name: string): Stoplight | undefined {
+        const nickname = checkForNickname(name);
+        const foundPlayer = stoplights.find(
+            player =>
+                player['Player Name'] === name ||
+                player['Player Name'] === nickname ||
+                player['Player Conversion'] === name ||
+                player['Player Conversion'] === nickname
+        );
+        if (!foundPlayer) {
+            console.warn('no stoplight found for', name);
+            return;
+        }
+        return {
+            name: foundPlayer['Player Name'],
+            position: foundPlayer['Position'],
+            matchup: foundPlayer['Matchup Light'],
+            offense: foundPlayer['Offense Light'],
+            vegas: foundPlayer['Vegas Light'],
+        };
+    }
+    return {stoplights, findStoplight};
+}
 
 export function useGetPicks(leagueId: string, userId?: string) {
     const [allPicks, setAllPicks] = useState<GetPicksResult>();

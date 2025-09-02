@@ -10,6 +10,7 @@ import {
     useProjectedLineup,
     useRoster,
     useRosterSettings,
+    useStoplights,
     useTeamIdFromUrl,
     useUserIdFromUrl,
 } from '../../../../hooks/hooks';
@@ -102,6 +103,7 @@ export default function Infinite() {
     const {sortByAdp} = useAdpData();
     const playerData = usePlayerData();
     const {risers, fallers} = useRisersFallers(roster);
+    const {findStoplight} = useStoplights();
     const [winLossRecord, setWinLossRecord] = useState<number[]>([0, 0]);
     useEffect(() => {
         setStartingLineup(startingLineup.slice(0, 14));
@@ -171,6 +173,9 @@ export default function Infinite() {
                             position={'BN'}
                             infinite={false}
                             weekly={true}
+                            stoplight={findStoplight(
+                                `${player.first_name} ${player.last_name}`
+                            )}
                         />
                     ))}
                 </div>
