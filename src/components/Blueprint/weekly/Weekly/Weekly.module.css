@@ -104,3 +104,12 @@
     font-size: 30px;
     color: white;
 }
+
+.bakeryCard {
+    position: absolute;
+    top: 1267px;
+    left: 48px;
+
+    width: 471px;
+    
+}

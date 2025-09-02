@@ -1,5 +1,5 @@
 import styles from './Weekly.module.css';
-import {blankWeekly} from '../../../../consts/images';
+import {bakeryCard1, blankWeekly} from '../../../../consts/images';
 import {
     useAdpData,
     useFetchRosters,
@@ -238,6 +238,7 @@ export default function Infinite() {
                     weekly={true}
                 />
                 <div className={styles.monthYear}>Week 1</div>
+                <img src={bakeryCard1} className={styles.bakeryCard} />
                 <img src={blankWeekly} className={styles.blankBp} />
             </div>
         </>
