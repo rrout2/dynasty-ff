@@ -235,6 +235,7 @@ export default function Infinite() {
                     leagueSize={numRosters}
                     roster={roster}
                     setBuys={setBuys}
+                    weekly={true}
                 />
                 <div className={styles.monthYear}>Week 1</div>
                 <img src={blankWeekly} className={styles.blankBp} />

@@ -402,11 +402,13 @@ export const BuySellHoldComponent = ({
     leagueSize,
     roster,
     setBuys,
+    weekly,
 }: {
     isSuperFlex: boolean;
     leagueSize: number;
     roster?: Roster;
     setBuys?: (buys: BuySellTileProps[]) => void;
+    weekly?: boolean;
 }) => {
     const {buys, sells} = useBuySells(isSuperFlex, leagueSize, roster);
 
@@ -422,6 +424,35 @@ export const BuySellHoldComponent = ({
     const row1 = '1102px';
     const row2 = '1246px';
     const row3 = '1478px';
+
+    const weeklyColumn = '821px';
+    const weeklyRow1 = '1152px';
+    const weeklyRow2 = '1296px';
+    const weeklyRow3 = '1518px';
+    if (weekly) {
+        return (
+            <>
+                <div
+                    className={styles.buySellHoldGraphicWeekly}
+                    style={{left: weeklyColumn, top: weeklyRow1}}
+                >
+                    <BuySellTile {...buys[0]} weekly={!!weekly} />
+                </div>
+                <div
+                    className={styles.buySellHoldGraphicWeekly}
+                    style={{left: weeklyColumn, top: weeklyRow2}}
+                >
+                    <BuySellTile {...buys[1]} weekly={!!weekly} />
+                </div>
+                <div
+                    className={styles.buySellHoldGraphicWeekly}
+                    style={{left: weeklyColumn, top: weeklyRow3}}
+                >
+                    <BuySellTile {...sells[0]} weekly={!!weekly} />
+                </div>
+            </>
+        );
+    }
     return (
         <>
             <div

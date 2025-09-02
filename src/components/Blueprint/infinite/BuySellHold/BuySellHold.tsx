@@ -41,6 +41,7 @@ enum BuySellType {
 export type BuySellTileProps = {
     playerId: string;
     type: BuySellType;
+    weekly?: boolean;
 };
 
 export function useBuySells(
@@ -479,11 +480,11 @@ function mapToImgSrc(type: BuySellType) {
     }
 }
 
-export function BuySellTile({playerId, type}: BuySellTileProps) {
+export function BuySellTile({playerId, type, weekly}: BuySellTileProps) {
     if (!playerId) return <></>;
     return (
         <div className={styles.buySellTile}>
-            {type !== BuySellType.Hold && (
+            {type !== BuySellType.Hold && !weekly && (
                 <img src={mapToImgSrc(type)} className={styles.buySellImage} />
             )}
             <PlayerBar playerId={playerId} />
