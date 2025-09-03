@@ -14,8 +14,8 @@ customer_info_file_path = os.path.join(script_dir, 'customer_info', json_file_na
 disallowed_buys_path = os.path.join(script_dir, f'email_to_buys/{last_month}/{last_month}_customer_info_disallowed_userids.json')
 
 league_id_key = "League ID"
-team_id_key = "Team ID"
-# user_id_key = "Sleeper ID"
+# team_id_key = "Team ID"
+user_id_key = "Sleeper ID"
 # sub_team_id_key = "\r\n\r\nFIND YOUR TEAM ID HERE\r\nTEAM ID FINDER"
 email_key = "Email"
 # verified_key = 'Column 1\r'
@@ -68,13 +68,13 @@ print(f'League IDs: ({len(league_ids)})')
 print(','.join(league_ids))
 
 # team_ids = [str(item[team_id_key][sub_team_id_key]) for item in verified_customer_data]
-team_ids = [str(item[team_id_key]) for item in verified_customer_data]
-print(f'\nTeam IDs: ({len(team_ids)})')
-print(','.join(team_ids))
+# team_ids = [str(item[team_id_key]) for item in verified_customer_data]
+# print(f'\nTeam IDs: ({len(team_ids)})')
+# print(','.join(team_ids))
 
-# user_ids = [str(item[user_id_key]) for item in verified_customer_data]
-# print(f'\nUser IDs: ({len(user_ids)})')
-# print(','.join(user_ids))
+user_ids = [str(item[user_id_key]) for item in verified_customer_data]
+print(f'\nUser IDs: ({len(user_ids)})')
+print(','.join(user_ids))
 
 emails = [item[email_key].strip() for item in verified_customer_data]
 print(f'\nEmails: ({len(emails)})')

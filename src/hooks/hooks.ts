@@ -15,6 +15,7 @@ import sfRookieRankingsJson from '../data/rookieBP/sf_rookie_rankings_and_tiers_
 import oneQbRookieRankingsJson from '../data/rookieBP/1qb_rookie_rankings_and_tiers_apr26.json';
 import playerStoplightsJson from '../data/weekly/playerLightsWeek1.json';
 import risersFallersJson from '../data/weekly/risersFallersWeek1.json';
+import weeklyRankingsJson from '../data/weekly/rankingsWeek1.json';
 
 import {
     League,
@@ -1305,15 +1306,63 @@ export function useRosterSettingsFromId(leagueId?: string) {
     return rosterSettings;
 }
 
+export function useWeeklyRanks() {
+    const [weeklyRanks] = useState(weeklyRankingsJson);
+    function get1QBRanks(p: Player) {
+        const name = p.first_name + ' ' + p.last_name;
+        const nickname = checkForNickname(name);
+        const rank = weeklyRanks.findIndex(
+            r => r['1QB'] === nickname || r['1QB'] === name
+        );
+        if (rank === -1) return Infinity;
+        return rank;
+    }
+    function getSuperflexRanks(p: Player) {
+        const name = p.first_name + ' ' + p.last_name;
+        const nickname = checkForNickname(name);
+        const rank = weeklyRanks.findIndex(
+            r => r['SF'] === nickname || r['SF'] === name
+        );
+        if (rank === -1) return Infinity;
+        return rank;
+    }
+    function sortBy1QBRanks(a: Player, b: Player) {
+        const aRank = get1QBRanks(a);
+        const bRank = get1QBRanks(b);
+        return aRank - bRank;
+    }
+    function sortBySuperflexRanks(a: Player, b: Player) {
+        const aRank = getSuperflexRanks(a);
+        const bRank = getSuperflexRanks(b);
+        return aRank - bRank;
+    }
+    return {weeklyRanks, sortBy1QBRanks, sortBySuperflexRanks};
+}
+
 export function useProjectedLineup(
     rosterSettings: Map<string, number>,
-    playerIds?: string[]
+    playerIds?: string[],
+    weekly = false
 ) {
     const playerData = usePlayerData();
     const [startingLineup, setStartingLineup] = useState<Lineup>([]);
     const [bench, setBench] = useState<Player[]>([]);
     const [benchString, setBenchString] = useState('');
     const {getAdp, sortByAdp} = useAdpData();
+    const {sortBy1QBRanks, sortBySuperflexRanks} = useWeeklyRanks();
+    const isSuperflex =
+        rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1;
+
+    let sortFn: (a: Player, b: Player) => number;
+    if (!weekly) {
+        sortFn = sortByAdp;
+    } else {
+        if (isSuperflex) {
+            sortFn = sortBySuperflexRanks;
+        } else {
+            sortFn = sortBy1QBRanks;
+        }
+    }
 
     useEffect(() => {
         if (!playerData || !playerIds) return;
@@ -1327,7 +1376,7 @@ export function useProjectedLineup(
                     count,
                     remainingPlayers,
                     getAdp,
-                    sortByAdp,
+                    sortFn,
                     playerData,
                     playerIds
                 );

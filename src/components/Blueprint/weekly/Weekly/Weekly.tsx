@@ -98,7 +98,8 @@ export default function Infinite() {
 
     const {startingLineup, setStartingLineup, bench} = useProjectedLineup(
         isNonSleeper ? nonSleeperRosterSettings : rosterSettings,
-        roster?.players
+        roster?.players,
+        true
     );
     const [flexOptions, setFlexOptions] = useState<Player[]>([]);
     const {sortByAdp} = useAdpData();
@@ -208,7 +209,10 @@ export default function Infinite() {
                         <div className={styles.risersGraphic}>
                             {risers.map(player => {
                                 return (
-                                    <div className={styles.riserFallerName}>
+                                    <div
+                                        className={styles.riserFallerName}
+                                        key={player}
+                                    >
                                         {maybeShortenedNameString(player)}
                                     </div>
                                 );
@@ -217,7 +221,10 @@ export default function Infinite() {
                         <div className={styles.fallersGraphic}>
                             {fallers.map(player => {
                                 return (
-                                    <div className={styles.riserFallerName}>
+                                    <div
+                                        className={styles.riserFallerName}
+                                        key={player}
+                                    >
                                         {maybeShortenedNameString(player)}
                                     </div>
                                 );
