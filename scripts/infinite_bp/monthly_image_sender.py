@@ -283,8 +283,9 @@ def main():
     try:
         # Authenticate
         uploader.authenticate()
-        folder_id = '1wMz4o_HgA6jwYvAAPy7ExTRnAfqLHgey' #uploader.create_or_get_folder(args.folder_name)
-        print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
+        # folder_id = '1wMz4o_HgA6jwYvAAPy7ExTRnAfqLHgey' #uploader.create_or_get_folder(args.folder_name)
+        # print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
+        print("No folder run, emailing directly")
         for i in range(start_idx, len(sender.league_id_list)):
             if sender.league_id_list[i] == '' or sender.league_id_list[i] == None:
                 continue
@@ -331,7 +332,7 @@ def main():
         
 
         print("\nDone!")
-        print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
+        # print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
 
     except Exception as e:
         print(f"\nAn error occurred: {str(e)}")
