@@ -14,6 +14,8 @@ import oneQbPickMovesJson from '../data/rookieBP/1qb_pick_moves.json';
 import sfRookieRankingsJson from '../data/rookieBP/sf_rookie_rankings_and_tiers_apr26.json';
 import oneQbRookieRankingsJson from '../data/rookieBP/1qb_rookie_rankings_and_tiers_apr26.json';
 import playerStoplightsJson from '../data/weekly/playerLightsWeek1.json';
+import risersFallersJson from '../data/weekly/risersFallersWeek1.json';
+
 import {
     League,
     Player,
@@ -62,6 +64,29 @@ import {calculateDepthScore} from '../components/Blueprint/v1/modules/DepthScore
 
 import {Archetype} from '../components/Blueprint/v1/modules/BigBoy/BigBoy';
 import {FinalPickData, getPicks, GetPicksResult} from '../sleeper-api/picks';
+
+export function useWeeklyRisersFallers(roster?: Roster) {
+    const [risersFallers] = useState(risersFallersJson);
+    const [risers, setRisers] = useState<string[]>(['a', 'b', 'c']);
+    const [fallers, setFallers] = useState<string[]>(['a', 'b', 'c']);
+    const playerData = usePlayerData();
+    useEffect(() => {
+        if (!roster || !playerData) return;
+        const rosterNames = roster.players
+            .map(p => playerData[p])
+            .filter(p => !!p)
+            .map(p => `${p.first_name} ${p.last_name}`);
+        const included = risersFallers.filter(
+            rf =>
+                rosterNames.includes(rf.Name) ||
+                rosterNames.includes(checkForNickname(rf.Name))
+        );
+        included.sort((a, b) => b.Difference - a.Difference);
+        setRisers(included.slice(0, 3).map(rf => rf.Name));
+        setFallers(included.slice(-3).map(rf => rf.Name));
+    }, [roster, risersFallers, playerData]);
+    return {risers, fallers};
+}
 
 export type Stoplight = {
     name: string;

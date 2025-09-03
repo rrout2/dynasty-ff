@@ -13,6 +13,7 @@ import {
     useStoplights,
     useTeamIdFromUrl,
     useUserIdFromUrl,
+    useWeeklyRisersFallers,
 } from '../../../../hooks/hooks';
 import {PlayerRow, StartersGraphic} from '../../v1/modules/Starters/Starters';
 import {GraphicComponent as PositionalGradesGraphic} from '../../v1/modules/PositionalGrades/PositionalGrades';
@@ -37,7 +38,7 @@ import {
     useRisersFallers,
 } from '../../v2/modules/RisersFallersModule/RisersFallersModule';
 
-type InSeasonVerdict = 'ELITE' | 'SOLID' | 'SHAKY?';
+type InSeasonVerdict = 'TROUBLE' | 'SOLID' | 'SHAKY';
 
 export default function Infinite() {
     const [leagueId] = useLeagueIdFromUrl();
@@ -102,7 +103,9 @@ export default function Infinite() {
     const [flexOptions, setFlexOptions] = useState<Player[]>([]);
     const {sortByAdp} = useAdpData();
     const playerData = usePlayerData();
-    const {risers, fallers} = useRisersFallers(roster);
+    const {risers, fallers} = useWeeklyRisersFallers(roster);
+    console.log('risers', risers);
+    console.log('fallers', fallers);
     const {findStoplight} = useStoplights();
     const [winLossRecord, setWinLossRecord] = useState<number[]>([0, 0]);
     useEffect(() => {
@@ -185,28 +188,22 @@ export default function Infinite() {
                 {playerData && (
                     <>
                         <div className={styles.risersGraphic}>
-                            {risers
-                                .map(playerId => playerData[playerId])
-                                .filter(p => !!p)
-                                .map(player => {
-                                    return (
-                                        <div className={styles.riserFallerName}>
-                                            {maybeShortenedName(player)}
-                                        </div>
-                                    );
-                                })}
+                            {risers.map(player => {
+                                return (
+                                    <div className={styles.riserFallerName}>
+                                        {maybeShortenedNameString(player)}
+                                    </div>
+                                );
+                            })}
                         </div>
                         <div className={styles.fallersGraphic}>
-                            {fallers
-                                .map(playerId => playerData[playerId])
-                                .filter(p => !!p)
-                                .map(player => {
-                                    return (
-                                        <div className={styles.riserFallerName}>
-                                            {maybeShortenedName(player)}
-                                        </div>
-                                    );
-                                })}
+                            {fallers.map(player => {
+                                return (
+                                    <div className={styles.riserFallerName}>
+                                        {maybeShortenedNameString(player)}
+                                    </div>
+                                );
+                            })}
                         </div>
                     </>
                 )}
@@ -247,13 +244,21 @@ export default function Infinite() {
 
 function getVerdictColor(tier: InSeasonVerdict): string {
     switch (tier) {
-        case 'ELITE':
-            return '#009444';
+        case 'TROUBLE':
+            return '#c15252';
         case 'SOLID':
             return '#8dc63f';
-        case 'SHAKY?':
+        case 'SHAKY':
             return '#f1bb1f';
         default:
             return '#000000';
     }
+}
+
+function maybeShortenedNameString(fullName: string): string {
+    const [firstName, lastName] = fullName.split(' ');
+    if (fullName.length >= 15) {
+        return `${firstName[0]}. ${lastName}`;
+    }
+    return fullName;
 }
