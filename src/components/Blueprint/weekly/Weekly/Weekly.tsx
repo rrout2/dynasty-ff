@@ -34,9 +34,9 @@ import {
     TeamNameComponent,
 } from '../../infinite/Infinite/Infinite';
 import {
-    maybeShortenedName,
-    useRisersFallers,
-} from '../../v2/modules/RisersFallersModule/RisersFallersModule';
+    RosterTier,
+    useRosterTierAndPosGrades,
+} from '../../infinite/RosterTier/RosterTier';
 
 type InSeasonVerdict = 'TROUBLE' | 'SOLID' | 'SHAKY';
 
@@ -52,7 +52,7 @@ export default function Infinite() {
     const [specifiedUser, setSpecifiedUser] = useState<User>();
     const [isNonSleeper, setIsNonSleeper] = useState(false);
     const [buys, setBuys] = useState<BuySellTileProps[]>([]);
-    const [inSeasonVerdict, _setInSeasonVerdict] =
+    const [inSeasonVerdict, setInSeasonVerdict] =
         useState<InSeasonVerdict>('SOLID');
     useEffect(() => {
         if (!allUsers.length || !hasTeamId() || +teamId >= allUsers.length) {
@@ -104,8 +104,6 @@ export default function Infinite() {
     const {sortByAdp} = useAdpData();
     const playerData = usePlayerData();
     const {risers, fallers} = useWeeklyRisersFallers(roster);
-    console.log('risers', risers);
-    console.log('fallers', fallers);
     const {findStoplight} = useStoplights();
     const [winLossRecord, setWinLossRecord] = useState<number[]>([0, 0]);
     useEffect(() => {
@@ -134,6 +132,26 @@ export default function Infinite() {
         ? rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1
         : nonSleeperRosterSettings.has(SUPER_FLEX) ||
           (nonSleeperRosterSettings.get(QB) ?? 0) > 1;
+
+    const {tier} = useRosterTierAndPosGrades(
+        isSuperFlex,
+        rosters?.length || 0,
+        roster
+    );
+    useEffect(() => {
+        switch (tier) {
+            case RosterTier.Rebuild:
+            case RosterTier.Reload:
+                setInSeasonVerdict('TROUBLE');
+                break;
+            case RosterTier.Competitive:
+                setInSeasonVerdict('SHAKY');
+                break;
+            case RosterTier.Championship:
+            case RosterTier.Elite:
+                setInSeasonVerdict('SOLID');
+        }
+    }, [tier]);
     function hasTeamId() {
         return teamId !== '' && teamId !== NONE_TEAM_ID;
     }
