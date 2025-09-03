@@ -143,9 +143,9 @@ class ImageEmailSender:
         else:
             disallowed_buys = disallowed_buys.replace('-', ',')
         if len(self.team_id_list) > 0:
-            return f"https://rrout2.github.io/dynasty-ff/#/infinite?leagueId={self.league_id_list[idx]}&teamId={self.team_id_list[idx]}&disallowedBuys={disallowed_buys}"
+            return f"https://rrout2.github.io/dynasty-ff/#/weekly?leagueId={self.league_id_list[idx]}&teamId={self.team_id_list[idx]}&disallowedBuys={disallowed_buys}"
         else:
-            return f"https://rrout2.github.io/dynasty-ff/#/infinite?leagueId={self.league_id_list[idx]}&userId={self.user_id_list[idx]}&disallowedBuys={disallowed_buys}"
+            return f"https://rrout2.github.io/dynasty-ff/#/weekly?leagueId={self.league_id_list[idx]}&userId={self.user_id_list[idx]}&disallowedBuys={disallowed_buys}"
 
     def download_image(self, idx):
         """Navigate to website and click download button"""
