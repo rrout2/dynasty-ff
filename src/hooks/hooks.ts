@@ -923,6 +923,12 @@ const checkForNickname = (playerName: string) => {
             return 'Cameron Ward';
         case 'Cameron Ward':
             return 'Cam Ward';
+        case "De'von Achane":
+            return 'Devon Achane';
+        case "De'Von Achane":
+            return 'Devon Achane';
+        case 'Devon Achane':
+            return "De'Von Achane";
         default:
             return playerName;
     }
