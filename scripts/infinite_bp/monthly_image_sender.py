@@ -72,6 +72,7 @@ class ImageEmailSender:
             self.disallowed_buys = [email.strip() for email in config['disallowed_buys'].split(',')]
         else:
             self.disallowed_buys = config['disallowed_buys']
+        print('self.disallowed_buys', self.disallowed_buys)
 
         self.smtp_server = config['smtp_server']
         self.smtp_port = int(config['smtp_port'])
