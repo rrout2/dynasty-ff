@@ -36,7 +36,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "SKIP_PREFLIGHT_CHECK=true DISABLE_ESLINT_PLUGIN=true NODE_OPTIONS=--max_old_space_size=8192 react-scripts build",
+    "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
     "lint": "gts lint",

@@ -16,6 +16,9 @@ jobs:
             - name: Checkout 🛎️
               uses: actions/checkout@v4
 
+            - name: Set node memory limit
+              run: echo "NODE_OPTIONS=--max_old_space_size=8192" >> $GITHUB_ENV
+
             - name: Install and Build 🔧
               run: |
                   npm ci
