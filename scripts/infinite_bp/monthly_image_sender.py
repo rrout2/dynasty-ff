@@ -297,43 +297,48 @@ def main():
             if sender.email_list[i] in sender.skip_list:
                 continue
             print(f"{i + 1}/{len(sender.league_id_list)}")
-            downloaded_file_path = sender.download_image(i)
 
-            if not downloaded_file_path:
-                print(f"Failed to download image {i + 1}/{len(sender.league_id_list)} for {sender.email_list[i]}")
-                sender.fails.append(sender.email_list[i])
-                sender.fail_indices.append(i)
-                print(f"failed indices: {sender.fail_indices}")
-                continue
-            try:
-                time.sleep(0.1)
-                print(f"Uploading {downloaded_file_path}...")
-                file = uploader.upload_image(downloaded_file_path, folder_id)
-                if file:
-                    uploader.make_public(file['id'])
-                    uploader.transfer_ownership(file['id'], sender.sender_email)
-                # sender.send_image_directly(sender.email_list[i], downloaded_file_path)
-                # print(f"Successfully sent image to {censor_email(sender.email_list[i])}\n")
-                
-                with open("email_to_buys.json", "w") as json_file:
-                    json.dump(sender.email_to_buys, json_file, indent=4)
-                with open("league_id_to_buys.json", "w") as json_file:
-                    json.dump(sender.league_id_to_buys, json_file, indent=4)
-                with open("user_id_to_buys.json", "w") as json_file:
-                    json.dump(sender.user_id_to_buys, json_file, indent=4)
-                os.remove(downloaded_file_path)
-            except smtplib.SMTPDataError as e:
-                print(f"\nAn email error occurred: {str(e)}")
-                logging.exception("SMTPDataError occurred")
-                sender.fails.append(sender.email_list[i])
-                sender.fail_indices.append(i)
-                print("exiting early due to email error")
-                break
-            except Exception as e:
-                print(f"\nAn upload/email error occurred: {str(e)}")
-                logging.exception("Exception occurred")
-                sender.fails.append(sender.email_list[i])
-                sender.fail_indices.append(i)
+            for attempt in range(2): # This loop provides one retry
+                try:
+                    downloaded_file_path = sender.download_image(i)
+                    if not downloaded_file_path:
+                        print(f"Failed to download image {i + 1}/{len(sender.league_id_list)} for {sender.email_list[i]}")
+                        sender.fails.append(sender.email_list[i])
+                        sender.fail_indices.append(i)
+                        print(f"failed indices: {sender.fail_indices}")
+                        continue
+
+                    time.sleep(0.1)
+                    print(f"Uploading {downloaded_file_path}...")
+                    file = uploader.upload_image(downloaded_file_path, folder_id)
+                    if file:
+                        uploader.make_public(file['id'])
+                        uploader.transfer_ownership(file['id'], sender.sender_email)
+                    # sender.send_image_directly(sender.email_list[i], downloaded_file_path)
+                    # print(f"Successfully sent image to {censor_email(sender.email_list[i])}\n")
+                    
+                    with open("email_to_buys.json", "w") as json_file:
+                        json.dump(sender.email_to_buys, json_file, indent=4)
+                    with open("league_id_to_buys.json", "w") as json_file:
+                        json.dump(sender.league_id_to_buys, json_file, indent=4)
+                    with open("user_id_to_buys.json", "w") as json_file:
+                        json.dump(sender.user_id_to_buys, json_file, indent=4)
+                    os.remove(downloaded_file_path)
+                    break # Exit the retry loop on success
+
+                except smtplib.SMTPDataError as e:
+                    print(f"\nAn email error occurred: {str(e)}")
+                    logging.exception("SMTPDataError occurred")
+                    sender.fails.append(sender.email_list[i])
+                    sender.fail_indices.append(i)
+                    print("exiting early due to email error")
+                    break
+                except Exception as e:
+                    print(f"\nAn upload/email error occurred: {str(e)}")
+                    logging.exception("Exception occurred")
+                    if attempt == 1: # Check if this is the final attempt
+                        sender.fails.append(sender.email_list[i])
+                        sender.fail_indices.append(i)
         
 
         print("\nDone!")
