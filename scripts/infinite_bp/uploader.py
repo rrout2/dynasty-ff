@@ -39,7 +39,7 @@ class GoogleDriveUploader:
             print(f"Authentication error: {str(e)}")
             raise
 
-    def upload_image(self, image_path, folder_id=None):
+    def upload_image(self, image_path, file_name=None, folder_id=None):
         """
         Upload an image to Google Drive.
 
@@ -50,7 +50,7 @@ class GoogleDriveUploader:
         try:
             # File metadata
             file_metadata = {
-                'name': os.path.basename(image_path)
+                'name': os.path.basename(image_path) if file_name is None else file_name
             }
 
             # If folder_id is provided, set it as the parent
