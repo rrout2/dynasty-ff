@@ -283,7 +283,7 @@ def main():
     try:
         # Authenticate
         uploader.authenticate()
-        folder_id = '1cGZouCO1KIcya1RfHF9tEyBdlMnV6mtA' #uploader.create_or_get_folder(args.folder_name)
+        folder_id = '17wv-uOwGKcLuapY7EDU3wkaYhqMFuybW' #uploader.create_or_get_folder(args.folder_name)
         print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
         # print("No folder run, emailing directly")
         for i in range(start_idx, len(sender.league_id_list)):
