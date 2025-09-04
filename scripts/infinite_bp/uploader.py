@@ -100,7 +100,8 @@ class GoogleDriveUploader:
                 fileId=file_id,
                 body=permission,
                 transferOwnership=True,
-                sendNotificationEmail=False
+                sendNotificationEmail=False,
+                supportsAllDrives=True
             ).execute()
 
             print(f"Successfully transferred ownership to {email}")
