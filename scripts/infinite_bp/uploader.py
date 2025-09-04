@@ -127,13 +127,14 @@ class GoogleDriveUploader:
             self.service.permissions().create(
                 fileId=file_id,
                 body=permission,
-                sendNotificationEmail=False
+                sendNotificationEmail=False,
+                supportsAllDrives=True
             ).execute()
 
             print(f"Successfully shared file with {email}")
 
         except Exception as e:
-            print(f"Sharing error: {str(e)}")
+            print(f"share_file error: {str(e)}")
 
     def make_public(self, file_id):
         """
@@ -151,13 +152,14 @@ class GoogleDriveUploader:
             self.service.permissions().create(
                 fileId=file_id,
                 body=permission,
-                sendNotificationEmail=False
+                sendNotificationEmail=False,
+                supportsAllDrives=True
             ).execute()
 
             print(f"Successfully made file public")
 
         except Exception as e:
-            print(f"Sharing error: {str(e)}")
+            print(f"make_public error: {str(e)}")
     
     def create_or_get_folder(self, folder_name):
         """Create or retrieve a folder in Google Drive"""
