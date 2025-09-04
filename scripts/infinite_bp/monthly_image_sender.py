@@ -283,9 +283,9 @@ def main():
     try:
         # Authenticate
         uploader.authenticate()
-        # folder_id = '1wMz4o_HgA6jwYvAAPy7ExTRnAfqLHgey' #uploader.create_or_get_folder(args.folder_name)
-        # print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
-        print("No folder run, emailing directly")
+        folder_id = '1cGZouCO1KIcya1RfHF9tEyBdlMnV6mtA' #uploader.create_or_get_folder(args.folder_name)
+        print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
+        # print("No folder run, emailing directly")
         for i in range(start_idx, len(sender.league_id_list)):
             if sender.league_id_list[i] == '' or sender.league_id_list[i] == None:
                 continue
@@ -307,8 +307,13 @@ def main():
                 continue
             try:
                 time.sleep(0.1)
-                sender.send_image_directly(sender.email_list[i], downloaded_file_path)
-                print(f"Successfully sent image to {censor_email(sender.email_list[i])}\n")
+                print(f"Uploading {downloaded_file_path}...")
+                file = uploader.upload_image(downloaded_file_path, folder_id)
+                if file:
+                    uploader.make_public(file['id'])
+                    uploader.transfer_ownership(file['id'], sender.sender_email)
+                # sender.send_image_directly(sender.email_list[i], downloaded_file_path)
+                # print(f"Successfully sent image to {censor_email(sender.email_list[i])}\n")
                 
                 with open("email_to_buys.json", "w") as json_file:
                     json.dump(sender.email_to_buys, json_file, indent=4)
@@ -332,7 +337,7 @@ def main():
         
 
         print("\nDone!")
-        # print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
+        print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
 
     except Exception as e:
         print(f"\nAn error occurred: {str(e)}")
