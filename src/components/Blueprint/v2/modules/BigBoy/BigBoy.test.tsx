@@ -1,4 +1,4 @@
-import {render, waitFor} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import BigBoy from './BigBoy';
 import {Roster} from '../../../../../sleeper-api/sleeper-api';
 import {HashRouter, Route, Routes} from 'react-router-dom';
@@ -10,6 +10,7 @@ import {
     SELLS,
 } from '../../../../../consts/urlParams';
 import userEvent from '@testing-library/user-event';
+import {JSX} from 'react';
 const ROSTER = {
     players: [
         '10235',
@@ -255,7 +256,7 @@ describe('BigBoy v2', () => {
 
         it('can load from url', async () => {
             mockSearchParams();
-            const {container} = await wrappedRender(
+            const {container, waitFor} = await wrappedRender(
                 <BigBoy
                     roster={ROSTER}
                     numRosters={NUM_ROSTERS}
@@ -351,7 +352,7 @@ describe('BigBoy v2', () => {
         it('can load rookie pick buys', async () => {
             const YEAR = '2025';
             mockSearchParams(DEFAULT_URL_PARAMS.replace('11565', `RP-${YEAR}`));
-            const {container} = await wrappedRender(
+            const {container, waitFor} = await wrappedRender(
                 <BigBoy
                     roster={ROSTER}
                     numRosters={NUM_ROSTERS}

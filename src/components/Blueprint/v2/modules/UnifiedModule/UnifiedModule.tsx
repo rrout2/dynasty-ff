@@ -71,7 +71,7 @@ export default function UnifiedModule({
     roster,
     numRosters,
     teamName,
-}: UnifiedModuleProps): JSX.Element {
+}: UnifiedModuleProps) {
     const {cornerstones, setCornerstones} = useCornerstones(roster);
     const [allPlayers, setAllPlayers] = useState<Player[]>([]);
     const [leagueId] = useLeagueIdFromUrl();
