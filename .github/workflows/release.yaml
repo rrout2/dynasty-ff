@@ -19,9 +19,6 @@ jobs:
             - name: Install and Build 🔧
               run: |
                   npm ci
-                  export NODE_OPTIONS=--max_old_space_size=8192
-                  export SKIP_PREFLIGHT_CHECK=true
-                  export DISABLE_ESLINT_PLUGIN=true
                   npm run build
 
             # - name: Run Unit Tests 🧪
