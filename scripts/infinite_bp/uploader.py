@@ -68,7 +68,8 @@ class GoogleDriveUploader:
             file = self.service.files().create(
                 body=file_metadata,
                 media_body=media,
-                fields='id, name, webViewLink'
+                fields='id, name, webViewLink',
+                supportsAllDrives=True
             ).execute()
 
             print(f"Successfully uploaded {file.get('name')}")
