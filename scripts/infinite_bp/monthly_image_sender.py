@@ -148,6 +148,7 @@ class ImageEmailSender:
 
         Args:
             idx (int): Index of blueprint
+            manual (bool): Whether to use manual URL
         """
         if manual:
             return f"https://rrout2.github.io/dynasty-ff/#/weekly?{self.manual_url_list[idx]}"
@@ -166,7 +167,7 @@ class ImageEmailSender:
         driver = self.setup_driver()
         try:
             # Navigate to the website
-            url = self.construct_url(idx)
+            url = self.construct_url(idx, manual)
             print(f"Navigating to {url}")
             driver.get(url)
             
