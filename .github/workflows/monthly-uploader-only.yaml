@@ -38,6 +38,8 @@ jobs:
                   USER_ID_LIST: ${{ secrets.USER_ID_LIST }}
                   SKIP_LIST: ${{ secrets.SKIP_LIST }}
                   DISALLOWED_BUYS: ${{ secrets.DISALLOWED_BUYS }}
+                  MANUAL_URL_LIST: ${{ secrets.MANUAL_URL_LIST }}
+                  MANUAL_EMAIL_LIST: ${{ secrets.MANUAL_EMAIL_LIST }}
               run: |
                   echo "email_list: ${EMAIL_LIST}" > config.yaml
                   echo "smtp_server: ${SMTP_SERVER}" >> config.yaml
@@ -49,10 +51,12 @@ jobs:
                   echo "user_id_list: ${USER_ID_LIST}" >> config.yaml
                   echo "skip_list: ${SKIP_LIST}" >> config.yaml
                   echo "disallowed_buys: ${DISALLOWED_BUYS}" >> config.yaml
+                  echo "manual_url_list: ${MANUAL_URL_LIST}" >> config.yaml
+                  echo "manual_email_list: ${MANUAL_EMAIL_LIST}" >> config.yaml
                   echo "${SA_CREDENTIALS}" > service-account-credentials.json
 
             - name: Run image sender
-              run: python scripts/infinite_bp/monthly_image_sender.py -s=0 -si=879
+              run: python scripts/infinite_bp/monthly_image_sender.py -s=0
             - uses: actions/upload-artifact@v4
               with:
                   path: |
