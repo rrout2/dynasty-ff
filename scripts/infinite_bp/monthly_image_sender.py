@@ -73,6 +73,18 @@ class ImageEmailSender:
         else:
             self.disallowed_buys = config['disallowed_buys']
 
+        if isinstance(config['manual_url_list'], str):
+            self.manual_url_list = [email.strip() for email in config['manual_url_list'].split(',')]
+        elif config['manual_url_list'] != None:
+            self.manual_url_list = config['manual_url_list']
+        else:
+            self.manual_url_list = []
+
+        if isinstance(config['manual_email_list'], str):
+            self.manual_email_list = [email.strip() for email in config['manual_email_list'].split(',')]
+        else:
+            self.manual_email_list = config['manual_email_list']
+
         self.smtp_server = config['smtp_server']
         self.smtp_port = int(config['smtp_port'])
         if send_email:
@@ -130,13 +142,15 @@ class ImageEmailSender:
             seconds += 1
         return seconds < timeout
 
-    def construct_url(self, idx):
+    def construct_url(self, idx, manual=False):
         """
         Construct the URL Certain League URL
 
         Args:
             idx (int): Index of blueprint
         """
+        if manual:
+            return f"https://rrout2.github.io/dynasty-ff/#/weekly?{self.manual_url_list[idx]}"
         disallowed_buys = str(self.disallowed_buys[idx])
         if disallowed_buys == 'None':
             disallowed_buys = ''
@@ -147,7 +161,7 @@ class ImageEmailSender:
         else:
             return f"https://rrout2.github.io/dynasty-ff/#/weekly?leagueId={self.league_id_list[idx]}&userId={self.user_id_list[idx]}&disallowedBuys={disallowed_buys}"
 
-    def download_image(self, idx):
+    def download_image(self, idx, manual=False):
         """Navigate to website and click download button"""
         driver = self.setup_driver()
         try:
@@ -283,8 +297,46 @@ def main():
     try:
         # Authenticate
         uploader.authenticate()
-        folder_id = '17wv-uOwGKcLuapY7EDU3wkaYhqMFuybW' #uploader.create_or_get_folder(args.folder_name)
+        folder_id = '1cGZouCO1KIcya1RfHF9tEyBdlMnV6mtA' #uploader.create_or_get_folder(args.folder_name)
         print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
+
+        print(f"Running manual URL list ({len(sender.manual_url_list)})...")
+        for i in range(len(sender.manual_url_list)):
+            if sender.manual_url_list[i] == '' or sender.manual_url_list[i] == None:
+                continue
+            print(f"{i + 1}/{len(sender.manual_url_list)}")
+            for attempt in range(2): # This loop provides one retry
+                try:
+                    downloaded_file_path = sender.download_image(i, manual=True)
+                    if not downloaded_file_path:
+                        print(f"Failed to download image {i + 1}/{len(sender.manual_url_list)} for {sender.manual_email_list[i]}")
+                        continue
+
+                    time.sleep(0.1)
+                    print(f"Uploading {downloaded_file_path}...")
+                    file = uploader.upload_image(downloaded_file_path, f"{sender.manual_email_list[i]}.png", folder_id)
+                    if file:
+                        uploader.make_public(file['id'])
+                        # uploader.transfer_ownership(file['id'], sender.sender_email)
+                    os.remove(downloaded_file_path)
+                    break # Exit the retry loop on success
+
+                except smtplib.SMTPDataError as e:
+                    print(f"\nAn email error occurred: {str(e)}")
+                    logging.exception("SMTPDataError occurred")
+                    sender.fails.append(sender.email_list[i])
+                    sender.fail_indices.append(i)
+                    print("exiting early due to email error")
+                    break
+                except Exception as e:
+                    print(f"\nAn upload/email error occurred: {str(e)}")
+                    logging.exception("Exception occurred")
+                    if attempt == 1: # Check if this is the final attempt
+                        sender.fails.append(sender.manual_email_list[i])
+                        sender.fail_indices.append(i)
+        
+
+
         # print("No folder run, emailing directly")
         for i in range(start_idx, len(sender.league_id_list)):
             if sender.league_id_list[i] == '' or sender.league_id_list[i] == None:
