@@ -121,6 +121,7 @@ export type Roster = {
         waiver_position: number;
         waiver_budget_used: number;
     };
+    co_owners: string[];
 };
 
 export interface DraftOrder {

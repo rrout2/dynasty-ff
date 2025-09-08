@@ -72,13 +72,21 @@ export default function Infinite() {
     }, [allUsers, teamId]);
 
     useEffect(() => {
-        if (!allUsers.length || !userId) {
+        if (!allUsers.length || !userId || !rosters) {
             return;
         }
-        const userIndex = allUsers.findIndex(u => u.user_id === userId);
+        const userIndex = rosters.findIndex(
+            r => r.owner_id === userId || r.co_owners?.includes(userId)
+        );
+        if (userIndex === -1) {
+            console.warn(
+                `could not find user with id '${userId}' in allUsers ${allUsers}`
+            );
+            return;
+        }
         setTeamId('' + userIndex);
         setSpecifiedUser(allUsers[userIndex]);
-    }, [allUsers, userId]);
+    }, [allUsers, userId, rosters]);
 
     useEffect(() => {
         if (!leagueId || !rosters) return;
