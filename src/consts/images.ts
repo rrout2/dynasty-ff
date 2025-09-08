@@ -100,7 +100,6 @@ import tenBg from '../assets/teamBackgrounds/TEN.png';
 import wasBg from '../assets/teamBackgrounds/WAS.png';
 
 import blankLogo from '../assets/logos/blank.png';
-import blueprint2 from '../assets/blueprint2.0.png';
 import scale from '../assets/scale.png';
 import slider from '../assets/slider.png';
 import blankblueprint from '../assets/Blueprint1-bkg.png';
@@ -168,9 +167,6 @@ import eliteQbTeDVMCCO from '../assets/2.0/dvms/QT-CCO.png';
 import eliteQbTeDVMRCC from '../assets/2.0/dvms/QT-RCC.png';
 
 // Infinite BP
-import blankInfinite from '../assets/infinite/Infinite_background.png';
-import blankInfiniteV2 from '../assets/infinite/blankInfinite_v2.png';
-import blankInfiniteV3 from '../assets/infinite/blankInfinite_v3.png';
 import blankInfiniteV4 from '../assets/infinite/blankInfinite_v4.png';
 import hardBuy from '../assets/infinite/Hard_Buy.png';
 import hardSell from '../assets/infinite/Hard_sell.png';
@@ -626,7 +622,6 @@ export {
     circleSlider,
     draftCapitalScale,
     draftCapitalBackground,
-    blueprint2,
     teamSilhouettes,
     teamBackgrounds,
     nflSilhouette,
@@ -664,13 +659,10 @@ export {
     rbHeavyDVM,
     eliteQbTeDVMCCO,
     eliteQbTeDVMRCC,
-    blankInfinite,
     hardBuy,
     hardSell,
     softBuy,
     softSell,
-    blankInfiniteV2,
-    blankInfiniteV3,
     blankInfiniteV4,
     tradeMeterButton,
     tradeMeterNeedle,
