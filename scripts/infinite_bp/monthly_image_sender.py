@@ -198,8 +198,9 @@ class ImageEmailSender:
                             key=os.path.getctime)
             print(f"Downloaded file: {latest_file}")
 
-            self.store_buy_ids(driver, idx)
-            print(f"Buy IDs: {self.email_to_buys[self.email_list[idx]]}")
+            if not manual:
+                self.store_buy_ids(driver, idx)
+                print(f"Buy IDs: {self.email_to_buys[self.email_list[idx]]}")
 
             return latest_file
         
