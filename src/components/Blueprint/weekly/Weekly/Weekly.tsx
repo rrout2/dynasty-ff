@@ -267,7 +267,7 @@ export default function Infinite() {
                     setBuys={setBuys}
                     weekly={true}
                 />
-                <div className={styles.monthYear}>Week 1</div>
+                <div className={styles.monthYear}>Week 2</div>
                 <img src={bakeryCard1} className={styles.bakeryCard} />
                 <img src={blankWeekly} className={styles.blankBp} />
             </div>
