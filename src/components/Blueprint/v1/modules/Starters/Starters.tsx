@@ -37,6 +37,7 @@ import {
     vRedLight,
     vYellowLight,
 } from '../../../../../consts/images';
+import {off} from 'process';
 
 function StartersModule(props: {
     roster?: Roster;
@@ -274,9 +275,13 @@ function StopLights({stoplight}: {stoplight?: Stoplight}) {
 
     return (
         <div className={styles.stopLights}>
-            <img src={matchupSrc} className={styles.stopLight} />
-            <img src={offenseSrc} className={styles.stopLight} />
-            <img src={vegasSrc} className={styles.stopLight} />
+            {matchupSrc && (
+                <img src={matchupSrc} className={styles.stopLight} />
+            )}
+            {offenseSrc && (
+                <img src={offenseSrc} className={styles.stopLight} />
+            )}
+            {vegasSrc && <img src={vegasSrc} className={styles.stopLight} />}
         </div>
     );
 }
