@@ -286,7 +286,7 @@ import vGreenLight from '../assets/weekly/V-green.png';
 import vYellowLight from '../assets/weekly/V-yellow.png';
 import vRedLight from '../assets/weekly/V-red.png';
 
-import bakeryCard1 from '../assets/weekly/bakery/WK1_Bakery_Card.png';
+import bakeryCard1 from '../assets/weekly/bakery/WK2_Bakery_Card.png';
 
 const tierLogos: Map<string, string> = new Map([
     ['S', sTier],
