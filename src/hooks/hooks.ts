@@ -15,7 +15,7 @@ import sfRookieRankingsJson from '../data/rookieBP/sf_rookie_rankings_and_tiers_
 import oneQbRookieRankingsJson from '../data/rookieBP/1qb_rookie_rankings_and_tiers_apr26.json';
 import playerStoplightsJson from '../data/weekly/playerLightsWeek1.json';
 import risersFallersJson from '../data/weekly/risersFallersWeek1.json';
-import weeklyRankingsJson from '../data/weekly/rankingsWeek1.json';
+import weeklyRankingsJson from '../data/weekly/rankingsWeek2.json';
 
 import {
     League,

@@ -78,9 +78,12 @@ export default function Infinite() {
         const userIndex = rosters.findIndex(
             r => r.owner_id === userId || r.co_owners?.includes(userId)
         );
+        console.log(rosters);
         if (userIndex === -1) {
             console.warn(
-                `could not find user with id '${userId}' in allUsers ${allUsers}`
+                `could not find user with id '${userId}' in rosters' owners: ${rosters.flatMap(
+                    r => [r.owner_id, ...(r.co_owners || [])]
+                )}`
             );
             return;
         }
