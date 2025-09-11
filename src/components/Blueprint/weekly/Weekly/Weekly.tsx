@@ -75,11 +75,11 @@ export default function Infinite() {
         if (!allUsers.length || !userId || !rosters) {
             return;
         }
-        const userIndex = rosters.findIndex(
+        const rosterIndex = rosters.findIndex(
             r => r.owner_id === userId || r.co_owners?.includes(userId)
         );
-        console.log(rosters);
-        if (userIndex === -1) {
+        console.log('rosterIndex', rosterIndex);
+        if (rosterIndex === -1) {
             console.warn(
                 `could not find user with id '${userId}' in rosters' owners: ${rosters.flatMap(
                     r => [r.owner_id, ...(r.co_owners || [])]
@@ -87,6 +87,10 @@ export default function Infinite() {
             );
             return;
         }
+        const userIndex = allUsers.findIndex(
+            u => u.user_id === rosters[rosterIndex].owner_id
+        );
+        console.log('userIndex', userIndex);
         setTeamId('' + userIndex);
         setSpecifiedUser(allUsers[userIndex]);
     }, [allUsers, userId, rosters]);
