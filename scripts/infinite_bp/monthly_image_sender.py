@@ -86,7 +86,7 @@ class ImageEmailSender:
             self.manual_email_list = config['manual_email_list']
 
         self.smtp_server = config['smtp_server']
-        self.smtp_port = int(config['smtp_port'])
+        self.smtp_port = int(config['smtp_port']) if config['smtp_port'] != None else None
         if send_email:
             self.sender_email = config['sender_email']
             self.sender_password = config['sender_password']
