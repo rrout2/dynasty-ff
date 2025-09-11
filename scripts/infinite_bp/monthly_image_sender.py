@@ -299,7 +299,7 @@ def main():
     try:
         # Authenticate
         uploader.authenticate()
-        folder_id = '17wv-uOwGKcLuapY7EDU3wkaYhqMFuybW' #uploader.create_or_get_folder(args.folder_name)
+        folder_id = '1GtdM5mE8ccBOaD4kge2c5Zrw_Cch9_Ju' #uploader.create_or_get_folder(args.folder_name)
         print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
 
         print(f"Running manual URL list ({len(sender.manual_url_list)})...")
