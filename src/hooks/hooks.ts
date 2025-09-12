@@ -6,7 +6,7 @@ import {
     useState,
 } from 'react';
 import playersJson from '../data/players.json';
-import rankingsJson from '../data/rankings_08052025.json';
+import rankingsJson from '../data/rankings_09122025.json';
 import buySellsData from '../data/buyssellsholds_with_ids_080525.json';
 import nflScheduleJson from '../data/nfl_schedule.json';
 import sfPickMovesJson from '../data/rookieBP/sf_pick_moves.json';
@@ -808,9 +808,7 @@ type adpDatum = {
 
 type Rank = {
     Player: string;
-    Team: string;
     Position: string;
-    Average: number;
 };
 
 export function useAdpData() {

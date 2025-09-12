@@ -1,0 +1,3012 @@
+[
+  {
+    "Player_Id": 4881,
+    "Player": "Lamar Jackson",
+    "Position": "QB",
+    "Rank": 14,
+    "Tier": 7,
+    "Superflex_Rank": 1,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4984,
+    "Player": "Josh Allen",
+    "Position": "QB",
+    "Rank": 15,
+    "Tier": 7,
+    "Superflex_Rank": 2,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11566,
+    "Player": "Jayden Daniels",
+    "Position": "QB",
+    "Rank": 21,
+    "Tier": 7,
+    "Superflex_Rank": 3,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7564,
+    "Player": "Ja'Marr Chase",
+    "Position": "WR",
+    "Rank": 1,
+    "Tier": 7,
+    "Superflex_Rank": 4,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6794,
+    "Player": "Justin Jefferson",
+    "Position": "WR",
+    "Rank": 2,
+    "Tier": 7,
+    "Superflex_Rank": 5,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6904,
+    "Player": "Jalen Hurts",
+    "Position": "QB",
+    "Rank": 30,
+    "Tier": 7,
+    "Superflex_Rank": 6,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6786,
+    "Player": "CeeDee Lamb",
+    "Position": "WR",
+    "Rank": 3,
+    "Tier": 7,
+    "Superflex_Rank": 7,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11632,
+    "Player": "Malik Nabers",
+    "Position": "WR",
+    "Rank": 4,
+    "Tier": 7,
+    "Superflex_Rank": 8,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6770,
+    "Player": "Joe Burrow",
+    "Position": "QB",
+    "Rank": 40,
+    "Tier": 7,
+    "Superflex_Rank": 9,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9493,
+    "Player": "Puka Nacua",
+    "Position": "WR",
+    "Rank": 5,
+    "Tier": 7,
+    "Superflex_Rank": 10,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4046,
+    "Player": "Patrick Mahomes",
+    "Position": "QB",
+    "Rank": 58,
+    "Tier": 7,
+    "Superflex_Rank": 11,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11631,
+    "Player": "Brian Thomas",
+    "Position": "WR",
+    "Rank": 6,
+    "Tier": 7,
+    "Superflex_Rank": 12,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9221,
+    "Player": "Jahmyr Gibbs",
+    "Position": "RB",
+    "Rank": 7,
+    "Tier": 7,
+    "Superflex_Rank": 13,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9509,
+    "Player": "Bijan Robinson",
+    "Position": "RB",
+    "Rank": 8,
+    "Tier": 7,
+    "Superflex_Rank": 14,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12527,
+    "Player": "Ashton Jeanty",
+    "Position": "RB",
+    "Rank": 10,
+    "Tier": 7,
+    "Superflex_Rank": 15,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11560,
+    "Player": "Caleb Williams",
+    "Position": "QB",
+    "Rank": 61,
+    "Tier": 7,
+    "Superflex_Rank": 16,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11604,
+    "Player": "Brock Bowers",
+    "Position": "TE",
+    "Rank": 9,
+    "Tier": 7,
+    "Superflex_Rank": 17,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7547,
+    "Player": "Amon-Ra St. Brown",
+    "Position": "WR",
+    "Rank": 11,
+    "Tier": 7,
+    "Superflex_Rank": 18,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8112,
+    "Player": "Drake London",
+    "Position": "WR",
+    "Rank": 12,
+    "Tier": 7,
+    "Superflex_Rank": 19,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11564,
+    "Player": "Drake Maye",
+    "Position": "QB",
+    "Rank": 63,
+    "Tier": 7,
+    "Superflex_Rank": 20,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12507,
+    "Player": "Omarion Hampton",
+    "Position": "RB",
+    "Rank": 13,
+    "Tier": 7,
+    "Superflex_Rank": 21,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9488,
+    "Player": "Jaxon Smith-Njigba",
+    "Position": "WR",
+    "Rank": 16,
+    "Tier": 7,
+    "Superflex_Rank": 22,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 10229,
+    "Player": "Rashee Rice",
+    "Position": "WR",
+    "Rank": 17,
+    "Tier": 7,
+    "Superflex_Rank": 23,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11635,
+    "Player": "Ladd McConkey",
+    "Position": "WR",
+    "Rank": 18,
+    "Tier": 7,
+    "Superflex_Rank": 24,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11628,
+    "Player": "Marvin Harrison",
+    "Position": "WR",
+    "Rank": 19,
+    "Tier": 7,
+    "Superflex_Rank": 25,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7569,
+    "Player": "Nico Collins",
+    "Position": "WR",
+    "Rank": 20,
+    "Tier": 7,
+    "Superflex_Rank": 26,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8130,
+    "Player": "Trey McBride",
+    "Position": "TE",
+    "Rank": 22,
+    "Tier": 7,
+    "Superflex_Rank": 27,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11563,
+    "Player": "Bo Nix",
+    "Position": "QB",
+    "Rank": 64,
+    "Tier": 7,
+    "Superflex_Rank": 28,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8183,
+    "Player": "Brock Purdy",
+    "Position": "QB",
+    "Rank": 65,
+    "Tier": 7,
+    "Superflex_Rank": 29,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6797,
+    "Player": "Justin Herbert",
+    "Position": "QB",
+    "Rank": 66,
+    "Tier": 7,
+    "Superflex_Rank": 30,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12526,
+    "Player": "Tetairoa McMillan",
+    "Position": "WR",
+    "Rank": 23,
+    "Tier": 7,
+    "Superflex_Rank": 31,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8146,
+    "Player": "Garrett Wilson",
+    "Position": "WR",
+    "Rank": 24,
+    "Tier": 7,
+    "Superflex_Rank": 32,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9226,
+    "Player": "Devon Achane",
+    "Position": "RB",
+    "Rank": 25,
+    "Tier": 7,
+    "Superflex_Rank": 33,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12529,
+    "Player": "TreVeyon Henderson",
+    "Position": "RB",
+    "Rank": 26,
+    "Tier": 7,
+    "Superflex_Rank": 34,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5849,
+    "Player": "Kyler Murray",
+    "Position": "QB",
+    "Rank": 77,
+    "Tier": 7,
+    "Superflex_Rank": 35,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4892,
+    "Player": "Baker Mayfield",
+    "Position": "QB",
+    "Rank": 78,
+    "Tier": 7,
+    "Superflex_Rank": 36,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12514,
+    "Player": "Emeka Egbuka",
+    "Position": "WR",
+    "Rank": 27,
+    "Tier": 7,
+    "Superflex_Rank": 37,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5859,
+    "Player": "A.J. Brown",
+    "Position": "WR",
+    "Rank": 28,
+    "Tier": 7,
+    "Superflex_Rank": 38,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9758,
+    "Player": "C.J. Stroud",
+    "Position": "QB",
+    "Rank": 81,
+    "Tier": 7,
+    "Superflex_Rank": 39,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11565,
+    "Player": "J.J. McCarthy",
+    "Position": "QB",
+    "Rank": 82,
+    "Tier": 7,
+    "Superflex_Rank": 40,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11620,
+    "Player": "Rome Odunze",
+    "Position": "WR",
+    "Rank": 29,
+    "Tier": 7,
+    "Superflex_Rank": 41,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4866,
+    "Player": "Saquon Barkley",
+    "Position": "RB",
+    "Rank": 31,
+    "Tier": 7,
+    "Superflex_Rank": 42,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11584,
+    "Player": "Bucky Irving",
+    "Position": "RB",
+    "Rank": 32,
+    "Tier": 7,
+    "Superflex_Rank": 43,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8150,
+    "Player": "Kyren Williams",
+    "Position": "RB",
+    "Rank": 33,
+    "Tier": 7,
+    "Superflex_Rank": 44,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12530,
+    "Player": "Travis Hunter",
+    "Position": "WR",
+    "Rank": 34,
+    "Tier": 7,
+    "Superflex_Rank": 45,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6801,
+    "Player": "Tee Higgins",
+    "Position": "WR",
+    "Rank": 35,
+    "Tier": 7,
+    "Superflex_Rank": 46,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11624,
+    "Player": "Xavier Worthy",
+    "Position": "WR",
+    "Rank": 36,
+    "Tier": 7,
+    "Superflex_Rank": 47,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8138,
+    "Player": "James Cook",
+    "Position": "RB",
+    "Rank": 37,
+    "Tier": 7,
+    "Superflex_Rank": 48,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6813,
+    "Player": "Jonathan Taylor",
+    "Position": "RB",
+    "Rank": 38,
+    "Tier": 7,
+    "Superflex_Rank": 49,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7525,
+    "Player": "DeVonta Smith",
+    "Position": "WR",
+    "Rank": 41,
+    "Tier": 7,
+    "Superflex_Rank": 50,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5846,
+    "Player": "DK Metcalf",
+    "Position": "WR",
+    "Rank": 42,
+    "Tier": 7,
+    "Superflex_Rank": 51,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8155,
+    "Player": "Breece Hall",
+    "Position": "RB",
+    "Rank": 43,
+    "Tier": 7,
+    "Superflex_Rank": 52,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9224,
+    "Player": "Chase Brown",
+    "Position": "RB",
+    "Rank": 44,
+    "Tier": 7,
+    "Superflex_Rank": 53,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12512,
+    "Player": "Quinshon Judkins",
+    "Position": "RB",
+    "Rank": 45,
+    "Tier": 7,
+    "Superflex_Rank": 54,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8144,
+    "Player": "Chris Olave",
+    "Position": "WR",
+    "Rank": 46,
+    "Tier": 7,
+    "Superflex_Rank": 55,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6804,
+    "Player": "Jordan Love",
+    "Position": "QB",
+    "Rank": 122,
+    "Tier": 7,
+    "Superflex_Rank": 56,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 3163,
+    "Player": "Jared Goff",
+    "Position": "QB",
+    "Rank": 124,
+    "Tier": 7,
+    "Superflex_Rank": 57,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8148,
+    "Player": "Jameson Williams",
+    "Position": "WR",
+    "Rank": 47,
+    "Tier": 7,
+    "Superflex_Rank": 58,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11559,
+    "Player": "Michael Penix",
+    "Position": "QB",
+    "Rank": 130,
+    "Tier": 7,
+    "Superflex_Rank": 59,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5850,
+    "Player": "Josh Jacobs",
+    "Position": "RB",
+    "Rank": 48,
+    "Tier": 7,
+    "Superflex_Rank": 60,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12522,
+    "Player": "Cameron Ward",
+    "Position": "QB",
+    "Rank": 134,
+    "Tier": 7,
+    "Superflex_Rank": 61,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 3294,
+    "Player": "Dak Prescott",
+    "Position": "QB",
+    "Rank": 135,
+    "Tier": 7,
+    "Superflex_Rank": 62,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9228,
+    "Player": "Bryce Young",
+    "Position": "QB",
+    "Rank": 136,
+    "Tier": 7,
+    "Superflex_Rank": 63,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7523,
+    "Player": "Trevor Lawrence",
+    "Position": "QB",
+    "Rank": 137,
+    "Tier": 7,
+    "Superflex_Rank": 64,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 99909,
+    "Player": "2026 EARLY-MID 1st",
+    "Position": "",
+    "Rank": 39,
+    "Tier": 7,
+    "Superflex_Rank": 65,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9997,
+    "Player": "Zay Flowers",
+    "Position": "WR",
+    "Rank": 49,
+    "Tier": 7,
+    "Superflex_Rank": 66,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 99927,
+    "Player": "2027 EARLY-MID 1st",
+    "Position": "",
+    "Rank": 57,
+    "Tier": 7,
+    "Superflex_Rank": 67,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8137,
+    "Player": "George Pickens",
+    "Position": "WR",
+    "Rank": 50,
+    "Tier": 7,
+    "Superflex_Rank": 68,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12518,
+    "Player": "Tyler Warren",
+    "Position": "TE",
+    "Rank": 51,
+    "Tier": 7,
+    "Superflex_Rank": 69,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 3198,
+    "Player": "Derrick Henry",
+    "Position": "RB",
+    "Rank": 52,
+    "Tier": 7,
+    "Superflex_Rank": 70,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9756,
+    "Player": "Jordan Addison",
+    "Position": "WR",
+    "Rank": 53,
+    "Tier": 7,
+    "Superflex_Rank": 71,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4983,
+    "Player": "DJ Moore",
+    "Position": "WR",
+    "Rank": 54,
+    "Tier": 7,
+    "Superflex_Rank": 72,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 10859,
+    "Player": "Sam LaPorta",
+    "Position": "TE",
+    "Rank": 55,
+    "Tier": 7,
+    "Superflex_Rank": 73,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12501,
+    "Player": "Matthew Golden",
+    "Position": "WR",
+    "Rank": 56,
+    "Tier": 7,
+    "Superflex_Rank": 74,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11638,
+    "Player": "Ricky Pearsall",
+    "Position": "WR",
+    "Rank": 59,
+    "Tier": 7,
+    "Superflex_Rank": 75,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5927,
+    "Player": "Terry McLaurin",
+    "Position": "WR",
+    "Rank": 60,
+    "Tier": 7,
+    "Superflex_Rank": 76,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 3321,
+    "Player": "Tyreek Hill",
+    "Position": "WR",
+    "Rank": 67,
+    "Tier": 7,
+    "Superflex_Rank": 77,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6803,
+    "Player": "Brandon Aiyuk",
+    "Position": "WR",
+    "Rank": 68,
+    "Tier": 7,
+    "Superflex_Rank": 78,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7526,
+    "Player": "Jaylen Waddle",
+    "Position": "WR",
+    "Rank": 69,
+    "Tier": 7,
+    "Superflex_Rank": 79,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12508,
+    "Player": "Jaxson Dart",
+    "Position": "QB",
+    "Rank": 142,
+    "Tier": 7,
+    "Superflex_Rank": 80,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9500,
+    "Player": "Josh Downs",
+    "Position": "WR",
+    "Rank": 70,
+    "Tier": 7,
+    "Superflex_Rank": 81,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6768,
+    "Player": "Tua Tagovailoa",
+    "Position": "QB",
+    "Rank": 149,
+    "Tier": 7,
+    "Superflex_Rank": 82,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12517,
+    "Player": "Colston Loveland",
+    "Position": "TE",
+    "Rank": 71,
+    "Tier": 7,
+    "Superflex_Rank": 83,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 99910,
+    "Player": "2026 MID-LATE 1st",
+    "Position": "",
+    "Rank": 62,
+    "Tier": 7,
+    "Superflex_Rank": 84,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12519,
+    "Player": "Luther Burden",
+    "Position": "WR",
+    "Rank": 72,
+    "Tier": 7,
+    "Superflex_Rank": 85,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 99928,
+    "Player": "2027 MID-LATE 1st",
+    "Position": "",
+    "Rank": 102,
+    "Tier": 7,
+    "Superflex_Rank": 86,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 2133,
+    "Player": "Davante Adams",
+    "Position": "WR",
+    "Rank": 73,
+    "Tier": 7,
+    "Superflex_Rank": 87,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4034,
+    "Player": "Christian McCaffrey",
+    "Position": "RB",
+    "Rank": 74,
+    "Tier": 7,
+    "Superflex_Rank": 88,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12489,
+    "Player": "RJ Harvey",
+    "Position": "RB",
+    "Rank": 75,
+    "Tier": 7,
+    "Superflex_Rank": 89,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 2216,
+    "Player": "Mike Evans",
+    "Position": "WR",
+    "Rank": 76,
+    "Tier": 7,
+    "Superflex_Rank": 90,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4037,
+    "Player": "Chris Godwin",
+    "Position": "WR",
+    "Rank": 79,
+    "Tier": 7,
+    "Superflex_Rank": 91,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5045,
+    "Player": "Courtland Sutton",
+    "Position": "WR",
+    "Rank": 80,
+    "Tier": 7,
+    "Superflex_Rank": 92,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8134,
+    "Player": "Khalil Shakir",
+    "Position": "WR",
+    "Rank": 83,
+    "Tier": 7,
+    "Superflex_Rank": 93,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6783,
+    "Player": "Jerry Jeudy",
+    "Position": "WR",
+    "Rank": 84,
+    "Tier": 7,
+    "Superflex_Rank": 94,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4981,
+    "Player": "Calvin Ridley",
+    "Position": "WR",
+    "Rank": 85,
+    "Tier": 7,
+    "Superflex_Rank": 95,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12484,
+    "Player": "Jayden Higgins",
+    "Position": "WR",
+    "Rank": 86,
+    "Tier": 7,
+    "Superflex_Rank": 96,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8151,
+    "Player": "Kenneth Walker",
+    "Position": "RB",
+    "Rank": 87,
+    "Tier": 7,
+    "Superflex_Rank": 97,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7594,
+    "Player": "Chuba Hubbard",
+    "Position": "RB",
+    "Rank": 88,
+    "Tier": 7,
+    "Superflex_Rank": 98,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12504,
+    "Player": "Kaleb Johnson",
+    "Position": "RB",
+    "Rank": 89,
+    "Tier": 7,
+    "Superflex_Rank": 99,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6819,
+    "Player": "Michael Pittman",
+    "Position": "WR",
+    "Rank": 90,
+    "Tier": 7,
+    "Superflex_Rank": 100,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5872,
+    "Player": "Deebo Samuel",
+    "Position": "WR",
+    "Rank": 91,
+    "Tier": 7,
+    "Superflex_Rank": 101,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5947,
+    "Player": "Jakobi Meyers",
+    "Position": "WR",
+    "Rank": 92,
+    "Tier": 7,
+    "Superflex_Rank": 102,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 2449,
+    "Player": "Stefon Diggs",
+    "Position": "WR",
+    "Rank": 93,
+    "Tier": 7,
+    "Superflex_Rank": 103,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4035,
+    "Player": "Alvin Kamara",
+    "Position": "RB",
+    "Rank": 94,
+    "Tier": 7,
+    "Superflex_Rank": 104,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5892,
+    "Player": "David Montgomery",
+    "Position": "RB",
+    "Rank": 95,
+    "Tier": 7,
+    "Superflex_Rank": 105,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4137,
+    "Player": "James Conner",
+    "Position": "RB",
+    "Rank": 96,
+    "Tier": 7,
+    "Superflex_Rank": 106,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 1373,
+    "Player": "Geno Smith",
+    "Position": "QB",
+    "Rank": 192,
+    "Tier": 7,
+    "Superflex_Rank": 107,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11637,
+    "Player": "Keon Coleman",
+    "Position": "WR",
+    "Rank": 97,
+    "Tier": 7,
+    "Superflex_Rank": 108,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 10222,
+    "Player": "Jayden Reed",
+    "Position": "WR",
+    "Rank": 98,
+    "Tier": 7,
+    "Superflex_Rank": 109,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 421,
+    "Player": "Matthew Stafford",
+    "Position": "QB",
+    "Rank": 194,
+    "Tier": 7,
+    "Superflex_Rank": 110,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7591,
+    "Player": "Justin Fields",
+    "Position": "QB",
+    "Rank": 195,
+    "Tier": 7,
+    "Superflex_Rank": 111,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12533,
+    "Player": "Jacory Croskey-Merritt",
+    "Position": "RB",
+    "Rank": 99,
+    "Tier": 7,
+    "Superflex_Rank": 112,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6790,
+    "Player": "D'Andre Swift",
+    "Position": "RB",
+    "Rank": 101,
+    "Tier": 7,
+    "Superflex_Rank": 113,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4943,
+    "Player": "Sam Darnold",
+    "Position": "QB",
+    "Rank": 199,
+    "Tier": 7,
+    "Superflex_Rank": 114,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 99911,
+    "Player": "2026 EARLY-MID 2nd",
+    "Position": "",
+    "Rank": 100,
+    "Tier": 7,
+    "Superflex_Rank": 115,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11655,
+    "Player": "Tyrone Tracy",
+    "Position": "RB",
+    "Rank": 103,
+    "Tier": 7,
+    "Superflex_Rank": 116,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 99929,
+    "Player": "2027 EARLY-MID 2nd",
+    "Position": "",
+    "Rank": 117,
+    "Tier": 7,
+    "Superflex_Rank": 117,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7090,
+    "Player": "Darnell Mooney",
+    "Position": "WR",
+    "Rank": 104,
+    "Tier": 7,
+    "Superflex_Rank": 118,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12509,
+    "Player": "Tre Harris",
+    "Position": "WR",
+    "Rank": 105,
+    "Tier": 7,
+    "Superflex_Rank": 119,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 2025008,
+    "Player": "Jaylin Noel",
+    "Position": "WR",
+    "Rank": 106,
+    "Tier": 7,
+    "Superflex_Rank": 120,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7049,
+    "Player": "Jauan Jennings",
+    "Position": "WR",
+    "Rank": 107,
+    "Tier": 7,
+    "Superflex_Rank": 121,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7543,
+    "Player": "Travis Etienne",
+    "Position": "RB",
+    "Rank": 108,
+    "Tier": 7,
+    "Superflex_Rank": 122,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9753,
+    "Player": "Zach Charbonnet",
+    "Position": "RB",
+    "Rank": 109,
+    "Tier": 7,
+    "Superflex_Rank": 123,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4039,
+    "Player": "Cooper Kupp",
+    "Position": "WR",
+    "Rank": 110,
+    "Tier": 7,
+    "Superflex_Rank": 124,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12541,
+    "Player": "Dont'e Thornton Jr.",
+    "Position": "WR",
+    "Rank": 111,
+    "Tier": 7,
+    "Superflex_Rank": 125,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5967,
+    "Player": "Tony Pollard",
+    "Position": "RB",
+    "Rank": 113,
+    "Tier": 7,
+    "Superflex_Rank": 126,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12483,
+    "Player": "Jack Bech",
+    "Position": "WR",
+    "Rank": 112,
+    "Tier": 7,
+    "Superflex_Rank": 127,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11646,
+    "Player": "Jalen Coker",
+    "Position": "WR",
+    "Rank": 114,
+    "Tier": 7,
+    "Superflex_Rank": 128,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11589,
+    "Player": "Trey Benson",
+    "Position": "RB",
+    "Rank": 116,
+    "Tier": 7,
+    "Superflex_Rank": 129,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4018,
+    "Player": "Joe Mixon",
+    "Position": "RB",
+    "Rank": 118,
+    "Tier": 7,
+    "Superflex_Rank": 130,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8205,
+    "Player": "Isiah Pacheco",
+    "Position": "RB",
+    "Rank": 119,
+    "Tier": 7,
+    "Superflex_Rank": 131,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9754,
+    "Player": "Quentin Johnston",
+    "Position": "WR",
+    "Rank": 115,
+    "Tier": 7,
+    "Superflex_Rank": 132,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7571,
+    "Player": "Rashod Bateman",
+    "Position": "WR",
+    "Rank": 120,
+    "Tier": 7,
+    "Superflex_Rank": 133,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4217,
+    "Player": "George Kittle",
+    "Position": "TE",
+    "Rank": 125,
+    "Tier": 7,
+    "Superflex_Rank": 134,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8676,
+    "Player": "Rashid Shaheed",
+    "Position": "WR",
+    "Rank": 121,
+    "Tier": 7,
+    "Superflex_Rank": 135,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9504,
+    "Player": "Kayshon Boutte",
+    "Position": "WR",
+    "Rank": 126,
+    "Tier": 7,
+    "Superflex_Rank": 136,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 2025009,
+    "Player": "Kyle Williams",
+    "Position": "WR",
+    "Rank": 127,
+    "Tier": 7,
+    "Superflex_Rank": 137,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5844,
+    "Player": "T.J. Hockenson",
+    "Position": "TE",
+    "Rank": 129,
+    "Tier": 7,
+    "Superflex_Rank": 138,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12542,
+    "Player": "Efton Chism",
+    "Position": "WR",
+    "Rank": 128,
+    "Tier": 7,
+    "Superflex_Rank": 139,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12492,
+    "Player": "Pat Bryant",
+    "Position": "WR",
+    "Rank": 131,
+    "Tier": 7,
+    "Superflex_Rank": 140,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11626,
+    "Player": "Xavier Legette",
+    "Position": "WR",
+    "Rank": 132,
+    "Tier": 7,
+    "Superflex_Rank": 141,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 10444,
+    "Player": "Cedric Tillman",
+    "Position": "WR",
+    "Rank": 133,
+    "Tier": 7,
+    "Superflex_Rank": 142,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 99912,
+    "Player": "2026 MID-LATE 2nd",
+    "Position": "",
+    "Rank": 123,
+    "Tier": 7,
+    "Superflex_Rank": 143,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11618,
+    "Player": "Jalen McMillan",
+    "Position": "WR",
+    "Rank": 138,
+    "Tier": 7,
+    "Superflex_Rank": 144,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 99930,
+    "Player": "2027 MID-LATE 2nd",
+    "Position": "",
+    "Rank": 146,
+    "Tier": 7,
+    "Superflex_Rank": 145,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4033,
+    "Player": "David Njoku",
+    "Position": "TE",
+    "Rank": 140,
+    "Tier": 7,
+    "Superflex_Rank": 146,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9484,
+    "Player": "Tucker Kraft",
+    "Position": "TE",
+    "Rank": 141,
+    "Tier": 7,
+    "Superflex_Rank": 147,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11625,
+    "Player": "Adonai Mitchell",
+    "Position": "WR",
+    "Rank": 139,
+    "Tier": 7,
+    "Superflex_Rank": 148,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5012,
+    "Player": "Mark Andrews",
+    "Position": "TE",
+    "Rank": 144,
+    "Tier": 7,
+    "Superflex_Rank": 149,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 10236,
+    "Player": "Dalton Kincaid",
+    "Position": "TE",
+    "Rank": 145,
+    "Tier": 7,
+    "Superflex_Rank": 150,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5848,
+    "Player": "Marquise Brown",
+    "Position": "WR",
+    "Rank": 143,
+    "Tier": 7,
+    "Superflex_Rank": 151,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 2309,
+    "Player": "Amari Cooper",
+    "Position": "WR",
+    "Rank": 147,
+    "Tier": 7,
+    "Superflex_Rank": 152,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4066,
+    "Player": "Evan Engram",
+    "Position": "TE",
+    "Rank": 150,
+    "Tier": 7,
+    "Superflex_Rank": 153,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7553,
+    "Player": "Kyle Pitts",
+    "Position": "TE",
+    "Rank": 151,
+    "Tier": 7,
+    "Superflex_Rank": 154,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12481,
+    "Player": "Cam Skattebo",
+    "Position": "RB",
+    "Rank": 152,
+    "Tier": 7,
+    "Superflex_Rank": 155,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11630,
+    "Player": "Roman Wilson",
+    "Position": "WR",
+    "Rank": 148,
+    "Tier": 7,
+    "Superflex_Rank": 156,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 1466,
+    "Player": "Travis Kelce",
+    "Position": "TE",
+    "Rank": 154,
+    "Tier": 7,
+    "Superflex_Rank": 157,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4199,
+    "Player": "Aaron Jones",
+    "Position": "RB",
+    "Rank": 155,
+    "Tier": 7,
+    "Superflex_Rank": 158,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8142,
+    "Player": "Alec Pierce",
+    "Position": "WR",
+    "Rank": 153,
+    "Tier": 7,
+    "Superflex_Rank": 159,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9502,
+    "Player": "Nathaniel Dell",
+    "Position": "WR",
+    "Rank": 156,
+    "Tier": 7,
+    "Superflex_Rank": 160,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 99913,
+    "Player": "2026 3rd",
+    "Position": "",
+    "Rank": 158,
+    "Tier": 7,
+    "Superflex_Rank": 161,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 7
+  },
+  {
+    "Player_Id": 7588,
+    "Player": "Javonte Williams",
+    "Position": "RB",
+    "Rank": 159,
+    "Tier": 7,
+    "Superflex_Rank": 162,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12487,
+    "Player": "Terrance Ferguson",
+    "Position": "TE",
+    "Rank": 160,
+    "Tier": 7,
+    "Superflex_Rank": 163,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12506,
+    "Player": "Harold Fannin",
+    "Position": "TE",
+    "Rank": 161,
+    "Tier": 7,
+    "Superflex_Rank": 164,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9494,
+    "Player": "Marvin Mims",
+    "Position": "WR",
+    "Rank": 157,
+    "Tier": 7,
+    "Superflex_Rank": 165,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 1426,
+    "Player": "DeAndre Hopkins",
+    "Position": "WR",
+    "Rank": 162,
+    "Tier": 7,
+    "Superflex_Rank": 166,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12457,
+    "Player": "Jaydon Blue",
+    "Position": "RB",
+    "Rank": 164,
+    "Tier": 7,
+    "Superflex_Rank": 167,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 1479,
+    "Player": "Keenan Allen",
+    "Position": "WR",
+    "Rank": 163,
+    "Tier": 7,
+    "Superflex_Rank": 168,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12469,
+    "Player": "Dylan Sampson",
+    "Position": "RB",
+    "Rank": 166,
+    "Tier": 7,
+    "Superflex_Rank": 169,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8408,
+    "Player": "Jordan Mason",
+    "Position": "RB",
+    "Rank": 167,
+    "Tier": 7,
+    "Superflex_Rank": 170,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8121,
+    "Player": "Romeo Doubs",
+    "Position": "WR",
+    "Rank": 165,
+    "Tier": 7,
+    "Superflex_Rank": 171,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8167,
+    "Player": "Christian Watson",
+    "Position": "WR",
+    "Rank": 168,
+    "Tier": 7,
+    "Superflex_Rank": 172,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12490,
+    "Player": "Bhayshul Tuten",
+    "Position": "RB",
+    "Rank": 170,
+    "Tier": 7,
+    "Superflex_Rank": 173,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9225,
+    "Player": "Tank Bigsby",
+    "Position": "RB",
+    "Rank": 171,
+    "Tier": 7,
+    "Superflex_Rank": 174,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 99914,
+    "Player": "2026 4th",
+    "Position": "",
+    "Rank": 172,
+    "Tier": 7,
+    "Superflex_Rank": 175,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 7
+  },
+  {
+    "Player_Id": 7596,
+    "Player": "Elijah Moore",
+    "Position": "WR",
+    "Rank": 169,
+    "Tier": 7,
+    "Superflex_Rank": 176,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 10232,
+    "Player": "Michael Wilson",
+    "Position": "WR",
+    "Rank": 173,
+    "Tier": 7,
+    "Superflex_Rank": 177,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9508,
+    "Player": "Tyjae Spears",
+    "Position": "RB",
+    "Rank": 175,
+    "Tier": 7,
+    "Superflex_Rank": 178,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8136,
+    "Player": "Rachaad White",
+    "Position": "RB",
+    "Rank": 176,
+    "Tier": 7,
+    "Superflex_Rank": 179,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4663,
+    "Player": "Austin Ekeler",
+    "Position": "RB",
+    "Rank": 177,
+    "Tier": 7,
+    "Superflex_Rank": 180,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9501,
+    "Player": "DeMario Douglas",
+    "Position": "WR",
+    "Rank": 174,
+    "Tier": 7,
+    "Superflex_Rank": 181,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6806,
+    "Player": "J.K. Dobbins",
+    "Position": "RB",
+    "Rank": 179,
+    "Tier": 7,
+    "Superflex_Rank": 182,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8228,
+    "Player": "Jaylen Warren",
+    "Position": "RB",
+    "Rank": 180,
+    "Tier": 7,
+    "Superflex_Rank": 183,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4950,
+    "Player": "Christian Kirk",
+    "Position": "WR",
+    "Rank": 178,
+    "Tier": 7,
+    "Superflex_Rank": 184,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 99931,
+    "Player": "2027 3rd",
+    "Position": "",
+    "Rank": 182,
+    "Tier": 7,
+    "Superflex_Rank": 185,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 7
+  },
+  {
+    "Player_Id": 7528,
+    "Player": "Najee Harris",
+    "Position": "RB",
+    "Rank": 183,
+    "Tier": 7,
+    "Superflex_Rank": 186,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11576,
+    "Player": "Braelon Allen",
+    "Position": "RB",
+    "Rank": 184,
+    "Tier": 7,
+    "Superflex_Rank": 187,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 10213,
+    "Player": "Tre Tucker",
+    "Position": "WR",
+    "Rank": 181,
+    "Tier": 7,
+    "Superflex_Rank": 188,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11619,
+    "Player": "Ja'Lynn Polk",
+    "Position": "WR",
+    "Rank": 185,
+    "Tier": 7,
+    "Superflex_Rank": 189,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12521,
+    "Player": "Elijah Arroyo",
+    "Position": "TE",
+    "Rank": 187,
+    "Tier": 7,
+    "Superflex_Rank": 190,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7600,
+    "Player": "Pat Freiermuth",
+    "Position": "TE",
+    "Rank": 188,
+    "Tier": 7,
+    "Superflex_Rank": 191,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4144,
+    "Player": "Jonnu Smith",
+    "Position": "TE",
+    "Rank": 189,
+    "Tier": 7,
+    "Superflex_Rank": 192,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11617,
+    "Player": "Malachi Corley",
+    "Position": "WR",
+    "Rank": 186,
+    "Tier": 7,
+    "Superflex_Rank": 193,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5022,
+    "Player": "Dallas Goedert",
+    "Position": "TE",
+    "Rank": 191,
+    "Tier": 7,
+    "Superflex_Rank": 194,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11627,
+    "Player": "Troy Franklin",
+    "Position": "WR",
+    "Rank": 190,
+    "Tier": 7,
+    "Superflex_Rank": 195,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7611,
+    "Player": "Rhamondre Stevenson",
+    "Position": "RB",
+    "Rank": 196,
+    "Tier": 7,
+    "Superflex_Rank": 196,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12495,
+    "Player": "Ollie Gordon II",
+    "Position": "RB",
+    "Rank": 197,
+    "Tier": 7,
+    "Superflex_Rank": 197,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8126,
+    "Player": "Wan'Dale Robinson",
+    "Position": "WR",
+    "Rank": 193,
+    "Tier": 7,
+    "Superflex_Rank": 198,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 2025001,
+    "Player": "Kyle Monangai",
+    "Position": "RB",
+    "Rank": 200,
+    "Tier": 7,
+    "Superflex_Rank": 199,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12474,
+    "Player": "Woody Marks",
+    "Position": "RB",
+    "Rank": 201,
+    "Tier": 7,
+    "Superflex_Rank": 200,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8125,
+    "Player": "Calvin Austin",
+    "Position": "WR",
+    "Rank": 198,
+    "Tier": 7,
+    "Superflex_Rank": 201,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9757,
+    "Player": "Kendre Miller",
+    "Position": "RB",
+    "Rank": 203,
+    "Tier": 7,
+    "Superflex_Rank": 202,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 2025013,
+    "Player": "Tyler Shough",
+    "Position": "QB",
+    "Rank": 204,
+    "Tier": 7,
+    "Superflex_Rank": 203,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6943,
+    "Player": "Gabe Davis",
+    "Position": "WR",
+    "Rank": 202,
+    "Tier": 7,
+    "Superflex_Rank": 204,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9229,
+    "Player": "Anthony Richardson",
+    "Position": "QB",
+    "Rank": 206,
+    "Tier": 7,
+    "Superflex_Rank": 205,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 1234,
+    "Player": "Russell Wilson",
+    "Position": "QB",
+    "Rank": 207,
+    "Tier": 7,
+    "Superflex_Rank": 206,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12510,
+    "Player": "Jalen Milroe",
+    "Position": "QB",
+    "Rank": 208,
+    "Tier": 7,
+    "Superflex_Rank": 207,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 10226,
+    "Player": "Andrei Iosivas",
+    "Position": "WR",
+    "Rank": 205,
+    "Tier": 7,
+    "Superflex_Rank": 208,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12486,
+    "Player": "Dillon Gabriel",
+    "Position": "QB",
+    "Rank": 210,
+    "Tier": 7,
+    "Superflex_Rank": 209,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8143,
+    "Player": "Jerome Ford",
+    "Position": "RB",
+    "Rank": 211,
+    "Tier": 7,
+    "Superflex_Rank": 210,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11569,
+    "Player": "Jarquez Hunter",
+    "Position": "RB",
+    "Rank": 212,
+    "Tier": 7,
+    "Superflex_Rank": 211,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8117,
+    "Player": "Jalen Tolbert",
+    "Position": "WR",
+    "Rank": 209,
+    "Tier": 7,
+    "Superflex_Rank": 212,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 1689,
+    "Player": "Adam Thielen",
+    "Position": "WR",
+    "Rank": 213,
+    "Tier": 7,
+    "Superflex_Rank": 213,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4988,
+    "Player": "Nick Chubb",
+    "Position": "RB",
+    "Rank": 215,
+    "Tier": 7,
+    "Superflex_Rank": 214,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12524,
+    "Player": "Shedeur Sanders",
+    "Position": "QB",
+    "Rank": 216,
+    "Tier": 7,
+    "Superflex_Rank": 215,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12467,
+    "Player": "Jordan James",
+    "Position": "RB",
+    "Rank": 217,
+    "Tier": 7,
+    "Superflex_Rank": 216,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12511,
+    "Player": "Will Howard",
+    "Position": "QB",
+    "Rank": 218,
+    "Tier": 7,
+    "Superflex_Rank": 217,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4068,
+    "Player": "Mike Williams",
+    "Position": "WR",
+    "Rank": 214,
+    "Tier": 7,
+    "Superflex_Rank": 218,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 96,
+    "Player": "Aaron Rodgers",
+    "Position": "QB",
+    "Rank": 220,
+    "Tier": 7,
+    "Superflex_Rank": 219,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5870,
+    "Player": "Daniel Jones",
+    "Position": "QB",
+    "Rank": 221,
+    "Tier": 7,
+    "Superflex_Rank": 220,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 2025007,
+    "Player": "Trevor Etienne",
+    "Position": "RB",
+    "Rank": 222,
+    "Tier": 7,
+    "Superflex_Rank": 221,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12471,
+    "Player": "DJ Giddens",
+    "Position": "RB",
+    "Rank": 223,
+    "Tier": 7,
+    "Superflex_Rank": 222,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 2374,
+    "Player": "Tyler Lockett",
+    "Position": "WR",
+    "Rank": 219,
+    "Tier": 7,
+    "Superflex_Rank": 223,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11575,
+    "Player": "Ray Davis",
+    "Position": "RB",
+    "Rank": 225,
+    "Tier": 7,
+    "Superflex_Rank": 224,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8111,
+    "Player": "Cade Otton",
+    "Position": "TE",
+    "Rank": 226,
+    "Tier": 7,
+    "Superflex_Rank": 225,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8110,
+    "Player": "Jake Ferguson",
+    "Position": "TE",
+    "Rank": 227,
+    "Tier": 7,
+    "Superflex_Rank": 226,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 99932,
+    "Player": "2027 4th",
+    "Position": "",
+    "Rank": 228,
+    "Tier": 7,
+    "Superflex_Rank": 227,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 7
+  },
+  {
+    "Player_Id": 4082,
+    "Player": "Curtis Samuel",
+    "Position": "WR",
+    "Rank": 224,
+    "Tier": 7,
+    "Superflex_Rank": 228,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 2197,
+    "Player": "Brandin Cooks",
+    "Position": "WR",
+    "Rank": 229,
+    "Tier": 7,
+    "Superflex_Rank": 229,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4381,
+    "Player": "Taysom Hill",
+    "Position": "TE",
+    "Rank": 230,
+    "Tier": 7,
+    "Superflex_Rank": 230,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12493,
+    "Player": "Oronde Gadsden",
+    "Position": "TE",
+    "Rank": 231,
+    "Tier": 7,
+    "Superflex_Rank": 231,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12502,
+    "Player": "Gunnar Helm",
+    "Position": "TE",
+    "Rank": 232,
+    "Tier": 7,
+    "Superflex_Rank": 232,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11596,
+    "Player": "Ben Sinnott",
+    "Position": "TE",
+    "Rank": 233,
+    "Tier": 7,
+    "Superflex_Rank": 233,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8131,
+    "Player": "Isaiah Likely",
+    "Position": "TE",
+    "Rank": 234,
+    "Tier": 7,
+    "Superflex_Rank": 234,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9480,
+    "Player": "Brenton Strange",
+    "Position": "TE",
+    "Rank": 235,
+    "Tier": 7,
+    "Superflex_Rank": 235,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9497,
+    "Player": "Jalin Hyatt",
+    "Position": "WR",
+    "Rank": 236,
+    "Tier": 7,
+    "Superflex_Rank": 236,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11645,
+    "Player": "Javon Baker",
+    "Position": "WR",
+    "Rank": 237,
+    "Tier": 7,
+    "Superflex_Rank": 237,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12476,
+    "Player": "Devin Neal",
+    "Position": "RB",
+    "Rank": 238,
+    "Tier": 7,
+    "Superflex_Rank": 238,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5001,
+    "Player": "Dalton Schultz",
+    "Position": "TE",
+    "Rank": 239,
+    "Tier": 7,
+    "Superflex_Rank": 239,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11586,
+    "Player": "Blake Corum",
+    "Position": "RB",
+    "Rank": 240,
+    "Tier": 7,
+    "Superflex_Rank": 240,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 3214,
+    "Player": "Hunter Henry",
+    "Position": "TE",
+    "Rank": 241,
+    "Tier": 7,
+    "Superflex_Rank": 241,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7828,
+    "Player": "Noah Gray",
+    "Position": "TE",
+    "Rank": 242,
+    "Tier": 7,
+    "Superflex_Rank": 242,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 10225,
+    "Player": "Jonathan Mingo",
+    "Position": "WR",
+    "Rank": 243,
+    "Tier": 7,
+    "Superflex_Rank": 243,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8132,
+    "Player": "Tyler Allgeier",
+    "Position": "RB",
+    "Rank": 244,
+    "Tier": 7,
+    "Superflex_Rank": 244,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11643,
+    "Player": "Jaylen Wright",
+    "Position": "RB",
+    "Rank": 245,
+    "Tier": 7,
+    "Superflex_Rank": 245,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11600,
+    "Player": "Ja'Tavion Sanders",
+    "Position": "TE",
+    "Rank": 246,
+    "Tier": 7,
+    "Superflex_Rank": 246,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9481,
+    "Player": "Luke Musgrave",
+    "Position": "TE",
+    "Rank": 247,
+    "Tier": 7,
+    "Superflex_Rank": 247,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8188,
+    "Player": "Tyquan Thornton",
+    "Position": "WR",
+    "Rank": 248,
+    "Tier": 7,
+    "Superflex_Rank": 248,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8147,
+    "Player": "John Metchie",
+    "Position": "WR",
+    "Rank": 249,
+    "Tier": 7,
+    "Superflex_Rank": 249,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11592,
+    "Player": "Erick All",
+    "Position": "TE",
+    "Rank": 250,
+    "Tier": 7,
+    "Superflex_Rank": 250,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5906,
+    "Player": "Dawson Knox",
+    "Position": "TE",
+    "Rank": 251,
+    "Tier": 7,
+    "Superflex_Rank": 251,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9482,
+    "Player": "Michael Mayer",
+    "Position": "TE",
+    "Rank": 252,
+    "Tier": 7,
+    "Superflex_Rank": 252,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11597,
+    "Player": "Theo Johnson",
+    "Position": "TE",
+    "Rank": 253,
+    "Tier": 7,
+    "Superflex_Rank": 253,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7670,
+    "Player": "Joshua Palmer",
+    "Position": "WR",
+    "Rank": 254,
+    "Tier": 7,
+    "Superflex_Rank": 254,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11557,
+    "Player": "Joe Milton",
+    "Position": "QB",
+    "Rank": 255,
+    "Tier": 7,
+    "Superflex_Rank": 255,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 1166,
+    "Player": "Kirk Cousins",
+    "Position": "QB",
+    "Rank": 256,
+    "Tier": 7,
+    "Superflex_Rank": 256,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11583,
+    "Player": "Jonathon Brooks",
+    "Position": "RB",
+    "Rank": 257,
+    "Tier": 7,
+    "Superflex_Rank": 257,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11651,
+    "Player": "Isaac Guerendo",
+    "Position": "RB",
+    "Rank": 258,
+    "Tier": 7,
+    "Superflex_Rank": 258,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8135,
+    "Player": "Treylon Burks",
+    "Position": "WR",
+    "Rank": 259,
+    "Tier": 7,
+    "Superflex_Rank": 259,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8154,
+    "Player": "Brian Robinson",
+    "Position": "RB",
+    "Rank": 260,
+    "Tier": 7,
+    "Superflex_Rank": 260,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7021,
+    "Player": "Rico Dowdle",
+    "Position": "RB",
+    "Rank": 261,
+    "Tier": 7,
+    "Superflex_Rank": 261,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7601,
+    "Player": "Rondale Moore",
+    "Position": "WR",
+    "Rank": 262,
+    "Tier": 7,
+    "Superflex_Rank": 262,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4234,
+    "Player": "Noah Brown",
+    "Position": "WR",
+    "Rank": 263,
+    "Tier": 7,
+    "Superflex_Rank": 263,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4098,
+    "Player": "Kareem Hunt",
+    "Position": "RB",
+    "Rank": 264,
+    "Tier": 7,
+    "Superflex_Rank": 264,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11579,
+    "Player": "Audric Estime",
+    "Position": "RB",
+    "Rank": 265,
+    "Tier": 7,
+    "Superflex_Rank": 265,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11647,
+    "Player": "Kimani Vidal",
+    "Position": "RB",
+    "Rank": 266,
+    "Tier": 7,
+    "Superflex_Rank": 266,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11581,
+    "Player": "MarShawn Lloyd",
+    "Position": "RB",
+    "Rank": 267,
+    "Tier": 7,
+    "Superflex_Rank": 267,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 10235,
+    "Player": "Roschon Johnson",
+    "Position": "RB",
+    "Rank": 268,
+    "Tier": 7,
+    "Superflex_Rank": 268,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4080,
+    "Player": "Zay Jones",
+    "Position": "WR",
+    "Rank": 269,
+    "Tier": 7,
+    "Superflex_Rank": 269,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8210,
+    "Player": "Chigoziem Okonkwo",
+    "Position": "TE",
+    "Rank": 270,
+    "Tier": 7,
+    "Superflex_Rank": 270,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7002,
+    "Player": "Juwan Johnson",
+    "Position": "TE",
+    "Rank": 271,
+    "Tier": 7,
+    "Superflex_Rank": 271,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8225,
+    "Player": "Daniel Bellinger",
+    "Position": "TE",
+    "Rank": 272,
+    "Tier": 7,
+    "Superflex_Rank": 272,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 10871,
+    "Player": "Luke Schoonmaker",
+    "Position": "TE",
+    "Rank": 273,
+    "Tier": 7,
+    "Superflex_Rank": 273,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4993,
+    "Player": "Mike Gesicki",
+    "Position": "TE",
+    "Rank": 274,
+    "Tier": 7,
+    "Superflex_Rank": 274,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12540,
+    "Player": "Chimere Dike",
+    "Position": "WR",
+    "Rank": 275,
+    "Tier": 7,
+    "Superflex_Rank": 275,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5970,
+    "Player": "Greg Dortch",
+    "Position": "WR",
+    "Rank": 276,
+    "Tier": 7,
+    "Superflex_Rank": 276,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7568,
+    "Player": "Brevin Jordan",
+    "Position": "TE",
+    "Rank": 277,
+    "Tier": 7,
+    "Superflex_Rank": 277,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5133,
+    "Player": "Tyler Conklin",
+    "Position": "TE",
+    "Rank": 278,
+    "Tier": 7,
+    "Superflex_Rank": 278,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 2078,
+    "Player": "Odell Beckham",
+    "Position": "WR",
+    "Rank": 279,
+    "Tier": 7,
+    "Superflex_Rank": 279,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6845,
+    "Player": "Zack Moss",
+    "Position": "RB",
+    "Rank": 280,
+    "Tier": 7,
+    "Superflex_Rank": 280,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6826,
+    "Player": "Cole Kmet",
+    "Position": "TE",
+    "Rank": 281,
+    "Tier": 7,
+    "Superflex_Rank": 281,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6945,
+    "Player": "Antonio Gibson",
+    "Position": "RB",
+    "Rank": 282,
+    "Tier": 7,
+    "Superflex_Rank": 282,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 10219,
+    "Player": "Chris Rodriguez",
+    "Position": "RB",
+    "Rank": 283,
+    "Tier": 7,
+    "Superflex_Rank": 283,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5995,
+    "Player": "Justice Hill",
+    "Position": "RB",
+    "Rank": 284,
+    "Tier": 7,
+    "Superflex_Rank": 284,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6130,
+    "Player": "Devin Singletary",
+    "Position": "RB",
+    "Rank": 285,
+    "Tier": 7,
+    "Superflex_Rank": 285,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9506,
+    "Player": "Sean Tucker",
+    "Position": "RB",
+    "Rank": 286,
+    "Tier": 7,
+    "Superflex_Rank": 286,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8162,
+    "Player": "Sam Howell",
+    "Position": "QB",
+    "Rank": 287,
+    "Tier": 7,
+    "Superflex_Rank": 287,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12500,
+    "Player": "Quinn Ewers",
+    "Position": "QB",
+    "Rank": 288,
+    "Tier": 7,
+    "Superflex_Rank": 288,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 2306,
+    "Player": "Jameis Winston",
+    "Position": "QB",
+    "Rank": 289,
+    "Tier": 7,
+    "Superflex_Rank": 289,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8160,
+    "Player": "Kenny Pickett",
+    "Position": "QB",
+    "Rank": 290,
+    "Tier": 7,
+    "Superflex_Rank": 290,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 12498,
+    "Player": "Mason Taylor",
+    "Position": "TE",
+    "Rank": 291,
+    "Tier": 7,
+    "Superflex_Rank": 291,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7567,
+    "Player": "Kenneth Gainwell",
+    "Position": "RB",
+    "Rank": 292,
+    "Tier": 7,
+    "Superflex_Rank": 292,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 5987,
+    "Player": "Alexander Mattison",
+    "Position": "RB",
+    "Rank": 293,
+    "Tier": 7,
+    "Superflex_Rank": 293,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 3048,
+    "Player": "Chris Manhertz",
+    "Position": "TE",
+    "Rank": 294,
+    "Tier": 7,
+    "Superflex_Rank": 294,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 7608,
+    "Player": "Khalil Herbert",
+    "Position": "RB",
+    "Rank": 295,
+    "Tier": 7,
+    "Superflex_Rank": 295,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4147,
+    "Player": "Samaje Perine",
+    "Position": "RB",
+    "Rank": 296,
+    "Tier": 7,
+    "Superflex_Rank": 296,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 11640,
+    "Player": "Jermaine Burton",
+    "Position": "WR",
+    "Rank": 297,
+    "Tier": 7,
+    "Superflex_Rank": 297,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 8119,
+    "Player": "Jahan Dotson",
+    "Position": "WR",
+    "Rank": 298,
+    "Tier": 7,
+    "Superflex_Rank": 298,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 4454,
+    "Player": "Kendrick Bourne",
+    "Position": "WR",
+    "Rank": 299,
+    "Tier": 7,
+    "Superflex_Rank": 299,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 6149,
+    "Player": "Darius Slayton",
+    "Position": "WR",
+    "Rank": 300,
+    "Tier": 7,
+    "Superflex_Rank": 300,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  },
+  {
+    "Player_Id": 9505,
+    "Player": "Deuce Vaughn",
+    "Position": "RB",
+    "Rank": 301,
+    "Tier": 7,
+    "Superflex_Rank": 301,
+    "Superflex_Tier": 7,
+    "Positional_Tier": 1
+  }
+]
