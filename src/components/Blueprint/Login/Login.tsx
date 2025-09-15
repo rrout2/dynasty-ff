@@ -85,6 +85,7 @@ export default function Login() {
                         Subscribtion tier:{' '}
                         {response.data.subscription_tier || 'N/A'}
                     </div>
+                    <div>User ID: {response.data.user_id || 'N/A'}</div>
                 </div>
             )}
         </div>
