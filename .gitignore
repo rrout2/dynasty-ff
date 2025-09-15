@@ -11,6 +11,8 @@
 # production
 /build
 /dist
+/scripts/infinite_bp/package
+/aws/aws/dist
 
 # misc
 .DS_Store
