@@ -1130,12 +1130,17 @@ export function useDisallowedBuysFromUrl(): [
     }, [searchParams]);
 
     useEffect(() => {
-        if (
-            disallowedBuys === searchParams.get(DISALLOWED_BUYS)?.split(',') ||
-            !disallowedBuys
-        ) {
+        if (disallowedBuys === searchParams.get(DISALLOWED_BUYS)?.split(',')) {
             return;
         }
+        if (!disallowedBuys || disallowedBuys.length === 0) {
+            setSearchParams(searchParams => {
+                searchParams.delete(DISALLOWED_BUYS);
+                return searchParams;
+            });
+            return;
+        }
+
         setSearchParams(searchParams => {
             searchParams.set(DISALLOWED_BUYS, disallowedBuys.join(','));
             return searchParams;
@@ -1481,7 +1486,8 @@ export function useAllPlayers() {
 export function useNonSleeper(
     rosters?: Roster[],
     specifiedUser?: User,
-    setRoster?: (roster: Roster) => void
+    setRoster?: (roster: Roster) => void,
+    skipSearchParams = false
 ) {
     const [leagueId] = useLeagueIdFromUrl();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -1524,6 +1530,7 @@ export function useNonSleeper(
     }, [specifiedUser, leagueId]);
 
     useEffect(() => {
+        if (skipSearchParams) return;
         if (leagueId) {
             setSearchParams(searchParams => {
                 searchParams.delete(TEAM_NAME);
@@ -1535,7 +1542,7 @@ export function useNonSleeper(
                 return searchParams;
             });
         }
-    }, [teamName, leagueId]);
+    }, [teamName, leagueId, skipSearchParams]);
 
     useEffect(() => {
         setNumRosters(
@@ -1544,6 +1551,7 @@ export function useNonSleeper(
     }, [rosters]);
 
     useEffect(() => {
+        if (skipSearchParams) return;
         if (leagueId) {
             setSearchParams(searchParams => {
                 searchParams.delete(LEAGUE_SIZE);
@@ -1558,6 +1566,7 @@ export function useNonSleeper(
     }, [numRosters, leagueId]);
 
     useEffect(() => {
+        if (skipSearchParams) return;
         if (leagueId) {
             setSearchParams(searchParams => {
                 searchParams.delete(PPR);
@@ -1576,6 +1585,7 @@ export function useNonSleeper(
     }, [ppr, teBonus, taxiSlots, leagueId]);
 
     useEffect(() => {
+        if (skipSearchParams) return;
         if (leagueId) {
             setSearchParams(searchParams => {
                 searchParams.delete(QB);
@@ -1616,6 +1626,7 @@ export function useNonSleeper(
     }, [nonSleeperIds, setRoster]);
 
     useEffect(() => {
+        if (skipSearchParams) return;
         if (leagueId) {
             setSearchParams(searchParams => {
                 searchParams.delete(NON_SLEEPER_IDS);

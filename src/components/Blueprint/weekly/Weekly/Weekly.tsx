@@ -26,7 +26,6 @@ import {
 import ExportButton from '../../shared/ExportButton';
 import {BuySellTileProps} from '../../infinite/BuySellHold/BuySellHold';
 import {QB, SUPER_FLEX} from '../../../../consts/fantasy';
-import {TeamSelectComponent} from '../../../Team/TeamPage/TeamPage';
 import {useEffect, useState} from 'react';
 import {NONE_TEAM_ID} from '../../../../consts/urlParams';
 import {
@@ -40,10 +39,56 @@ import {
 
 type InSeasonVerdict = 'TROUBLE' | 'SOLID' | 'SHAKY';
 
-export default function Infinite() {
+export default function Weekly() {
     const [leagueId] = useLeagueIdFromUrl();
     const [teamId, setTeamId] = useTeamIdFromUrl();
     const [userId] = useUserIdFromUrl();
+    const [buys, setBuys] = useState<BuySellTileProps[]>([]);
+    const [loaded, setLoaded] = useState(false);
+    const [teamName, setTeamName] = useState('');
+
+    return (
+        <>
+            <ExportButton
+                className={styles.fullBlueprint}
+                pngName={`${teamName}_weekly.png`}
+                disabled={!loaded}
+            />
+            <span>{buys.map(b => b.playerId).join(',')}</span>
+            <WeeklyBlueprint
+                leagueId={leagueId}
+                teamId={teamId}
+                setTeamId={setTeamId}
+                userId={userId}
+                setBuys={setBuys}
+                setLoaded={setLoaded}
+                setTeamName={setTeamName}
+            />
+        </>
+    );
+}
+
+export type WeeklyBlueprintProps = {
+    leagueId: string;
+    teamId: string;
+    setTeamId: (teamId: string) => void;
+    userId?: string;
+    setBuys?: (buys: BuySellTileProps[]) => void;
+    setLoaded?: (loaded: boolean) => void;
+    setTeamName?: (name: string) => void;
+    classNameForExport?: string;
+};
+
+export function WeeklyBlueprint({
+    leagueId,
+    teamId,
+    setTeamId,
+    userId,
+    setBuys,
+    setLoaded,
+    setTeamName,
+    classNameForExport,
+}: WeeklyBlueprintProps) {
     const league = useLeague(leagueId);
     const rosterSettings = useRosterSettings(league);
     const {data: rosters} = useFetchRosters(leagueId);
@@ -51,9 +96,9 @@ export default function Infinite() {
     const [allUsers, setAllUsers] = useState<User[]>([]);
     const [specifiedUser, setSpecifiedUser] = useState<User>();
     const [isNonSleeper, setIsNonSleeper] = useState(false);
-    const [buys, setBuys] = useState<BuySellTileProps[]>([]);
     const [inSeasonVerdict, setInSeasonVerdict] =
         useState<InSeasonVerdict>('SOLID');
+
     useEffect(() => {
         if (!allUsers.length || !hasTeamId() || +teamId >= allUsers.length) {
             return;
@@ -105,11 +150,16 @@ export default function Infinite() {
         );
     }, [leagueId, rosters]);
 
+    useEffect(() => {
+        if (!setTeamName) return;
+        setTeamName(getTeamName(user));
+    }, [user]);
+
     const {
         nonSleeperRosterSettings,
         numRosters,
         teamName: nonSleeperTeamName,
-    } = useNonSleeper(rosters, specifiedUser, setRoster);
+    } = useNonSleeper(rosters, specifiedUser, setRoster, true);
 
     const {startingLineup, setStartingLineup, bench} = useProjectedLineup(
         isNonSleeper ? nonSleeperRosterSettings : rosterSettings,
@@ -138,6 +188,11 @@ export default function Infinite() {
                 .slice(0, 2)
         );
     }, [bench]);
+
+    useEffect(() => {
+        if (!setLoaded) return;
+        setLoaded(startingLineup.some(({player}) => player.first_name !== ''));
+    }, [startingLineup]);
 
     useEffect(() => {
         if (!roster || !roster.settings) return;
@@ -171,114 +226,89 @@ export default function Infinite() {
     function hasTeamId() {
         return teamId !== '' && teamId !== NONE_TEAM_ID;
     }
-
     return (
-        <>
-            <ExportButton
-                className={styles.fullBlueprint}
-                pngName={`${getTeamName(user)}_infinite.png`}
-                disabled={startingLineup.every(
-                    ({player}) => player.first_name === ''
-                )}
-            />
-            {leagueId && (
-                <TeamSelectComponent
-                    teamId={teamId}
-                    setTeamId={setTeamId}
-                    allUsers={allUsers}
-                    specifiedUser={specifiedUser}
-                    style={{
-                        margin: '4px',
-                        maxWidth: '800px',
-                    }}
+        <div className={`${styles.fullBlueprint} ${classNameForExport || ''}`}>
+            <div className={styles.startersGraphic}>
+                <StartersGraphic
+                    startingLineup={startingLineup}
+                    transparent={true}
+                    weekly
                 />
+            </div>
+            <div className={styles.flexOptionsGraphic}>
+                {flexOptions.map(player => (
+                    <PlayerRow
+                        key={player.player_id}
+                        player={player}
+                        position={'BN'}
+                        infinite={false}
+                        weekly={true}
+                        stoplight={findStoplight(
+                            `${player.first_name} ${player.last_name}`
+                        )}
+                    />
+                ))}
+            </div>
+            <div className={styles.winLossRecordGraphic}>
+                {winLossRecord.join('-')}
+            </div>
+            {playerData && (
+                <>
+                    <div className={styles.risersGraphic}>
+                        {risers.map(player => {
+                            return (
+                                <div
+                                    className={styles.riserFallerName}
+                                    key={player}
+                                >
+                                    {maybeShortenedNameString(player)}
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <div className={styles.fallersGraphic}>
+                        {fallers.map(player => {
+                            return (
+                                <div
+                                    className={styles.riserFallerName}
+                                    key={player}
+                                >
+                                    {maybeShortenedNameString(player)}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </>
             )}
-            <span>{buys.map(b => b.playerId).join(',')}</span>
-            <div className={styles.fullBlueprint}>
-                <div className={styles.startersGraphic}>
-                    <StartersGraphic
-                        startingLineup={startingLineup}
-                        transparent={true}
-                        weekly
-                    />
-                </div>
-                <div className={styles.flexOptionsGraphic}>
-                    {flexOptions.map(player => (
-                        <PlayerRow
-                            key={player.player_id}
-                            player={player}
-                            position={'BN'}
-                            infinite={false}
-                            weekly={true}
-                            stoplight={findStoplight(
-                                `${player.first_name} ${player.last_name}`
-                            )}
-                        />
-                    ))}
-                </div>
-                <div className={styles.winLossRecordGraphic}>
-                    {winLossRecord.join('-')}
-                </div>
-                {playerData && (
-                    <>
-                        <div className={styles.risersGraphic}>
-                            {risers.map(player => {
-                                return (
-                                    <div
-                                        className={styles.riserFallerName}
-                                        key={player}
-                                    >
-                                        {maybeShortenedNameString(player)}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                        <div className={styles.fallersGraphic}>
-                            {fallers.map(player => {
-                                return (
-                                    <div
-                                        className={styles.riserFallerName}
-                                        key={player}
-                                    >
-                                        {maybeShortenedNameString(player)}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </>
-                )}
-                <TeamNameComponent
-                    teamName={
-                        isNonSleeper ? nonSleeperTeamName : getTeamName(user)
-                    }
-                />
-                <div className={styles.positionalGradesGraphic}>
-                    <PositionalGradesGraphic
-                        transparent={true}
-                        roster={roster}
-                        isSuperFlex={isSuperFlex}
-                        leagueSize={numRosters}
-                        numStarters={startingLineup.length}
-                    />
-                </div>
-                <div
-                    className={styles.rosterTierGraphic}
-                    style={{color: getVerdictColor(inSeasonVerdict)}}
-                >
-                    {inSeasonVerdict}
-                </div>
-                <BuySellHoldComponent
+            <TeamNameComponent
+                teamName={isNonSleeper ? nonSleeperTeamName : getTeamName(user)}
+            />
+            <div className={styles.positionalGradesGraphic}>
+                <PositionalGradesGraphic
+                    transparent={true}
+                    roster={roster}
                     isSuperFlex={isSuperFlex}
                     leagueSize={numRosters}
-                    roster={roster}
-                    setBuys={setBuys}
-                    weekly={true}
+                    numStarters={startingLineup.length}
                 />
-                <div className={styles.monthYear}>Week 3</div>
-                <img src={bakeryCard1} className={styles.bakeryCard} />
-                <img src={blankWeekly} className={styles.blankBp} />
             </div>
-        </>
+            <div
+                className={styles.rosterTierGraphic}
+                style={{color: getVerdictColor(inSeasonVerdict)}}
+            >
+                {inSeasonVerdict}
+            </div>
+            <BuySellHoldComponent
+                isSuperFlex={isSuperFlex}
+                leagueSize={numRosters}
+                roster={roster}
+                setBuys={setBuys}
+                weekly={true}
+            />
+            <div className={styles.monthYear}>Week 3</div>
+            <img src={bakeryCard1} className={styles.bakeryCard} />
+            <img src={blankWeekly} className={styles.blankBp} />
+        </div>
     );
 }
 

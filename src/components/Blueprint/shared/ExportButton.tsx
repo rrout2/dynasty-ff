@@ -14,6 +14,7 @@ export default function ExportButton({
     downloadIcon: showDownloadIcon,
     disabled: isDisabled,
     tooltipTitle,
+    handleExportFn,
 }: {
     className: string | string[];
     tooltipTitle?: string;
@@ -22,6 +23,7 @@ export default function ExportButton({
     zipName?: string;
     downloadIcon?: boolean;
     disabled?: boolean;
+    handleExportFn?: () => Promise<void>;
 }) {
     const [loading, setLoading] = useState(false);
 
@@ -79,7 +81,10 @@ export default function ExportButton({
     if (showDownloadIcon) {
         return (
             <Tooltip title={tooltipTitle || 'Download'}>
-                <IconButton onClick={handleExport} disabled={isDisabled}>
+                <IconButton
+                    onClick={handleExportFn || handleExport}
+                    disabled={isDisabled}
+                >
                     <FileDownload />
                 </IconButton>
             </Tooltip>
@@ -91,6 +96,10 @@ export default function ExportButton({
             variant="outlined"
             onClick={() => {
                 setLoading(true);
+                if (handleExportFn) {
+                    handleExportFn().finally(() => setLoading(false));
+                    return;
+                }
                 handleExport().finally(() => setLoading(false));
             }}
             style={{

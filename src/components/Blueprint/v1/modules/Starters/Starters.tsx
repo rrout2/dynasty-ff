@@ -37,7 +37,6 @@ import {
     vRedLight,
     vYellowLight,
 } from '../../../../../consts/images';
-import {off} from 'process';
 
 function StartersModule(props: {
     roster?: Roster;
