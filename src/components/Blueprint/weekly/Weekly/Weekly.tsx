@@ -168,7 +168,6 @@ export function WeeklyBlueprint({
         true
     );
     const [flexOptions, setFlexOptions] = useState<Player[]>([]);
-    const {sortByAdp} = useAdpData();
     const playerData = usePlayerData();
     const {risers, fallers} = useWeeklyRisersFallers(roster);
     const {findStoplight} = useStoplights();
