@@ -48,8 +48,8 @@ def check_user_in_league(user_id, league_id):
 		return f"Error: {e}"
 
 # === Step 1: Read usernames and league_ids from CSV ===
-input_file = "/Users/tourv/Downloads/new_need_id.csv"
-output_file = "/Users/tourv/Downloads/new_need_id_final.csv"
+input_file = "/Users/tourv/Downloads/bdjhka.csv"
+output_file = "/Users/tourv/Downloads/bdjhka_final.csv"
 user_league_pairs = []
 
 print('Step 1: Read usernames and league_ids from CSV...')

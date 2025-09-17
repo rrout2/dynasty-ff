@@ -1,0 +1,758 @@
+[
+  {
+    "1QB": "Bijan Robinson",
+    "SF": "Lamar Jackson"
+  },
+  {
+    "1QB": "Christian McCaffrey",
+    "SF": "Josh Allen"
+  },
+  {
+    "1QB": "CeeDee Lamb",
+    "SF": "Jalen Hurts"
+  },
+  {
+    "1QB": "Saquon Barkley",
+    "SF": "Patrick Mahomes"
+  },
+  {
+    "1QB": "Ja'Marr Chase",
+    "SF": "Jayden Daniels"
+  },
+  {
+    "1QB": "Puka Nacua",
+    "SF": "Justin Herbert"
+  },
+  {
+    "1QB": "Jahmyr Gibbs",
+    "SF": "Baker Mayfield"
+  },
+  {
+    "1QB": "Justin Jefferson",
+    "SF": "Dak Prescott"
+  },
+  {
+    "1QB": "Malik Nabers",
+    "SF": "Jared Goff"
+  },
+  {
+    "1QB": "Devon Achane",
+    "SF": "Drake Maye"
+  },
+  {
+    "1QB": "Jonathan Taylor",
+    "SF": "Caleb Williams"
+  },
+  {
+    "1QB": "Amon-Ra St. Brown",
+    "SF": "Kyler Murray"
+  },
+  {
+    "1QB": "James Cook",
+    "SF": "Jordan Love"
+  },
+  {
+    "1QB": "Jaxon Smith-Njigba",
+    "SF": "Justin Fields"
+  },
+  {
+    "1QB": "Lamar Jackson",
+    "SF": "Bo Nix"
+  },
+  {
+    "1QB": "Derrick Henry",
+    "SF": "Trevor Lawrence"
+  },
+  {
+    "1QB": "Bucky Irving",
+    "SF": "C.J. Stroud"
+  },
+  {
+    "1QB": "Josh Jacobs",
+    "SF": "Daniel Jones"
+  },
+  {
+    "1QB": "Drake London",
+    "SF": "Aaron Rodgers"
+  },
+  {
+    "1QB": "Nico Collins",
+    "SF": "Matthew Stafford"
+  },
+  {
+    "1QB": "A.J. Brown",
+    "SF": "Russell Wilson"
+  },
+  {
+    "1QB": "Davante Adams",
+    "SF": "Michael Penix"
+  },
+  {
+    "1QB": "Josh Allen",
+    "SF": "Geno Smith"
+  },
+  {
+    "1QB": "Ashton Jeanty",
+    "SF": "Sam Darnold"
+  },
+  {
+    "1QB": "Trey McBride",
+    "SF": "Bryce Young"
+  },
+  {
+    "1QB": "Brian Thomas",
+    "SF": "Cameron Ward"
+  },
+  {
+    "1QB": "Alvin Kamara",
+    "SF": "Spencer Rattler"
+  },
+  {
+    "1QB": "Javonte Williams",
+    "SF": "Tua Tagovailoa"
+  },
+  {
+    "1QB": "Rome Odunze",
+    "SF": "Joe Flacco"
+  },
+  {
+    "1QB": "Brock Bowers",
+    "SF": "Bijan Robinson"
+  },
+  {
+    "1QB": "Jalen Hurts",
+    "SF": "Christian McCaffrey"
+  },
+  {
+    "1QB": "Emeka Egbuka",
+    "SF": "CeeDee Lamb"
+  },
+  {
+    "1QB": "Breece Hall",
+    "SF": "Saquon Barkley"
+  },
+  {
+    "1QB": "Travis Etienne",
+    "SF": "Ja'Marr Chase"
+  },
+  {
+    "1QB": "Kyren Williams",
+    "SF": "Puka Nacua"
+  },
+  {
+    "1QB": "Garrett Wilson",
+    "SF": "Jahmyr Gibbs"
+  },
+  {
+    "1QB": "Tyler Warren",
+    "SF": "Justin Jefferson"
+  },
+  {
+    "1QB": "Mike Evans",
+    "SF": "Malik Nabers"
+  },
+  {
+    "1QB": "Chase Brown",
+    "SF": "Devon Achane"
+  },
+  {
+    "1QB": "James Conner",
+    "SF": "Jonathan Taylor"
+  },
+  {
+    "1QB": "Jaylen Warren",
+    "SF": "Amon-Ra St. Brown"
+  },
+  {
+    "1QB": "Sam LaPorta",
+    "SF": "James Cook"
+  },
+  {
+    "1QB": "Chuba Hubbard",
+    "SF": "Jaxon Smith-Njigba"
+  },
+  {
+    "1QB": "DK Metcalf",
+    "SF": "Derrick Henry"
+  },
+  {
+    "1QB": "Terry McLaurin",
+    "SF": "Bucky Irving"
+  },
+  {
+    "1QB": "Patrick Mahomes",
+    "SF": "Josh Jacobs"
+  },
+  {
+    "1QB": "Zay Flowers",
+    "SF": "Drake London"
+  },
+  {
+    "1QB": "Ladd McConkey",
+    "SF": "Nico Collins"
+  },
+  {
+    "1QB": "Tetairoa McMillan",
+    "SF": "A.J. Brown"
+  },
+  {
+    "1QB": "Jakobi Meyers",
+    "SF": "Davante Adams"
+  },
+  {
+    "1QB": "Courtland Sutton",
+    "SF": "Ashton Jeanty"
+  },
+  {
+    "1QB": "Jordan Mason",
+    "SF": "Trey McBride"
+  },
+  {
+    "1QB": "D'Andre Swift",
+    "SF": "Brian Thomas"
+  },
+  {
+    "1QB": "Marvin Harrison",
+    "SF": "Alvin Kamara"
+  },
+  {
+    "1QB": "Jayden Daniels",
+    "SF": "Javonte Williams"
+  },
+  {
+    "1QB": "Deebo Samuel",
+    "SF": "Rome Odunze"
+  },
+  {
+    "1QB": "Calvin Ridley",
+    "SF": "Brock Bowers"
+  },
+  {
+    "1QB": "Tony Pollard",
+    "SF": "Emeka Egbuka"
+  },
+  {
+    "1QB": "J.K. Dobbins",
+    "SF": "Breece Hall"
+  },
+  {
+    "1QB": "DeVonta Smith",
+    "SF": "Travis Etienne"
+  },
+  {
+    "1QB": "Tee Higgins",
+    "SF": "Kyren Williams"
+  },
+  {
+    "1QB": "Tyreek Hill",
+    "SF": "Garrett Wilson"
+  },
+  {
+    "1QB": "George Pickens",
+    "SF": "Tyler Warren"
+  },
+  {
+    "1QB": "Jameson Williams",
+    "SF": "Mike Evans"
+  },
+  {
+    "1QB": "Kenneth Walker",
+    "SF": "Chase Brown"
+  },
+  {
+    "1QB": "Justin Herbert",
+    "SF": "James Conner"
+  },
+  {
+    "1QB": "Baker Mayfield",
+    "SF": "Jaylen Warren"
+  },
+  {
+    "1QB": "Keenan Allen",
+    "SF": "Sam LaPorta"
+  },
+  {
+    "1QB": "Chris Olave",
+    "SF": "Chuba Hubbard"
+  },
+  {
+    "1QB": "Omarion Hampton",
+    "SF": "DK Metcalf"
+  },
+  {
+    "1QB": "Ricky Pearsall",
+    "SF": "Terry McLaurin"
+  },
+  {
+    "1QB": "Dak Prescott",
+    "SF": "Zay Flowers"
+  },
+  {
+    "1QB": "Jared Goff",
+    "SF": "Ladd McConkey"
+  },
+  {
+    "1QB": "Jacory Croskey-Merritt",
+    "SF": "Tetairoa McMillan"
+  },
+  {
+    "1QB": "David Montgomery",
+    "SF": "Jakobi Meyers"
+  },
+  {
+    "1QB": "Tucker Kraft",
+    "SF": "Courtland Sutton"
+  },
+  {
+    "1QB": "Zach Charbonnet",
+    "SF": "Jordan Mason"
+  },
+  {
+    "1QB": "Travis Hunter",
+    "SF": "D'Andre Swift"
+  },
+  {
+    "1QB": "Travis Kelce",
+    "SF": "Marvin Harrison"
+  },
+  {
+    "1QB": "Rhamondre Stevenson",
+    "SF": "Deebo Samuel"
+  },
+  {
+    "1QB": "Quentin Johnston",
+    "SF": "Calvin Ridley"
+  },
+  {
+    "1QB": "DJ Moore",
+    "SF": "Tony Pollard"
+  },
+  {
+    "1QB": "Quinshon Judkins",
+    "SF": "J.K. Dobbins"
+  },
+  {
+    "1QB": "Juwan Johnson",
+    "SF": "DeVonta Smith"
+  },
+  {
+    "1QB": "Jauan Jennings",
+    "SF": "Tee Higgins"
+  },
+  {
+    "1QB": "Jaylen Waddle",
+    "SF": "Tyreek Hill"
+  },
+  {
+    "1QB": "Zach Ertz",
+    "SF": "George Pickens"
+  },
+  {
+    "1QB": "Drake Maye",
+    "SF": "Jameson Williams"
+  },
+  {
+    "1QB": "Caleb Williams",
+    "SF": "Kenneth Walker"
+  },
+  {
+    "1QB": "Kyler Murray",
+    "SF": "Keenan Allen"
+  },
+  {
+    "1QB": "Jordan Love",
+    "SF": "Chris Olave"
+  },
+  {
+    "1QB": "Nick Chubb",
+    "SF": "Omarion Hampton"
+  },
+  {
+    "1QB": "Jake Ferguson",
+    "SF": "Ricky Pearsall"
+  },
+  {
+    "1QB": "Isiah Pacheco",
+    "SF": "Jacory Croskey-Merritt"
+  },
+  {
+    "1QB": "Marquise Brown",
+    "SF": "David Montgomery"
+  },
+  {
+    "1QB": "Stefon Diggs",
+    "SF": "Tucker Kraft"
+  },
+  {
+    "1QB": "Wan'Dale Robinson",
+    "SF": "Zach Charbonnet"
+  },
+  {
+    "1QB": "Michael Pittman",
+    "SF": "Travis Hunter"
+  },
+  {
+    "1QB": "Cedric Tillman",
+    "SF": "Travis Kelce"
+  },
+  {
+    "1QB": "Keon Coleman",
+    "SF": "Rhamondre Stevenson"
+  },
+  {
+    "1QB": "Jerry Jeudy",
+    "SF": "Quentin Johnston"
+  },
+  {
+    "1QB": "Cam Skattebo",
+    "SF": "DJ Moore"
+  },
+  {
+    "1QB": "TreVeyon Henderson",
+    "SF": "Quinshon Judkins"
+  },
+  {
+    "1QB": "Bhayshul Tuten",
+    "SF": "Juwan Johnson"
+  },
+  {
+    "1QB": "Trey Benson",
+    "SF": "Jauan Jennings"
+  },
+  {
+    "1QB": "Tyler Allgeier",
+    "SF": "Jaylen Waddle"
+  },
+  {
+    "1QB": "Rashid Shaheed",
+    "SF": "Zach Ertz"
+  },
+  {
+    "1QB": "Darnell Mooney",
+    "SF": "Nick Chubb"
+  },
+  {
+    "1QB": "Cooper Kupp",
+    "SF": "Jake Ferguson"
+  },
+  {
+    "1QB": "Tyrone Tracy",
+    "SF": "Isiah Pacheco"
+  },
+  {
+    "1QB": "Rachaad White",
+    "SF": "Marquise Brown"
+  },
+  {
+    "1QB": "Romeo Doubs",
+    "SF": "Stefon Diggs"
+  },
+  {
+    "1QB": "Khalil Shakir",
+    "SF": "Wan'Dale Robinson"
+  },
+  {
+    "1QB": "Justin Fields",
+    "SF": "Michael Pittman"
+  },
+  {
+    "1QB": "Bo Nix",
+    "SF": "Cedric Tillman"
+  },
+  {
+    "1QB": "Trevor Lawrence",
+    "SF": "Keon Coleman"
+  },
+  {
+    "1QB": "C.J. Stroud",
+    "SF": "Jerry Jeudy"
+  },
+  {
+    "1QB": "David Njoku",
+    "SF": "Cam Skattebo"
+  },
+  {
+    "1QB": "Kyle Pitts",
+    "SF": "TreVeyon Henderson"
+  },
+  {
+    "1QB": "Mark Andrews",
+    "SF": "Bhayshul Tuten"
+  },
+  {
+    "1QB": "Hunter Henry",
+    "SF": "Trey Benson"
+  },
+  {
+    "1QB": "Troy Franklin",
+    "SF": "Tyler Allgeier"
+  },
+  {
+    "1QB": "Josh Downs",
+    "SF": "Rashid Shaheed"
+  },
+  {
+    "1QB": "Elic Ayomanor",
+    "SF": "Darnell Mooney"
+  },
+  {
+    "1QB": "Harold Fannin",
+    "SF": "Cooper Kupp"
+  },
+  {
+    "1QB": "Daniel Jones",
+    "SF": "Tyrone Tracy"
+  },
+  {
+    "1QB": "Aaron Rodgers",
+    "SF": "Rachaad White"
+  },
+  {
+    "1QB": "Matthew Stafford",
+    "SF": "Romeo Doubs"
+  },
+  {
+    "1QB": "Mac Jones",
+    "SF": "Khalil Shakir"
+  },
+  {
+    "1QB": "Russell Wilson",
+    "SF": "David Njoku"
+  },
+  {
+    "1QB": "RJ Harvey",
+    "SF": "Kyle Pitts"
+  },
+  {
+    "1QB": "Jeremy McNichols",
+    "SF": "Mark Andrews"
+  },
+  {
+    "1QB": "Dylan Sampson",
+    "SF": "Hunter Henry"
+  },
+  {
+    "1QB": "Dyami Brown",
+    "SF": "Troy Franklin"
+  },
+  {
+    "1QB": "Dontayvion Wicks",
+    "SF": "Josh Downs"
+  },
+  {
+    "1QB": "Kayshon Boutte",
+    "SF": "Elic Ayomanor"
+  },
+  {
+    "1QB": "Christian Kirk",
+    "SF": "Harold Fannin"
+  },
+  {
+    "1QB": "Matthew Golden",
+    "SF": "Mac Jones"
+  },
+  {
+    "1QB": "Calvin Austin",
+    "SF": "RJ Harvey"
+  },
+  {
+    "1QB": "Kenneth Gainwell",
+    "SF": "Jeremy McNichols"
+  },
+  {
+    "1QB": "Ray Davis",
+    "SF": "Dylan Sampson"
+  },
+  {
+    "1QB": "Jerome Ford",
+    "SF": "Dyami Brown"
+  },
+  {
+    "1QB": "Michael Penix",
+    "SF": "Dontayvion Wicks"
+  },
+  {
+    "1QB": "Kareem Hunt",
+    "SF": "Kayshon Boutte"
+  },
+  {
+    "1QB": "Geno Smith",
+    "SF": "Christian Kirk"
+  },
+  {
+    "1QB": "Carson Wentz",
+    "SF": "Matthew Golden"
+  },
+  {
+    "1QB": "Sam Darnold",
+    "SF": "Calvin Austin"
+  },
+  {
+    "1QB": "Bryce Young",
+    "SF": "Kenneth Gainwell"
+  },
+  {
+    "1QB": "Jake Browning",
+    "SF": "Ray Davis"
+  },
+  {
+    "1QB": "Cameron Ward",
+    "SF": "Jerome Ford"
+  },
+  {
+    "1QB": "T.J. Hockenson",
+    "SF": "Kareem Hunt"
+  },
+  {
+    "1QB": "Blake Corum",
+    "SF": "Carson Wentz"
+  },
+  {
+    "1QB": "Rashod Bateman",
+    "SF": "Jake Browning"
+  },
+  {
+    "1QB": "Tyquan Thornton",
+    "SF": "T.J. Hockenson"
+  },
+  {
+    "1QB": "Alec Pierce",
+    "SF": "Blake Corum"
+  },
+  {
+    "1QB": "Brenton Strange",
+    "SF": "Rashod Bateman"
+  },
+  {
+    "1QB": "Braelon Allen",
+    "SF": "Tyquan Thornton"
+  },
+  {
+    "1QB": "Dalton Kincaid",
+    "SF": "Alec Pierce"
+  },
+  {
+    "1QB": "Woody Marks",
+    "SF": "Brenton Strange"
+  },
+  {
+    "1QB": "Ja'Tavion Sanders",
+    "SF": "Braelon Allen"
+  },
+  {
+    "1QB": "Brian Robinson",
+    "SF": "Dalton Kincaid"
+  },
+  {
+    "1QB": "Chigoziem Okonkwo",
+    "SF": "Woody Marks"
+  },
+  {
+    "1QB": "Najee Harris",
+    "SF": "Ja'Tavion Sanders"
+  },
+  {
+    "1QB": "Justice Hill",
+    "SF": "Brian Robinson"
+  },
+  {
+    "1QB": "Evan Engram",
+    "SF": "Chigoziem Okonkwo"
+  },
+  {
+    "1QB": "Rico Dowdle",
+    "SF": "Najee Harris"
+  },
+  {
+    "1QB": "Spencer Rattler",
+    "SF": "Justice Hill"
+  },
+  {
+    "1QB": "Tua Tagovailoa",
+    "SF": "Evan Engram"
+  },
+  {
+    "1QB": "Joe Flacco",
+    "SF": "Rico Dowdle"
+  },
+  {
+    "1QB": "Hunter Renfrow",
+    "SF": "Hunter Renfrow"
+  },
+  {
+    "1QB": "DeAndre Hopkins",
+    "SF": "DeAndre Hopkins"
+  },
+  {
+    "1QB": "Jonnu Smith",
+    "SF": "Jonnu Smith"
+  },
+  {
+    "1QB": "A.J. Dillon",
+    "SF": "A.J. Dillon"
+  },
+  {
+    "1QB": "Devontez Walker",
+    "SF": "Devontez Walker"
+  },
+  {
+    "1QB": "Cade Otton",
+    "SF": "Cade Otton"
+  },
+  {
+    "1QB": "Miles Sanders",
+    "SF": "Miles Sanders"
+  },
+  {
+    "1QB": "Joshua Palmer",
+    "SF": "Joshua Palmer"
+  },
+  {
+    "1QB": "Colston Loveland",
+    "SF": "Colston Loveland"
+  },
+  {
+    "1QB": "Zamir White",
+    "SF": "Zamir White"
+  },
+  {
+    "1QB": "Pat Freiermuth",
+    "SF": "Pat Freiermuth"
+  },
+  {
+    "1QB": "Marvin Mims",
+    "SF": "Marvin Mims"
+  },
+  {
+    "1QB": "Ollie Gordon II",
+    "SF": "Ollie Gordon II"
+  },
+  {
+    "1QB": "Jalen Nailor",
+    "SF": "Jalen Nailor"
+  },
+  {
+    "1QB": "Tyrod Taylor",
+    "SF": "Tyrod Taylor"
+  },
+  {
+    "1QB": "Jayden Higgins",
+    "SF": "Jayden Higgins"
+  },
+  {
+    "1QB": "Xavier Legette",
+    "SF": "Xavier Legette"
+  },
+  {
+    "1QB": "Chris Rodriguez",
+    "SF": "Chris Rodriguez"
+  },
+  {
+    "1QB": "Adam Thielen",
+    "SF": "Adam Thielen"
+  },
+  {
+    "1QB": "Tory Horton",
+    "SF": "Tory Horton"
+  }
+]
