@@ -1,7 +1,10 @@
 import {useEffect, useState} from 'react';
 import styles from './RisersFallersModule.module.css';
 import {Player, Roster} from '../../../../../sleeper-api/sleeper-api';
-import {useAdpData, usePlayerData} from '../../../../../hooks/hooks';
+import {
+    usePlayerData,
+    useWeeklyRisersFallers,
+} from '../../../../../hooks/hooks';
 import PlayerSelectComponent from '../../../shared/PlayerSelectComponent';
 import StyledNumberInput from '../../../shared/StyledNumberInput';
 import ExportButton from '../../../shared/ExportButton';
@@ -18,22 +21,27 @@ export type RisersFallersModuleProps = {
     teamName?: string;
 };
 export function useRisersFallers(roster?: Roster) {
+    const {risers: weeklyRisers, fallers: weeklyFallers} =
+        useWeeklyRisersFallers(roster);
+    console.log(weeklyRisers, weeklyFallers);
     const [risers, setRisers] = useState<string[]>([]);
     const [riserValues, setRiserValues] = useState<number[]>([30, 20, 10]);
     const [fallers, setFallers] = useState<string[]>([]);
     const [fallerValues, setFallerValues] = useState<number[]>([-10, -20, -30]);
     const playerData = usePlayerData();
-    const {sortByAdp} = useAdpData();
+
     useEffect(() => {
-        if (!roster || !playerData) return;
-        const players = roster.players
-            .map(p => playerData[p])
-            .filter(p => !!p)
-            .sort(sortByAdp)
-            .map(p => p.player_id);
-        setRisers(players.slice(0, 3));
-        setFallers(players.slice(3, 6));
-    }, [roster, playerData]);
+        if (!playerData) return;
+        function findPlayerId(playerName: string) {
+            if (!playerData) return '';
+            const player = Object.values(playerData).find(
+                p => `${p.first_name} ${p.last_name}` === playerName
+            );
+            return player ? player.player_id : '';
+        }
+        setRisers(weeklyRisers.map(findPlayerId));
+        setFallers(weeklyFallers.map(findPlayerId));
+    }, [weeklyRisers, weeklyFallers, playerData]);
     return {
         risers,
         setRisers,
