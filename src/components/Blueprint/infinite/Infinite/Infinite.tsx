@@ -418,7 +418,13 @@ export const BuySellHoldComponent = ({
     setBuys?: (buys: BuySellTileProps[]) => void;
     weekly?: boolean;
 }) => {
-    const {buys, sells} = useBuySells(isSuperFlex, leagueSize, roster);
+    const {buys, sells} = useBuySells(
+        isSuperFlex,
+        leagueSize,
+        roster,
+        2,
+        weekly
+    );
 
     useEffect(() => {
         if (setBuys) {

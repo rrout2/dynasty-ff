@@ -9,6 +9,7 @@ import {
     useBuySellData,
     useDisallowedBuysFromUrl,
     usePlayerData,
+    useSplitBuySellData,
 } from '../../../../hooks/hooks';
 import PlayerBar from '../PlayerBar/PlayerBar';
 
@@ -48,7 +49,8 @@ export function useBuySells(
     isSuperFlex: boolean,
     leagueSize: number,
     roster?: Roster,
-    maxSells = 2
+    maxSells = 2,
+    contendRebuildSplit = false
 ) {
     const {tier, qbGrade, rbGrade, wrGrade, teGrade} =
         useRosterTierAndPosGrades(isSuperFlex, leagueSize, roster);
@@ -64,6 +66,20 @@ export function useBuySells(
         sells: allSells,
         holds: allHolds,
     } = useBuySellData();
+    const {
+        rebuildQbBuys,
+        rebuildRbBuys,
+        rebuildWrBuys,
+        rebuildTeBuys,
+        rebuildSells,
+        rebuildHolds,
+        contendQbBuys,
+        contendRbBuys,
+        contendWrBuys,
+        contendTeBuys,
+        contendSells,
+        contendHolds,
+    } = useSplitBuySellData();
     const playerData = usePlayerData();
     useEffect(() => {
         if (!roster || tier === RosterTier.Unknown || !playerData) return;
@@ -81,6 +97,18 @@ export function useBuySells(
         teGrade,
         allSells,
         allHolds,
+        rebuildQbBuys,
+        rebuildRbBuys,
+        rebuildWrBuys,
+        rebuildTeBuys,
+        rebuildSells,
+        rebuildHolds,
+        contendQbBuys,
+        contendRbBuys,
+        contendWrBuys,
+        contendTeBuys,
+        contendSells,
+        contendHolds,
         tier,
         playerData,
     ]);
@@ -93,6 +121,10 @@ export function useBuySells(
 
     interface TradeTargets {
         [position: string]: number;
+    }
+
+    function isContending() {
+        return tier === RosterTier.Championship || tier === RosterTier.Elite || tier === RosterTier.Competitive;
     }
 
     /**
@@ -226,8 +258,18 @@ export function useBuySells(
         ) {
             return [];
         }
+        let buyList;
+        if (contendRebuildSplit) {
+            if (isContending()) {
+                buyList = contendQbBuys;
+            } else {
+                buyList = rebuildQbBuys;
+            }
+        } else {
+            buyList = qbBuys;
+        }
         const toBuy: BuySellTileProps[] = [];
-        for (const qbBuy of qbBuys) {
+        for (const qbBuy of buyList) {
             if (toBuy.length >= numToBuy) {
                 break;
             }
@@ -271,8 +313,18 @@ export function useBuySells(
         if (tier === RosterTier.Rebuild || tier === RosterTier.Reload) {
             return [];
         }
+        let buyList;
+        if (contendRebuildSplit) {
+            if (isContending()) {
+                buyList = contendRbBuys;
+            } else {
+                buyList = rebuildRbBuys;
+            }
+        } else {
+            buyList = rbBuys;
+        }
         const toBuy: BuySellTileProps[] = [];
-        for (const rbBuy of rbBuys) {
+        for (const rbBuy of buyList) {
             if (toBuy.length >= numToBuy) {
                 break;
             }
@@ -304,8 +356,18 @@ export function useBuySells(
         existingWrBuys?: BuySellTileProps[]
     ): BuySellTileProps[] {
         const secondPass = !!existingWrBuys;
+        let buyList;
+        if (contendRebuildSplit) {
+            if (isContending()) {
+                buyList = contendWrBuys;
+            } else {
+                buyList = rebuildWrBuys;
+            }
+        } else {
+            buyList = wrBuys;
+        }
         const toBuy: BuySellTileProps[] = [];
-        for (const wrBuy of wrBuys) {
+        for (const wrBuy of buyList) {
             if (toBuy.length >= numToBuy) {
                 break;
             }
@@ -354,8 +416,18 @@ export function useBuySells(
     }
 
     function calcTeBuys(numToBuy: number): BuySellTileProps[] {
+        let buyList;
+        if (contendRebuildSplit) {
+            if (isContending()) {
+                buyList = contendTeBuys;
+            } else {
+                buyList = rebuildTeBuys;
+            }
+        } else {
+            buyList = teBuys;
+        }
         const toBuy: BuySellTileProps[] = [];
-        for (const teBuy of teBuys) {
+        for (const teBuy of buyList) {
             if (toBuy.length >= numToBuy) {
                 break;
             }
@@ -399,7 +471,17 @@ export function useBuySells(
 
     function calculateSells(): BuySellTileProps[] {
         if (!roster) return [];
-        return allSells
+        let sellList;
+        if (contendRebuildSplit) {
+            if (isContending()) {
+                sellList = contendSells;
+            } else {
+                sellList = rebuildSells;
+            }
+        } else {
+            sellList = allSells;
+        }
+        return sellList
             .filter(sell => roster.players.includes(sell.player_id))
             .filter(s => {
                 if (isSuperFlex || s.position !== QB) return true;
@@ -419,7 +501,17 @@ export function useBuySells(
 
     function calculateHolds(): BuySellTileProps[] {
         if (!roster) return [];
-        return allHolds
+        let holdList;
+        if (contendRebuildSplit) {
+            if (isContending()) {
+                holdList = contendHolds;
+            } else {
+                holdList = rebuildHolds;
+            }
+        } else {
+            holdList = allHolds;
+        }
+        return holdList
             .filter(
                 hold =>
                     roster.players.includes(hold.player_id) &&

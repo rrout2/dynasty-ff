@@ -8,6 +8,7 @@ import {
 import playersJson from '../data/players.json';
 import rankingsJson from '../data/rankings_09122025.json';
 import buySellsData from '../data/buyssellsholds_with_ids_080525.json';
+import buySellsContendRebuild from '../data/buyssellsholds_with_ids_091725.json';
 import nflScheduleJson from '../data/nfl_schedule.json';
 import sfPickMovesJson from '../data/rookieBP/sf_pick_moves.json';
 import oneQbPickMovesJson from '../data/rookieBP/1qb_pick_moves.json';
@@ -607,7 +608,182 @@ export type BuySellVerdict = {
     explanation: string;
     player_id: string;
     age: number;
+    contend_verdict: string;
+    rebuild_verdict: string;
 };
+
+export function useSplitBuySellData() {
+    const [buySells] = useState(
+        buySellsContendRebuild as unknown as BuySellVerdict[]
+    );
+    const [rebuildQbBuys, setRebuildQbBuys] = useState<BuySellVerdict[]>([]);
+    const [rebuildRbBuys, setRebuildRbBuys] = useState<BuySellVerdict[]>([]);
+    const [rebuildWrBuys, setRebuildWrBuys] = useState<BuySellVerdict[]>([]);
+    const [rebuildTeBuys, setRebuildTeBuys] = useState<BuySellVerdict[]>([]);
+    const [rebuildSells, setRebuildSells] = useState<BuySellVerdict[]>([]);
+    const [rebuildHolds, setRebuildHolds] = useState<BuySellVerdict[]>([]);
+    const [contendQbBuys, setContendQbBuys] = useState<BuySellVerdict[]>([]);
+    const [contendRbBuys, setContendRbBuys] = useState<BuySellVerdict[]>([]);
+    const [contendWrBuys, setContendWrBuys] = useState<BuySellVerdict[]>([]);
+    const [contendTeBuys, setContendTeBuys] = useState<BuySellVerdict[]>([]);
+    const [contendSells, setContendSells] = useState<BuySellVerdict[]>([]);
+    const [contendHolds, setContendHolds] = useState<BuySellVerdict[]>([]);
+    const {sortNamesByAdp} = useAdpData();
+    useEffect(() => {
+        const contendQbBuys = buySells.filter(
+            b =>
+                b.position === QB &&
+                (b.contend_verdict === 'Soft Buy' ||
+                    b.contend_verdict === 'Hard Buy')
+        );
+
+        const contendRbBuys = buySells.filter(
+            b =>
+                b.position === RB &&
+                (b.contend_verdict === 'Soft Buy' ||
+                    b.contend_verdict === 'Hard Buy')
+        );
+
+        const contendWrBuys = buySells.filter(
+            b =>
+                b.position === WR &&
+                (b.contend_verdict === 'Soft Buy' ||
+                    b.contend_verdict === 'Hard Buy')
+        );
+
+        const contendTeBuys = buySells.filter(
+            b =>
+                b.position === TE &&
+                (b.contend_verdict === 'Soft Buy' ||
+                    b.contend_verdict === 'Hard Buy')
+        );
+        const contendSells = buySells
+            .filter(
+                b =>
+                    b.contend_verdict === 'Soft Sell' ||
+                    b.contend_verdict === 'Hard Sell'
+            )
+            .sort((a, b) => sortNamesByAdp(a.name, b.name));
+
+        const contendHolds = buySells
+            .filter(
+                b =>
+                    b.contend_verdict === 'Hold' ||
+                    b.contend_verdict === 'Hard Buy' ||
+                    b.contend_verdict === 'Soft Buy'
+            )
+            .sort((a, b) => b.difference - a.difference);
+        shuffle(contendQbBuys);
+        shuffle(contendRbBuys);
+        shuffle(contendWrBuys);
+        shuffle(contendTeBuys);
+        setContendQbBuys(contendQbBuys);
+        setContendRbBuys(contendRbBuys);
+        setContendWrBuys(contendWrBuys);
+        setContendTeBuys(contendTeBuys);
+        setContendSells(contendSells);
+        setContendHolds(contendHolds);
+        const rebuildQbBuys = buySells.filter(
+            b =>
+                b.position === QB &&
+                (b.rebuild_verdict === 'Soft Buy' ||
+                    b.rebuild_verdict === 'Hard Buy')
+        );
+
+        const rebuildRbBuys = buySells.filter(
+            b =>
+                b.position === RB &&
+                (b.rebuild_verdict === 'Soft Buy' ||
+                    b.rebuild_verdict === 'Hard Buy')
+        );
+
+        const rebuildWrBuys = buySells.filter(
+            b =>
+                b.position === WR &&
+                (b.rebuild_verdict === 'Soft Buy' ||
+                    b.rebuild_verdict === 'Hard Buy')
+        );
+
+        const rebuildTeBuys = buySells.filter(
+            b =>
+                b.position === TE &&
+                (b.rebuild_verdict === 'Soft Buy' ||
+                    b.rebuild_verdict === 'Hard Buy')
+        );
+        const rebuildSells = buySells
+            .filter(
+                b =>
+                    b.rebuild_verdict === 'Soft Sell' ||
+                    b.rebuild_verdict === 'Hard Sell'
+            )
+            .sort((a, b) => sortNamesByAdp(a.name, b.name));
+
+        const rebuildHolds = buySells
+            .filter(
+                b =>
+                    b.rebuild_verdict === 'Hold' ||
+                    b.rebuild_verdict === 'Hard Buy' ||
+                    b.rebuild_verdict === 'Soft Buy'
+            )
+            .sort((a, b) => b.difference - a.difference);
+        shuffle(rebuildQbBuys);
+        shuffle(rebuildRbBuys);
+        shuffle(rebuildWrBuys);
+        shuffle(rebuildTeBuys);
+        setRebuildQbBuys(rebuildQbBuys);
+        setRebuildRbBuys(rebuildRbBuys);
+        setRebuildWrBuys(rebuildWrBuys);
+        setRebuildTeBuys(rebuildTeBuys);
+        setRebuildSells(rebuildSells);
+        setRebuildHolds(rebuildHolds);
+    }, [buySells]);
+
+    function shuffle(array: BuySellVerdict[]) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function getVerdict(playerName: string) {
+        const playerNickname = checkForNickname(playerName);
+        const verdict = buySells.find(
+            b =>
+                b.name.replace(/\W/g, '').toLowerCase() ===
+                    playerName.replace(/\W/g, '').toLowerCase() ||
+                b.alt_name.replace(/\W/g, '').toLowerCase() ===
+                    playerNickname.replace(/\W/g, '').toLowerCase() ||
+                b.name.replace(/\W/g, '').toLowerCase() ===
+                    playerNickname.replace(/\W/g, '').toLowerCase() ||
+                b.alt_name.replace(/\W/g, '').toLowerCase() ===
+                    playerName.replace(/\W/g, '').toLowerCase()
+        );
+        if (!verdict) {
+            console.warn(
+                `cannot find verdict with name = '${playerName}' or alt_name = '${playerNickname}'`
+            );
+            return undefined;
+        }
+        return verdict;
+    }
+
+    return {
+        buySells,
+        rebuildQbBuys,
+        rebuildRbBuys,
+        rebuildWrBuys,
+        rebuildTeBuys,
+        rebuildSells,
+        rebuildHolds,
+        contendQbBuys,
+        contendRbBuys,
+        contendWrBuys,
+        contendTeBuys,
+        contendSells,
+        contendHolds,
+        getVerdict,
+    };
+}
 
 export function useBuySellData() {
     const [buySells] = useState(buySellsData as unknown as BuySellVerdict[]);

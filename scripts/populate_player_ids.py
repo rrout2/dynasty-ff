@@ -54,7 +54,9 @@ def process_json_files(players_file, ids_file, output_file):
         player['difference'] = player['Difference']
         player['team'] = player['Team']
         player['position'] = player['Position']
-        player['verdict'] = player['REAL VERDICT']
+        # player['verdict'] = player['REAL VERDICT']
+        player['contend_veridct'] = player['Contend Team']
+        player['rebuild_verdict'] = player['Rebuild Team']
         # player['reason'] = player['Explanation']
         player['domain_rank'] = player['Domain Rank']
         player['pos_adp'] = player['Market ADP ']
@@ -64,7 +66,9 @@ def process_json_files(players_file, ids_file, output_file):
         del player['Difference']
         del player['Team']
         del player['Position']
-        del player['REAL VERDICT']
+        # del player['REAL VERDICT']
+        del player['Contend Team']
+        del player['Rebuild Team']
         # del player['Explanation']
         del player['Domain Rank']
         del player['Market ADP ']
@@ -108,7 +112,7 @@ def process_json_files(players_file, ids_file, output_file):
 # Example usage
 if __name__ == "__main__":
     process_json_files(
-        '../src/data/buyssellsholds_080525.json',  # First JSON file with player objects
+        '../src/data/buyssellsholds_091725.json',  # First JSON file with player objects
         '../src/data/players.json',  # Second JSON file with ID mappings
-        '../src/data/buyssellsholds_with_ids_080525.json'  # Output file
+        '../src/data/buyssellsholds_with_ids_091725.json'  # Output file
     )
