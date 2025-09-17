@@ -1,7 +1,6 @@
 import styles from './Weekly.module.css';
 import {bakeryCard1, blankWeekly} from '../../../../consts/images';
 import {
-    useAdpData,
     useFetchRosters,
     useLeague,
     useLeagueIdFromUrl,
