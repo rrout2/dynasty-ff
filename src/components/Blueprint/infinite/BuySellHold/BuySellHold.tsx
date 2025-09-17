@@ -22,6 +22,13 @@ const ONE_QB_ALLOWSET = new Set<string>([
     'Kyler Murray',
 ]);
 
+// No QB buys if team has one of these players.
+const ONE_QB_DISALLOWSET = new Set<string>([
+    'Josh Allen',
+    'Jayden Daniels',
+    'Lamar Jackson',
+]);
+
 // No TE buys if team has one of these players.
 const TE_DISALLOWSET = new Set<string>([
     'Brock Bowers',
@@ -124,7 +131,11 @@ export function useBuySells(
     }
 
     function isContending() {
-        return tier === RosterTier.Championship || tier === RosterTier.Elite || tier === RosterTier.Competitive;
+        return (
+            tier === RosterTier.Championship ||
+            tier === RosterTier.Elite ||
+            tier === RosterTier.Competitive
+        );
     }
 
     /**
@@ -178,6 +189,19 @@ export function useBuySells(
                         TE_DISALLOWSET.has(`${p.first_name} ${p.last_name}`)
                     );
                 if (hasEliteTe) {
+                    assignTargets(position, 0);
+                    continue;
+                }
+            }
+
+            if (position === QB && !isSuperFlex) {
+                const hasEliteQb = roster?.players
+                    .map(p => playerData![p])
+                    .filter(p => !!p)
+                    .find(p =>
+                        ONE_QB_DISALLOWSET.has(`${p.first_name} ${p.last_name}`)
+                    );
+                if (hasEliteQb) {
                     assignTargets(position, 0);
                     continue;
                 }
