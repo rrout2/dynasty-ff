@@ -13,6 +13,7 @@ import {
     useStoplights,
     useTeamIdFromUrl,
     useUserIdFromUrl,
+    useWeeklyRanks,
     useWeeklyRisersFallers,
 } from '../../../../hooks/hooks';
 import {PlayerRow, StartersGraphic} from '../../v1/modules/Starters/Starters';
@@ -179,15 +180,18 @@ export function WeeklyBlueprint({
     useEffect(() => {
         setIsNonSleeper(!leagueId);
     }, [leagueId]);
-
+    const isSuperFlex = !isNonSleeper
+        ? rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1
+        : nonSleeperRosterSettings.has(SUPER_FLEX) ||
+          (nonSleeperRosterSettings.get(QB) ?? 0) > 1;
     useEffect(() => {
         setFlexOptions(
             bench
-                .sort(sortByAdp)
+                .sort(isSuperFlex ? sortBySuperflexRanks : sortBy1QBRanks)
                 .filter(p => p.position !== QB)
                 .slice(0, 2)
         );
-    }, [bench]);
+    }, [bench, isSuperFlex]);
 
     useEffect(() => {
         if (!setLoaded) return;
@@ -199,16 +203,12 @@ export function WeeklyBlueprint({
         setWinLossRecord([roster.settings.wins, roster.settings.losses]);
     }, [roster?.settings]);
 
-    const isSuperFlex = !isNonSleeper
-        ? rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1
-        : nonSleeperRosterSettings.has(SUPER_FLEX) ||
-          (nonSleeperRosterSettings.get(QB) ?? 0) > 1;
-
     const {tier} = useRosterTierAndPosGrades(
         isSuperFlex,
         rosters?.length || 0,
         roster
     );
+    const {sortBy1QBRanks, sortBySuperflexRanks} = useWeeklyRanks();
     useEffect(() => {
         switch (tier) {
             case RosterTier.Rebuild:
