@@ -1494,7 +1494,10 @@ export function useRosterSettingsFromId(leagueId?: string) {
 export function useWeeklyRanks() {
     const [weeklyRanks] = useState(weeklyRankingsJson);
     function get1QBRanks(p: Player) {
-        const name = p.first_name + ' ' + p.last_name;
+        return get1QbRankByName(p.first_name + ' ' + p.last_name)
+    }
+
+    function get1QbRankByName(name: string) {
         const nickname = checkForNickname(name);
         const rank = weeklyRanks.findIndex(
             r => r['1QB'] === nickname || r['1QB'] === name
@@ -1503,7 +1506,9 @@ export function useWeeklyRanks() {
         return rank;
     }
     function getSuperflexRanks(p: Player) {
-        const name = p.first_name + ' ' + p.last_name;
+        return getSuperflexRankByName(p.first_name + ' ' + p.last_name);
+    }
+    function getSuperflexRankByName(name: string) {
         const nickname = checkForNickname(name);
         const rank = weeklyRanks.findIndex(
             r => r['SF'] === nickname || r['SF'] === name
@@ -1521,7 +1526,7 @@ export function useWeeklyRanks() {
         const bRank = getSuperflexRanks(b);
         return aRank - bRank;
     }
-    return {weeklyRanks, sortBy1QBRanks, sortBySuperflexRanks};
+    return {weeklyRanks, sortBy1QBRanks, sortBySuperflexRanks, get1QBRanks, getSuperflexRanks, getSuperflexRankByName, get1QbRankByName};
 }
 
 export function useProjectedLineup(
@@ -1534,18 +1539,21 @@ export function useProjectedLineup(
     const [bench, setBench] = useState<Player[]>([]);
     const [benchString, setBenchString] = useState('');
     const {getAdp, sortByAdp} = useAdpData();
-    const {sortBy1QBRanks, sortBySuperflexRanks} = useWeeklyRanks();
+    const {sortBy1QBRanks, sortBySuperflexRanks, getSuperflexRankByName, get1QbRankByName} = useWeeklyRanks();
     const isSuperflex =
         rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1;
-
     let sortFn: (a: Player, b: Player) => number;
+    let getFn: (playerName: string) => number;
     if (!weekly) {
         sortFn = sortByAdp;
+        getFn = getAdp;
     } else {
         if (isSuperflex) {
             sortFn = sortBySuperflexRanks;
+            getFn = getSuperflexRankByName;
         } else {
             sortFn = sortBy1QBRanks;
+            getFn = get1QbRankByName;
         }
     }
 
@@ -1560,7 +1568,7 @@ export function useProjectedLineup(
                     position,
                     count,
                     remainingPlayers,
-                    getAdp,
+                    getFn,
                     sortFn,
                     playerData,
                     playerIds
@@ -1842,8 +1850,8 @@ function getBestNAtPosition(
     position: string,
     count: number,
     remainingPlayers: Set<string>,
-    getAdp: (playerName: string) => number,
-    sortByAdp: (a: Player, b: Player) => number,
+    getFn: (playerName: string) => number,
+    sortFn: (a: Player, b: Player) => number,
     playerData: PlayerData,
     playerIds: string[]
 ): Player[] {
@@ -1859,7 +1867,7 @@ function getBestNAtPosition(
                             p.fantasy_positions.includes(RB) ||
                             p.fantasy_positions.includes(TE))
                 )
-                .sort(sortByAdp)
+                .sort(sortFn)
                 .slice(0, count);
         case WR_RB_FLEX:
             return playerIds
@@ -1871,7 +1879,7 @@ function getBestNAtPosition(
                         (p.fantasy_positions.includes(WR) ||
                             p.fantasy_positions.includes(RB))
                 )
-                .sort(sortByAdp)
+                .sort(sortFn)
                 .slice(0, count);
         case WR_TE_FLEX:
             return playerIds
@@ -1883,7 +1891,7 @@ function getBestNAtPosition(
                         (p.fantasy_positions.includes(WR) ||
                             p.fantasy_positions.includes(TE))
                 )
-                .sort(sortByAdp)
+                .sort(sortFn)
                 .slice(0, count);
 
         case SUPER_FLEX:
@@ -1898,7 +1906,7 @@ function getBestNAtPosition(
                             p.fantasy_positions.includes(TE) ||
                             p.fantasy_positions.includes(QB))
                 )
-                .sort(sortByAdp)
+                .sort(sortFn)
                 .sort((a, b) => {
                     // maybe adjust this
                     const startingQbThreshold = 160;
@@ -1906,7 +1914,7 @@ function getBestNAtPosition(
                     // manually prioritizing starting level QBs for super flex
                     if (a.position === QB && b.position !== QB) {
                         if (
-                            getAdp(`${a.first_name} ${a.last_name}`) <
+                            getFn(`${a.first_name} ${a.last_name}`) <
                             startingQbThreshold
                         ) {
                             return -1;
@@ -1916,7 +1924,7 @@ function getBestNAtPosition(
                     }
                     if (a.position !== QB && b.position === QB) {
                         if (
-                            getAdp(`${b.first_name} ${b.last_name}`) <
+                            getFn(`${b.first_name} ${b.last_name}`) <
                             startingQbThreshold
                         ) {
                             return 1;
@@ -1924,7 +1932,7 @@ function getBestNAtPosition(
                             return -1;
                         }
                     }
-                    return sortByAdp(a, b);
+                    return sortFn(a, b);
                 })
                 .slice(0, count);
         default: // non-flex positions
@@ -1932,7 +1940,7 @@ function getBestNAtPosition(
                 .filter(p => remainingPlayers.has(p))
                 .map(p => playerData[p])
                 .filter(p => !!p && p.fantasy_positions.includes(position))
-                .sort(sortByAdp)
+                .sort(sortFn)
                 .slice(0, count);
     }
 }
