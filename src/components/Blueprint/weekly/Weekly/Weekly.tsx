@@ -208,19 +208,19 @@ export function WeeklyBlueprint({
     );
     const {sortBy1QBRanks, sortBySuperflexRanks} = useWeeklyRanks();
     useEffect(() => {
-        switch (tier) {
-            case RosterTier.Rebuild:
-            case RosterTier.Reload:
-                setInSeasonVerdict('TROUBLE');
-                break;
-            case RosterTier.Competitive:
-                setInSeasonVerdict('SHAKY');
-                break;
-            case RosterTier.Championship:
-            case RosterTier.Elite:
-                setInSeasonVerdict('SOLID');
+        if (!rosters || !roster?.settings ) return;
+        const pointsForList = rosters.map(r => r.settings.fpts).sort();
+        const pointsFor = roster.settings.fpts;
+        const rank = pointsForList.findIndex(p => p === pointsFor) + 1;
+        const percentile = (rank / rosters.length) * 100;
+        if (percentile > 66) {
+            setInSeasonVerdict('SOLID');
+        } else if (percentile > 33) {
+            setInSeasonVerdict('SHAKY');
+        } else {
+            setInSeasonVerdict('TROUBLE');
         }
-    }, [tier]);
+    }, [rosters, roster]);
     function hasTeamId() {
         return teamId !== '' && teamId !== NONE_TEAM_ID;
     }
@@ -302,6 +302,7 @@ export function WeeklyBlueprint({
                 roster={roster}
                 setBuys={setBuys}
                 weekly={true}
+                inSeasonVerdict={inSeasonVerdict}
             />
             <div className={styles.monthYear}>Week 4</div>
             <img src={bakeryCard1} className={styles.bakeryCard} />

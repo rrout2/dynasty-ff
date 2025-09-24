@@ -934,9 +934,6 @@ export function usePlayerValues() {
         const rank = getAdp(playerName);
         const datum = adpData[rank - 1];
         if (!datum) {
-            console.warn(
-                `cannot find player with name = '${playerName}' in adpData`
-            );
             return {
                 Player: playerName,
                 Value: 0,

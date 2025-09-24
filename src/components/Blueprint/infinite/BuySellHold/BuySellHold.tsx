@@ -57,7 +57,8 @@ export function useBuySells(
     leagueSize: number,
     roster?: Roster,
     maxSells = 2,
-    contendRebuildSplit = false
+    contendRebuildSplit = false,
+    inSeasonVerdict?: string
 ) {
     const {tier, qbGrade, rbGrade, wrGrade, teGrade} =
         useRosterTierAndPosGrades(isSuperFlex, leagueSize, roster);
@@ -131,11 +132,10 @@ export function useBuySells(
     }
 
     function isContending() {
-        return (
-            tier === RosterTier.Championship ||
-            tier === RosterTier.Elite ||
-            tier === RosterTier.Competitive
-        );
+        if (!inSeasonVerdict) {
+            console.warn('no in season verdict');
+        }
+        return inSeasonVerdict === 'SOLID' || inSeasonVerdict === 'SHAKY';
     }
 
     /**

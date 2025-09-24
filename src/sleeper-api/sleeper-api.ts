@@ -117,6 +117,7 @@ export type Roster = {
         ties: number;
         losses: number;
         fpts: number;
+        fpts_against: number;
 
         waiver_position: number;
         waiver_budget_used: number;

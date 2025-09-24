@@ -411,19 +411,22 @@ export const BuySellHoldComponent = ({
     roster,
     setBuys,
     weekly,
+    inSeasonVerdict,
 }: {
     isSuperFlex: boolean;
     leagueSize: number;
     roster?: Roster;
     setBuys?: (buys: BuySellTileProps[]) => void;
     weekly?: boolean;
+    inSeasonVerdict?: string;
 }) => {
     const {buys, sells} = useBuySells(
         isSuperFlex,
         leagueSize,
         roster,
         2,
-        weekly
+        weekly,
+        inSeasonVerdict,
     );
 
     useEffect(() => {
