@@ -55,7 +55,7 @@ def process_json_files(players_file, ids_file, output_file):
         player['team'] = player['Team']
         player['position'] = player['Position']
         # player['verdict'] = player['REAL VERDICT']
-        player['contend_veridct'] = player['Contend Team']
+        player['contend_verdict'] = player['Contend Team']
         player['rebuild_verdict'] = player['Rebuild Team']
         # player['reason'] = player['Explanation']
         player['domain_rank'] = player['Domain Rank']
