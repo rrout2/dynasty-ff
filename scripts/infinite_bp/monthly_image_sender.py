@@ -357,9 +357,10 @@ def main():
                     downloaded_file_path = sender.download_image(i)
                     if not downloaded_file_path:
                         print(f"Failed to download image {i + 1}/{len(sender.league_id_list)} for {sender.email_list[i]}")
-                        sender.fails.append(sender.email_list[i])
-                        sender.fail_indices.append(i)
-                        print(f"failed indices: {sender.fail_indices}")
+                        if attempt == 1:
+                            sender.fails.append(sender.email_list[i])
+                            sender.fail_indices.append(i)
+                            print(f"failed indices: {sender.fail_indices}")
                         continue
 
                     time.sleep(0.1)
