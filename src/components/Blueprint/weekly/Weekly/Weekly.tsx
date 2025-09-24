@@ -203,12 +203,12 @@ export function WeeklyBlueprint({
 
     const {tier} = useRosterTierAndPosGrades(
         isSuperFlex,
-        rosters?.length || 0,
+        rosters?.length || numRosters || 12,
         roster
     );
     const {sortBy1QBRanks, sortBySuperflexRanks} = useWeeklyRanks();
     useEffect(() => {
-        if (!rosters || !roster?.settings ) return;
+        if (!rosters || !roster?.settings || isNonSleeper) return;
         const pointsForList = rosters.map(r => r.settings.fpts).sort();
         const pointsFor = roster.settings.fpts;
         const rank = pointsForList.findIndex(p => p === pointsFor) + 1;
@@ -220,7 +220,22 @@ export function WeeklyBlueprint({
         } else {
             setInSeasonVerdict('TROUBLE');
         }
-    }, [rosters, roster]);
+    }, [rosters, roster, isNonSleeper]);
+    useEffect(() => {
+        if (!isNonSleeper) return;
+        switch (tier) {
+            case RosterTier.Rebuild:
+            case RosterTier.Reload:
+                setInSeasonVerdict('TROUBLE');
+                break;
+            case RosterTier.Competitive:
+                setInSeasonVerdict('SHAKY');
+                break;
+            case RosterTier.Championship:
+            case RosterTier.Elite:
+                setInSeasonVerdict('SOLID');
+        }
+    }, [tier, isNonSleeper]);
     function hasTeamId() {
         return teamId !== '' && teamId !== NONE_TEAM_ID;
     }
