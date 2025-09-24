@@ -303,7 +303,7 @@ export function WeeklyBlueprint({
                 setBuys={setBuys}
                 weekly={true}
             />
-            <div className={styles.monthYear}>Week 3</div>
+            <div className={styles.monthYear}>Week 4</div>
             <img src={bakeryCard1} className={styles.bakeryCard} />
             <img src={blankWeekly} className={styles.blankBp} />
         </div>
