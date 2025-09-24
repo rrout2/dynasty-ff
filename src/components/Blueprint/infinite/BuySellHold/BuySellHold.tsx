@@ -286,6 +286,9 @@ export function useBuySells(
         if (contendRebuildSplit) {
             if (isContending()) {
                 buyList = contendQbBuys;
+                if (inSeasonVerdict === 'SHAKY') {
+                    buyList.push(...rebuildQbBuys);
+                }
             } else {
                 buyList = rebuildQbBuys;
             }
@@ -341,6 +344,9 @@ export function useBuySells(
         if (contendRebuildSplit) {
             if (isContending()) {
                 buyList = contendRbBuys;
+                if (inSeasonVerdict === 'SHAKY') {
+                    buyList.push(...rebuildRbBuys);
+                }
             } else {
                 buyList = rebuildRbBuys;
             }
@@ -384,6 +390,9 @@ export function useBuySells(
         if (contendRebuildSplit) {
             if (isContending()) {
                 buyList = contendWrBuys;
+                if (inSeasonVerdict === 'SHAKY') {
+                    buyList.push(...rebuildWrBuys);
+                }
             } else {
                 buyList = rebuildWrBuys;
             }
@@ -444,6 +453,9 @@ export function useBuySells(
         if (contendRebuildSplit) {
             if (isContending()) {
                 buyList = contendTeBuys;
+                if (inSeasonVerdict === 'SHAKY') {
+                    buyList.push(...rebuildTeBuys);
+                }
             } else {
                 buyList = rebuildTeBuys;
             }
@@ -497,7 +509,7 @@ export function useBuySells(
         if (!roster) return [];
         let sellList;
         if (contendRebuildSplit) {
-            if (isContending()) {
+            if (inSeasonVerdict === 'SOLID' || inSeasonVerdict === 'SHAKY') {
                 sellList = contendSells;
             } else {
                 sellList = rebuildSells;
