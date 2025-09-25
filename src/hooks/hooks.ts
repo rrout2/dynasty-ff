@@ -1056,7 +1056,7 @@ export function useAdpData() {
     return {adpData, getAdp, sortByAdp, getPositionalAdp, sortNamesByAdp};
 }
 
-const checkForNickname = (playerName: string) => {
+export const checkForNickname = (playerName: string) => {
     switch (playerName) {
         case 'Tank Dell':
             return 'Nathaniel Dell';

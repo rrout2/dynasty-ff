@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import styles from './RisersFallersModule.module.css';
 import {Player, Roster} from '../../../../../sleeper-api/sleeper-api';
 import {
+    checkForNickname,
     usePlayerData,
     useWeeklyRisersFallers,
 } from '../../../../../hooks/hooks';
@@ -23,7 +24,6 @@ export type RisersFallersModuleProps = {
 export function useRisersFallers(roster?: Roster) {
     const {risers: weeklyRisers, fallers: weeklyFallers} =
         useWeeklyRisersFallers(roster);
-    console.log(weeklyRisers, weeklyFallers);
     const [risers, setRisers] = useState<string[]>([]);
     const [riserValues, setRiserValues] = useState<number[]>([30, 20, 10]);
     const [fallers, setFallers] = useState<string[]>([]);
@@ -34,8 +34,9 @@ export function useRisersFallers(roster?: Roster) {
         if (!playerData) return;
         function findPlayerId(playerName: string) {
             if (!playerData) return '';
+            const nickname  = checkForNickname(playerName);
             const player = Object.values(playerData).find(
-                p => `${p.first_name} ${p.last_name}` === playerName
+                p => `${p.first_name} ${p.last_name}` === playerName || `${p.first_name} ${p.last_name}` === nickname
             );
             return player ? player.player_id : '';
         }
@@ -282,6 +283,9 @@ export function InputComponent({
 }
 
 export function maybeShortenedName(player: Player) {
+    if (!player) {
+        return '';
+    }
     const fullName = `${player.first_name} ${player.last_name}`;
     if (fullName.length >= 15) {
         return `${player.first_name[0]}. ${player.last_name}`;
