@@ -5,6 +5,10 @@ on:
             folderId:
                 description: 'Folder ID'     
                 required: true
+            startIndex:
+                description: 'Start Index'
+                default: 0
+                required: true
             tags:
                 description: 'Test scenario tags'   
 
@@ -63,7 +67,7 @@ jobs:
                   echo "${SA_CREDENTIALS}" > service-account-credentials.json
 
             - name: Run image sender
-              run: python scripts/infinite_bp/monthly_image_sender.py -s=0
+              run: python scripts/infinite_bp/monthly_image_sender.py -s=0 -si=${{ github.event.inputs.startIndex }}
             - uses: actions/upload-artifact@v4
               with:
                   path: |
