@@ -37,6 +37,11 @@ class ImageEmailSender:
             with open(config_path, 'r') as file:
                 config = yaml.safe_load(file)
 
+        if isinstance(config['folder_id'], str):
+            self.folder_id = config['folder_id']
+        else:
+            raise ValueError("Folder ID must be in config file")
+
         # Parse email list from string to list if needed
         if isinstance(config['email_list'], str):
             self.email_list = [email.strip() for email in config['email_list'].split(',')]
@@ -299,8 +304,7 @@ def main():
     try:
         # Authenticate
         uploader.authenticate()
-        folder_id = '1FuyH0r70a-OUHRCiCEu0pBE-ItWBXsW2' #uploader.create_or_get_folder(args.folder_name)
-        print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
+        print(f"Folder link: https://drive.google.com/drive/folders/{sender.folder_id}")
 
         print(f"Running manual URL list ({len(sender.manual_url_list)})...")
         for i in range(len(sender.manual_url_list)):
@@ -316,7 +320,7 @@ def main():
 
                     time.sleep(0.1)
                     print(f"Uploading {downloaded_file_path}...")
-                    file = uploader.upload_image(downloaded_file_path, f"{sender.manual_email_list[i]}.png", folder_id)
+                    file = uploader.upload_image(downloaded_file_path, f"{sender.manual_email_list[i]}.png", sender.folder_id)
                     # if file:
                     #     uploader.make_public(file['id'])
                         # uploader.transfer_ownership(file['id'], sender.sender_email)
@@ -365,7 +369,7 @@ def main():
 
                     time.sleep(0.1)
                     print(f"Uploading {downloaded_file_path}...")
-                    file = uploader.upload_image(downloaded_file_path, f"{sender.email_list[i]}.png", folder_id)
+                    file = uploader.upload_image(downloaded_file_path, f"{sender.email_list[i]}.png", sender.folder_id)
                     if file:
                         uploader.make_public(file['id'])
                         # uploader.transfer_ownership(file['id'], sender.sender_email)
@@ -397,7 +401,7 @@ def main():
         
 
         print("\nDone!")
-        print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
+        print(f"Folder link: https://drive.google.com/drive/folders/{sender.folder_id}")
 
     except Exception as e:
         print(f"\nAn error occurred: {str(e)}")

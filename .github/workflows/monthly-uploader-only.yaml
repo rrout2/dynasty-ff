@@ -1,6 +1,11 @@
 name: Manual Upload to Drive Folder
 on:
     workflow_dispatch: # Allows manual trigger
+      folderId:
+          description: 'Folder ID'     
+          required: true
+      tags:
+          description: 'Test scenario tags'  
 
 jobs:
     upload-images:
@@ -41,7 +46,8 @@ jobs:
                   MANUAL_URL_LIST: ${{ secrets.MANUAL_URL_LIST }}
                   MANUAL_EMAIL_LIST: ${{ secrets.MANUAL_EMAIL_LIST }}
               run: |
-                  echo "email_list: ${EMAIL_LIST}" > config.yaml
+                  echo "folder_id: ${{ github.event.inputs.folderId }}" >> config.yaml
+                  echo "email_list: ${EMAIL_LIST}" >> config.yaml
                   echo "smtp_server: ${SMTP_SERVER}" >> config.yaml
                   echo "smtp_port: ${SMTP_PORT}" >> config.yaml
                   echo "sender_email: ${SENDER_EMAIL}" >> config.yaml
