@@ -1,11 +1,12 @@
 name: Manual Upload to Drive Folder
 on:
     workflow_dispatch: # Allows manual trigger
-      folderId:
-          description: 'Folder ID'     
-          required: true
-      tags:
-          description: 'Test scenario tags'  
+        inputs:
+            folderId:
+                description: 'Folder ID'     
+                required: true
+            tags:
+                description: 'Test scenario tags'   
 
 jobs:
     upload-images:
