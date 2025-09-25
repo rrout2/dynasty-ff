@@ -1559,6 +1559,39 @@ export function useProjectedLineup(
         const remainingPlayers = new Set(playerIds);
         const starters: {player: Player; position: string}[] = [];
         Array.from(rosterSettings)
+            .sort(
+                // sort by number of positions allowed in slot
+                // ie, SUPER_FLEX === 4, FLEX === 3, WR_RB_FLEX === 2, WR_TE_FLEX === 2
+                (a, b) => {
+                    if (a[0] === b[0]) {
+                        return 0;
+                    }
+                    if (!a[0].includes(FLEX) && !b[0].includes(FLEX)) {
+                        return 0;
+                    }
+                    if (a[0].includes(FLEX) && !b[0].includes(FLEX)) {
+                        return 1;
+                    }
+                    if (!a[0].includes(FLEX) && b[0].includes(FLEX)) {
+                        return -1;
+                    }
+                    if (a[0].includes(FLEX) && b[0].includes(FLEX)) {
+                        if (a[0] === WR_RB_FLEX || a[0] === WR_TE_FLEX && b[0] === FLEX) {
+                            return -1;
+                        }
+                        if (b[0] === WR_RB_FLEX || b[0] === WR_TE_FLEX && a[0] === FLEX) {
+                            return 1;
+                        }
+                        if (a[0] === SUPER_FLEX) {
+                            return 1;
+                        }
+                        if (b[0] === SUPER_FLEX) {
+                            return -1;
+                        }
+                    }
+                    return 0;
+                }
+            )
             .filter(([position]) => ALLOWED_POSITIONS.has(position))
             .forEach(([position, count]) => {
                 const bestAtPosition = getBestNAtPosition(
