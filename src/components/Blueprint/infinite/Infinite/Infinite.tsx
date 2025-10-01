@@ -443,8 +443,8 @@ export const BuySellHoldComponent = ({
     const row3 = '1478px';
 
     const weeklyColumn = '821px';
-    const weeklyRow1 = '1152px';
-    const weeklyRow2 = '1296px';
+    const weeklyRow1 = '1142px';
+    const weeklyRow2 = '1286px';
     const weeklyRow3 = '1518px';
     if (weekly) {
         return (
