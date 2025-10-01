@@ -8,15 +8,15 @@ import {
 import playersJson from '../data/players.json';
 import rankingsJson from '../data/rankings_09122025.json';
 import buySellsData from '../data/buyssellsholds_with_ids_080525.json';
-import buySellsContendRebuild from '../data/buyssellsholds_with_ids_092425.json';
+import buySellsContendRebuild from '../data/buyssellsholds_with_ids_100125.json';
 import nflScheduleJson from '../data/nfl_schedule.json';
 import sfPickMovesJson from '../data/rookieBP/sf_pick_moves.json';
 import oneQbPickMovesJson from '../data/rookieBP/1qb_pick_moves.json';
 import sfRookieRankingsJson from '../data/rookieBP/sf_rookie_rankings_and_tiers_apr26.json';
 import oneQbRookieRankingsJson from '../data/rookieBP/1qb_rookie_rankings_and_tiers_apr26.json';
-import playerStoplightsJson from '../data/weekly/playerLightsWeek4.json';
-import risersFallersJson from '../data/weekly/risersFallersWeek4.json';
-import weeklyRankingsJson from '../data/weekly/rankingsWeek4.json';
+import playerStoplightsJson from '../data/weekly/playerLightsWeek5.json';
+import risersFallersJson from '../data/weekly/risersFallersWeek5.json';
+import weeklyRankingsJson from '../data/weekly/rankingsWeek5.json';
 
 import {
     League,
