@@ -8098,5 +8098,41 @@
     "Matchup Light": "YELLOW",
     "Offense Light": "GREEN",
     "Vegas Light": "GREEN"
+  },
+  {
+    "Player Conversion": "Isaiah Bond",
+    "Player Name": "Isaiah Bond",
+    "Position": "WR",
+    "Opponent": "Minnesota Vikings",
+    "Matchup Light": "RED",
+    "Offense Light": "RED",
+    "Vegas Light": "RED"
+  },
+  {
+    "Player Conversion": "Orande Gadsden",
+    "Player Name": "Orande Gadsden",
+    "Position": "TE",
+    "Opponent": "Washington Commanders",
+    "Matchup Light": "GREEN",
+    "Offense Light": "RED",
+    "Vegas Light": "GREEN"
+  },
+  {
+    "Player Conversion": "Chris Rodriguez",
+    "Player Name": "Chris Rodriguez",
+    "Position": "RB",
+    "Opponent": "Los Angeles Chargers",
+    "Matchup Light": "RED",
+    "Offense Light": "YELLOW",
+    "Vegas Light": "YELLOW"
+  },
+  {
+    "Player Conversion": "Darren Waller",
+    "Player Name": "Darren Waller",
+    "Position": "TE",
+    "Opponent": "Carolina Panthers",
+    "Matchup Light": "GREEN",
+    "Offense Light": "YELLOW",
+    "Vegas Light": "YELLOW"
   }
 ]
