@@ -319,7 +319,7 @@ export function WeeklyBlueprint({
                 weekly={true}
                 inSeasonVerdict={inSeasonVerdict}
             />
-            <div className={styles.monthYear}>Week 4</div>
+            <div className={styles.monthYear}>Week 5</div>
             <img src={bakeryCard1} className={styles.bakeryCard} />
             <img src={blankWeekly} className={styles.blankBp} />
         </div>
