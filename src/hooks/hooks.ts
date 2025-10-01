@@ -6,7 +6,7 @@ import {
     useState,
 } from 'react';
 import playersJson from '../data/players.json';
-import rankingsJson from '../data/rankings_09122025.json';
+import rankingsJson from '../data/rankings_10012025.json';
 import buySellsData from '../data/buyssellsholds_with_ids_080525.json';
 import buySellsContendRebuild from '../data/buyssellsholds_with_ids_100125.json';
 import nflScheduleJson from '../data/nfl_schedule.json';
