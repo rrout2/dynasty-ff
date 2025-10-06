@@ -244,8 +244,8 @@ function InputComponent({
                 `Rookie Pick 1.${i < 10 ? `0${i}` : `${i}`}`
             );
         }
-        nonIdPlayerOptions.push('2025 1st');
         nonIdPlayerOptions.push('2026 1st');
+        nonIdPlayerOptions.push('2027 1st');
         return (
             <>
                 {playersToTrade.map((_, idx) => (

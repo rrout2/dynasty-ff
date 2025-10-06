@@ -168,10 +168,10 @@ function InputComponent({
             .filter(p => !!p.team)
             .sort(sortBySearchRank)
             .map(p => p.player_id);
-        opts.push('RP-2025');
         opts.push('RP-2026');
-        opts.push('RP-FIRST-2025');
+        opts.push('RP-2027');
         opts.push('RP-FIRST-2026');
+        opts.push('RP-FIRST-2027');
 
         const [inputValue, setInputValue] = inputStateList[idx];
         return (
