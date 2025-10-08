@@ -217,7 +217,7 @@ export function WeeklyBlueprint({
         const weightedPercentile = winPercentage * 0.4 + percentile * 0.6;
         if (weightedPercentile > 65) {
             setInSeasonVerdict('SOLID');
-        } else if (weightedPercentile > 30) {
+        } else if (weightedPercentile > 35) {
             setInSeasonVerdict('SHAKY');
         } else {
             setInSeasonVerdict('TROUBLE');
