@@ -1,5 +1,5 @@
 import styles from './Weekly.module.css';
-import {bakeryCard1, blankWeekly} from '../../../../consts/images';
+import {bakeryCard, blankWeekly} from '../../../../consts/images';
 import {
     useFetchRosters,
     useLeague,
@@ -322,7 +322,7 @@ export function WeeklyBlueprint({
                 inSeasonVerdict={inSeasonVerdict}
             />
             <div className={styles.monthYear}>Week 6</div>
-            <img src={bakeryCard1} className={styles.bakeryCard} />
+            <img src={bakeryCard} className={styles.bakeryCard} />
             <img src={blankWeekly} className={styles.blankBp} />
         </div>
     );
