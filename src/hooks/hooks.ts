@@ -6,9 +6,9 @@ import {
     useState,
 } from 'react';
 import playersJson from '../data/players.json';
-import rankingsJson from '../data/rankings_10012025.json';
+import rankingsJson from '../data/rankings_10082025.json';
 import buySellsData from '../data/buyssellsholds_with_ids_080525.json';
-import buySellsContendRebuild from '../data/buyssellsholds_with_ids_100125.json';
+import buySellsContendRebuild from '../data/buyssellsholds_with_ids_100825.json';
 import nflScheduleJson from '../data/nfl_schedule.json';
 import sfPickMovesJson from '../data/rookieBP/sf_pick_moves.json';
 import oneQbPickMovesJson from '../data/rookieBP/1qb_pick_moves.json';
