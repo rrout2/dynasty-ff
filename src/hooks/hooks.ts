@@ -14,9 +14,9 @@ import sfPickMovesJson from '../data/rookieBP/sf_pick_moves.json';
 import oneQbPickMovesJson from '../data/rookieBP/1qb_pick_moves.json';
 import sfRookieRankingsJson from '../data/rookieBP/sf_rookie_rankings_and_tiers_apr26.json';
 import oneQbRookieRankingsJson from '../data/rookieBP/1qb_rookie_rankings_and_tiers_apr26.json';
-import playerStoplightsJson from '../data/weekly/playerLightsWeek5.json';
-import risersFallersJson from '../data/weekly/risersFallersWeek5.json';
-import weeklyRankingsJson from '../data/weekly/rankingsWeek5.json';
+import playerStoplightsJson from '../data/weekly/playerLightsWeek6.json';
+import risersFallersJson from '../data/weekly/risersFallersWeek6.json';
+import weeklyRankingsJson from '../data/weekly/rankingsWeek6.json';
 
 import {
     League,
