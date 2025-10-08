@@ -2547,8 +2547,8 @@
     "Vegas Light": "YELLOW"
   },
   {
-    "Player Conversion": "Deshaun Watson",
-    "Player Name": "Deshaun Watson",
+    "Player Conversion": "Dillon Gabriel",
+    "Player Name": "Dillon Gabriel",
     "Position": "QB",
     "Opponent": "Pittsburgh Steelers",
     "Matchup Light": "GREEN",
@@ -2691,13 +2691,13 @@
     "Vegas Light": "RED"
   },
   {
-    "Player Conversion": "Joe Flacco",
-    "Player Name": "Joe Flacco",
+    "Player Conversion": "Carson Wentz",
+    "Player Name": "Carson Wentz",
     "Position": "QB",
-    "Opponent": "Green Bay Packers",
-    "Matchup Light": "YELLOW",
-    "Offense Light": "RED",
-    "Vegas Light": "RED"
+    "Opponent": "BYE",
+    "Matchup Light": "BYE",
+    "Offense Light": "BYE",
+    "Vegas Light": "BYE"
   },
   {
     "Player Conversion": "Chris Rodriguez",
@@ -2997,8 +2997,8 @@
     "Vegas Light": "RED"
   },
   {
-    "Player Conversion": "Joe Flacco",
-    "Player Name": "Joe Flacco",
+    "Player Conversion": "",
+    "Player Name": "",
     "Position": "QB",
     "Opponent": "New York Giants",
     "Matchup Light": "YELLOW",
