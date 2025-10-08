@@ -1,6 +1,6 @@
 [
   {
-    "Name": "Lamar Jackson",
+    "Player": "Lamar Jackson",
     "Team": "BAL",
     "Position": "QB",
     "Avery Huffman Rank": 1,
@@ -11,7 +11,7 @@
     "Position Rank_2": "QB1"
   },
   {
-    "Name": "Josh Allen",
+    "Player": "Josh Allen",
     "Team": "BUF",
     "Position": "QB",
     "Avery Huffman Rank": 2,
@@ -22,7 +22,7 @@
     "Position Rank_2": "QB2"
   },
   {
-    "Name": "Jayden Daniels",
+    "Player": "Jayden Daniels",
     "Team": "WAS",
     "Position": "QB",
     "Avery Huffman Rank": 3,
@@ -33,7 +33,7 @@
     "Position Rank_2": "QB3"
   },
   {
-    "Name": "Ja'Marr Chase",
+    "Player": "Ja'Marr Chase",
     "Team": "CIN",
     "Position": "WR",
     "Avery Huffman Rank": 5,
@@ -44,7 +44,7 @@
     "Position Rank_2": "WR1"
   },
   {
-    "Name": "Jalen Hurts",
+    "Player": "Jalen Hurts",
     "Team": "PHI",
     "Position": "QB",
     "Avery Huffman Rank": 4,
@@ -55,7 +55,7 @@
     "Position Rank_2": "QB4"
   },
   {
-    "Name": "CeeDee Lamb",
+    "Player": "CeeDee Lamb",
     "Team": "DAL",
     "Position": "WR",
     "Avery Huffman Rank": 6,
@@ -66,7 +66,7 @@
     "Position Rank_2": "WR2"
   },
   {
-    "Name": "Justin Jefferson",
+    "Player": "Justin Jefferson",
     "Team": "MIN",
     "Position": "WR",
     "Avery Huffman Rank": 8,
@@ -77,7 +77,7 @@
     "Position Rank_2": "WR3"
   },
   {
-    "Name": "Puka Nacua",
+    "Player": "Puka Nacua",
     "Team": "LAR",
     "Position": "WR",
     "Avery Huffman Rank": 9,
@@ -88,7 +88,7 @@
     "Position Rank_2": "WR4"
   },
   {
-    "Name": "Amon-Ra St. Brown",
+    "Player": "Amon-Ra St. Brown",
     "Team": "DET",
     "Position": "WR",
     "Avery Huffman Rank": 10,
@@ -99,7 +99,7 @@
     "Position Rank_2": "WR5"
   },
   {
-    "Name": "Jaxon Smith-Njigba",
+    "Player": "Jaxon Smith-Njigba",
     "Team": "SEA",
     "Position": "WR",
     "Avery Huffman Rank": 11,
@@ -110,7 +110,7 @@
     "Position Rank_2": "WR6"
   },
   {
-    "Name": "Bijan Robinson",
+    "Player": "Bijan Robinson",
     "Team": "ATL",
     "Position": "RB",
     "Avery Huffman Rank": 12,
@@ -121,7 +121,7 @@
     "Position Rank_2": "RB1"
   },
   {
-    "Name": "Patrick Mahomes",
+    "Player": "Patrick Mahomes",
     "Team": "KC",
     "Position": "QB",
     "Avery Huffman Rank": 7,
@@ -132,7 +132,7 @@
     "Position Rank_2": "QB5"
   },
   {
-    "Name": "Jahmyr Gibbs",
+    "Player": "Jahmyr Gibbs",
     "Team": "DET",
     "Position": "RB",
     "Avery Huffman Rank": 13,
@@ -143,7 +143,7 @@
     "Position Rank_2": "RB2"
   },
   {
-    "Name": "Drake Maye",
+    "Player": "Drake Maye",
     "Team": "NE",
     "Position": "QB",
     "Avery Huffman Rank": 18,
@@ -154,7 +154,7 @@
     "Position Rank_2": "QB5"
   },
   {
-    "Name": "Ashton Jeanty",
+    "Player": "Ashton Jeanty",
     "Team": "LV",
     "Position": "RB",
     "Avery Huffman Rank": 15,
@@ -165,7 +165,7 @@
     "Position Rank_2": "RB3"
   },
   {
-    "Name": "Caleb Williams",
+    "Player": "Caleb Williams",
     "Team": "CHI",
     "Position": "QB",
     "Avery Huffman Rank": 19,
@@ -176,7 +176,7 @@
     "Position Rank_2": "QB7"
   },
   {
-    "Name": "Malik Nabers",
+    "Player": "Malik Nabers",
     "Team": "NYG",
     "Position": "WR",
     "Avery Huffman Rank": 14,
@@ -187,7 +187,7 @@
     "Position Rank_2": "WR7"
   },
   {
-    "Name": "Brock Bowers",
+    "Player": "Brock Bowers",
     "Team": "LV",
     "Position": "TE",
     "Avery Huffman Rank": 16,
@@ -198,7 +198,7 @@
     "Position Rank_2": "TE1"
   },
   {
-    "Name": "Drake London",
+    "Player": "Drake London",
     "Team": "ATL",
     "Position": "WR",
     "Avery Huffman Rank": 20,
@@ -209,7 +209,7 @@
     "Position Rank_2": "WR8"
   },
   {
-    "Name": "Rome Odunze",
+    "Player": "Rome Odunze",
     "Team": "CHI",
     "Position": "WR",
     "Avery Huffman Rank": 21,
@@ -220,7 +220,7 @@
     "Position Rank_2": "WR9"
   },
   {
-    "Name": "Joe Burrow",
+    "Player": "Joe Burrow",
     "Team": "CIN",
     "Position": "QB",
     "Avery Huffman Rank": 17,
@@ -231,7 +231,7 @@
     "Position Rank_2": "QB8"
   },
   {
-    "Name": "Emeka Egbuka",
+    "Player": "Emeka Egbuka",
     "Team": "TB",
     "Position": "WR",
     "Avery Huffman Rank": 22,
@@ -242,7 +242,7 @@
     "Position Rank_2": "WR10"
   },
   {
-    "Name": "Omarion Hampton",
+    "Player": "Omarion Hampton",
     "Team": "LAC",
     "Position": "RB",
     "Avery Huffman Rank": 24,
@@ -253,7 +253,7 @@
     "Position Rank_2": "RB4"
   },
   {
-    "Name": "Tetairoa McMillan",
+    "Player": "Tetairoa McMillan",
     "Team": "CAR",
     "Position": "WR",
     "Avery Huffman Rank": 23,
@@ -264,7 +264,7 @@
     "Position Rank_2": "WR11"
   },
   {
-    "Name": "Rashee Rice",
+    "Player": "Rashee Rice",
     "Team": "KC",
     "Position": "WR",
     "Avery Huffman Rank": 25,
@@ -275,7 +275,7 @@
     "Position Rank_2": "WR12"
   },
   {
-    "Name": "Justin Herbert",
+    "Player": "Justin Herbert",
     "Team": "LAC",
     "Position": "QB",
     "Avery Huffman Rank": 29,
@@ -286,7 +286,7 @@
     "Position Rank_2": "QB9"
   },
   {
-    "Name": "Trey McBride",
+    "Player": "Trey McBride",
     "Team": "ARI",
     "Position": "TE",
     "Avery Huffman Rank": 26,
@@ -297,7 +297,7 @@
     "Position Rank_2": "TE2"
   },
   {
-    "Name": "Baker Mayfield",
+    "Player": "Baker Mayfield",
     "Team": "TB",
     "Position": "QB",
     "Avery Huffman Rank": 27,
@@ -308,7 +308,7 @@
     "Position Rank_2": "QB10"
   },
   {
-    "Name": "Garrett Wilson",
+    "Player": "Garrett Wilson",
     "Team": "NYJ",
     "Position": "WR",
     "Avery Huffman Rank": 31,
@@ -319,7 +319,7 @@
     "Position Rank_2": "WR13"
   },
   {
-    "Name": "Bo Nix",
+    "Player": "Bo Nix",
     "Team": "DEN",
     "Position": "QB",
     "Avery Huffman Rank": 28,
@@ -330,7 +330,7 @@
     "Position Rank_2": "QB11"
   },
   {
-    "Name": "Brock Purdy",
+    "Player": "Brock Purdy",
     "Team": "SF",
     "Position": "QB",
     "Avery Huffman Rank": 30,
@@ -341,7 +341,7 @@
     "Position Rank_2": "QB12"
   },
   {
-    "Name": "Marvin Harrison",
+    "Player": "Marvin Harrison",
     "Team": "ARI",
     "Position": "WR",
     "Avery Huffman Rank": 33,
@@ -352,7 +352,7 @@
     "Position Rank_2": "WR14"
   },
   {
-    "Name": "Devon Achane",
+    "Player": "Devon Achane",
     "Team": "MIA",
     "Position": "RB",
     "Avery Huffman Rank": 35,
@@ -363,7 +363,7 @@
     "Position Rank_2": "RB5"
   },
   {
-    "Name": "Nico Collins",
+    "Player": "Nico Collins",
     "Team": "HOU",
     "Position": "WR",
     "Avery Huffman Rank": 37,
@@ -374,7 +374,7 @@
     "Position Rank_2": "WR15"
   },
   {
-    "Name": "Brian Thomas",
+    "Player": "Brian Thomas",
     "Team": "JAX",
     "Position": "WR",
     "Avery Huffman Rank": 32,
@@ -385,7 +385,7 @@
     "Position Rank_2": "WR16"
   },
   {
-    "Name": "Jonathan Taylor",
+    "Player": "Jonathan Taylor",
     "Team": "IND",
     "Position": "RB",
     "Avery Huffman Rank": 36,
@@ -396,7 +396,7 @@
     "Position Rank_2": "RB6"
   },
   {
-    "Name": "Ladd McConkey",
+    "Player": "Ladd McConkey",
     "Team": "LAC",
     "Position": "WR",
     "Avery Huffman Rank": 34,
@@ -407,7 +407,7 @@
     "Position Rank_2": "WR17"
   },
   {
-    "Name": "Zay Flowers",
+    "Player": "Zay Flowers",
     "Team": "BAL",
     "Position": "WR",
     "Avery Huffman Rank": 38,
@@ -418,7 +418,7 @@
     "Position Rank_2": "WR18"
   },
   {
-    "Name": "Kyler Murray",
+    "Player": "Kyler Murray",
     "Team": "ARI",
     "Position": "QB",
     "Avery Huffman Rank": 40,
@@ -429,7 +429,7 @@
     "Position Rank_2": "QB13"
   },
   {
-    "Name": "Bucky Irving",
+    "Player": "Bucky Irving",
     "Team": "TB",
     "Position": "RB",
     "Avery Huffman Rank": 39,
@@ -440,7 +440,7 @@
     "Position Rank_2": "RB7"
   },
   {
-    "Name": "James Cook",
+    "Player": "James Cook",
     "Team": "BUF",
     "Position": "RB",
     "Avery Huffman Rank": 42,
@@ -451,7 +451,7 @@
     "Position Rank_2": "RB8"
   },
   {
-    "Name": "Quinshon Judkins",
+    "Player": "Quinshon Judkins",
     "Team": "CLE",
     "Position": "RB",
     "Avery Huffman Rank": 43,
@@ -462,7 +462,7 @@
     "Position Rank_2": "RB9"
   },
   {
-    "Name": "Jordan Love",
+    "Player": "Jordan Love",
     "Team": "GB",
     "Position": "QB",
     "Avery Huffman Rank": 50,
@@ -473,7 +473,7 @@
     "Position Rank_2": "QB14"
   },
   {
-    "Name": "A.J. Brown",
+    "Player": "A.J. Brown",
     "Team": "PHI",
     "Position": "WR",
     "Avery Huffman Rank": 44,
@@ -484,7 +484,7 @@
     "Position Rank_2": "WR19"
   },
   {
-    "Name": "Tee Higgins",
+    "Player": "Tee Higgins",
     "Team": "CIN",
     "Position": "WR",
     "Avery Huffman Rank": 45,
@@ -495,7 +495,7 @@
     "Position Rank_2": "WR20"
   },
   {
-    "Name": "Saquon Barkley",
+    "Player": "Saquon Barkley",
     "Team": "PHI",
     "Position": "RB",
     "Avery Huffman Rank": 47,
@@ -506,7 +506,7 @@
     "Position Rank_2": "RB10"
   },
   {
-    "Name": "TreVeyon Henderson",
+    "Player": "TreVeyon Henderson",
     "Team": "NE",
     "Position": "RB",
     "Avery Huffman Rank": 48,
@@ -517,7 +517,7 @@
     "Position Rank_2": "RB11"
   },
   {
-    "Name": "Jared Goff",
+    "Player": "Jared Goff",
     "Team": "DET",
     "Position": "QB",
     "Avery Huffman Rank": 41,
@@ -528,7 +528,7 @@
     "Position Rank_2": "QB15"
   },
   {
-    "Name": "Jaylen Waddle",
+    "Player": "Jaylen Waddle",
     "Team": "MIA",
     "Position": "WR",
     "Avery Huffman Rank": 53,
@@ -539,7 +539,7 @@
     "Position Rank_2": "WR21"
   },
   {
-    "Name": "Xavier Worthy",
+    "Player": "Xavier Worthy",
     "Team": "KC",
     "Position": "WR",
     "Avery Huffman Rank": 52,
@@ -550,7 +550,7 @@
     "Position Rank_2": "WR22"
   },
   {
-    "Name": "C.J. Stroud",
+    "Player": "C.J. Stroud",
     "Team": "HOU",
     "Position": "QB",
     "Avery Huffman Rank": 49,
@@ -561,7 +561,7 @@
     "Position Rank_2": "QB16"
   },
   {
-    "Name": "Kyren Williams",
+    "Player": "Kyren Williams",
     "Team": "LAR",
     "Position": "RB",
     "Avery Huffman Rank": 51,
@@ -572,7 +572,7 @@
     "Position Rank_2": "RB12"
   },
   {
-    "Name": "Josh Jacobs",
+    "Player": "Josh Jacobs",
     "Team": "GB",
     "Position": "RB",
     "Avery Huffman Rank": 54,
@@ -583,7 +583,7 @@
     "Position Rank_2": "RB13"
   },
   {
-    "Name": "DeVonta Smith",
+    "Player": "DeVonta Smith",
     "Team": "PHI",
     "Position": "WR",
     "Avery Huffman Rank": 57,
@@ -594,7 +594,7 @@
     "Position Rank_2": "WR23"
   },
   {
-    "Name": "Tyler Warren",
+    "Player": "Tyler Warren",
     "Team": "IND",
     "Position": "TE",
     "Avery Huffman Rank": 46,
@@ -605,7 +605,7 @@
     "Position Rank_2": "TE3"
   },
   {
-    "Name": "Dak Prescott",
+    "Player": "Dak Prescott",
     "Team": "DAL",
     "Position": "QB",
     "Avery Huffman Rank": 58,
@@ -616,7 +616,7 @@
     "Position Rank_2": "QB17"
   },
   {
-    "Name": "George Pickens",
+    "Player": "George Pickens",
     "Team": "DAL",
     "Position": "WR",
     "Avery Huffman Rank": 61,
@@ -627,7 +627,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Jaxson Dart",
+    "Player": "Jaxson Dart",
     "Team": "NYG",
     "Position": "QB",
     "Avery Huffman Rank": 62,
@@ -638,7 +638,7 @@
     "Position Rank_2": "QB18"
   },
   {
-    "Name": "Breece Hall",
+    "Player": "Breece Hall",
     "Team": "NYJ",
     "Position": "RB",
     "Avery Huffman Rank": 68,
@@ -649,7 +649,7 @@
     "Position Rank_2": "RB14"
   },
   {
-    "Name": "Michael Penix",
+    "Player": "Michael Penix",
     "Team": "ATL",
     "Position": "QB",
     "Avery Huffman Rank": 59,
@@ -660,7 +660,7 @@
     "Position Rank_2": "QB19"
   },
   {
-    "Name": "Jameson Williams",
+    "Player": "Jameson Williams",
     "Team": "DET",
     "Position": "WR",
     "Avery Huffman Rank": 66,
@@ -671,7 +671,7 @@
     "Position Rank_2": "WR25"
   },
   {
-    "Name": "Travis Hunter",
+    "Player": "Travis Hunter",
     "Team": "JAX",
     "Position": "WR",
     "Avery Huffman Rank": 56,
@@ -682,7 +682,7 @@
     "Position Rank_2": "WR26"
   },
   {
-    "Name": "Cameron Ward",
+    "Player": "Cameron Ward",
     "Team": "TEN",
     "Position": "QB",
     "Avery Huffman Rank": 60,
@@ -693,7 +693,7 @@
     "Position Rank_2": "QB20"
   },
   {
-    "Name": "J.J. McCarthy",
+    "Player": "J.J. McCarthy",
     "Team": "MIN",
     "Position": "QB",
     "Avery Huffman Rank": 64,
@@ -704,7 +704,7 @@
     "Position Rank_2": "QB21"
   },
   {
-    "Name": "Jake Ferguson",
+    "Player": "Jake Ferguson",
     "Team": "DAL",
     "Position": "TE",
     "Avery Huffman Rank": 55,
@@ -715,7 +715,7 @@
     "Position Rank_2": "TE4"
   },
   {
-    "Name": "Cam Skattebo",
+    "Player": "Cam Skattebo",
     "Team": "NYG",
     "Position": "RB",
     "Avery Huffman Rank": 70,
@@ -726,7 +726,7 @@
     "Position Rank_2": "RB15"
   },
   {
-    "Name": "Chris Olave",
+    "Player": "Chris Olave",
     "Team": "NO",
     "Position": "WR",
     "Avery Huffman Rank": 67,
@@ -737,7 +737,7 @@
     "Position Rank_2": "WR27"
   },
   {
-    "Name": "Christian McCaffrey",
+    "Player": "Christian McCaffrey",
     "Team": "SF",
     "Position": "RB",
     "Avery Huffman Rank": 69,
@@ -748,7 +748,7 @@
     "Position Rank_2": "RB16"
   },
   {
-    "Name": "Trevor Lawrence",
+    "Player": "Trevor Lawrence",
     "Team": "JAX",
     "Position": "QB",
     "Avery Huffman Rank": 63,
@@ -759,7 +759,7 @@
     "Position Rank_2": "QB22"
   },
   {
-    "Name": "Bryce Young",
+    "Player": "Bryce Young",
     "Team": "CAR",
     "Position": "QB",
     "Avery Huffman Rank": 77,
@@ -770,7 +770,7 @@
     "Position Rank_2": "QB22"
   },
   {
-    "Name": "Ricky Pearsall",
+    "Player": "Ricky Pearsall",
     "Team": "SF",
     "Position": "WR",
     "Avery Huffman Rank": 73,
@@ -781,7 +781,7 @@
     "Position Rank_2": "WR28"
   },
   {
-    "Name": "Tucker Kraft",
+    "Player": "Tucker Kraft",
     "Team": "GB",
     "Position": "TE",
     "Avery Huffman Rank": 65,
@@ -792,7 +792,7 @@
     "Position Rank_2": "TE5"
   },
   {
-    "Name": "Quentin Johnston",
+    "Player": "Quentin Johnston",
     "Team": "LAC",
     "Position": "WR",
     "Avery Huffman Rank": 76,
@@ -803,7 +803,7 @@
     "Position Rank_2": "WR29"
   },
   {
-    "Name": "Matthew Golden",
+    "Player": "Matthew Golden",
     "Team": "GB",
     "Position": "WR",
     "Avery Huffman Rank": 75,
@@ -814,7 +814,7 @@
     "Position Rank_2": "WR30"
   },
   {
-    "Name": "Jordan Addison",
+    "Player": "Jordan Addison",
     "Team": "MIN",
     "Position": "WR",
     "Avery Huffman Rank": 74,
@@ -825,7 +825,7 @@
     "Position Rank_2": "WR31"
   },
   {
-    "Name": "RJ Harvey",
+    "Player": "RJ Harvey",
     "Team": "DEN",
     "Position": "RB",
     "Avery Huffman Rank": 72,
@@ -836,7 +836,7 @@
     "Position Rank_2": "RB17"
   },
   {
-    "Name": "DK Metcalf",
+    "Player": "DK Metcalf",
     "Team": "PIT",
     "Position": "WR",
     "Avery Huffman Rank": 84,
@@ -847,7 +847,7 @@
     "Position Rank_2": "WR32"
   },
   {
-    "Name": "Davante Adams",
+    "Player": "Davante Adams",
     "Team": "LAR",
     "Position": "WR",
     "Avery Huffman Rank": 85,
@@ -858,7 +858,7 @@
     "Position Rank_2": "WR33"
   },
   {
-    "Name": "Terry McLaurin",
+    "Player": "Terry McLaurin",
     "Team": "WAS",
     "Position": "WR",
     "Avery Huffman Rank": 86,
@@ -869,7 +869,7 @@
     "Position Rank_2": "WR33"
   },
   {
-    "Name": "Michael Pittman",
+    "Player": "Michael Pittman",
     "Team": "IND",
     "Position": "WR",
     "Avery Huffman Rank": 88,
@@ -880,7 +880,7 @@
     "Position Rank_2": "WR35"
   },
   {
-    "Name": "Courtland Sutton",
+    "Player": "Courtland Sutton",
     "Team": "DEN",
     "Position": "WR",
     "Avery Huffman Rank": 80,
@@ -891,7 +891,7 @@
     "Position Rank_2": "WR36"
   },
   {
-    "Name": "Kenneth Walker",
+    "Player": "Kenneth Walker",
     "Team": "SEA",
     "Position": "RB",
     "Avery Huffman Rank": 83,
@@ -902,7 +902,7 @@
     "Position Rank_2": "RB18"
   },
   {
-    "Name": "Brandon Aiyuk",
+    "Player": "Brandon Aiyuk",
     "Team": "SF",
     "Position": "WR",
     "Avery Huffman Rank": 87,
@@ -913,7 +913,7 @@
     "Position Rank_2": "WR37"
   },
   {
-    "Name": "Deebo Samuel",
+    "Player": "Deebo Samuel",
     "Team": "WAS",
     "Position": "WR",
     "Avery Huffman Rank": 90,
@@ -924,7 +924,7 @@
     "Position Rank_2": "WR37"
   },
   {
-    "Name": "Derrick Henry",
+    "Player": "Derrick Henry",
     "Team": "BAL",
     "Position": "RB",
     "Avery Huffman Rank": 71,
@@ -935,7 +935,7 @@
     "Position Rank_2": "RB19"
   },
   {
-    "Name": "Javonte Williams",
+    "Player": "Javonte Williams",
     "Team": "DAL",
     "Position": "RB",
     "Avery Huffman Rank": 82,
@@ -946,7 +946,7 @@
     "Position Rank_2": "RB20"
   },
   {
-    "Name": "DJ Moore",
+    "Player": "DJ Moore",
     "Team": "CHI",
     "Position": "WR",
     "Avery Huffman Rank": 92,
@@ -957,7 +957,7 @@
     "Position Rank_2": "WR39"
   },
   {
-    "Name": "Travis Etienne",
+    "Player": "Travis Etienne",
     "Team": "JAX",
     "Position": "RB",
     "Avery Huffman Rank": 89,
@@ -968,7 +968,7 @@
     "Position Rank_2": "RB21"
   },
   {
-    "Name": "Chris Godwin",
+    "Player": "Chris Godwin",
     "Team": "TB",
     "Position": "WR",
     "Avery Huffman Rank": 93,
@@ -979,7 +979,7 @@
     "Position Rank_2": "WR40"
   },
   {
-    "Name": "Mike Evans",
+    "Player": "Mike Evans",
     "Team": "TB",
     "Position": "WR",
     "Avery Huffman Rank": 94,
@@ -990,7 +990,7 @@
     "Position Rank_2": "WR40"
   },
   {
-    "Name": "Tua Tagovailoa",
+    "Player": "Tua Tagovailoa",
     "Team": "MIA",
     "Position": "QB",
     "Avery Huffman Rank": 104,
@@ -1001,7 +1001,7 @@
     "Position Rank_2": "QB24"
   },
   {
-    "Name": "Justin Fields",
+    "Player": "Justin Fields",
     "Team": "NYJ",
     "Position": "QB",
     "Avery Huffman Rank": 78,
@@ -1012,7 +1012,7 @@
     "Position Rank_2": "QB25"
   },
   {
-    "Name": "Luther Burden",
+    "Player": "Luther Burden",
     "Team": "CHI",
     "Position": "WR",
     "Avery Huffman Rank": 99,
@@ -1023,7 +1023,7 @@
     "Position Rank_2": "WR42"
   },
   {
-    "Name": "Trey Benson",
+    "Player": "Trey Benson",
     "Team": "ARI",
     "Position": "RB",
     "Avery Huffman Rank": 91,
@@ -1034,7 +1034,7 @@
     "Position Rank_2": "RB22"
   },
   {
-    "Name": "Khalil Shakir",
+    "Player": "Khalil Shakir",
     "Team": "BUF",
     "Position": "WR",
     "Avery Huffman Rank": 101,
@@ -1045,7 +1045,7 @@
     "Position Rank_2": "WR43"
   },
   {
-    "Name": "Josh Downs",
+    "Player": "Josh Downs",
     "Team": "IND",
     "Position": "WR",
     "Avery Huffman Rank": 95,
@@ -1056,7 +1056,7 @@
     "Position Rank_2": "WR44"
   },
   {
-    "Name": "Keon Coleman",
+    "Player": "Keon Coleman",
     "Team": "BUF",
     "Position": "WR",
     "Avery Huffman Rank": 98,
@@ -1067,7 +1067,7 @@
     "Position Rank_2": "WR45"
   },
   {
-    "Name": "Chuba Hubbard",
+    "Player": "Chuba Hubbard",
     "Team": "CAR",
     "Position": "RB",
     "Avery Huffman Rank": 96,
@@ -1078,7 +1078,7 @@
     "Position Rank_2": "RB23"
   },
   {
-    "Name": "Chase Brown",
+    "Player": "Chase Brown",
     "Team": "CIN",
     "Position": "RB",
     "Avery Huffman Rank": 97,
@@ -1089,7 +1089,7 @@
     "Position Rank_2": "RB24"
   },
   {
-    "Name": "Jerry Jeudy",
+    "Player": "Jerry Jeudy",
     "Team": "CLE",
     "Position": "WR",
     "Avery Huffman Rank": 102,
@@ -1100,7 +1100,7 @@
     "Position Rank_2": "WR46"
   },
   {
-    "Name": "Jakobi Meyers",
+    "Player": "Jakobi Meyers",
     "Team": "LV",
     "Position": "WR",
     "Avery Huffman Rank": 114,
@@ -1111,7 +1111,7 @@
     "Position Rank_2": "WR47"
   },
   {
-    "Name": "Sam LaPorta",
+    "Player": "Sam LaPorta",
     "Team": "DET",
     "Position": "TE",
     "Avery Huffman Rank": 79,
@@ -1122,7 +1122,7 @@
     "Position Rank_2": "TE6"
   },
   {
-    "Name": "David Montgomery",
+    "Player": "David Montgomery",
     "Team": "DET",
     "Position": "RB",
     "Avery Huffman Rank": 100,
@@ -1133,7 +1133,7 @@
     "Position Rank_2": "RB25"
   },
   {
-    "Name": "Jayden Higgins",
+    "Player": "Jayden Higgins",
     "Team": "HOU",
     "Position": "WR",
     "Avery Huffman Rank": 103,
@@ -1144,7 +1144,7 @@
     "Position Rank_2": "WR48"
   },
   {
-    "Name": "Geno Smith",
+    "Player": "Geno Smith",
     "Team": "LV",
     "Position": "QB",
     "Avery Huffman Rank": 106,
@@ -1155,7 +1155,7 @@
     "Position Rank_2": "QB26"
   },
   {
-    "Name": "Elic Ayomanor",
+    "Player": "Elic Ayomanor",
     "Team": "TEN",
     "Position": "WR",
     "Avery Huffman Rank": 117,
@@ -1166,7 +1166,7 @@
     "Position Rank_2": "WR49"
   },
   {
-    "Name": "George Kittle",
+    "Player": "George Kittle",
     "Team": "SF",
     "Position": "TE",
     "Avery Huffman Rank": 81,
@@ -1177,7 +1177,7 @@
     "Position Rank_2": "TE7"
   },
   {
-    "Name": "Alvin Kamara",
+    "Player": "Alvin Kamara",
     "Team": "NO",
     "Position": "RB",
     "Avery Huffman Rank": 105,
@@ -1188,7 +1188,7 @@
     "Position Rank_2": "RB26"
   },
   {
-    "Name": "Daniel Jones",
+    "Player": "Daniel Jones",
     "Team": "IND",
     "Position": "QB",
     "Avery Huffman Rank": 107,
@@ -1199,7 +1199,7 @@
     "Position Rank_2": "QB27"
   },
   {
-    "Name": "Stefon Diggs",
+    "Player": "Stefon Diggs",
     "Team": "NE",
     "Position": "WR",
     "Avery Huffman Rank": 119,
@@ -1210,7 +1210,7 @@
     "Position Rank_2": "WR50"
   },
   {
-    "Name": "Zach Charbonnet",
+    "Player": "Zach Charbonnet",
     "Team": "SEA",
     "Position": "RB",
     "Avery Huffman Rank": 111,
@@ -1221,7 +1221,7 @@
     "Position Rank_2": "RB27"
   },
   {
-    "Name": "Jaylen Warren",
+    "Player": "Jaylen Warren",
     "Team": "PIT",
     "Position": "RB",
     "Avery Huffman Rank": 109,
@@ -1232,7 +1232,7 @@
     "Position Rank_2": "RB28"
   },
   {
-    "Name": "Kaleb Johnson",
+    "Player": "Kaleb Johnson",
     "Team": "PIT",
     "Position": "RB",
     "Avery Huffman Rank": 110,
@@ -1243,7 +1243,7 @@
     "Position Rank_2": "RB29"
   },
   {
-    "Name": "Jayden Reed",
+    "Player": "Jayden Reed",
     "Team": "GB",
     "Position": "WR",
     "Avery Huffman Rank": 115,
@@ -1254,7 +1254,7 @@
     "Position Rank_2": "WR51"
   },
   {
-    "Name": "Darnell Mooney",
+    "Player": "Darnell Mooney",
     "Team": "ATL",
     "Position": "WR",
     "Avery Huffman Rank": 116,
@@ -1265,7 +1265,7 @@
     "Position Rank_2": "WR52"
   },
   {
-    "Name": "D'Andre Swift",
+    "Player": "D'Andre Swift",
     "Team": "CHI",
     "Position": "RB",
     "Avery Huffman Rank": 112,
@@ -1276,7 +1276,7 @@
     "Position Rank_2": "RB30"
   },
   {
-    "Name": "Calvin Ridley",
+    "Player": "Calvin Ridley",
     "Team": "TEN",
     "Position": "WR",
     "Avery Huffman Rank": 128,
@@ -1287,7 +1287,7 @@
     "Position Rank_2": "WR53"
   },
   {
-    "Name": "Isaiah Bond",
+    "Player": "Isaiah Bond",
     "Team": "DEN",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -1298,7 +1298,7 @@
     "Position Rank_2": "WR54"
   },
   {
-    "Name": "Keenan Allen",
+    "Player": "Keenan Allen",
     "Team": "LAC",
     "Position": "WR",
     "Avery Huffman Rank": 129,
@@ -1309,7 +1309,7 @@
     "Position Rank_2": "WR55"
   },
   {
-    "Name": "Tyreek Hill",
+    "Player": "Tyreek Hill",
     "Team": "MIA",
     "Position": "WR",
     "Avery Huffman Rank": 113,
@@ -1320,7 +1320,7 @@
     "Position Rank_2": "WR56"
   },
   {
-    "Name": "Bhayshul Tuten",
+    "Player": "Bhayshul Tuten",
     "Team": "JAX",
     "Position": "RB",
     "Avery Huffman Rank": 123,
@@ -1331,7 +1331,7 @@
     "Position Rank_2": "RB31"
   },
   {
-    "Name": "Dont'e Thornton Jr.",
+    "Player": "Dont'e Thornton Jr.",
     "Team": "LV",
     "Position": "WR",
     "Avery Huffman Rank": 124,
@@ -1342,7 +1342,7 @@
     "Position Rank_2": "WR57"
   },
   {
-    "Name": "Jacory Croskey-Merritt",
+    "Player": "Jacory Croskey-Merritt",
     "Team": "WAS",
     "Position": "RB",
     "Avery Huffman Rank": 130,
@@ -1353,7 +1353,7 @@
     "Position Rank_2": "RB32"
   },
   {
-    "Name": "Colston Loveland",
+    "Player": "Colston Loveland",
     "Team": "CHI",
     "Position": "TE",
     "Avery Huffman Rank": 118,
@@ -1364,7 +1364,7 @@
     "Position Rank_2": "TE8"
   },
   {
-    "Name": "Jack Bech",
+    "Player": "Jack Bech",
     "Team": "LV",
     "Position": "WR",
     "Avery Huffman Rank": 125,
@@ -1375,7 +1375,7 @@
     "Position Rank_2": "WR58"
   },
   {
-    "Name": "Cooper Kupp",
+    "Player": "Cooper Kupp",
     "Team": "SEA",
     "Position": "WR",
     "Avery Huffman Rank": 127,
@@ -1386,7 +1386,7 @@
     "Position Rank_2": "WR58"
   },
   {
-    "Name": "Jordan Mason",
+    "Player": "Jordan Mason",
     "Team": "MIN",
     "Position": "RB",
     "Avery Huffman Rank": 132,
@@ -1397,7 +1397,7 @@
     "Position Rank_2": "RB33"
   },
   {
-    "Name": "Dalton Kincaid",
+    "Player": "Dalton Kincaid",
     "Team": "BUF",
     "Position": "TE",
     "Avery Huffman Rank": 120,
@@ -1408,7 +1408,7 @@
     "Position Rank_2": "TE9"
   },
   {
-    "Name": "Matthew Stafford",
+    "Player": "Matthew Stafford",
     "Team": "LAR",
     "Position": "QB",
     "Avery Huffman Rank": 157,
@@ -1419,7 +1419,7 @@
     "Position Rank_2": "QB28"
   },
   {
-    "Name": "Kyle Pitts",
+    "Player": "Kyle Pitts",
     "Team": "ATL",
     "Position": "TE",
     "Avery Huffman Rank": 122,
@@ -1430,7 +1430,7 @@
     "Position Rank_2": "TE10"
   },
   {
-    "Name": "Wan'Dale Robinson",
+    "Player": "Wan'Dale Robinson",
     "Team": "NYG",
     "Position": "WR",
     "Avery Huffman Rank": 143,
@@ -1441,7 +1441,7 @@
     "Position Rank_2": "WR60"
   },
   {
-    "Name": "Isaac TeSlaa",
+    "Player": "Isaac TeSlaa",
     "Team": "DET",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -1452,7 +1452,7 @@
     "Position Rank_2": "WR61"
   },
   {
-    "Name": "Jauan Jennings",
+    "Player": "Jauan Jennings",
     "Team": "SF",
     "Position": "WR",
     "Avery Huffman Rank": 142,
@@ -1463,7 +1463,7 @@
     "Position Rank_2": "WR62"
   },
   {
-    "Name": "Jaylin Noel",
+    "Player": "Jaylin Noel",
     "Team": "HOU",
     "Position": "WR",
     "Avery Huffman Rank": 150,
@@ -1474,7 +1474,7 @@
     "Position Rank_2": "WR62"
   },
   {
-    "Name": "T.J. Hockenson",
+    "Player": "T.J. Hockenson",
     "Team": "MIN",
     "Position": "TE",
     "Avery Huffman Rank": 121,
@@ -1485,7 +1485,7 @@
     "Position Rank_2": "TE11"
   },
   {
-    "Name": "Harold Fannin",
+    "Player": "Harold Fannin",
     "Team": "CLE",
     "Position": "TE",
     "Avery Huffman Rank": 126,
@@ -1496,7 +1496,7 @@
     "Position Rank_2": "TE12"
   },
   {
-    "Name": "Mason Taylor",
+    "Player": "Mason Taylor",
     "Team": "NYJ",
     "Position": "TE",
     "Avery Huffman Rank": 134,
@@ -1507,7 +1507,7 @@
     "Position Rank_2": "TE13"
   },
   {
-    "Name": "Woody Marks",
+    "Player": "Woody Marks",
     "Team": "HOU",
     "Position": "RB",
     "Avery Huffman Rank": 131,
@@ -1518,7 +1518,7 @@
     "Position Rank_2": "RB34"
   },
   {
-    "Name": "Tory Horton",
+    "Player": "Tory Horton",
     "Team": "SEA",
     "Position": "WR",
     "Avery Huffman Rank": 166,
@@ -1529,7 +1529,7 @@
     "Position Rank_2": "WR64"
   },
   {
-    "Name": "Tony Pollard",
+    "Player": "Tony Pollard",
     "Team": "TEN",
     "Position": "RB",
     "Avery Huffman Rank": 135,
@@ -1540,7 +1540,7 @@
     "Position Rank_2": "RB35"
   },
   {
-    "Name": "Dallas Goedert",
+    "Player": "Dallas Goedert",
     "Team": "PHI",
     "Position": "TE",
     "Avery Huffman Rank": 139,
@@ -1551,7 +1551,7 @@
     "Position Rank_2": "TE14"
   },
   {
-    "Name": "Tre Harris",
+    "Player": "Tre Harris",
     "Team": "LAC",
     "Position": "WR",
     "Avery Huffman Rank": 167,
@@ -1562,7 +1562,7 @@
     "Position Rank_2": "WR65"
   },
   {
-    "Name": "Rashod Bateman",
+    "Player": "Rashod Bateman",
     "Team": "BAL",
     "Position": "WR",
     "Avery Huffman Rank": 149,
@@ -1573,7 +1573,7 @@
     "Position Rank_2": "WR66"
   },
   {
-    "Name": "Jalen Coker",
+    "Player": "Jalen Coker",
     "Team": "CAR",
     "Position": "WR",
     "Avery Huffman Rank": 151,
@@ -1584,7 +1584,7 @@
     "Position Rank_2": "WR66"
   },
   {
-    "Name": "David Njoku",
+    "Player": "David Njoku",
     "Team": "CLE",
     "Position": "TE",
     "Avery Huffman Rank": 133,
@@ -1595,7 +1595,7 @@
     "Position Rank_2": "TE15"
   },
   {
-    "Name": "Tyrone Tracy",
+    "Player": "Tyrone Tracy",
     "Team": "NYG",
     "Position": "RB",
     "Avery Huffman Rank": 137,
@@ -1606,7 +1606,7 @@
     "Position Rank_2": "RB36"
   },
   {
-    "Name": "Mark Andrews",
+    "Player": "Mark Andrews",
     "Team": "BAL",
     "Position": "TE",
     "Avery Huffman Rank": 140,
@@ -1617,7 +1617,7 @@
     "Position Rank_2": "TE16"
   },
   {
-    "Name": "Aaron Jones",
+    "Player": "Aaron Jones",
     "Team": "MIN",
     "Position": "RB",
     "Avery Huffman Rank": 138,
@@ -1628,7 +1628,7 @@
     "Position Rank_2": "RB37"
   },
   {
-    "Name": "Rashid Shaheed",
+    "Player": "Rashid Shaheed",
     "Team": "NO",
     "Position": "WR",
     "Avery Huffman Rank": 156,
@@ -1639,7 +1639,7 @@
     "Position Rank_2": "WR68"
   },
   {
-    "Name": "Sam Darnold",
+    "Player": "Sam Darnold",
     "Team": "SEA",
     "Position": "QB",
     "Avery Huffman Rank": 108,
@@ -1650,7 +1650,7 @@
     "Position Rank_2": "QB29"
   },
   {
-    "Name": "Pat Bryant",
+    "Player": "Pat Bryant",
     "Team": "DEN",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -1661,7 +1661,7 @@
     "Position Rank_2": "WR69"
   },
   {
-    "Name": "Malik Washington",
+    "Player": "Malik Washington",
     "Team": "MIA",
     "Position": "WR",
     "Avery Huffman Rank": 178,
@@ -1672,7 +1672,7 @@
     "Position Rank_2": "WR70"
   },
   {
-    "Name": "J.K. Dobbins",
+    "Player": "J.K. Dobbins",
     "Team": "DEN",
     "Position": "RB",
     "Avery Huffman Rank": 136,
@@ -1683,7 +1683,7 @@
     "Position Rank_2": "RB38"
   },
   {
-    "Name": "Dylan Sampson",
+    "Player": "Dylan Sampson",
     "Team": "CLE",
     "Position": "RB",
     "Avery Huffman Rank": 144,
@@ -1694,7 +1694,7 @@
     "Position Rank_2": "RB38"
   },
   {
-    "Name": "Kayshon Boutte",
+    "Player": "Kayshon Boutte",
     "Team": "NE",
     "Position": "WR",
     "Avery Huffman Rank": 169,
@@ -1705,7 +1705,7 @@
     "Position Rank_2": "WR71"
   },
   {
-    "Name": "Joe Mixon",
+    "Player": "Joe Mixon",
     "Team": "HOU",
     "Position": "RB",
     "Avery Huffman Rank": 146,
@@ -1716,7 +1716,7 @@
     "Position Rank_2": "RB40"
   },
   {
-    "Name": "Xavier Legette",
+    "Player": "Xavier Legette",
     "Team": "CAR",
     "Position": "WR",
     "Avery Huffman Rank": 154,
@@ -1727,7 +1727,7 @@
     "Position Rank_2": "WR72"
   },
   {
-    "Name": "Rachaad White",
+    "Player": "Rachaad White",
     "Team": "TB",
     "Position": "RB",
     "Avery Huffman Rank": 145,
@@ -1738,7 +1738,7 @@
     "Position Rank_2": "RB41"
   },
   {
-    "Name": "Cedric Tillman",
+    "Player": "Cedric Tillman",
     "Team": "CLE",
     "Position": "WR",
     "Avery Huffman Rank": 153,
@@ -1749,7 +1749,7 @@
     "Position Rank_2": "WR73"
   },
   {
-    "Name": "Tyjae Spears",
+    "Player": "Tyjae Spears",
     "Team": "TEN",
     "Position": "RB",
     "Avery Huffman Rank": 147,
@@ -1760,7 +1760,7 @@
     "Position Rank_2": "RB42"
   },
   {
-    "Name": "Troy Franklin",
+    "Player": "Troy Franklin",
     "Team": "DEN",
     "Position": "WR",
     "Avery Huffman Rank": 168,
@@ -1771,7 +1771,7 @@
     "Position Rank_2": "WR74"
   },
   {
-    "Name": "Marquise Brown",
+    "Player": "Marquise Brown",
     "Team": "KC",
     "Position": "WR",
     "Avery Huffman Rank": 152,
@@ -1782,7 +1782,7 @@
     "Position Rank_2": "WR75"
   },
   {
-    "Name": "Alec Pierce",
+    "Player": "Alec Pierce",
     "Team": "IND",
     "Position": "WR",
     "Avery Huffman Rank": 155,
@@ -1793,7 +1793,7 @@
     "Position Rank_2": "WR76"
   },
   {
-    "Name": "Kyle Williams",
+    "Player": "Kyle Williams",
     "Team": "NE",
     "Position": "WR",
     "Avery Huffman Rank": 185,
@@ -1804,7 +1804,7 @@
     "Position Rank_2": "WR77"
   },
   {
-    "Name": "Jaydon Blue",
+    "Player": "Jaydon Blue",
     "Team": "DAL",
     "Position": "RB",
     "Avery Huffman Rank": 163,
@@ -1815,7 +1815,7 @@
     "Position Rank_2": "RB43"
   },
   {
-    "Name": "Isiah Pacheco",
+    "Player": "Isiah Pacheco",
     "Team": "KC",
     "Position": "RB",
     "Avery Huffman Rank": 160,
@@ -1826,7 +1826,7 @@
     "Position Rank_2": "RB44"
   },
   {
-    "Name": "Braelon Allen",
+    "Player": "Braelon Allen",
     "Team": "NYJ",
     "Position": "RB",
     "Avery Huffman Rank": 164,
@@ -1837,7 +1837,7 @@
     "Position Rank_2": "RB45"
   },
   {
-    "Name": "Rhamondre Stevenson",
+    "Player": "Rhamondre Stevenson",
     "Team": "NE",
     "Position": "RB",
     "Avery Huffman Rank": 159,
@@ -1848,7 +1848,7 @@
     "Position Rank_2": "RB46"
   },
   {
-    "Name": "Jalen McMillan",
+    "Player": "Jalen McMillan",
     "Team": "TB",
     "Position": "WR",
     "Avery Huffman Rank": 187,
@@ -1859,7 +1859,7 @@
     "Position Rank_2": "WR78"
   },
   {
-    "Name": "Adonai Mitchell",
+    "Player": "Adonai Mitchell",
     "Team": "IND",
     "Position": "WR",
     "Avery Huffman Rank": 186,
@@ -1870,7 +1870,7 @@
     "Position Rank_2": "WR79"
   },
   {
-    "Name": "Oronde Gadsden",
+    "Player": "Oronde Gadsden",
     "Team": "LAC",
     "Position": "TE",
     "Avery Huffman Rank": 171,
@@ -1881,7 +1881,7 @@
     "Position Rank_2": "TE17"
   },
   {
-    "Name": "Elijah Arroyo",
+    "Player": "Elijah Arroyo",
     "Team": "SEA",
     "Position": "TE",
     "Avery Huffman Rank": 170,
@@ -1892,7 +1892,7 @@
     "Position Rank_2": "TE18"
   },
   {
-    "Name": "Tyler Shough",
+    "Player": "Tyler Shough",
     "Team": "NO",
     "Position": "QB",
     "Avery Huffman Rank": 158,
@@ -1903,7 +1903,7 @@
     "Position Rank_2": "QB30"
   },
   {
-    "Name": "Najee Harris",
+    "Player": "Najee Harris",
     "Team": "LAC",
     "Position": "RB",
     "Avery Huffman Rank": 180,
@@ -1914,7 +1914,7 @@
     "Position Rank_2": "RB47"
   },
   {
-    "Name": "Travis Kelce",
+    "Player": "Travis Kelce",
     "Team": "KC",
     "Position": "TE",
     "Avery Huffman Rank": 141,
@@ -1925,7 +1925,7 @@
     "Position Rank_2": "TE19"
   },
   {
-    "Name": "Theo Johnson",
+    "Player": "Theo Johnson",
     "Team": "NYG",
     "Position": "TE",
     "Avery Huffman Rank": 172,
@@ -1936,7 +1936,7 @@
     "Position Rank_2": "TE20"
   },
   {
-    "Name": "Romeo Doubs",
+    "Player": "Romeo Doubs",
     "Team": "GB",
     "Position": "WR",
     "Avery Huffman Rank": 177,
@@ -1947,7 +1947,7 @@
     "Position Rank_2": "WR80"
   },
   {
-    "Name": "DJ Giddens",
+    "Player": "DJ Giddens",
     "Team": "IND",
     "Position": "RB",
     "Avery Huffman Rank": 148,
@@ -1958,7 +1958,7 @@
     "Position Rank_2": "RB48"
   },
   {
-    "Name": "Nathaniel Dell",
+    "Player": "Nathaniel Dell",
     "Team": "HOU",
     "Position": "WR",
     "Avery Huffman Rank": 190,
@@ -1969,7 +1969,7 @@
     "Position Rank_2": "WR81"
   },
   {
-    "Name": "Jarquez Hunter",
+    "Player": "Jarquez Hunter",
     "Team": "LAR",
     "Position": "RB",
     "Avery Huffman Rank": 162,
@@ -1980,7 +1980,7 @@
     "Position Rank_2": "RB49"
   },
   {
-    "Name": "Marvin Mims",
+    "Player": "Marvin Mims",
     "Team": "DEN",
     "Position": "WR",
     "Avery Huffman Rank": 188,
@@ -1991,7 +1991,7 @@
     "Position Rank_2": "WR82"
   },
   {
-    "Name": "Tahj Brooks",
+    "Player": "Tahj Brooks",
     "Team": "CIN",
     "Position": "RB",
     "Avery Huffman Rank": 182,
@@ -2002,7 +2002,7 @@
     "Position Rank_2": "RB50"
   },
   {
-    "Name": "Anthony Richardson",
+    "Player": "Anthony Richardson",
     "Team": "IND",
     "Position": "QB",
     "Avery Huffman Rank": 174,
@@ -2013,7 +2013,7 @@
     "Position Rank_2": "QB31"
   },
   {
-    "Name": "Brashard Smith",
+    "Player": "Brashard Smith",
     "Team": "KC",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -2024,7 +2024,7 @@
     "Position Rank_2": "RB51"
   },
   {
-    "Name": "Jordan James",
+    "Player": "Jordan James",
     "Team": "SF",
     "Position": "RB",
     "Avery Huffman Rank": 165,
@@ -2035,7 +2035,7 @@
     "Position Rank_2": "RB52"
   },
   {
-    "Name": "Trevor Etienne",
+    "Player": "Trevor Etienne",
     "Team": "CAR",
     "Position": "RB",
     "Avery Huffman Rank": 161,
@@ -2046,7 +2046,7 @@
     "Position Rank_2": "RB53"
   },
   {
-    "Name": "Russell Wilson",
+    "Player": "Russell Wilson",
     "Team": "NYG",
     "Position": "QB",
     "Avery Huffman Rank": 176,
@@ -2057,7 +2057,7 @@
     "Position Rank_2": "QB32"
   },
   {
-    "Name": "Christian Watson",
+    "Player": "Christian Watson",
     "Team": "GB",
     "Position": "WR",
     "Avery Huffman Rank": 191,
@@ -2068,7 +2068,7 @@
     "Position Rank_2": "WR83"
   },
   {
-    "Name": "Ollie Gordon II",
+    "Player": "Ollie Gordon II",
     "Team": "MIA",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -2079,7 +2079,7 @@
     "Position Rank_2": "RB54"
   },
   {
-    "Name": "Elijah Moore",
+    "Player": "Elijah Moore",
     "Team": "BUF",
     "Position": "WR",
     "Avery Huffman Rank": 193,
@@ -2090,7 +2090,7 @@
     "Position Rank_2": "WR84"
   },
   {
-    "Name": "Kyle Monangai",
+    "Player": "Kyle Monangai",
     "Team": "CHI",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -2101,7 +2101,7 @@
     "Position Rank_2": "RB1"
   },
   {
-    "Name": "DeAndre Hopkins",
+    "Player": "DeAndre Hopkins",
     "Team": "BAL",
     "Position": "WR",
     "Avery Huffman Rank": 203,
@@ -2112,7 +2112,7 @@
     "Position Rank_2": "WR2"
   },
   {
-    "Name": "Michael Wilson",
+    "Player": "Michael Wilson",
     "Team": "ARI",
     "Position": "WR",
     "Avery Huffman Rank": 194,
@@ -2123,7 +2123,7 @@
     "Position Rank_2": "WR85"
   },
   {
-    "Name": "Aaron Rodgers",
+    "Player": "Aaron Rodgers",
     "Team": "PIT",
     "Position": "QB",
     "Avery Huffman Rank": 175,
@@ -2134,7 +2134,7 @@
     "Position Rank_2": "QB33"
   },
   {
-    "Name": "Savion Williams",
+    "Player": "Savion Williams",
     "Team": "GB",
     "Position": "WR",
     "Avery Huffman Rank": 192,
@@ -2145,7 +2145,7 @@
     "Position Rank_2": "WR3"
   },
   {
-    "Name": "DeMario Douglas",
+    "Player": "DeMario Douglas",
     "Team": "NE",
     "Position": "WR",
     "Avery Huffman Rank": 195,
@@ -2156,7 +2156,7 @@
     "Position Rank_2": "WR86"
   },
   {
-    "Name": "AJ Barner",
+    "Player": "AJ Barner",
     "Team": "SEA",
     "Position": "TE",
     "Avery Huffman Rank": 205,
@@ -2167,7 +2167,7 @@
     "Position Rank_2": "TE21"
   },
   {
-    "Name": "Brenton Strange",
+    "Player": "Brenton Strange",
     "Team": "JAX",
     "Position": "TE",
     "Avery Huffman Rank": 173,
@@ -2178,7 +2178,7 @@
     "Position Rank_2": "TE22"
   },
   {
-    "Name": "Tank Bigsby",
+    "Player": "Tank Bigsby",
     "Team": "JAX",
     "Position": "RB",
     "Avery Huffman Rank": 218,
@@ -2189,7 +2189,7 @@
     "Position Rank_2": "RB55"
   },
   {
-    "Name": "Tre Tucker",
+    "Player": "Tre Tucker",
     "Team": "LV",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -2200,7 +2200,7 @@
     "Position Rank_2": "WR87"
   },
   {
-    "Name": "Ray Davis",
+    "Player": "Ray Davis",
     "Team": "BUF",
     "Position": "RB",
     "Avery Huffman Rank": 183,
@@ -2211,7 +2211,7 @@
     "Position Rank_2": "RB56"
   },
   {
-    "Name": "Jalen Milroe",
+    "Player": "Jalen Milroe",
     "Team": "SEA",
     "Position": "QB",
     "Avery Huffman Rank": 197,
@@ -2222,7 +2222,7 @@
     "Position Rank_2": "QB34"
   },
   {
-    "Name": "Ja'Lynn Polk",
+    "Player": "Ja'Lynn Polk",
     "Team": "NE",
     "Position": "WR",
     "Avery Huffman Rank": 196,
@@ -2233,7 +2233,7 @@
     "Position Rank_2": "WR88"
   },
   {
-    "Name": "Jerome Ford",
+    "Player": "Jerome Ford",
     "Team": "CLE",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -2244,7 +2244,7 @@
     "Position Rank_2": "RB57"
   },
   {
-    "Name": "Malachi Corley",
+    "Player": "Malachi Corley",
     "Team": "NYJ",
     "Position": "WR",
     "Avery Huffman Rank": 199,
@@ -2255,7 +2255,7 @@
     "Position Rank_2": "WR89"
   },
   {
-    "Name": "Austin Ekeler",
+    "Player": "Austin Ekeler",
     "Team": "WAS",
     "Position": "RB",
     "Avery Huffman Rank": 236,
@@ -2266,7 +2266,7 @@
     "Position Rank_2": "RB58"
   },
   {
-    "Name": "Devin Neal",
+    "Player": "Devin Neal",
     "Team": "NO",
     "Position": "RB",
     "Avery Huffman Rank": 181,
@@ -2277,7 +2277,7 @@
     "Position Rank_2": "RB59"
   },
   {
-    "Name": "Dillon Gabriel",
+    "Player": "Dillon Gabriel",
     "Team": "CLE",
     "Position": "QB",
     "Avery Huffman Rank": 202,
@@ -2288,7 +2288,7 @@
     "Position Rank_2": "QB35"
   },
   {
-    "Name": "Will Howard",
+    "Player": "Will Howard",
     "Team": "PIT",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -2299,7 +2299,7 @@
     "Position Rank_2": "QB36"
   },
   {
-    "Name": "Roman Wilson",
+    "Player": "Roman Wilson",
     "Team": "PIT",
     "Position": "WR",
     "Avery Huffman Rank": 253,
@@ -2310,7 +2310,7 @@
     "Position Rank_2": "WR90"
   },
   {
-    "Name": "Kendre Miller",
+    "Player": "Kendre Miller",
     "Team": "NO",
     "Position": "RB",
     "Avery Huffman Rank": 230,
@@ -2321,7 +2321,7 @@
     "Position Rank_2": "RB60"
   },
   {
-    "Name": "Jaylen Wright",
+    "Player": "Jaylen Wright",
     "Team": "MIA",
     "Position": "RB",
     "Avery Huffman Rank": 179,
@@ -2332,7 +2332,7 @@
     "Position Rank_2": "RB61"
   },
   {
-    "Name": "Evan Engram",
+    "Player": "Evan Engram",
     "Team": "DEN",
     "Position": "TE",
     "Avery Huffman Rank": 206,
@@ -2343,7 +2343,7 @@
     "Position Rank_2": "TE4"
   },
   {
-    "Name": "Terrance Ferguson",
+    "Player": "Terrance Ferguson",
     "Team": "LAR",
     "Position": "TE",
     "Avery Huffman Rank": 207,
@@ -2354,7 +2354,7 @@
     "Position Rank_2": "TE23"
   },
   {
-    "Name": "Blake Corum",
+    "Player": "Blake Corum",
     "Team": "LAR",
     "Position": "RB",
     "Avery Huffman Rank": 200,
@@ -2365,7 +2365,7 @@
     "Position Rank_2": "RB62"
   },
   {
-    "Name": "Jonnu Smith",
+    "Player": "Jonnu Smith",
     "Team": "MIA",
     "Position": "TE",
     "Avery Huffman Rank": 208,
@@ -2376,7 +2376,7 @@
     "Position Rank_2": "TE24"
   },
   {
-    "Name": "Pat Freiermuth",
+    "Player": "Pat Freiermuth",
     "Team": "PIT",
     "Position": "TE",
     "Avery Huffman Rank": 209,
@@ -2387,7 +2387,7 @@
     "Position Rank_2": "TE24"
   },
   {
-    "Name": "Shedeur Sanders",
+    "Player": "Shedeur Sanders",
     "Team": "CLE",
     "Position": "QB",
     "Avery Huffman Rank": 224,
@@ -2398,7 +2398,7 @@
     "Position Rank_2": "QB37"
   },
   {
-    "Name": "Jalen Tolbert",
+    "Player": "Jalen Tolbert",
     "Team": "DAL",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -2409,7 +2409,7 @@
     "Position Rank_2": "WR5"
   },
   {
-    "Name": "Tyler Allgeier",
+    "Player": "Tyler Allgeier",
     "Team": "ATL",
     "Position": "RB",
     "Avery Huffman Rank": 201,
@@ -2420,7 +2420,7 @@
     "Position Rank_2": "RB63"
   },
   {
-    "Name": "Taysom Hill",
+    "Player": "Taysom Hill",
     "Team": "NO",
     "Position": "TE",
     "Avery Huffman Rank": 214,
@@ -2431,7 +2431,7 @@
     "Position Rank_2": "TE26"
   },
   {
-    "Name": "Ben Sinnott",
+    "Player": "Ben Sinnott",
     "Team": "WAS",
     "Position": "TE",
     "Avery Huffman Rank": 210,
@@ -2442,7 +2442,7 @@
     "Position Rank_2": "TE27"
   },
   {
-    "Name": "Nick Chubb",
+    "Player": "Nick Chubb",
     "Team": "HOU",
     "Position": "RB",
     "Avery Huffman Rank": 235,
@@ -2453,7 +2453,7 @@
     "Position Rank_2": "RB64"
   },
   {
-    "Name": "Kirk Cousins",
+    "Player": "Kirk Cousins",
     "Team": "ATL",
     "Position": "QB",
     "Avery Huffman Rank": 198,
@@ -2464,7 +2464,7 @@
     "Position Rank_2": "QB38"
   },
   {
-    "Name": "Isaiah Likely",
+    "Player": "Isaiah Likely",
     "Team": "BAL",
     "Position": "TE",
     "Avery Huffman Rank": 213,
@@ -2475,7 +2475,7 @@
     "Position Rank_2": "TE28"
   },
   {
-    "Name": "Cade Otton",
+    "Player": "Cade Otton",
     "Team": "TB",
     "Position": "TE",
     "Avery Huffman Rank": 222,
@@ -2486,7 +2486,7 @@
     "Position Rank_2": "TE29"
   },
   {
-    "Name": "Adam Thielen",
+    "Player": "Adam Thielen",
     "Team": "CAR",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -2497,7 +2497,7 @@
     "Position Rank_2": "WR91"
   },
   {
-    "Name": "Mike Williams",
+    "Player": "Mike Williams",
     "Team": "LAC",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -2508,7 +2508,7 @@
     "Position Rank_2": "WR92"
   },
   {
-    "Name": "Dalton Schultz",
+    "Player": "Dalton Schultz",
     "Team": "HOU",
     "Position": "TE",
     "Avery Huffman Rank": 215,
@@ -2519,7 +2519,7 @@
     "Position Rank_2": "TE30"
   },
   {
-    "Name": "Christian Kirk",
+    "Player": "Christian Kirk",
     "Team": "HOU",
     "Position": "WR",
     "Avery Huffman Rank": 255,
@@ -2530,7 +2530,7 @@
     "Position Rank_2": "WR93"
   },
   {
-    "Name": "Calvin Austin",
+    "Player": "Calvin Austin",
     "Team": "PIT",
     "Position": "WR",
     "Avery Huffman Rank": 242,
@@ -2541,7 +2541,7 @@
     "Position Rank_2": "WR94"
   },
   {
-    "Name": "Hunter Henry",
+    "Player": "Hunter Henry",
     "Team": "NE",
     "Position": "TE",
     "Avery Huffman Rank": 216,
@@ -2552,7 +2552,7 @@
     "Position Rank_2": "TE31"
   },
   {
-    "Name": "Luke Musgrave",
+    "Player": "Luke Musgrave",
     "Team": "GB",
     "Position": "TE",
     "Avery Huffman Rank": 212,
@@ -2563,7 +2563,7 @@
     "Position Rank_2": "TE32"
   },
   {
-    "Name": "Spencer Rattler",
+    "Player": "Spencer Rattler",
     "Team": "NO",
     "Position": "QB",
     "Avery Huffman Rank": 225,
@@ -2574,7 +2574,7 @@
     "Position Rank_2": "QB39"
   },
   {
-    "Name": "Gunnar Helm",
+    "Player": "Gunnar Helm",
     "Team": "TEN",
     "Position": "TE",
     "Avery Huffman Rank": "-",
@@ -2585,7 +2585,7 @@
     "Position Rank_2": "TE6"
   },
   {
-    "Name": "Deshaun Watson",
+    "Player": "Deshaun Watson",
     "Team": "CLE",
     "Position": "QB",
     "Avery Huffman Rank": 226,
@@ -2596,7 +2596,7 @@
     "Position Rank_2": "QB40"
   },
   {
-    "Name": "Noah Gray",
+    "Player": "Noah Gray",
     "Team": "KC",
     "Position": "TE",
     "Avery Huffman Rank": 217,
@@ -2607,7 +2607,7 @@
     "Position Rank_2": "TE33"
   },
   {
-    "Name": "Ja'Tavion Sanders",
+    "Player": "Ja'Tavion Sanders",
     "Team": "CAR",
     "Position": "TE",
     "Avery Huffman Rank": 220,
@@ -2618,7 +2618,7 @@
     "Position Rank_2": "TE34"
   },
   {
-    "Name": "Erick All",
+    "Player": "Erick All",
     "Team": "CIN",
     "Position": "TE",
     "Avery Huffman Rank": 223,
@@ -2629,7 +2629,7 @@
     "Position Rank_2": "TE35"
   },
   {
-    "Name": "James Conner",
+    "Player": "James Conner",
     "Team": "ARI",
     "Position": "RB",
     "Avery Huffman Rank": 234,
@@ -2640,7 +2640,7 @@
     "Position Rank_2": "RB65"
   },
   {
-    "Name": "Andrei Iosivas",
+    "Player": "Andrei Iosivas",
     "Team": "CIN",
     "Position": "WR",
     "Avery Huffman Rank": 252,
@@ -2651,7 +2651,7 @@
     "Position Rank_2": "WR95"
   },
   {
-    "Name": "Curtis Samuel",
+    "Player": "Curtis Samuel",
     "Team": "BUF",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -2662,7 +2662,7 @@
     "Position Rank_2": "WR96"
   },
   {
-    "Name": "Juwan Johnson",
+    "Player": "Juwan Johnson",
     "Team": "NO",
     "Position": "TE",
     "Avery Huffman Rank": 211,
@@ -2673,7 +2673,7 @@
     "Position Rank_2": "TE36"
   },
   {
-    "Name": "Brandin Cooks",
+    "Player": "Brandin Cooks",
     "Team": "NO",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -2684,7 +2684,7 @@
     "Position Rank_2": "WR97"
   },
   {
-    "Name": "Chimere Dike",
+    "Player": "Chimere Dike",
     "Team": "TEN",
     "Position": "WR",
     "Avery Huffman Rank": 189,
@@ -2695,7 +2695,7 @@
     "Position Rank_2": "WR98"
   },
   {
-    "Name": "Brian Robinson",
+    "Player": "Brian Robinson",
     "Team": "WAS",
     "Position": "RB",
     "Avery Huffman Rank": 227,
@@ -2706,7 +2706,7 @@
     "Position Rank_2": "RB66"
   },
   {
-    "Name": "Isaac Guerendo",
+    "Player": "Isaac Guerendo",
     "Team": "SF",
     "Position": "RB",
     "Avery Huffman Rank": 231,
@@ -2717,7 +2717,7 @@
     "Position Rank_2": "RB67"
   },
   {
-    "Name": "Rico Dowdle",
+    "Player": "Rico Dowdle",
     "Team": "CAR",
     "Position": "RB",
     "Avery Huffman Rank": 228,
@@ -2728,7 +2728,7 @@
     "Position Rank_2": "RB68"
   },
   {
-    "Name": "Jalin Hyatt",
+    "Player": "Jalin Hyatt",
     "Team": "NYG",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -2739,7 +2739,7 @@
     "Position Rank_2": "WR7"
   },
   {
-    "Name": "Audric Estime",
+    "Player": "Audric Estime",
     "Team": "DEN",
     "Position": "RB",
     "Avery Huffman Rank": 229,
@@ -2750,7 +2750,7 @@
     "Position Rank_2": "RB69"
   },
   {
-    "Name": "Jonathon Brooks",
+    "Player": "Jonathon Brooks",
     "Team": "CAR",
     "Position": "RB",
     "Avery Huffman Rank": 237,
@@ -2761,7 +2761,7 @@
     "Position Rank_2": "RB69"
   },
   {
-    "Name": "Dontayvion Wicks",
+    "Player": "Dontayvion Wicks",
     "Team": "GB",
     "Position": "WR",
     "Avery Huffman Rank": 241,
@@ -2772,7 +2772,7 @@
     "Position Rank_2": "WR99"
   },
   {
-    "Name": "Joe Milton",
+    "Player": "Joe Milton",
     "Team": "DAL",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -2783,7 +2783,7 @@
     "Position Rank_2": "QB41"
   },
   {
-    "Name": "Tyler Lockett",
+    "Player": "Tyler Lockett",
     "Team": "TEN",
     "Position": "WR",
     "Avery Huffman Rank": 254,
@@ -2794,7 +2794,7 @@
     "Position Rank_2": "WR100"
   },
   {
-    "Name": "MarShawn Lloyd",
+    "Player": "MarShawn Lloyd",
     "Team": "GB",
     "Position": "RB",
     "Avery Huffman Rank": 232,
@@ -2805,7 +2805,7 @@
     "Position Rank_2": "RB71"
   },
   {
-    "Name": "Justice Hill",
+    "Player": "Justice Hill",
     "Team": "BAL",
     "Position": "RB",
     "Avery Huffman Rank": 219,
@@ -2816,7 +2816,7 @@
     "Position Rank_2": "RB72"
   },
   {
-    "Name": "Darren Waller",
+    "Player": "Darren Waller",
     "Team": "MIA",
     "Position": "TE",
     "Avery Huffman Rank": 245,
@@ -2827,7 +2827,7 @@
     "Position Rank_2": "TE37"
   },
   {
-    "Name": "Javon Baker",
+    "Player": "Javon Baker",
     "Team": "NE",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -2838,7 +2838,7 @@
     "Position Rank_2": "WR8"
   },
   {
-    "Name": "Kareem Hunt",
+    "Player": "Kareem Hunt",
     "Team": "KC",
     "Position": "RB",
     "Avery Huffman Rank": 240,
@@ -2849,7 +2849,7 @@
     "Position Rank_2": "RB73"
   },
   {
-    "Name": "Jermaine Burton",
+    "Player": "Jermaine Burton",
     "Team": "CIN",
     "Position": "WR",
     "Avery Huffman Rank": 204,
@@ -2860,7 +2860,7 @@
     "Position Rank_2": "WR101"
   },
   {
-    "Name": "Jonathan Mingo",
+    "Player": "Jonathan Mingo",
     "Team": "DAL",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -2871,7 +2871,7 @@
     "Position Rank_2": "WR102"
   },
   {
-    "Name": "Tyquan Thornton",
+    "Player": "Tyquan Thornton",
     "Team": "KC",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -2882,7 +2882,7 @@
     "Position Rank_2": "WR103"
   },
   {
-    "Name": "Roschon Johnson",
+    "Player": "Roschon Johnson",
     "Team": "CHI",
     "Position": "RB",
     "Avery Huffman Rank": 233,
@@ -2893,7 +2893,7 @@
     "Position Rank_2": "RB9"
   },
   {
-    "Name": "Michael Mayer",
+    "Player": "Michael Mayer",
     "Team": "LV",
     "Position": "TE",
     "Avery Huffman Rank": 243,
@@ -2904,7 +2904,7 @@
     "Position Rank_2": "TE38"
   },
   {
-    "Name": "Darnell Washington",
+    "Player": "Darnell Washington",
     "Team": "PIT",
     "Position": "TE",
     "Avery Huffman Rank": 250,
@@ -2915,7 +2915,7 @@
     "Position Rank_2": "TE38"
   },
   {
-    "Name": "Cole Kmet",
+    "Player": "Cole Kmet",
     "Team": "CHI",
     "Position": "TE",
     "Avery Huffman Rank": 221,
@@ -2926,7 +2926,7 @@
     "Position Rank_2": "TE40"
   },
   {
-    "Name": "Chigoziem Okonkwo",
+    "Player": "Chigoziem Okonkwo",
     "Team": "TEN",
     "Position": "TE",
     "Avery Huffman Rank": 246,
@@ -2937,7 +2937,7 @@
     "Position Rank_2": "TE41"
   },
   {
-    "Name": "Dawson Knox",
+    "Player": "Dawson Knox",
     "Team": "BUF",
     "Position": "TE",
     "Avery Huffman Rank": 248,
@@ -2948,7 +2948,7 @@
     "Position Rank_2": "TE41"
   },
   {
-    "Name": "Kimani Vidal",
+    "Player": "Kimani Vidal",
     "Team": "LAC",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -2959,7 +2959,7 @@
     "Position Rank_2": "RB74"
   },
   {
-    "Name": "Antonio Gibson",
+    "Player": "Antonio Gibson",
     "Team": "NE",
     "Position": "RB",
     "Avery Huffman Rank": 239,
@@ -2970,7 +2970,7 @@
     "Position Rank_2": "RB75"
   },
   {
-    "Name": "Mike Gesicki",
+    "Player": "Mike Gesicki",
     "Team": "CIN",
     "Position": "TE",
     "Avery Huffman Rank": 244,
@@ -2981,7 +2981,7 @@
     "Position Rank_2": "TE43"
   },
   {
-    "Name": "Daniel Bellinger",
+    "Player": "Daniel Bellinger",
     "Team": "NYG",
     "Position": "TE",
     "Avery Huffman Rank": 249,
@@ -2992,7 +2992,7 @@
     "Position Rank_2": "TE44"
   },
   {
-    "Name": "Devin Singletary",
+    "Player": "Devin Singletary",
     "Team": "NYG",
     "Position": "RB",
     "Avery Huffman Rank": 238,
@@ -3003,7 +3003,7 @@
     "Position Rank_2": "RB76"
   },
   {
-    "Name": "John Metchie",
+    "Player": "John Metchie",
     "Team": "HOU",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3014,7 +3014,7 @@
     "Position Rank_2": "WR10"
   },
   {
-    "Name": "Luke Schoonmaker",
+    "Player": "Luke Schoonmaker",
     "Team": "DAL",
     "Position": "TE",
     "Avery Huffman Rank": 256,
@@ -3025,7 +3025,7 @@
     "Position Rank_2": "TE45"
   },
   {
-    "Name": "Joshua Palmer",
+    "Player": "Joshua Palmer",
     "Team": "BUF",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3036,7 +3036,7 @@
     "Position Rank_2": "WR11"
   },
   {
-    "Name": "Treylon Burks",
+    "Player": "Treylon Burks",
     "Team": "TEN",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3047,7 +3047,7 @@
     "Position Rank_2": "WR104"
   },
   {
-    "Name": "Rondale Moore",
+    "Player": "Rondale Moore",
     "Team": "MIN",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3058,7 +3058,7 @@
     "Position Rank_2": "WR105"
   },
   {
-    "Name": "Samaje Perine",
+    "Player": "Samaje Perine",
     "Team": "CIN",
     "Position": "RB",
     "Avery Huffman Rank": 247,
@@ -3069,7 +3069,7 @@
     "Position Rank_2": "RB77"
   },
   {
-    "Name": "Brevin Jordan",
+    "Player": "Brevin Jordan",
     "Team": "HOU",
     "Position": "TE",
     "Avery Huffman Rank": "-",
@@ -3080,7 +3080,7 @@
     "Position Rank_2": "TE12"
   },
   {
-    "Name": "Zack Moss",
+    "Player": "Zack Moss",
     "Team": "CIN",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3091,7 +3091,7 @@
     "Position Rank_2": "RB78"
   },
   {
-    "Name": "Chris Rodriguez",
+    "Player": "Chris Rodriguez",
     "Team": "WAS",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3102,7 +3102,7 @@
     "Position Rank_2": "RB13"
   },
   {
-    "Name": "Deuce Vaughn",
+    "Player": "Deuce Vaughn",
     "Team": "DAL",
     "Position": "RB",
     "Avery Huffman Rank": 251,
@@ -3113,7 +3113,7 @@
     "Position Rank_2": "RB79"
   },
   {
-    "Name": "Sam Howell",
+    "Player": "Sam Howell",
     "Team": "MIN",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3124,7 +3124,7 @@
     "Position Rank_2": "QB42"
   },
   {
-    "Name": "Quinn Ewers",
+    "Player": "Quinn Ewers",
     "Team": "MIA",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3135,7 +3135,7 @@
     "Position Rank_2": "QB14"
   },
   {
-    "Name": "Jameis Winston",
+    "Player": "Jameis Winston",
     "Team": "NYG",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3146,7 +3146,7 @@
     "Position Rank_2": "QB43"
   },
   {
-    "Name": "Kenny Pickett",
+    "Player": "Kenny Pickett",
     "Team": "CLE",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3157,7 +3157,7 @@
     "Position Rank_2": "QB15"
   },
   {
-    "Name": "Tyler Conklin",
+    "Player": "Tyler Conklin",
     "Team": "LAC",
     "Position": "TE",
     "Avery Huffman Rank": "-",
@@ -3168,7 +3168,7 @@
     "Position Rank_2": "TE16"
   },
   {
-    "Name": "Sean Tucker",
+    "Player": "Sean Tucker",
     "Team": "TB",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3179,7 +3179,7 @@
     "Position Rank_2": "RB17"
   },
   {
-    "Name": "Kenneth Gainwell",
+    "Player": "Kenneth Gainwell",
     "Team": "PIT",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3190,7 +3190,7 @@
     "Position Rank_2": "RB18"
   },
   {
-    "Name": "Alexander Mattison",
+    "Player": "Alexander Mattison",
     "Team": "MIA",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3201,7 +3201,7 @@
     "Position Rank_2": "RB19"
   },
   {
-    "Name": "Khalil Herbert",
+    "Player": "Khalil Herbert",
     "Team": "IND",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3212,7 +3212,7 @@
     "Position Rank_2": "RB20"
   },
   {
-    "Name": "Noah Brown",
+    "Player": "Noah Brown",
     "Team": "WAS",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3223,7 +3223,7 @@
     "Position Rank_2": "WR21"
   },
   {
-    "Name": "Zay Jones",
+    "Player": "Zay Jones",
     "Team": "ARI",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3234,7 +3234,7 @@
     "Position Rank_2": "WR106"
   },
   {
-    "Name": "Greg Dortch",
+    "Player": "Greg Dortch",
     "Team": "ARI",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3245,7 +3245,7 @@
     "Position Rank_2": "WR22"
   },
   {
-    "Name": "Jahan Dotson",
+    "Player": "Jahan Dotson",
     "Team": "PHI",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3256,7 +3256,7 @@
     "Position Rank_2": "WR107"
   },
   {
-    "Name": "Kendrick Bourne",
+    "Player": "Kendrick Bourne",
     "Team": "NE",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3267,7 +3267,7 @@
     "Position Rank_2": "WR108"
   },
   {
-    "Name": "Darius Slayton",
+    "Player": "Darius Slayton",
     "Team": "NYG",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3278,7 +3278,7 @@
     "Position Rank_2": "WR109"
   },
   {
-    "Name": "Chris Manhertz",
+    "Player": "Chris Manhertz",
     "Team": "NYG",
     "Position": "TE",
     "Avery Huffman Rank": "-",
@@ -3289,7 +3289,7 @@
     "Position Rank_2": "TE23"
   },
   {
-    "Name": "Joe Flacco",
+    "Player": "Joe Flacco",
     "Team": "CLE",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3300,7 +3300,7 @@
     "Position Rank_2": "QB44"
   },
   {
-    "Name": "Jalen Royals",
+    "Player": "Jalen Royals",
     "Team": "KC",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3311,7 +3311,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Jake Browning",
+    "Player": "Jake Browning",
     "Team": "CIN",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3322,7 +3322,7 @@
     "Position Rank_2": "QB44"
   },
   {
-    "Name": "Emanuel Wilson",
+    "Player": "Emanuel Wilson",
     "Team": "GB",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3333,7 +3333,7 @@
     "Position Rank_2": "RB24"
   },
   {
-    "Name": "Dyami Brown",
+    "Player": "Dyami Brown",
     "Team": "JAX",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3344,7 +3344,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Tai Felton",
+    "Player": "Tai Felton",
     "Team": "MIN",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3355,7 +3355,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Parker Washington",
+    "Player": "Parker Washington",
     "Team": "JAX",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3366,7 +3366,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Zach Ertz",
+    "Player": "Zach Ertz",
     "Team": "WAS",
     "Position": "TE",
     "Avery Huffman Rank": "-",
@@ -3377,7 +3377,7 @@
     "Position Rank_2": "TE46"
   },
   {
-    "Name": "Devaughn Vele",
+    "Player": "Devaughn Vele",
     "Team": "DEN",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3388,7 +3388,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Xavier Restrepo",
+    "Player": "Xavier Restrepo",
     "Team": "TEN",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3399,7 +3399,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Isaiah Davis",
+    "Player": "Isaiah Davis",
     "Team": "NYJ",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3410,7 +3410,7 @@
     "Position Rank_2": "RB24"
   },
   {
-    "Name": "Jordan Whittington",
+    "Player": "Jordan Whittington",
     "Team": "LAR",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3421,7 +3421,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Diontae Johnson",
+    "Player": "Diontae Johnson",
     "Team": "CLE",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3432,7 +3432,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Jaylin Lane",
+    "Player": "Jaylin Lane",
     "Team": "WAS",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3443,7 +3443,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Zach Wilson",
+    "Player": "Zach Wilson",
     "Team": "MIA",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3454,7 +3454,7 @@
     "Position Rank_2": "QB44"
   },
   {
-    "Name": "Keaton Mitchell",
+    "Player": "Keaton Mitchell",
     "Team": "BAL",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3465,7 +3465,7 @@
     "Position Rank_2": "RB80"
   },
   {
-    "Name": "Tez Johnson",
+    "Player": "Tez Johnson",
     "Team": "TB",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3476,7 +3476,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Miles Sanders",
+    "Player": "Miles Sanders",
     "Team": "DAL",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3487,7 +3487,7 @@
     "Position Rank_2": "RB80"
   },
   {
-    "Name": "Keandre Lambert-Smith",
+    "Player": "Keandre Lambert-Smith",
     "Team": "LAC",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3498,7 +3498,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Malik Willis",
+    "Player": "Malik Willis",
     "Team": "GB",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3509,7 +3509,7 @@
     "Position Rank_2": "QB24"
   },
   {
-    "Name": "LeQuint Allen",
+    "Player": "LeQuint Allen",
     "Team": "JAX",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3520,7 +3520,7 @@
     "Position Rank_2": "RB24"
   },
   {
-    "Name": "Will Levis",
+    "Player": "Will Levis",
     "Team": "TEN",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3531,7 +3531,7 @@
     "Position Rank_2": "QB24"
   },
   {
-    "Name": "Jaleel McLaughlin",
+    "Player": "Jaleel McLaughlin",
     "Team": "DEN",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3542,7 +3542,7 @@
     "Position Rank_2": "RB24"
   },
   {
-    "Name": "Damien Martinez",
+    "Player": "Damien Martinez",
     "Team": "SEA",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3553,7 +3553,7 @@
     "Position Rank_2": "RB80"
   },
   {
-    "Name": "Mason Rudolph",
+    "Player": "Mason Rudolph",
     "Team": "PIT",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3564,7 +3564,7 @@
     "Position Rank_2": "QB44"
   },
   {
-    "Name": "Phil Mafah",
+    "Player": "Phil Mafah",
     "Team": "DAL",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3575,7 +3575,7 @@
     "Position Rank_2": "RB80"
   },
   {
-    "Name": "Kalel Mullings",
+    "Player": "Kalel Mullings",
     "Team": "TEN",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3586,7 +3586,7 @@
     "Position Rank_2": "RB80"
   },
   {
-    "Name": "Skyy Moore",
+    "Player": "Skyy Moore",
     "Team": "KC",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3597,7 +3597,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Luke McCaffrey",
+    "Player": "Luke McCaffrey",
     "Team": "WAS",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3608,7 +3608,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Nick Westbrook-Ikhine",
+    "Player": "Nick Westbrook-Ikhine",
     "Team": "MIA",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3619,7 +3619,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Mac Jones",
+    "Player": "Mac Jones",
     "Team": "SF",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3630,7 +3630,7 @@
     "Position Rank_2": "QB24"
   },
   {
-    "Name": "Arian Smith",
+    "Player": "Arian Smith",
     "Team": "NYJ",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3641,7 +3641,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Will Shipley",
+    "Player": "Will Shipley",
     "Team": "PHI",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3652,7 +3652,7 @@
     "Position Rank_2": "RB80"
   },
   {
-    "Name": "Raheem Mostert",
+    "Player": "Raheem Mostert",
     "Team": "LV",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3663,7 +3663,7 @@
     "Position Rank_2": "RB80"
   },
   {
-    "Name": "LaJohntay Wester",
+    "Player": "LaJohntay Wester",
     "Team": "BAL",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3674,7 +3674,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Gardner Minshew",
+    "Player": "Gardner Minshew",
     "Team": "KC",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3685,7 +3685,7 @@
     "Position Rank_2": "QB44"
   },
   {
-    "Name": "Jimmy Horn Jr.",
+    "Player": "Jimmy Horn Jr.",
     "Team": "CAR",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3696,7 +3696,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Tahj Washington",
+    "Player": "Tahj Washington",
     "Team": "MIA",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3707,7 +3707,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Noah Fant",
+    "Player": "Noah Fant",
     "Team": "SEA",
     "Position": "TE",
     "Avery Huffman Rank": "-",
@@ -3718,7 +3718,7 @@
     "Position Rank_2": "TE24"
   },
   {
-    "Name": "Dameon Pierce",
+    "Player": "Dameon Pierce",
     "Team": "HOU",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3729,7 +3729,7 @@
     "Position Rank_2": "RB80"
   },
   {
-    "Name": "Jacoby Brissett",
+    "Player": "Jacoby Brissett",
     "Team": "ARI",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3740,7 +3740,7 @@
     "Position Rank_2": "QB44"
   },
   {
-    "Name": "Trey Palmer",
+    "Player": "Trey Palmer",
     "Team": "TB",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3751,7 +3751,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "A.T. Perry",
+    "Player": "A.T. Perry",
     "Team": "DEN",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3762,7 +3762,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Aidan O'Connell",
+    "Player": "Aidan O'Connell",
     "Team": "LV",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3773,7 +3773,7 @@
     "Position Rank_2": "QB44"
   },
   {
-    "Name": "Xavier Gipson",
+    "Player": "Xavier Gipson",
     "Team": "NYJ",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3784,7 +3784,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Elijah Mitchell",
+    "Player": "Elijah Mitchell",
     "Team": "KC",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3795,7 +3795,7 @@
     "Position Rank_2": "RB24"
   },
   {
-    "Name": "Jake Bobo",
+    "Player": "Jake Bobo",
     "Team": "SEA",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3806,7 +3806,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Tyler Scott",
+    "Player": "Tyler Scott",
     "Team": "CHI",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3817,7 +3817,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Josh Reynolds",
+    "Player": "Josh Reynolds",
     "Team": "NYJ",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3828,7 +3828,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Jared Wiley",
+    "Player": "Jared Wiley",
     "Team": "KC",
     "Position": "TE",
     "Avery Huffman Rank": "-",
@@ -3839,7 +3839,7 @@
     "Position Rank_2": "TE24"
   },
   {
-    "Name": "Allen Lazard",
+    "Player": "Allen Lazard",
     "Team": "NYJ",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3850,7 +3850,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Jeremy McNichols",
+    "Player": "Jeremy McNichols",
     "Team": "WAS",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3861,7 +3861,7 @@
     "Position Rank_2": "RB80"
   },
   {
-    "Name": "Mecole Hardman",
+    "Player": "Mecole Hardman",
     "Team": "GB",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3872,7 +3872,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Tutu Atwell",
+    "Player": "Tutu Atwell",
     "Team": "LAR",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3883,7 +3883,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Tyler Higbee",
+    "Player": "Tyler Higbee",
     "Team": "LAR",
     "Position": "TE",
     "Avery Huffman Rank": "-",
@@ -3894,7 +3894,7 @@
     "Position Rank_2": "TE46"
   },
   {
-    "Name": "Marquez Valdes-Scantling",
+    "Player": "Marquez Valdes-Scantling",
     "Team": "SEA",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3905,7 +3905,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Tommy DeVito",
+    "Player": "Tommy DeVito",
     "Team": "NYG",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3916,7 +3916,7 @@
     "Position Rank_2": "QB24"
   },
   {
-    "Name": "Hendon Hooker",
+    "Player": "Hendon Hooker",
     "Team": "DET",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3927,7 +3927,7 @@
     "Position Rank_2": "QB24"
   },
   {
-    "Name": "Devontez Walker",
+    "Player": "Devontez Walker",
     "Team": "BAL",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3938,7 +3938,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Will Dissly",
+    "Player": "Will Dissly",
     "Team": "LAC",
     "Position": "TE",
     "Avery Huffman Rank": "-",
@@ -3949,7 +3949,7 @@
     "Position Rank_2": "TE46"
   },
   {
-    "Name": "Jelani Woods",
+    "Player": "Jelani Woods",
     "Team": "IND",
     "Position": "TE",
     "Avery Huffman Rank": "-",
@@ -3960,7 +3960,7 @@
     "Position Rank_2": "TE46"
   },
   {
-    "Name": "Xavier Hutchinson",
+    "Player": "Xavier Hutchinson",
     "Team": "HOU",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -3971,7 +3971,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "AJ Dillon",
+    "Player": "AJ Dillon",
     "Team": "PHI",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -3982,7 +3982,7 @@
     "Position Rank_2": "RB24"
   },
   {
-    "Name": "Jarrett Stidham",
+    "Player": "Jarrett Stidham",
     "Team": "DEN",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -3993,7 +3993,7 @@
     "Position Rank_2": "QB44"
   },
   {
-    "Name": "Zamir White",
+    "Player": "Zamir White",
     "Team": "LV",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4004,7 +4004,7 @@
     "Position Rank_2": "RB24"
   },
   {
-    "Name": "Jaheim Bell",
+    "Player": "Jaheim Bell",
     "Team": "NE",
     "Position": "TE",
     "Avery Huffman Rank": "-",
@@ -4015,7 +4015,7 @@
     "Position Rank_2": "TE46"
   },
   {
-    "Name": "Brenden Rice",
+    "Player": "Brenden Rice",
     "Team": "LAC",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4026,7 +4026,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Trey Lance",
+    "Player": "Trey Lance",
     "Team": "LAC",
     "Position": "QB",
     "Avery Huffman Rank": "-",
@@ -4037,7 +4037,7 @@
     "Position Rank_2": "QB24"
   },
   {
-    "Name": "Rasheen Ali",
+    "Player": "Rasheen Ali",
     "Team": "BAL",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4048,7 +4048,7 @@
     "Position Rank_2": "RB80"
   },
   {
-    "Name": "Jacob Cowing",
+    "Player": "Jacob Cowing",
     "Team": "SF",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4059,7 +4059,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Demarcus Robinson",
+    "Player": "Demarcus Robinson",
     "Team": "SF",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4070,7 +4070,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Jamari Thrash",
+    "Player": "Jamari Thrash",
     "Team": "CLE",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4081,7 +4081,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Ty Johnson",
+    "Player": "Ty Johnson",
     "Team": "BUF",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4092,7 +4092,7 @@
     "Position Rank_2": "RB24"
   },
   {
-    "Name": "JuJu Smith-Schuster",
+    "Player": "JuJu Smith-Schuster",
     "Team": "KC",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4103,7 +4103,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Rasheen Ali",
+    "Player": "Rasheen Ali",
     "Team": "BAL",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4114,7 +4114,7 @@
     "Position Rank_2": "RB24"
   },
   {
-    "Name": "Josh Reynolds",
+    "Player": "Josh Reynolds",
     "Team": "NYJ",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4125,7 +4125,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Jacob Cowing",
+    "Player": "Jacob Cowing",
     "Team": "SF",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4136,7 +4136,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Allen Lazard",
+    "Player": "Allen Lazard",
     "Team": "NYJ",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4147,7 +4147,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Demarcus Robinson",
+    "Player": "Demarcus Robinson",
     "Team": "SF",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4158,7 +4158,7 @@
     "Position Rank_2": "WR110"
   },
   {
-    "Name": "Gerald Everett",
+    "Player": "Gerald Everett",
     "Team": "",
     "Position": "TE",
     "Avery Huffman Rank": "-",
@@ -4169,7 +4169,7 @@
     "Position Rank_2": "TE46"
   },
   {
-    "Name": "Jamari Thrash",
+    "Player": "Jamari Thrash",
     "Team": "CLE",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4180,7 +4180,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "Marquez Valdes-Scantling",
+    "Player": "Marquez Valdes-Scantling",
     "Team": "SEA",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4191,7 +4191,7 @@
     "Position Rank_2": "WR24"
   },
   {
-    "Name": "JuJu Smith-Schuster",
+    "Player": "JuJu Smith-Schuster",
     "Team": "KC",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4202,7 +4202,7 @@
     "Position Rank_2": "WR"
   },
   {
-    "Name": "Ty Johnson",
+    "Player": "Ty Johnson",
     "Team": "BUF",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4213,7 +4213,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Dylan Laube",
+    "Player": "Dylan Laube",
     "Team": "LV",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4224,7 +4224,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Kylen Granson",
+    "Player": "Kylen Granson",
     "Team": "PHI",
     "Position": "TE",
     "Avery Huffman Rank": "-",
@@ -4235,7 +4235,7 @@
     "Position Rank_2": "TE"
   },
   {
-    "Name": "Carson Steele",
+    "Player": "Carson Steele",
     "Team": "KC",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4246,7 +4246,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Israel Abanikanda",
+    "Player": "Israel Abanikanda",
     "Team": "SF",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4257,7 +4257,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Dalvin Cook",
+    "Player": "Dalvin Cook",
     "Team": "",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4268,7 +4268,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Gus Edwards",
+    "Player": "Gus Edwards",
     "Team": "",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4279,7 +4279,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Clyde Edwards-Helaire",
+    "Player": "Clyde Edwards-Helaire",
     "Team": "NO",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4290,7 +4290,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Jamaal Williams",
+    "Player": "Jamaal Williams",
     "Team": "",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4301,7 +4301,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Ronnie Rivers",
+    "Player": "Ronnie Rivers",
     "Team": "LAR",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4312,7 +4312,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Evan Hull",
+    "Player": "Evan Hull",
     "Team": "PIT",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4323,7 +4323,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "K.J. Osborn",
+    "Player": "K.J. Osborn",
     "Team": "WAS",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4334,7 +4334,7 @@
     "Position Rank_2": "WR"
   },
   {
-    "Name": "Cam Akers",
+    "Player": "Cam Akers",
     "Team": "",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4345,7 +4345,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Bo Melton",
+    "Player": "Bo Melton",
     "Team": "GB",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4356,7 +4356,7 @@
     "Position Rank_2": "WR"
   },
   {
-    "Name": "Emari Demercado",
+    "Player": "Emari Demercado",
     "Team": "ARI",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4367,7 +4367,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Bub Means",
+    "Player": "Bub Means",
     "Team": "NO",
     "Position": "WR",
     "Avery Huffman Rank": "-",
@@ -4378,7 +4378,7 @@
     "Position Rank_2": "WR"
   },
   {
-    "Name": "Isaiah Spiller",
+    "Player": "Isaiah Spiller",
     "Team": "",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4389,7 +4389,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "D'Onta Foreman",
+    "Player": "D'Onta Foreman",
     "Team": "",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4400,7 +4400,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Jeff Wilson",
+    "Player": "Jeff Wilson",
     "Team": "",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4411,7 +4411,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Pierre Strong",
+    "Player": "Pierre Strong",
     "Team": "CLE",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4422,7 +4422,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Eric Gray",
+    "Player": "Eric Gray",
     "Team": "NYG",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4433,7 +4433,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "D'Ernest Johnson",
+    "Player": "D'Ernest Johnson",
     "Team": "",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4444,7 +4444,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Ty Chandler",
+    "Player": "Ty Chandler",
     "Team": "MIN",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4455,7 +4455,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Trey Sermon",
+    "Player": "Trey Sermon",
     "Team": "PIT",
     "Position": "RB",
     "Avery Huffman Rank": "-",
@@ -4466,7 +4466,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Ty Johnson",
+    "Player": "Ty Johnson",
     "Team": "BUF",
     "Position": "RB",
     "Avery Huffman Rank": 413,
@@ -4477,7 +4477,7 @@
     "Position Rank_2": "RB"
   },
   {
-    "Name": "Ty Johnson",
+    "Player": "Ty Johnson",
     "Team": "BUF",
     "Position": "RB",
     "Avery Huffman Rank": 300,

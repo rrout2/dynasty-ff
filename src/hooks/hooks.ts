@@ -986,6 +986,9 @@ type Rank = {
 
 export function useAdpData() {
     const [adpData, setAdpData] = useState<adpDatum[]>([]);
+    useEffect(() => {
+        console.log(adpData);
+    }, [adpData])
 
     useEffect(() => {
         setAdpData(
