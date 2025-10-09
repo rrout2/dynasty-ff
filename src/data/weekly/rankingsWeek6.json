@@ -224,47 +224,47 @@
     "SF": "Davante Adams"
   },
   {
-    "1QB": "Ricky Pearsall",
+    "1QB": "Rhamondre Stevenson",
     "SF": "George Pickens"
   },
   {
-    "1QB": "Rhamondre Stevenson",
+    "1QB": "Tony Pollard",
     "SF": "Deebo Samuel"
   },
   {
-    "1QB": "Tony Pollard",
+    "1QB": "Jaylen Warren",
     "SF": "Jacory Croskey-Merritt"
   },
   {
-    "1QB": "Jaylen Warren",
+    "1QB": "Chase Brown",
     "SF": "Travis Etienne"
   },
   {
-    "1QB": "Chase Brown",
+    "1QB": "Hassan Haskins",
     "SF": "Michael Carter"
   },
   {
-    "1QB": "Hassan Haskins",
+    "1QB": "Ladd McConkey",
     "SF": "Trey McBride"
   },
   {
-    "1QB": "Ladd McConkey",
+    "1QB": "Zay Flowers",
     "SF": "Courtland Sutton"
   },
   {
-    "1QB": "Zay Flowers",
+    "1QB": "Stefon Diggs",
     "SF": "A.J. Brown"
   },
   {
-    "1QB": "Stefon Diggs",
+    "1QB": "Alvin Kamara",
     "SF": "Marvin Harrison"
   },
   {
-    "1QB": "Alvin Kamara",
+    "1QB": "Romeo Doubs",
     "SF": "Garrett Wilson"
   },
   {
-    "1QB": "Romeo Doubs",
+    "1QB": "Kendrick Bourne",
     "SF": "Jaylen Waddle"
   },
   {
@@ -321,47 +321,47 @@
   },
   {
     "1QB": "David Montgomery",
-    "SF": "Ricky Pearsall"
-  },
-  {
-    "1QB": "Jameson Williams",
     "SF": "Rhamondre Stevenson"
   },
   {
-    "1QB": "Dallas Goedert",
+    "1QB": "Jameson Williams",
     "SF": "Tony Pollard"
   },
   {
-    "1QB": "Jordan Love",
+    "1QB": "Dallas Goedert",
     "SF": "Jaylen Warren"
   },
   {
-    "1QB": "Dak Prescott",
+    "1QB": "Jordan Love",
     "SF": "Chase Brown"
   },
   {
-    "1QB": "Baker Mayfield",
+    "1QB": "Dak Prescott",
     "SF": "Hassan Haskins"
   },
   {
-    "1QB": "Caleb Williams",
+    "1QB": "Baker Mayfield",
     "SF": "Ladd McConkey"
   },
   {
-    "1QB": "Tre Tucker",
+    "1QB": "Caleb Williams",
     "SF": "Zay Flowers"
   },
   {
-    "1QB": "Khalil Shakir",
+    "1QB": "Tre Tucker",
     "SF": "Stefon Diggs"
   },
   {
-    "1QB": "Elic Ayomanor",
+    "1QB": "Khalil Shakir",
     "SF": "Alvin Kamara"
   },
   {
-    "1QB": "Kareem Hunt",
+    "1QB": "Elic Ayomanor",
     "SF": "Romeo Doubs"
+  },
+  {
+    "1QB": "Kareem Hunt",
+    "SF": "Kendrick Bourne"
   },
   {
     "1QB": "Kimani Vidal",
@@ -384,39 +384,39 @@
     "SF": "Calvin Ridley"
   },
   {
-    "1QB": "Kendrick Bourne",
+    "1QB": "Rashid Shaheed",
     "SF": "Hunter Henry"
   },
   {
-    "1QB": "Rashid Shaheed",
+    "1QB": "David Njoku",
     "SF": "Travis Kelce"
   },
   {
-    "1QB": "David Njoku",
+    "1QB": "Matthew Stafford",
     "SF": "Sam LaPorta"
   },
   {
-    "1QB": "Matthew Stafford",
+    "1QB": "Daniel Jones",
     "SF": "Zach Charbonnet"
   },
   {
-    "1QB": "Daniel Jones",
+    "1QB": "Bo Nix",
     "SF": "TreVeyon Henderson"
   },
   {
-    "1QB": "Bo Nix",
+    "1QB": "Justin Fields",
     "SF": "Jakobi Meyers"
   },
   {
-    "1QB": "Justin Fields",
+    "1QB": "Jared Goff",
     "SF": "Chris Godwin"
   },
   {
-    "1QB": "Jared Goff",
+    "1QB": "Mac Jones",
     "SF": "Darren Waller"
   },
   {
-    "1QB": "Mac Jones",
+    "1QB": "Jauan Jennings",
     "SF": "David Montgomery"
   },
   {
@@ -464,60 +464,64 @@
     "SF": "Keon Coleman"
   },
   {
-    "1QB": "Cooper Kupp",
-    "SF": "Kendrick Bourne"
-  },
-  {
-    "1QB": "Mark Andrews",
+    "1QB": "Demarcus Robinson",
     "SF": "Rashid Shaheed"
   },
   {
-    "1QB": "Zach Ertz",
+    "1QB": "Cooper Kupp",
     "SF": "David Njoku"
   },
   {
-    "1QB": "Mason Taylor",
+    "1QB": "Mark Andrews",
+    "SF": "Jauan Jennings"
+  },
+  {
+    "1QB": "Zach Ertz",
     "SF": "Tyquan Thornton"
   },
   {
-    "1QB": "Jake Tonges",
+    "1QB": "Mason Taylor",
     "SF": "Kendre Miller"
   },
   {
-    "1QB": "Theo Johnson",
+    "1QB": "Jake Tonges",
     "SF": "RJ Harvey"
   },
   {
-    "1QB": "Harold Fannin",
+    "1QB": "Theo Johnson",
     "SF": "Darnell Mooney"
   },
   {
-    "1QB": "Evan Engram",
+    "1QB": "Harold Fannin",
     "SF": "Isaiah Davis"
   },
   {
-    "1QB": "Ollie Gordon II",
+    "1QB": "Evan Engram",
     "SF": "Marquise Brown"
   },
   {
-    "1QB": "Tyler Allgeier",
+    "1QB": "Ollie Gordon II",
     "SF": "Wan'Dale Robinson"
   },
   {
-    "1QB": "Kenneth Gainwell",
+    "1QB": "Tyler Allgeier",
     "SF": "Troy Franklin"
   },
   {
-    "1QB": "Trevor Lawrence",
+    "1QB": "Kenneth Gainwell",
     "SF": "Jerry Jeudy"
   },
   {
-    "1QB": "Sam Darnold",
+    "1QB": "Trevor Lawrence",
     "SF": "Travis Hunter"
   },
   {
-    "1QB": "Bryce Young",
+    "1QB": "Sam Darnold",
     "SF": "Josh Downs"
+  },
+  {
+    "1QB": "Bryce Young",
+    "SF": "Demarcus Robinson"
   },
   {
     "1QB": "Kyler Murray",
@@ -536,44 +540,40 @@
     "SF": "Mason Taylor"
   },
   {
-    "1QB": "Demarcus Robinson",
+    "1QB": "Jeremy McNichols",
     "SF": "Jake Tonges"
   },
   {
-    "1QB": "Jeremy McNichols",
+    "1QB": "Justice Hill",
     "SF": "Theo Johnson"
   },
   {
-    "1QB": "Justice Hill",
+    "1QB": "Kayshon Boutte",
     "SF": "Harold Fannin"
   },
   {
-    "1QB": "Kayshon Boutte",
+    "1QB": "Bhayshul Tuten",
     "SF": "Evan Engram"
   },
   {
-    "1QB": "Bhayshul Tuten",
+    "1QB": "Blake Corum",
     "SF": "Ollie Gordon II"
   },
   {
-    "1QB": "Blake Corum",
+    "1QB": "Jalen Tolbert",
     "SF": "Tyler Allgeier"
   },
   {
-    "1QB": "Jalen Tolbert",
+    "1QB": "Isaiah Bond",
     "SF": "Kenneth Gainwell"
   },
   {
-    "1QB": "Isaiah Bond",
+    "1QB": "Rashod Bateman",
     "SF": "Dontayvion Wicks"
   },
   {
-    "1QB": "Rashod Bateman",
-    "SF": "Marvin Mims"
-  },
-  {
     "1QB": "Ryan Flournoy",
-    "SF": "Demarcus Robinson"
+    "SF": "Marvin Mims"
   },
   {
     "1QB": "Emari Demercado",
@@ -764,6 +764,10 @@
     "SF": "DeAndre Hopkins"
   },
   {
+    "1QB": "Ricky Pearsall",
+    "SF": "Ricky Pearsall"
+  },
+  {
     "1QB": "Michael Wilson",
     "SF": "Michael Wilson"
   },
@@ -794,10 +798,6 @@
   {
     "1QB": "Joshua Palmer",
     "SF": "Joshua Palmer"
-  },
-  {
-    "1QB": "Jauan Jennings",
-    "SF": "Jauan Jennings"
   },
   {
     "1QB": "Tyler Lockett",
