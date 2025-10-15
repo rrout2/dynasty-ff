@@ -286,6 +286,7 @@ def main():
     parser.add_argument('-s', '--send_email', type=int, default=0, help="Whether or not to send emails (0 or 1)")
     parser.add_argument('-si', '--start_index', type=int, default=0, help="Start index for processing images")
     parser.add_argument('-e', '--end_index', type=int, default=-1, help="End index for processing images")
+    parser.add_argument('-d', '--download_dir', type=str, default='downloads', help="Directory to store downloaded images")
     args = parser.parse_args()
     if int(args.send_email) != 1 and int(args.send_email) != 0:
         print("--send_email must be 0 or 1")
@@ -293,6 +294,7 @@ def main():
     send_email = bool(int(args.send_email))
     print(f"Sending emails: {send_email}")
     sender = ImageEmailSender(send_email)
+    sender.download_dir = args.download_dir
 
     start_idx = int(args.start_index)
     end_idx = int(args.end_index)
