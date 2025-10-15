@@ -294,7 +294,7 @@ def main():
     send_email = bool(int(args.send_email))
     print(f"Sending emails: {send_email}")
     sender = ImageEmailSender(send_email)
-    sender.download_dir = args.download_dir
+    sender.download_dir = os.path.join(os.getcwd(), args.download_dir)
     os.makedirs(sender.download_dir, exist_ok=True)
 
     start_idx = int(args.start_index)
