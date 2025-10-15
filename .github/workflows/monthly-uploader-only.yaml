@@ -94,9 +94,9 @@ jobs:
                         
                         # --- Launch the Python Worker in the Background ---
                         # The '&' symbol is crucial; it runs the command as a background job (creating the thread/process)
-                        python scripts/infinite_bp/monthly_image_sender.py -s=0 -si="$current_start_index" -e="$current_end_index" -d="downloads{$current_start_index}" &
+                        python scripts/infinite_bp/monthly_image_sender.py -s=0 -si="$current_start_index" -e="$current_end_index" -d="downloads_{$current_start_index}" &
                         
-                        echo "Launched Thread $((i+1)): Processing tasks $current_start_index to $current_end_index, download_dir: downloads{$current_start_index}"
+                        echo "Launched Thread $((i+1)): Processing tasks $current_start_index to $current_end_index, download_dir: downloads_{$current_start_index}"
                     else
                         # If N < M, some threads may not be needed
                         echo "Skipping Thread $((i+1)): No tasks assigned (N < M)"
