@@ -285,7 +285,6 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-s', '--send_email', type=int, default=0, help="Whether or not to send emails (0 or 1)")
     parser.add_argument('-si', '--start_index', type=int, default=0, help="Start index for processing images")
-    parser.add_argument('-e', '--end_index', type=int, default=-1, help="End index for processing images")
     args = parser.parse_args()
     if int(args.send_email) != 1 and int(args.send_email) != 0:
         print("--send_email must be 0 or 1")
@@ -295,9 +294,6 @@ def main():
     sender = ImageEmailSender(send_email)
 
     start_idx = int(args.start_index)
-    end_idx = int(args.end_index)
-    if end_idx == -1:
-        end_idx = len(sender.league_id_list)
 
     # Path to your service account credentials JSON file
     credentials_path = 'service-account-credentials.json'
@@ -348,7 +344,7 @@ def main():
 
 
         # print("No folder run, emailing directly")
-        for i in range(start_idx, end_idx):
+        for i in range(start_idx, len(sender.league_id_list)):
             if sender.league_id_list[i] == '' or sender.league_id_list[i] == None:
                 continue
             has_invalid_team_id = i >= len(sender.team_id_list) or sender.team_id_list[i] == '' or sender.team_id_list[i] == None

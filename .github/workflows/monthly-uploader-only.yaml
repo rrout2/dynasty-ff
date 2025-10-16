@@ -9,10 +9,8 @@ on:
                 description: 'Start Index'
                 default: 0
                 required: true
-            numThreads:
-                description: 'Number of threads'
-                default: 1
-                required: true
+            tags:
+                description: 'Test scenario tags'   
 
 jobs:
     upload-images:
@@ -69,42 +67,7 @@ jobs:
                   echo "${SA_CREDENTIALS}" > service-account-credentials.json
 
             - name: Run image sender
-              run: |
-                  COUNT=$(echo "${{ secrets.LEAGUE_ID_LIST }}" | awk -F',' '{print NF}')
-                  echo "Total number of tasks: $COUNT"
-                  chunk_size=$(($COUNT / ${{ github.event.inputs.numThreads }}))
-                  echo "Chunk size: $chunk_size"
-                  remainder=$(($COUNT % ${{ github.event.inputs.numThreads }}))
-                  current_start_index=0
-                  for ((i=0; i<${{ github.event.inputs.numThreads }}; i++)); do
-                    # Determine the number of tasks for the current chunk
-                    tasks_in_chunk=$chunk_size
-
-                    # The last thread takes any remaining tasks (handling the remainder)
-                    if [ "$i" -eq "$(($M - 1))" ]; then
-                        echo "Last thread takes $remainder tasks"
-                        tasks_in_chunk=$(($chunk_size + $remainder))
-                    fi
-                    
-                    # Calculate the inclusive end index
-                    current_end_index=$(($current_start_index + $tasks_in_chunk))
-
-                    # Safety check: ensure the start index is within the total task count
-                    if [ "$current_start_index" -le "$COUNT" ]; then
-                        
-                        # --- Launch the Python Worker in the Background ---
-                        # The '&' symbol is crucial; it runs the command as a background job (creating the thread/process)
-                        python scripts/infinite_bp/monthly_image_sender.py -s=0 -si="$current_start_index" -si="$current_end_index" &
-                        
-                        echo "Launched Thread $((i+1)): Processing tasks $current_start_index to $current_end_index"
-                    else
-                        # If N < M, some threads may not be needed
-                        echo "Skipping Thread $((i+1)): No tasks assigned (N < M)"
-                    fi
-
-                    # Update the start index for the next thread
-                    current_start_index=$(($current_end_index + 1))
-                  done
+              run: python scripts/infinite_bp/monthly_image_sender.py -s=0 -si=${{ github.event.inputs.startIndex }}
             - uses: actions/upload-artifact@v4
               with:
                   path: |
