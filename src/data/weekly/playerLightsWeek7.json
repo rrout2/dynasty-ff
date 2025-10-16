@@ -2601,13 +2601,13 @@
     "Vegas Light": "GREEN"
   },
   {
-    "Player Conversion": "Rondale Moore",
-    "Player Name": "Rondale Moore",
-    "Position": "WR",
-    "Opponent": "Philadelphia Eagles",
-    "Matchup Light": "YELLOW",
+    "Player Conversion": "Michael Mayer",
+    "Player Name": "Michael Mayer",
+    "Position": "TE",
+    "Opponent": "Kansas City Chiefs",
+    "Matchup Light": "RED",
     "Offense Light": "YELLOW",
-    "Vegas Light": "YELLOW"
+    "Vegas Light": "RED"
   },
   {
     "Player Conversion": "Joe Flacco",
@@ -2637,13 +2637,13 @@
     "Vegas Light": "GREEN"
   },
   {
-    "Player Conversion": "Jonathan Mingo",
-    "Player Name": "Jonathan Mingo",
+    "Player Conversion": "Tez Johnson",
+    "Player Name": "Tez Johnson",
     "Position": "WR",
-    "Opponent": "Washington Commanders",
-    "Matchup Light": "YELLOW",
+    "Opponent": "Detroit Lions",
+    "Matchup Light": "GREEN",
     "Offense Light": "GREEN",
-    "Vegas Light": "GREEN"
+    "Vegas Light": "YELLOW"
   },
   {
     "Player Conversion": "Kendrick Bourne",
