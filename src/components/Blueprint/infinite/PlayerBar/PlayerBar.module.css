@@ -26,6 +26,11 @@
     font-family: 'Prohibition';
     font-size: 28px;
     color: white;
+
+    white-space: nowrap; 
+    width: 200px; 
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .positionChip {
