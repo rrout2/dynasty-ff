@@ -295,7 +295,6 @@ def main():
     print(f"Sending emails: {send_email}")
     sender = ImageEmailSender(send_email)
     sender.download_dir = args.download_dir
-    os.makedirs(sender.download_dir, exist_ok=True)
 
     start_idx = int(args.start_index)
     end_idx = int(args.end_index)
