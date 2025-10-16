@@ -94,7 +94,7 @@ jobs:
                         
                         # --- Launch the Python Worker in the Background ---
                         # The '&' symbol is crucial; it runs the command as a background job (creating the thread/process)
-                        python scripts/infinite_bp/monthly_image_sender.py -s=0 -si="$current_start_index" -e="$current_end_index" &
+                        python scripts/infinite_bp/monthly_image_sender.py -s=0 -si="$current_start_index" -si="$current_end_index" &
                         
                         echo "Launched Thread $((i+1)): Processing tasks $current_start_index to $current_end_index"
                     else
@@ -105,12 +105,6 @@ jobs:
                     # Update the start index for the next thread
                     current_start_index=$(($current_end_index + 1))
                   done
-                  echo "-----------------------------------"
-                  echo "All threads launched. Waiting for completion..."
-                  wait
-                  echo "-----------------------------------"
-                  echo "✅ All parallel tasks completed successfully."
-                  echo "-----------------------------------"
             - uses: actions/upload-artifact@v4
               with:
                   path: |
