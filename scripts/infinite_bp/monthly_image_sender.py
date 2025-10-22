@@ -281,10 +281,70 @@ def censor_email(email):
     local_part = local_part[:2] + '***' + local_part[-2:]
     return f"{local_part}@{parts[1]}"
 
+def get_chunk_indices(data_list, chunk_index, number_of_chunks):
+    """
+    Calculates the start and end indices (exclusive) for a specific chunk
+    of a given list, distributing the data as evenly as possible.
+
+    Args:
+        data_list: The list of data to be chunked.
+        chunk_index: The 1-indexed number of the chunk to retrieve (e.g., 1, 2, 3...).
+        number_of_chunks: The total number of chunks to divide the list into.
+
+    Returns:
+        A tuple (start_index, end_index) where end_index is exclusive.
+
+    Raises:
+        ValueError: If chunk_index or number_of_chunks are invalid (e.g., out of range).
+    """
+    list_length = len(data_list)
+
+    # --- 1. Validation ---
+    if number_of_chunks <= 0:
+        raise ValueError("number_of_chunks must be a positive integer.")
+    if chunk_index <= 0 or chunk_index > number_of_chunks:
+        raise ValueError(
+            f"chunk_index ({chunk_index}) must be between 1 and number_of_chunks ({number_of_chunks})."
+        )
+    if list_length == 0:
+        return (0, 0)
+
+    # --- 2. Calculate Base Distribution Parameters ---
+    # base_size is the minimum size of any chunk (using integer division)
+    base_size = list_length // number_of_chunks
+    # extra_elements is the number of chunks that will be one element larger
+    extra_elements = list_length % number_of_chunks
+
+    # --- 3. Determine Start Index (Inclusive) ---
+
+    # The first 'extra_elements' chunks are size (base_size + 1).
+    # Chunks after that are size (base_size).
+
+    # a) Calculate total elements from 'base_size' in all preceding chunks (0-indexed)
+    preceding_chunks = chunk_index - 1
+    start_index = preceding_chunks * base_size
+
+    # b) Add the 'extra' element for all preceding chunks that were large
+    # This is the minimum of (how many chunks came before it) and (how many extra elements there are)
+    start_index += min(preceding_chunks, extra_elements)
+
+    # --- 4. Determine End Index (Exclusive) ---
+
+    # Check if the current chunk is one of the larger chunks
+    is_large_chunk = chunk_index <= extra_elements
+    chunk_size = base_size + (1 if is_large_chunk else 0)
+
+    end_index = start_index + chunk_size
+
+    return (start_index, end_index)
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-s', '--send_email', type=int, default=0, help="Whether or not to send emails (0 or 1)")
     parser.add_argument('-si', '--start_index', type=int, default=0, help="Start index for processing images")
+    parser.add_argument('-ci', '--chunk_index', type=int, default=1, help="Chunk index (1-based)")
+    parser.add_argument('-nc', '--number_of_chunks', type=int, default=1, help="Number of chunks")
+    
     args = parser.parse_args()
     if int(args.send_email) != 1 and int(args.send_email) != 0:
         print("--send_email must be 0 or 1")
@@ -293,7 +353,15 @@ def main():
     print(f"Sending emails: {send_email}")
     sender = ImageEmailSender(send_email)
 
-    start_idx = int(args.start_index)
+    chunk_index = int(args.chunk_index)
+    number_of_chunks = int(args.number_of_chunks)
+    if chunk_index < 1 or chunk_index > number_of_chunks:
+        print("--chunk_index must be between 1 and --number_of_chunks")
+        return
+
+    (start_idx, end_idx) = get_chunk_indices(sender.league_id_list, chunk_index, number_of_chunks)
+
+    # start_idx = int(args.start_index)
 
     # Path to your service account credentials JSON file
     credentials_path = 'service-account-credentials.json'
@@ -344,7 +412,7 @@ def main():
 
 
         # print("No folder run, emailing directly")
-        for i in range(start_idx, len(sender.league_id_list)):
+        for i in range(start_idx, end_idx):
             if sender.league_id_list[i] == '' or sender.league_id_list[i] == None:
                 continue
             has_invalid_team_id = i >= len(sender.team_id_list) or sender.team_id_list[i] == '' or sender.team_id_list[i] == None

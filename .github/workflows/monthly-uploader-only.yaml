@@ -9,8 +9,14 @@ on:
                 description: 'Start Index'
                 default: 0
                 required: true
-            tags:
-                description: 'Test scenario tags'   
+            numberOfChunks:
+                description: 'Number of Chunks'
+                default: 1
+                required: true
+            chunkIndex:
+                description: 'Chunk Index (1-based)'
+                default: 1
+                required: true
 
 jobs:
     upload-images:
