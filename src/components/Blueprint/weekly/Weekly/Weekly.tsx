@@ -212,9 +212,9 @@ export function WeeklyBlueprint({
         const pointsForList = rosters.map(r => r.settings.fpts).sort();
         const pointsFor = roster.settings.fpts;
         const rank = pointsForList.findIndex(p => p === pointsFor) + 1;
-        const percentile = (rank / rosters.length) * 100;
+        const pointsForPercentile = (rank / rosters.length) * 100;
         const winPercentage = (roster.settings.wins / (roster.settings.wins + roster.settings.losses + roster.settings.ties)) * 100;
-        const weightedPercentile = winPercentage * 0.4 + percentile * 0.6;
+        const weightedPercentile = winPercentage * 0.7 + pointsForPercentile * 0.3;
         if (weightedPercentile > 65) {
             setInSeasonVerdict('SOLID');
         } else if (weightedPercentile > 35) {
