@@ -204,9 +204,9 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
     const [rebuildContendValue, setRebuildContendValue] = useState(50);
     const [draftCapitalValue, setDraftCapitalValue] = useState(5);
 
-    const [draftCapitalNotes2025, setDraftCapitalNotes2025] = useState(
-        'placeholder 2025 notes'
-    );
+    // const [draftCapitalNotes2025, setDraftCapitalNotes2025] = useState(
+    //     'placeholder 2025 notes'
+    // );
     const [draftCapitalNotes2026, setDraftCapitalNotes2026] = useState(
         'placeholder 2026 notes'
     );
@@ -412,19 +412,19 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
         const followingYearInfo = getPicksInfo(myPicks, '2027');
         setDraftCapitalNotes2027(followingYearInfo);
     }, [draftPicks, myPicks]);
-    useEffect(() => {
-        const thisYearInfo = draftPicks
-            .filter(
-                draftPick => draftPick.round !== '' && draftPick.pick !== ''
-            )
-            .map(draftPick => {
-                return `${draftPick.round}.${
-                    draftPick.pick && draftPick.pick < 10 ? '0' : ''
-                }${draftPick.pick}`;
-            })
-            .join(', ');
-        setDraftCapitalNotes2025(thisYearInfo);
-    }, [draftPicks]);
+    // useEffect(() => {
+    //     const thisYearInfo = draftPicks
+    //         .filter(
+    //             draftPick => draftPick.round !== '' && draftPick.pick !== ''
+    //         )
+    //         .map(draftPick => {
+    //             return `${draftPick.round}.${
+    //                 draftPick.pick && draftPick.pick < 10 ? '0' : ''
+    //             }${draftPick.pick}`;
+    //         })
+    //         .join(', ');
+    //     setDraftCapitalNotes2025(thisYearInfo);
+    // }, [draftPicks]);
 
     function shortenOutlook(outlook: string) {
         switch (outlook) {
@@ -477,10 +477,10 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                 );
             });
             searchParams.set(IN_RETURN, inReturn.join('-'));
-            searchParams.set(
-                `${DRAFT_CAPITAL_NOTES}2025`,
-                draftCapitalNotes2025
-            );
+            // searchParams.set(
+            //     `${DRAFT_CAPITAL_NOTES}2025`,
+            //     draftCapitalNotes2025
+            // );
             searchParams.set(
                 `${DRAFT_CAPITAL_NOTES}2026`,
                 draftCapitalNotes2026
@@ -592,9 +592,9 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
             });
         });
         setInReturn((searchParams.get(IN_RETURN) || '').split('-'));
-        setDraftCapitalNotes2025(
-            searchParams.get(`${DRAFT_CAPITAL_NOTES}2025`) || ''
-        );
+        // setDraftCapitalNotes2025(
+        //     searchParams.get(`${DRAFT_CAPITAL_NOTES}2025`) || ''
+        // );
         setDraftCapitalNotes2026(
             searchParams.get(`${DRAFT_CAPITAL_NOTES}2026`) || ''
         );
@@ -782,16 +782,13 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                                 borderBottom: '3px solid white',
                             }}
                         >
-                            {!hasDraftOccurred ? '2025' : '2026'}
+                            {'2026'}
                         </div>
                         <div
                             className={styles.draftCapitalText}
                             style={{paddingBottom: '10px'}}
                         >
-                            {(!hasDraftOccurred
-                                ? draftCapitalNotes2025
-                                : draftCapitalNotes2026
-                            ).toUpperCase()}
+                            {draftCapitalNotes2026.toUpperCase()}
                         </div>
                     </div>
                     <div className={styles.draftCapRow}>
@@ -799,13 +796,10 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                             className={styles.draftCapLabel}
                             style={{color: '#f38908', paddingTop: '10px'}}
                         >
-                            {!hasDraftOccurred ? '2026' : '2027'}
+                            {'2027'}
                         </div>
                         <div className={styles.draftCapitalText}>
-                            {(!hasDraftOccurred
-                                ? draftCapitalNotes2026
-                                : draftCapitalNotes2027
-                            ).toUpperCase()}
+                            {draftCapitalNotes2027.toUpperCase()}
                         </div>
                     </div>
                 </div>
@@ -1206,12 +1200,8 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                             <DraftCapitalInput
                                 draftPicks={draftPicks}
                                 setDraftPicks={setDraftPicks}
-                                draftCapitalNotes2025={draftCapitalNotes2025}
                                 draftCapitalNotes2026={draftCapitalNotes2026}
                                 draftCapitalNotes2027={draftCapitalNotes2027}
-                                setDraftCapitalNotes2025={
-                                    setDraftCapitalNotes2025
-                                }
                                 setDraftCapitalNotes2026={
                                     setDraftCapitalNotes2026
                                 }
@@ -1384,10 +1374,8 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
 type DraftCapitalInputProps = {
     draftPicks: DraftPick[];
     setDraftPicks: (value: SetStateAction<DraftPick[]>) => void;
-    draftCapitalNotes2025?: string;
     draftCapitalNotes2026?: string;
     draftCapitalNotes2027?: string;
-    setDraftCapitalNotes2025?: (value: SetStateAction<string>) => void;
     setDraftCapitalNotes2026?: (value: SetStateAction<string>) => void;
     setDraftCapitalNotes2027?: (value: SetStateAction<string>) => void;
 };
@@ -1395,10 +1383,8 @@ type DraftCapitalInputProps = {
 export function DraftCapitalInput({
     draftPicks,
     setDraftPicks,
-    draftCapitalNotes2025,
     draftCapitalNotes2026,
     draftCapitalNotes2027,
-    setDraftCapitalNotes2025,
     setDraftCapitalNotes2026,
     setDraftCapitalNotes2027,
 }: DraftCapitalInputProps) {
@@ -1503,14 +1489,6 @@ export function DraftCapitalInput({
                     </FormControl>
                 </div>
             ))}
-            {setDraftCapitalNotes2025 && (
-                <TextField
-                    style={{margin: '4px'}}
-                    label={'2025 Draft Info'}
-                    value={draftCapitalNotes2025}
-                    onChange={e => setDraftCapitalNotes2025(e.target.value)}
-                />
-            )}
             {setDraftCapitalNotes2026 && (
                 <TextField
                     style={{margin: '4px'}}
