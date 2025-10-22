@@ -203,10 +203,6 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
     const [isRedraft, setIsRedraft] = useState(false);
     const [rebuildContendValue, setRebuildContendValue] = useState(50);
     const [draftCapitalValue, setDraftCapitalValue] = useState(5);
-
-    // const [draftCapitalNotes2025, setDraftCapitalNotes2025] = useState(
-    //     'placeholder 2025 notes'
-    // );
     const [draftCapitalNotes2026, setDraftCapitalNotes2026] = useState(
         'placeholder 2026 notes'
     );
@@ -412,19 +408,6 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
         const followingYearInfo = getPicksInfo(myPicks, '2027');
         setDraftCapitalNotes2027(followingYearInfo);
     }, [draftPicks, myPicks]);
-    // useEffect(() => {
-    //     const thisYearInfo = draftPicks
-    //         .filter(
-    //             draftPick => draftPick.round !== '' && draftPick.pick !== ''
-    //         )
-    //         .map(draftPick => {
-    //             return `${draftPick.round}.${
-    //                 draftPick.pick && draftPick.pick < 10 ? '0' : ''
-    //             }${draftPick.pick}`;
-    //         })
-    //         .join(', ');
-    //     setDraftCapitalNotes2025(thisYearInfo);
-    // }, [draftPicks]);
 
     function shortenOutlook(outlook: string) {
         switch (outlook) {
@@ -477,10 +460,6 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                 );
             });
             searchParams.set(IN_RETURN, inReturn.join('-'));
-            // searchParams.set(
-            //     `${DRAFT_CAPITAL_NOTES}2025`,
-            //     draftCapitalNotes2025
-            // );
             searchParams.set(
                 `${DRAFT_CAPITAL_NOTES}2026`,
                 draftCapitalNotes2026
@@ -592,9 +571,6 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
             });
         });
         setInReturn((searchParams.get(IN_RETURN) || '').split('-'));
-        // setDraftCapitalNotes2025(
-        //     searchParams.get(`${DRAFT_CAPITAL_NOTES}2025`) || ''
-        // );
         setDraftCapitalNotes2026(
             searchParams.get(`${DRAFT_CAPITAL_NOTES}2026`) || ''
         );
