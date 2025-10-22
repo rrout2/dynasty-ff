@@ -3,7 +3,7 @@ on:
     workflow_dispatch: # Allows manual trigger
         inputs:
             folderId:
-                description: 'Folder ID'     
+                description: 'Folder ID or link'     
                 required: true
             startIndex:
                 description: 'Start Index'

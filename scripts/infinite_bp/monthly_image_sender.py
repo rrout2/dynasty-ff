@@ -38,7 +38,7 @@ class ImageEmailSender:
                 config = yaml.safe_load(file)
 
         if isinstance(config['folder_id'], str):
-            self.folder_id = config['folder_id']
+            self.folder_id = config['folder_id'].split('/')[-1]
         else:
             raise ValueError("Folder ID must be in config file")
 
