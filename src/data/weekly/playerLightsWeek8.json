@@ -2439,31 +2439,31 @@
     "Vegas Light": "RED"
   },
   {
-    "Player Conversion": "Xavier Hutchinson",
-    "Player Name": "Xavier Hutchinson",
+    "Player Conversion": "Chimere Dike",
+    "Player Name": "Chimere Dike",
     "Position": "WR",
-    "Opponent": "San Francisco 49ers",
-    "Matchup Light": "YELLOW",
-    "Offense Light": "YELLOW",
-    "Vegas Light": "YELLOW"
+    "Opponent": "Indianapolis Colts",
+    "Matchup Light": "GREEN",
+    "Offense Light": "RED",
+    "Vegas Light": "RED"
   },
   {
-    "Player Conversion": "Damien Martinez",
-    "Player Name": "Damien Martinez",
-    "Position": "RB",
-    "Opponent": "BYE",
-    "Matchup Light": "BYE",
-    "Offense Light": "BYE",
-    "Vegas Light": "BYE"
-  },
-  {
-    "Player Conversion": "Tahj Washington",
-    "Player Name": "Tahj Washington",
+    "Player Conversion": "Malik Washington",
+    "Player Name": "Malik Washington",
     "Position": "WR",
     "Opponent": "Atlanta Falcons",
     "Matchup Light": "RED",
     "Offense Light": "RED",
     "Vegas Light": "RED"
+  },
+  {
+    "Player Conversion": "Samaje Perine",
+    "Player Name": "Samaje Perine",
+    "Position": "RB",
+    "Opponent": "New York Jets",
+    "Matchup Light": "YELLOW",
+    "Offense Light": "RED",
+    "Vegas Light": "YELLOW"
   },
   {
     "Player Conversion": "Noah Fant",
