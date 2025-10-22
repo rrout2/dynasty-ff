@@ -199,7 +199,7 @@ class ImageEmailSender:
             if not downloaded_files:
                 raise Exception("No files found in download directory")
 
-            latest_file = max([os.path.join(self.download_dir, f) for f in downloaded_files],
+            latest_file = max([os.path.join(self.download_dir, f) for f in downloaded_files if f.endswith('.png')],
                             key=os.path.getctime)
             print(f"Downloaded file: {latest_file}")
 
