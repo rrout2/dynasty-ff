@@ -359,7 +359,9 @@ def main():
         print("--chunk_index must be between 1 and --number_of_chunks")
         return
 
-    (start_idx, end_idx) = get_chunk_indices(sender.league_id_list, chunk_index, number_of_chunks)
+    (start_idx, end_idx) = (0, 0)
+    if sender.league_id_list != None and sender.league_id_list != []:
+        (start_idx, end_idx) = get_chunk_indices(sender.league_id_list, chunk_index, number_of_chunks)
 
     # start_idx = int(args.start_index)
 
