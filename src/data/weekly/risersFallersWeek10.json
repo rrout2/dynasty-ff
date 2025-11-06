@@ -1,0 +1,849 @@
+[
+  {
+    "Name": "Josh Allen",
+    "Current ADP": 1,
+    "Previous ADP": 1,
+    "Difference": 0,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Ja'Marr Chase",
+    "Current ADP": 2,
+    "Previous ADP": 3,
+    "Difference": 1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Bijan Robinson",
+    "Current ADP": 3,
+    "Previous ADP": 2,
+    "Difference": -1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jaxon Smith-Njigba",
+    "Current ADP": 4,
+    "Previous ADP": 9,
+    "Difference": 5,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Lamar Jackson",
+    "Current ADP": 5,
+    "Previous ADP": 5,
+    "Difference": 0,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Puka Nacua",
+    "Current ADP": 6,
+    "Previous ADP": 4,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Drake Maye",
+    "Current ADP": 7,
+    "Previous ADP": 11,
+    "Difference": 4,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jahmyr Gibbs",
+    "Current ADP": 8,
+    "Previous ADP": 6,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Justin Jefferson",
+    "Current ADP": 9,
+    "Previous ADP": 8,
+    "Difference": -1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Amon-Ra St. Brown",
+    "Current ADP": 10,
+    "Previous ADP": 10,
+    "Difference": 0,
+    "Eligible?": ""
+  },
+  {
+    "Name": "CeeDee Lamb",
+    "Current ADP": 11,
+    "Previous ADP": 12,
+    "Difference": 1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Brock Bowers",
+    "Current ADP": 12,
+    "Previous ADP": 16,
+    "Difference": 4,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Malik Nabers",
+    "Current ADP": 13,
+    "Previous ADP": 13,
+    "Difference": 0,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jayden Daniels",
+    "Current ADP": 14,
+    "Previous ADP": 7,
+    "Difference": -7,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jonathan Taylor",
+    "Current ADP": 15,
+    "Previous ADP": 17,
+    "Difference": 2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Patrick Mahomes",
+    "Current ADP": 16,
+    "Previous ADP": 19,
+    "Difference": 3,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jalen Hurts",
+    "Current ADP": 17,
+    "Previous ADP": 15,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Emeka Egbuka",
+    "Current ADP": 18,
+    "Previous ADP": 14,
+    "Difference": -4,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Justin Herbert",
+    "Current ADP": 19,
+    "Previous ADP": 20,
+    "Difference": 1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Drake London",
+    "Current ADP": 20,
+    "Previous ADP": 21,
+    "Difference": 1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Ashton Jeanty",
+    "Current ADP": 21,
+    "Previous ADP": 18,
+    "Difference": -3,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Rashee Rice",
+    "Current ADP": 22,
+    "Previous ADP": 27,
+    "Difference": 5,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Trey McBride",
+    "Current ADP": 23,
+    "Previous ADP": 22,
+    "Difference": -1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Joe Burrow",
+    "Current ADP": 24,
+    "Previous ADP": 24,
+    "Difference": 0,
+    "Eligible?": ""
+  },
+  {
+    "Name": "De'Von Achane",
+    "Current ADP": 25,
+    "Previous ADP": 23,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jaxson Dart",
+    "Current ADP": 26,
+    "Previous ADP": 40,
+    "Difference": 14,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Tyler Warren",
+    "Current ADP": 27,
+    "Previous ADP": 25,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Bo Nix",
+    "Current ADP": 28,
+    "Previous ADP": 34,
+    "Difference": 6,
+    "Eligible?": ""
+  },
+  {
+    "Name": "James Cook",
+    "Current ADP": 29,
+    "Previous ADP": 32,
+    "Difference": 3,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Omarion Hampton",
+    "Current ADP": 30,
+    "Previous ADP": 26,
+    "Difference": -4,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Caleb Williams",
+    "Current ADP": 31,
+    "Previous ADP": 33,
+    "Difference": 2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Bucky Irving",
+    "Current ADP": 32,
+    "Previous ADP": 30,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Quinshon Judkins",
+    "Current ADP": 33,
+    "Previous ADP": 31,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Garrett Wilson",
+    "Current ADP": 34,
+    "Previous ADP": 39,
+    "Difference": 5,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Tetairoa McMillan",
+    "Current ADP": 35,
+    "Previous ADP": 29,
+    "Difference": -6,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Rome Odunze",
+    "Current ADP": 36,
+    "Previous ADP": 28,
+    "Difference": -8,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Baker Mayfield",
+    "Current ADP": 37,
+    "Previous ADP": 35,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Nico Collins",
+    "Current ADP": 38,
+    "Previous ADP": 36,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Ladd McConkey",
+    "Current ADP": 39,
+    "Previous ADP": 42,
+    "Difference": 3,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jordan Love",
+    "Current ADP": 40,
+    "Previous ADP": 37,
+    "Difference": -3,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Christian McCaffrey",
+    "Current ADP": 41,
+    "Previous ADP": 43,
+    "Difference": 2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Saquon Barkley",
+    "Current ADP": 42,
+    "Previous ADP": 41,
+    "Difference": -1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Brian Thomas Jr.",
+    "Current ADP": 43,
+    "Previous ADP": 38,
+    "Difference": -5,
+    "Eligible?": ""
+  },
+  {
+    "Name": "George Pickens",
+    "Current ADP": 44,
+    "Previous ADP": 44,
+    "Difference": 0,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Marvin Harrison Jr.",
+    "Current ADP": 45,
+    "Previous ADP": 46,
+    "Difference": 1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Breece Hall",
+    "Current ADP": 46,
+    "Previous ADP": 48,
+    "Difference": 2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Josh Jacobs",
+    "Current ADP": 47,
+    "Previous ADP": 45,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Kyren Williams",
+    "Current ADP": 48,
+    "Previous ADP": 47,
+    "Difference": -1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Tee Higgins",
+    "Current ADP": 49,
+    "Previous ADP": 57,
+    "Difference": 8,
+    "Eligible?": ""
+  },
+  {
+    "Name": "C.J. Stroud",
+    "Current ADP": 50,
+    "Previous ADP": 51,
+    "Difference": 1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Brock Purdy",
+    "Current ADP": 51,
+    "Previous ADP": 52,
+    "Difference": 1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Dak Prescott",
+    "Current ADP": 52,
+    "Previous ADP": 50,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Daniel Jones",
+    "Current ADP": 53,
+    "Previous ADP": 53,
+    "Difference": 0,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Tucker Kraft",
+    "Current ADP": 54,
+    "Previous ADP": 49,
+    "Difference": -5,
+    "Eligible?": ""
+  },
+  {
+    "Name": "DeVonta Smith",
+    "Current ADP": 55,
+    "Previous ADP": 56,
+    "Difference": 1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jaylen Waddle",
+    "Current ADP": 56,
+    "Previous ADP": 62,
+    "Difference": 6,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Sam Darnold",
+    "Current ADP": 57,
+    "Previous ADP": 73,
+    "Difference": 16,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Sam LaPorta",
+    "Current ADP": 58,
+    "Previous ADP": 60,
+    "Difference": 2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Travis Hunter",
+    "Current ADP": 59,
+    "Previous ADP": 54,
+    "Difference": -5,
+    "Eligible?": ""
+  },
+  {
+    "Name": "J.J. McCarthy",
+    "Current ADP": 60,
+    "Previous ADP": 75,
+    "Difference": 15,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Chris Olave",
+    "Current ADP": 61,
+    "Previous ADP": 59,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Oronde Gadsden",
+    "Current ADP": 62,
+    "Previous ADP": 67,
+    "Difference": 5,
+    "Eligible?": ""
+  },
+  {
+    "Name": "A.J. Brown",
+    "Current ADP": 63,
+    "Previous ADP": 55,
+    "Difference": -8,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jordan Addison",
+    "Current ADP": 64,
+    "Previous ADP": 58,
+    "Difference": -6,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jared Goff",
+    "Current ADP": 65,
+    "Previous ADP": 63,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "TreVeyon Henderson",
+    "Current ADP": 66,
+    "Previous ADP": 65,
+    "Difference": -1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Cam Skattebo",
+    "Current ADP": 67,
+    "Previous ADP": 61,
+    "Difference": -6,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Zay Flowers",
+    "Current ADP": 68,
+    "Previous ADP": 64,
+    "Difference": -4,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Javonte Williams",
+    "Current ADP": 69,
+    "Previous ADP": 69,
+    "Difference": 0,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Trevor Lawrence",
+    "Current ADP": 70,
+    "Previous ADP": 74,
+    "Difference": 4,
+    "Eligible?": ""
+  },
+  {
+    "Name": "DK Metcalf",
+    "Current ADP": 71,
+    "Previous ADP": 68,
+    "Difference": -3,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Michael Penix Jr.",
+    "Current ADP": 72,
+    "Previous ADP": 71,
+    "Difference": -1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Michael Pittman",
+    "Current ADP": 73,
+    "Previous ADP": 87,
+    "Difference": 14,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Xavier Worthy",
+    "Current ADP": 74,
+    "Previous ADP": 66,
+    "Difference": -8,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Chase Brown",
+    "Current ADP": 75,
+    "Previous ADP": 81,
+    "Difference": 6,
+    "Eligible?": ""
+  },
+  {
+    "Name": "RJ Harvey",
+    "Current ADP": 76,
+    "Previous ADP": 79,
+    "Difference": 3,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Cam Ward",
+    "Current ADP": 77,
+    "Previous ADP": 70,
+    "Difference": -7,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Colston Loveland",
+    "Current ADP": 78,
+    "Previous ADP": 92,
+    "Difference": 14,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Harold Fannin",
+    "Current ADP": 79,
+    "Previous ADP": 86,
+    "Difference": 7,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Ricky Pearsall",
+    "Current ADP": 80,
+    "Previous ADP": 72,
+    "Difference": -8,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jake Ferguson",
+    "Current ADP": 81,
+    "Previous ADP": 82,
+    "Difference": 1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Kenneth Walker III",
+    "Current ADP": 82,
+    "Previous ADP": 76,
+    "Difference": -6,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Matthew Golden",
+    "Current ADP": 83,
+    "Previous ADP": 77,
+    "Difference": -6,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Quentin Johnston",
+    "Current ADP": 84,
+    "Previous ADP": 78,
+    "Difference": -6,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jameson Williams",
+    "Current ADP": 85,
+    "Previous ADP": 84,
+    "Difference": -1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Derrick Henry",
+    "Current ADP": 86,
+    "Previous ADP": 85,
+    "Difference": -1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Kyler Murray",
+    "Current ADP": 87,
+    "Previous ADP": 80,
+    "Difference": -7,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Davante Adams",
+    "Current ADP": 88,
+    "Previous ADP": 90,
+    "Difference": 2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Rico Dowdle",
+    "Current ADP": 89,
+    "Previous ADP": 105,
+    "Difference": 16,
+    "Eligible?": ""
+  },
+  {
+    "Name": "George Kittle",
+    "Current ADP": 90,
+    "Previous ADP": 91,
+    "Difference": 1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Travis Etienne",
+    "Current ADP": 91,
+    "Previous ADP": 88,
+    "Difference": -3,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Courtland Sutton",
+    "Current ADP": 92,
+    "Previous ADP": 89,
+    "Difference": -3,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Dalton Kincaid",
+    "Current ADP": 93,
+    "Previous ADP": 99,
+    "Difference": 6,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Bryce Young",
+    "Current ADP": 94,
+    "Previous ADP": 95,
+    "Difference": 1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jaylen Warren",
+    "Current ADP": 95,
+    "Previous ADP": 93,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Kyle Pitts",
+    "Current ADP": 96,
+    "Previous ADP": 96,
+    "Difference": 0,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Luther Burden",
+    "Current ADP": 97,
+    "Previous ADP": 94,
+    "Difference": -3,
+    "Eligible?": ""
+  },
+  {
+    "Name": "D'Andre Swift",
+    "Current ADP": 98,
+    "Previous ADP": 97,
+    "Difference": -1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Trey Benson",
+    "Current ADP": 99,
+    "Previous ADP": 101,
+    "Difference": 2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "J.K. Dobbins",
+    "Current ADP": 100,
+    "Previous ADP": 98,
+    "Difference": -2,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Zach Charbonnet",
+    "Current ADP": 101,
+    "Previous ADP": 100,
+    "Difference": -1,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jacory Croskey-Merritt",
+    "Current ADP": 102,
+    "Previous ADP": 83,
+    "Difference": -19,
+    "Eligible?": ""
+  },
+  {
+    "Name": "D.J. Moore",
+    "Current ADP": 103,
+    "Previous ADP": 106,
+    "Difference": 3,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Khalil Shakir",
+    "Current ADP": 104,
+    "Previous ADP": 112,
+    "Difference": 8,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Josh Downs",
+    "Current ADP": 105,
+    "Previous ADP": 111,
+    "Difference": 6,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Matthew Stafford",
+    "Current ADP": 106,
+    "Previous ADP": 110,
+    "Difference": 4,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Kyle Monangai",
+    "Current ADP": 107,
+    "Previous ADP": 155,
+    "Difference": 48,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Woody Marks",
+    "Current ADP": 108,
+    "Previous ADP": 104,
+    "Difference": -4,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Mason Taylor",
+    "Current ADP": 109,
+    "Previous ADP": 114,
+    "Difference": 5,
+    "Eligible?": ""
+  },
+  {
+    "Name": "David Montgomery",
+    "Current ADP": 110,
+    "Previous ADP": 102,
+    "Difference": -8,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Troy Franklin",
+    "Current ADP": 111,
+    "Previous ADP": 120,
+    "Difference": 9,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Rashid Shaheed",
+    "Current ADP": 112,
+    "Previous ADP": 127,
+    "Difference": 15,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Terry McLaurin",
+    "Current ADP": 113,
+    "Previous ADP": 103,
+    "Difference": -10,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Romeo Doubs",
+    "Current ADP": 114,
+    "Previous ADP": 123,
+    "Difference": 9,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Kayshon Boutte",
+    "Current ADP": 115,
+    "Previous ADP": 119,
+    "Difference": 4,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Brandon Aiyuk",
+    "Current ADP": 116,
+    "Previous ADP": 121,
+    "Difference": 5,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Jayden Reed",
+    "Current ADP": 117,
+    "Previous ADP": 117,
+    "Difference": 0,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Tory Horton",
+    "Current ADP": 118,
+    "Previous ADP": 133,
+    "Difference": 15,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Bhayshul Tuten",
+    "Current ADP": 119,
+    "Previous ADP": 115,
+    "Difference": -4,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Wan'Dale Robinson",
+    "Current ADP": 120,
+    "Previous ADP": 124,
+    "Difference": 4,
+    "Eligible?": ""
+  },
+  {
+    "Name": "Keon Coleman",
+    "Current ADP": 121,
+    "Previous ADP": 109,
+    "Difference": -12,
+    "Eligible?": ""
+  }
+]
