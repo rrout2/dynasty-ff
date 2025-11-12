@@ -22,6 +22,7 @@ import RookieDraft from './components/Blueprint/rookieDraft/RookieDraft/RookieDr
 import WhiteboardBase from './components/Blueprint/whiteboard/Base/Base';
 import Weekly from './components/Blueprint/weekly/Weekly/Weekly';
 import Dashboard from './components/Blueprint/Dashboard/Dashboard';
+import BuySellHoldDashboard from './components/BuySellHoldDashboard/BuySellHoldDashboard';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -59,6 +60,10 @@ root.render(
                     <Route path="/whiteboard" element={<WhiteboardBase />} />
                     <Route path="/weekly" element={<Weekly />} />
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route
+                        path="/buysellholddashboard"
+                        element={<BuySellHoldDashboard />}
+                    />
                 </Routes>
             </HashRouter>
         </QueryClientProvider>

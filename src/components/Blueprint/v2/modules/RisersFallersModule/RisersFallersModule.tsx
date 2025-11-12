@@ -34,9 +34,11 @@ export function useRisersFallers(roster?: Roster) {
         if (!playerData) return;
         function findPlayerId(playerName: string) {
             if (!playerData) return '';
-            const nickname  = checkForNickname(playerName);
+            const nickname = checkForNickname(playerName);
             const player = Object.values(playerData).find(
-                p => `${p.first_name} ${p.last_name}` === playerName || `${p.first_name} ${p.last_name}` === nickname
+                p =>
+                    `${p.first_name} ${p.last_name}` === playerName ||
+                    `${p.first_name} ${p.last_name}` === nickname
             );
             return player ? player.player_id : '';
         }

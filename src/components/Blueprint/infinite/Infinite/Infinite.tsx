@@ -426,7 +426,7 @@ export const BuySellHoldComponent = ({
         roster,
         2,
         weekly,
-        inSeasonVerdict,
+        inSeasonVerdict
     );
 
     useEffect(() => {

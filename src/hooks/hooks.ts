@@ -1490,7 +1490,7 @@ export function useRosterSettingsFromId(leagueId?: string) {
 export function useWeeklyRanks() {
     const [weeklyRanks] = useState(weeklyRankingsJson);
     function get1QBRanks(p: Player) {
-        return get1QbRankByName(p.first_name + ' ' + p.last_name)
+        return get1QbRankByName(p.first_name + ' ' + p.last_name);
     }
 
     function get1QbRankByName(name: string) {
@@ -1522,7 +1522,15 @@ export function useWeeklyRanks() {
         const bRank = getSuperflexRanks(b);
         return aRank - bRank;
     }
-    return {weeklyRanks, sortBy1QBRanks, sortBySuperflexRanks, get1QBRanks, getSuperflexRanks, getSuperflexRankByName, get1QbRankByName};
+    return {
+        weeklyRanks,
+        sortBy1QBRanks,
+        sortBySuperflexRanks,
+        get1QBRanks,
+        getSuperflexRanks,
+        getSuperflexRankByName,
+        get1QbRankByName,
+    };
 }
 
 export function useProjectedLineup(
@@ -1535,7 +1543,12 @@ export function useProjectedLineup(
     const [bench, setBench] = useState<Player[]>([]);
     const [benchString, setBenchString] = useState('');
     const {getAdp, sortByAdp} = useAdpData();
-    const {sortBy1QBRanks, sortBySuperflexRanks, getSuperflexRankByName, get1QbRankByName} = useWeeklyRanks();
+    const {
+        sortBy1QBRanks,
+        sortBySuperflexRanks,
+        getSuperflexRankByName,
+        get1QbRankByName,
+    } = useWeeklyRanks();
     const isSuperflex =
         rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1;
     let sortFn: (a: Player, b: Player) => number;
@@ -1575,10 +1588,16 @@ export function useProjectedLineup(
                         return -1;
                     }
                     if (a[0].includes(FLEX) && b[0].includes(FLEX)) {
-                        if (a[0] === WR_RB_FLEX || a[0] === WR_TE_FLEX && b[0] === FLEX) {
+                        if (
+                            a[0] === WR_RB_FLEX ||
+                            (a[0] === WR_TE_FLEX && b[0] === FLEX)
+                        ) {
                             return -1;
                         }
-                        if (b[0] === WR_RB_FLEX || b[0] === WR_TE_FLEX && a[0] === FLEX) {
+                        if (
+                            b[0] === WR_RB_FLEX ||
+                            (b[0] === WR_TE_FLEX && a[0] === FLEX)
+                        ) {
                             return 1;
                         }
                         if (a[0] === SUPER_FLEX) {
