@@ -5,7 +5,7 @@ import os
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Specify the JSON file name
-json_file_name = 'domain_customer_info_weekly9_teamids.json'
+json_file_name = 'domain_customer_info_weekly10_teamids.json'
 
 last_month = 'july2025'
 
