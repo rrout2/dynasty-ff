@@ -1,82 +1,247 @@
-import {DataGrid, GridColDef} from '@mui/x-data-grid';
-import {useQuery} from '@tanstack/react-query';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import {useSearchParams} from 'react-router-dom';
-import { useTitle } from '../../hooks/hooks';
+import { useState } from "react";
 
-type BuySellHoldPlayer = {
-    Player: string;
-    Position: string;
-    Team: string;
-    Age: number;
-    MarketADP: number;
-    DomainRank: number;
-    Difference: number;
-    PercentageDifference: string;
-    CalculatedVerdict: string;
-    ManualOverride: string;
-    Overall: string;
-    ContendTeam: string;
-    RebuildTeam: string;
+type BuySellHoldApiRow = {
+  PlayerId: number;
+  Player: string;
+  ["Calculated Verdict"]: string;
+  ["Manual Override"]: string;
 };
-type BuySellHoldPlayerList = BuySellHoldPlayer[];
 
-const columns: GridColDef[] = [
-    {field: 'Player', headerName: 'Player', width: 150},
-    {field: 'Position', headerName: 'Position', width: 100},
-    {field: 'Domain Rank', headerName: 'Domain Rank', width: 100},
-    {field: 'Market ADP', headerName: 'Market ADP', width: 100},
-    {field: 'Difference', headerName: 'Difference', width: 100},
-    {field: 'Calculated Verdict', headerName: 'Calculated Verdict', width: 150},
-    {field: 'Manual Override', headerName: 'Manual Override', width: 100, valueGetter: (_, row) => row.ManualOverride || 'None'},
-    {field: 'Contend Team', headerName: 'Contend Verdict', width: 150},
-    {field: 'Rebuild Team', headerName: 'Rebuild Verdict', width: 150},
+type BuySellHoldRow = {
+  playerId: number;
+  playerName: string;
+  calculatedVerdict: string;
+  initialManualOverride: string;
+};
+
+const MANUAL_OVERRIDE_OPTIONS = [
+  "HARD SELL",
+  "SOFT SELL",
+  "HOLD",
+  "SOFT BUY",
+  "HARD BUY",
 ];
 
-export default function BuySellHoldDashboard() {
-    const [searchParams] = useSearchParams();
-    const [week, setWeek] = useState('11');
+const API_BASE_URL = "https://domainffapi.azurewebsites.net";
 
-    useEffect(() => {
-        const weekParam = searchParams.get('week') || '11';
-        setWeek(weekParam);
-    }, [searchParams]);
-    const {
-        data: apiData,
-        error,
-        isLoading,
-        isError,
-    } = useQuery({
-        queryKey: ['buySellHold', week],
-        queryFn: async () => {
-            const options = {
-                method: 'GET',
-                url: `https://domainffapi.azurewebsites.net/api/BuySellHold/${week}`,
-            };
-            const res = await axios.request(options);
-            return res.data as BuySellHoldPlayerList;
-        },
-        retry: false,
-    });
-    useTitle('BuySellHold Dashboard');
-    return (
-        <>
-            {apiData && (
-                <div>
-                    <div>Week: {week}</div>
-                    <DataGrid
-                        getRowId={(row) => row.Player} 
-                        rows={apiData}
-                        columns={columns}
-                        pageSizeOptions={[20, 50, 100]}
-                        // checkboxSelection
-                        sx={{border: 0}}
-                    />
-                </div>
-            )}
-            {isLoading && <div>loading...</div>}
-            {isError && <div>{`Error: ${error}`}</div>}
-        </>
-    );
-}
+const BuySellHoldOverrides: React.FC = () => {
+  const [weekId, setWeekId] = useState<number>(1);
+  const [rows, setRows] = useState<BuySellHoldRow[]>([]);
+  const [overrides, setOverrides] = useState<Record<number, string>>({});
+  const [originalOverrides, setOriginalOverrides] = useState<Record<number, string>>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+
+  const loadWeek = async () => {
+    setIsLoading(true);
+    setError(null);
+    setMessage(null);
+
+    try {
+      const resp = await fetch(`${API_BASE_URL}/api/BuySellHold/${weekId}`);
+      if (!resp.ok) {
+        throw new Error(`Failed to load data for week ${weekId}. Status: ${resp.status}`);
+      }
+
+      const data: BuySellHoldApiRow[] = await resp.json();
+
+      const mappedRows: BuySellHoldRow[] = data.map((r) => ({
+        playerId: r.PlayerId,
+        playerName: r.Player,
+        calculatedVerdict: r["Calculated Verdict"],
+        initialManualOverride: r["Manual Override"] ?? "",
+      }));
+
+      setRows(mappedRows);
+
+      const initialOverrideMap: Record<number, string> = {};
+      mappedRows.forEach((row) => {
+        if (row.initialManualOverride) {
+          initialOverrideMap[row.playerId] = row.initialManualOverride;
+        }
+      });
+
+      setOverrides(initialOverrideMap);
+      setOriginalOverrides(initialOverrideMap);
+    } catch (e: any) {
+      console.error(e);
+      setError(e.message ?? "An error occurred while loading data.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleOverrideChange = (playerId: number, value: string) => {
+    setOverrides((prev) => ({
+      ...prev,
+      [playerId]: value,
+    }));
+  };
+
+  const handleSaveOverrides = async () => {
+    setError(null);
+    setMessage(null);
+
+    const payload = rows
+      .map((row) => {
+        const value = overrides[row.playerId] ?? "";
+        const original = originalOverrides[row.playerId] ?? "";
+
+        if (!value) return null;
+
+        if (value === original) return null;
+
+        return {
+          playerId: row.playerId,
+          overrideValue: value,
+        };
+      })
+      .filter((x): x is { playerId: number; overrideValue: string } => x !== null);
+
+    if (payload.length === 0) {
+      setMessage("No new overrides to save.");
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const resp = await fetch(
+        `${API_BASE_URL}/api/BuySellHold/overrides?weekId=${weekId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (!resp.ok) {
+        const text = await resp.text();
+        throw new Error(
+          `Failed to save overrides. Status: ${resp.status}. Response: ${text}`
+        );
+      }
+
+      const affected = await resp.json();
+
+      const newOriginal = { ...originalOverrides };
+      payload.forEach((item) => {
+        newOriginal[item.playerId] = item.overrideValue;
+      });
+      setOriginalOverrides(newOriginal);
+
+      setMessage(`Overrides saved successfully (rows affected: ${affected}).`);
+    } catch (e: any) {
+      console.error(e);
+      setError(e.message ?? "An error occurred while saving overrides.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <div style={{ padding: "1rem", maxWidth: 900, margin: "0 auto" }}>
+      <h2>Buy / Sell / Hold Manual Overrides</h2>
+
+      <div style={{ marginBottom: "1rem", display: "flex", gap: "0.5rem", alignItems: "center" }}>
+        <label htmlFor="week-select">Week:</label>
+        <select
+          id="week-select"
+          value={weekId}
+          onChange={(e) => setWeekId(Number(e.target.value))}
+        >
+          {Array.from({ length: 22 }).map((_, idx) => {
+            const w = idx + 1;
+            return (
+              <option key={w} value={w}>
+                Week {w}
+              </option>
+            );
+          })}
+        </select>
+
+        <button onClick={loadWeek} disabled={isLoading}>
+          {isLoading ? "Loading..." : "Load Week"}
+        </button>
+      </div>
+
+      {error && (
+        <div style={{ color: "red", marginBottom: "0.5rem" }}>
+          {error}
+        </div>
+      )}
+      {message && (
+        <div style={{ color: "green", marginBottom: "0.5rem" }}>
+          {message}
+        </div>
+      )}
+
+      <div style={{ marginBottom: "1rem" }}>
+        <button onClick={handleSaveOverrides} disabled={isSaving || rows.length === 0}>
+          {isSaving ? "Saving..." : "Save Overrides"}
+        </button>
+      </div>
+
+      {rows.length > 0 ? (
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+            fontSize: "0.9rem",
+          }}
+        >
+          <thead>
+            <tr>
+              <th style={{ borderBottom: "1px solid #ccc", textAlign: "left", padding: "0.5rem" }}>
+                Player Name
+              </th>
+              <th style={{ borderBottom: "1px solid #ccc", textAlign: "left", padding: "0.5rem" }}>
+                Calculated Verdict
+              </th>
+              <th style={{ borderBottom: "1px solid #ccc", textAlign: "left", padding: "0.5rem" }}>
+                Manual Override
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => {
+              const currentOverride = overrides[row.playerId] ?? "";
+              return (
+                <tr key={row.playerId}>
+                  <td style={{ borderBottom: "1px solid #eee", padding: "0.5rem" }}>
+                    {row.playerName}
+                  </td>
+                  <td style={{ borderBottom: "1px solid #eee", padding: "0.5rem" }}>
+                    {row.calculatedVerdict}
+                  </td>
+                  <td style={{ borderBottom: "1px solid #eee", padding: "0.5rem" }}>
+                    <select
+                      value={currentOverride}
+                      onChange={(e) =>
+                        handleOverrideChange(row.playerId, e.target.value)
+                      }
+                    >
+                      <option value="">-- No override --</option>
+                      {MANUAL_OVERRIDE_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt}>
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      ) : (
+        !isLoading && <div>No data loaded. Select a week and click "Load Week".</div>
+      )}
+    </div>
+  );
+};
+
+export default BuySellHoldOverrides;
