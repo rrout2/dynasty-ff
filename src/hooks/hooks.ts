@@ -68,13 +68,36 @@ import {Archetype} from '../components/Blueprint/v1/modules/BigBoy/BigBoy';
 import {FinalPickData, getPicks, GetPicksResult} from '../sleeper-api/picks';
 import axios from 'axios';
 
+const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
+
+function useApiRisersFallers() {
+    const currListId = 177;
+    const prevListId = 157;
+    const {
+        data: risersFallers,
+    } = useQuery({
+        queryKey: ['risersFallers', currListId, prevListId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}RiserFaller?currentListId=${currListId}&previousListId=${prevListId}`,
+            };
+            const res = await axios.request(options);
+            return res.data as any[];
+        },
+        retry: false,
+    });
+
+    return {risersFallers};
+}
+
 export function useWeeklyRisersFallers(roster?: Roster) {
-    const [risersFallers] = useState(risersFallersJson);
+    const {risersFallers} = useApiRisersFallers();
     const [risers, setRisers] = useState<string[]>(['a', 'b', 'c']);
     const [fallers, setFallers] = useState<string[]>(['a', 'b', 'c']);
     const playerData = usePlayerData();
     useEffect(() => {
-        if (!roster || !playerData) return;
+        if (!roster || !playerData || !risersFallers) return;
         const rosterNames = roster.players
             .map(p => playerData[p])
             .filter(p => !!p)
@@ -111,7 +134,7 @@ export function useStoplights(week: string | number = 12) {
         queryFn: async () => {
             const options = {
                 method: 'GET',
-                url: `https://domainffapi.azurewebsites.net/api/PlayerLights/${week}`,
+                url: `${AZURE_API_URL}api/PlayerLights/${week}`,
             };
             const res = await axios.request(options);
             return res.data as Stoplight[];
