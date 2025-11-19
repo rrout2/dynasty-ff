@@ -169,7 +169,7 @@ export function WeeklyBlueprint({
     const [flexOptions, setFlexOptions] = useState<Player[]>([]);
     const playerData = usePlayerData();
     const {risers, fallers} = useWeeklyRisersFallers(roster);
-    const {findStoplight} = useStoplights();
+    const {findStoplight, isFetched} = useStoplights();
     const [winLossRecord, setWinLossRecord] = useState<number[]>([0, 0]);
     useEffect(() => {
         setStartingLineup(startingLineup.slice(0, 14));
@@ -247,6 +247,7 @@ export function WeeklyBlueprint({
     function hasTeamId() {
         return teamId !== '' && teamId !== NONE_TEAM_ID;
     }
+    // if (!isFetched) return <>loading...!</>
     return (
         <div className={`${styles.fullBlueprint} ${classNameForExport || ''}`}>
             <div className={styles.startersGraphic}>

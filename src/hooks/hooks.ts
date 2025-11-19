@@ -66,6 +66,7 @@ import {calculateDepthScore} from '../components/Blueprint/v1/modules/DepthScore
 
 import {Archetype} from '../components/Blueprint/v1/modules/BigBoy/BigBoy';
 import {FinalPickData, getPicks, GetPicksResult} from '../sleeper-api/picks';
+import axios from 'axios';
 
 export function useWeeklyRisersFallers(roster?: Roster) {
     const [risersFallers] = useState(risersFallersJson);
@@ -91,37 +92,49 @@ export function useWeeklyRisersFallers(roster?: Roster) {
 }
 
 export type Stoplight = {
-    name: string;
+    playerName: string;
     position: string;
-    matchup: string;
-    offense: string;
-    vegas: string;
+    matchupLight: string;
+    offenseLight: string;
+    vegasLight: string;
 };
 
-export function useStoplights() {
-    const [stoplights] = useState(playerStoplightsJson);
+export function useStoplights(week: string | number = 12) {
+    const {
+        data: stoplights,
+        error,
+        isLoading,
+        isFetched,
+        isError,
+    } = useQuery({
+        queryKey: ['stoplights', week],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `https://domainffapi.azurewebsites.net/api/PlayerLights/${week}`,
+            };
+            const res = await axios.request(options);
+            return res.data as Stoplight[];
+        },
+        retry: false,
+    });
+
     function findStoplight(name: string): Stoplight | undefined {
+        if (!stoplights) return;
         const nickname = checkForNickname(name);
         const foundPlayer = stoplights.find(
             player =>
-                player['Player Name'] === name ||
-                player['Player Name'] === nickname ||
-                player['Player Conversion'] === name ||
-                player['Player Conversion'] === nickname
+                player.playerName === name ||
+                player.playerName === nickname
         );
         if (!foundPlayer) {
             console.warn('no stoplight found for', name);
             return;
         }
-        return {
-            name: foundPlayer['Player Name'],
-            position: foundPlayer['Position'],
-            matchup: foundPlayer['Matchup Light'],
-            offense: foundPlayer['Offense Light'],
-            vegas: foundPlayer['Vegas Light'],
-        };
+        // console.log('found stoplight for', name);
+        return foundPlayer;
     }
-    return {stoplights, findStoplight};
+    return {stoplights, findStoplight, isFetched};
 }
 
 export function useGetPicks(leagueId: string, userId?: string) {

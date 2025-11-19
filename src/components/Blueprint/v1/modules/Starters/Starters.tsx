@@ -151,7 +151,10 @@ function StartersGraphic(props: {
         weekly,
     } = props;
 
-    const {findStoplight} = useStoplights();
+    const {findStoplight, isFetched, stoplights} = useStoplights();
+    if (!isFetched) return <></>;
+    console.log('isFetched', isFetched);
+    console.log('stoplights', stoplights);
 
     return (
         <div
@@ -225,7 +228,7 @@ export function PlayerRow({
             {infinite && player.player_id && (
                 <DifferenceChip verdict={getVerdict(fullName)} />
             )}
-            {weekly && player.player_id && <StopLights stoplight={stoplight} />}
+            {weekly && player.player_id && stoplight && <StopLights stoplight={stoplight} />}
         </div>
     );
 }
@@ -238,7 +241,7 @@ function StopLights({stoplight}: {stoplight?: Stoplight}) {
     let matchupSrc = '';
     let offenseSrc = '';
     let vegasSrc = '';
-    switch (stoplight.matchup) {
+    switch (stoplight.matchupLight) {
         case 'GREEN':
             matchupSrc = mGreenLight;
             break;
@@ -249,7 +252,7 @@ function StopLights({stoplight}: {stoplight?: Stoplight}) {
             matchupSrc = mYellowLight;
             break;
     }
-    switch (stoplight.offense) {
+    switch (stoplight.offenseLight) {
         case 'GREEN':
             offenseSrc = oGreenLight;
             break;
@@ -260,7 +263,7 @@ function StopLights({stoplight}: {stoplight?: Stoplight}) {
             offenseSrc = oYellowLight;
             break;
     }
-    switch (stoplight.vegas) {
+    switch (stoplight.vegasLight) {
         case 'GREEN':
             vegasSrc = vGreenLight;
             break;
