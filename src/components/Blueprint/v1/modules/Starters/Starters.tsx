@@ -151,10 +151,8 @@ function StartersGraphic(props: {
         weekly,
     } = props;
 
-    const {findStoplight, isFetched, stoplights} = useStoplights();
+    const {findStoplight, isFetched} = useStoplights();
     if (!isFetched) return <></>;
-    console.log('isFetched', isFetched);
-    console.log('stoplights', stoplights);
 
     return (
         <div
