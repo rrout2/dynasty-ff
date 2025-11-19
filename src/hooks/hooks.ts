@@ -134,7 +134,7 @@ export function useStoplights(week: string | number = 12) {
         queryFn: async () => {
             const options = {
                 method: 'GET',
-                url: `${AZURE_API_URL}api/PlayerLights/${week}`,
+                url: `${AZURE_API_URL}PlayerLights/${week}`,
             };
             const res = await axios.request(options);
             return res.data as Stoplight[];
@@ -1020,18 +1020,38 @@ type Rank = {
     Position: string;
 };
 
+function useRankingsApi(week: string | number = 12) {
+    const {
+        data: rankings,
+    } = useQuery({
+        queryKey: ['rankings', week],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Rankings?weekId=${week}`,
+            };
+            const res = await axios.request(options);
+            return res.data as any[];
+        },
+        retry: false,
+    });
+    return {rankings};
+}
+
 export function useAdpData() {
+    const {rankings} = useRankingsApi();
     const [adpData, setAdpData] = useState<adpDatum[]>([]);
     useEffect(() => {
+        if (!rankings) return;
         setAdpData(
-            (rankingsJson as unknown as Rank[]).map((p: Rank) => {
+            (rankings as unknown as Rank[]).map((p: Rank) => {
                 return {
                     player_name: p.Player,
                     Position: p.Position,
                 };
             })
         );
-    }, [rankingsJson]);
+    }, [rankings]);
 
     const getAdp = (playerName: string): number => {
         const playerNickname = checkForNickname(playerName);
