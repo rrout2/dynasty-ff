@@ -381,7 +381,7 @@ def main():
             if sender.manual_url_list[i] == '' or sender.manual_url_list[i] == None:
                 continue
             print(f"{i + 1}/{len(sender.manual_url_list)}")
-            for attempt in range(2): # This loop provides one retry
+            for attempt in range(3): # This loop provides two retries
                 try:
                     downloaded_file_path = sender.download_image(i, manual=True)
                     if not downloaded_file_path:
@@ -407,7 +407,7 @@ def main():
                 except Exception as e:
                     print(f"\nAn upload/email error occurred: {str(e)}")
                     logging.exception("Exception occurred")
-                    if attempt == 1: # Check if this is the final attempt
+                    if attempt == 2: # Check if this is the final attempt
                         sender.fails.append(sender.manual_email_list[i])
                         sender.fail_indices.append(i)
         
@@ -426,7 +426,7 @@ def main():
                 continue
             print(f"{i + 1}/{len(sender.league_id_list)}")
 
-            for attempt in range(2): # This loop provides one retry
+            for attempt in range(3): # This loop provides two retries
                 try:
                     downloaded_file_path = sender.download_image(i)
                     if not downloaded_file_path:
@@ -465,7 +465,7 @@ def main():
                 except Exception as e:
                     print(f"\nAn upload/email error occurred: {str(e)}")
                     logging.exception("Exception occurred")
-                    if attempt == 1: # Check if this is the final attempt
+                    if attempt == 2: # Check if this is the final attempt
                         sender.fails.append(sender.email_list[i])
                         sender.fail_indices.append(i)
         
