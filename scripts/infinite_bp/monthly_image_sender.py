@@ -182,6 +182,11 @@ class ImageEmailSender:
                 EC.presence_of_element_located((By.CSS_SELECTOR, self.download_button_selector))
             )
 
+            # Wait for loading to finish
+            WebDriverWait(driver, 30).until(
+                EC.invisibility_of_element_located((By.CSS_SELECTOR, '.loading'))
+            )
+
             # Wait for and click the download button
             button = WebDriverWait(driver, 20).until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, self.download_button_selector))
