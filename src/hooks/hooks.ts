@@ -68,7 +68,7 @@ import {Archetype} from '../components/Blueprint/v1/modules/BigBoy/BigBoy';
 import {FinalPickData, getPicks, GetPicksResult} from '../sleeper-api/picks';
 import axios from 'axios';
 
-const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
+export const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
 function useApiRisersFallers() {
     const currListId = 177;
@@ -647,6 +647,29 @@ export type BuySellVerdict = {
     contend_verdict: string;
     rebuild_verdict: string;
 };
+
+function useBuySellHoldApi(week: string | number = 12) {
+    const {
+        data: buySells,
+        error,
+        isLoading,
+        isFetched,
+        isError,
+    } = useQuery({
+        queryKey: ['weekly BSH', week],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}BuySellHold/${week}`,
+            };
+            const res = await axios.request(options);
+            return res.data as BuySellVerdict[];
+        },
+        retry: false,
+    });
+
+    return {buySells, error, isLoading, isFetched, isError};
+}
 
 export function useSplitBuySellData() {
     const [buySells] = useState(
