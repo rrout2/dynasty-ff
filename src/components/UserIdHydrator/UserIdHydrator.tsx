@@ -1,4 +1,6 @@
 import React, { useState, useCallback, ChangeEvent } from 'react';
+import styles from './UserIdHydrator.module.css';
+
 
 // --- Type Definitions ---
 
@@ -132,8 +134,7 @@ const fetchWithRetry = async (url: string, retries: number = RETRY_ATTEMPTS): Pr
  */
 const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
-
-// --- React Component ---
+// (All your type definitions and helper functions stay the same above here…)
 
 const UserIdHydrator = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -147,7 +148,6 @@ const UserIdHydrator = () => {
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const uploadedFile = event.target.files ? event.target.files[0] : null;
         setFile(uploadedFile);
-        // Reset state
         setStatus('idle');
         setErrorMsg(null);
         setDownloadCsv(null);
@@ -256,18 +256,20 @@ const UserIdHydrator = () => {
     const progressPercentage = totalRows > 0 ? Math.round((progress / totalRows) * 100) : 0;
 
     return (
-        <div className="min-h-screen bg-gray-50 flex items-start justify-center p-4 sm:p-10 font-sans">
-            <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-6 sm:p-8 space-y-6">
-                <h1 className="text-3xl font-extrabold text-indigo-700 border-b pb-2">
-                    Sleeper User ID Hydrator
-                </h1>
-                <p className="text-gray-600">
-                    Upload a CSV file containing a column named <code className="font-mono text-indigo-600 bg-indigo-50 px-1 py-0.5 rounded">sleeper_username</code>. This tool will fetch the corresponding <code className="font-mono text-indigo-600 bg-indigo-50 px-1 py-0.5 rounded">user_id</code> from the Sleeper API and add it as a new column.
+        <div className={styles.pageWrapper}>
+            <div className={styles.card}>
+                <h1 className={styles.heading}>Sleeper User ID Hydrator</h1>
+                <p className={styles.description}>
+                    Upload a CSV file containing a column named
+                    <code className={styles.codeTag}>sleeper_username</code>.
+                    This tool will fetch the corresponding
+                    <code className={styles.codeTag}>user_id</code>
+                    from the Sleeper API and add it as a new column.
                 </p>
 
-                {/* 1. File Input */}
-                <div className="border border-dashed border-gray-300 rounded-lg p-4 bg-gray-50">
-                    <label htmlFor="csv-upload" className="block text-sm font-medium text-gray-700 mb-2">
+                {/* File upload */}
+                <div className={styles.uploadBox}>
+                    <label htmlFor="csv-upload" className={styles.uploadLabel}>
                         Upload CSV File
                     </label>
                     <input
@@ -275,82 +277,64 @@ const UserIdHydrator = () => {
                         type="file"
                         accept=".csv"
                         onChange={handleFileChange}
-                        className="w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-full file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-indigo-50 file:text-indigo-700
-                            hover:file:bg-indigo-100"
                         disabled={status === 'processing'}
+                        className={styles.uploadInput}
                     />
                     {file && (
-                        <p className="mt-2 text-xs text-gray-500">
-                            Selected: <span className="font-medium text-gray-700">{file.name}</span>
-                        </p>
+                        <p className={styles.fileName}>Selected: {file.name}</p>
                     )}
                 </div>
 
-                {/* 2. Process Button */}
+                {/* Process button */}
                 <button
                     onClick={handleProcessClick}
                     disabled={!file || status === 'processing' || status === 'complete'}
-                    className={`w-full py-3 px-4 rounded-xl text-white font-bold transition duration-150 shadow-md ${
-                        !file || status === 'processing' || status === 'complete'
-                            ? 'bg-indigo-300 cursor-not-allowed'
-                            : 'bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50'
+                    className={`${styles.processBtn} ${
+                        (!file || status === 'processing' || status === 'complete')
+                            ? styles.processBtnDisabled
+                            : styles.processBtnActive
                     }`}
                 >
-                    {status === 'processing' ? (
-                        <div className="flex items-center justify-center">
-                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            Processing... ({progress}/{totalRows})
-                        </div>
-                    ) : 'Start API Lookup and Process CSV'}
+                    {status === 'processing'
+                        ? `Processing... (${progress}/${totalRows})`
+                        : 'Start API Lookup and Process CSV'}
                 </button>
 
-                {/* 3. Status and Error */}
+                {/* Progress bar */}
                 {(status === 'processing' || totalRows > 0) && (
-                    <div className="mt-4">
-                        <div className="flex justify-between mb-1 text-sm font-medium text-gray-700">
+                    <div className={styles.progressWrapper}>
+                        <div className={styles.progressHeader}>
                             <span>Processing Progress</span>
                             <span>{progressPercentage}%</span>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2.5">
+                        <div className={styles.progressBarBackground}>
                             <div
-                                className="bg-indigo-600 h-2.5 rounded-full transition-all duration-500"
+                                className={styles.progressBarFill}
                                 style={{ width: `${progressPercentage}%` }}
                             ></div>
                         </div>
                     </div>
                 )}
 
+                {/* Error */}
                 {errorMsg && (
-                    <div role="alert" className="p-4 rounded-lg bg-red-100 text-red-700 border border-red-300">
-                        <p className="font-semibold">Operation Failed:</p>
-                        <p className="text-sm">{errorMsg}</p>
+                    <div className={styles.errorBox}>
+                        <p className={styles.errorTitle}>Operation Failed:</p>
+                        <p>{errorMsg}</p>
                     </div>
                 )}
 
-                {/* 4. Download Result */}
+                {/* Download */}
                 {status === 'complete' && downloadCsv && (
-                    <div className="p-6 rounded-xl bg-green-50 border border-green-300 text-center space-y-4">
-                        <p className="text-xl font-bold text-green-700">
-                            Processing Complete!
-                        </p>
-                        <p className="text-green-600">
+                    <div className={styles.successBox}>
+                        <p className={styles.successTitle}>Processing Complete!</p>
+                        <p className={styles.successText}>
                             Successfully processed {totalRows} rows. Your updated CSV is ready.
                         </p>
                         <button
                             onClick={handleDownload}
-                            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-green-600 hover:bg-green-700 transition duration-150 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50"
+                            className={styles.downloadBtn}
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L10 11.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z" clipRule="evenodd" />
-                                <path fillRule="evenodd" d="M10 2a1 1 0 011 1v8a1 1 0 11-2 0V3a1 1 0 011-1z" clipRule="evenodd" />
-                            </svg>
                             Download Updated CSV
                         </button>
                     </div>

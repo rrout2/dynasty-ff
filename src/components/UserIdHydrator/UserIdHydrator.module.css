@@ -1,0 +1,162 @@
+.pageWrapper {
+    min-height: 100vh;
+    background: #f9fafb;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    font-family: sans-serif;
+}
+
+.card {
+    width: 100%;
+    max-width: 720px;
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.heading {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #4338ca;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.description {
+    color: #4b5563;
+    margin-top: 1rem;
+}
+
+.codeTag {
+    font-family: monospace;
+    background: #eef2ff;
+    color: #4f46e5;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin: 0 4px;
+}
+
+.uploadBox {
+    background: #f9fafb;
+    border: 1px dashed #d1d5db;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-top: 1.5rem;
+}
+
+.uploadLabel {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.uploadInput {
+    width: 100%;
+}
+
+.fileName {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.processBtn {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 1rem;
+    font-weight: 700;
+    color: white;
+    margin-top: 1rem;
+    transition: background 0.15s, opacity 0.15s;
+}
+
+.processBtnDisabled {
+    background: #a5b4fc;
+    cursor: not-allowed;
+}
+
+.processBtnActive {
+    background: #4f46e5;
+}
+
+.processBtnActive:hover {
+    background: #4338ca;
+}
+
+.progressWrapper {
+    margin-top: 1.5rem;
+}
+
+.progressHeader {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+    color: #374151;
+}
+
+.progressBarBackground {
+    background: #e5e7eb;
+    height: 10px;
+    border-radius: 9999px;
+}
+
+.progressBarFill {
+    background: #4f46e5;
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.4s ease;
+}
+
+.errorBox {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin-top: 1rem;
+}
+
+.errorTitle {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.successBox {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.successTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #047857;
+}
+
+.successText {
+    color: #059669;
+    margin-top: 0.5rem;
+}
+
+.downloadBtn {
+    background: #059669;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    margin-top: 1rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.downloadBtn:hover {
+    background: #047857;
+}
