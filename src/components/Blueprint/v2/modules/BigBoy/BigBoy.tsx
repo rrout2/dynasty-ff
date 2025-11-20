@@ -618,20 +618,20 @@ function FullBlueprint({
     isPreview,
 }: FullBlueprintProps) {
     const playerData = usePlayerData();
-    const {sortByAdp} = useAdpData();
+    const {sortByAdp, isLoading} = useAdpData();
     const [leagueId] = useLeagueIdFromUrl();
     const league = useLeague(leagueId);
     const rosterSettings = useRosterSettings(league);
     const [allPlayers, setAllPlayers] = useState<Player[]>([]);
     useEffect(() => {
-        if (!roster || !playerData) return;
+        if (!roster || !playerData || isLoading) return;
         setAllPlayers(
             roster.players
                 .map(playerId => playerData[playerId])
                 .filter(p => !!p)
                 .sort(sortByAdp)
         );
-    }, [roster, playerData]);
+    }, [roster, playerData, isLoading]);
 
     function getBlueprintCode() {
         const isSuperflex = rosterSettings.has(SUPER_FLEX);
