@@ -1545,15 +1545,41 @@ export function useRosterSettingsFromId(leagueId?: string) {
     return rosterSettings;
 }
 
+function useWeeklyLineupsApi() {
+    // TODO: better way to get this
+    const listId = 172;
+    const {
+        data: weeklyLineups,
+        error,
+        isLoading,
+        isFetched,
+        isError,
+    } = useQuery({
+        queryKey: ['kyle ranks', listId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Rankings/kyle/${listId}`,
+            };
+            const res = await axios.request(options);
+            return res.data as any[];
+        },
+        retry: false,
+    });
+
+    return {weeklyLineups, error, isLoading, isFetched, isError};
+}
+
 export function useWeeklyRanks() {
-    const [weeklyRanks] = useState(weeklyRankingsJson);
+    const {weeklyLineups, isLoading} = useWeeklyLineupsApi();
     function get1QBRanks(p: Player) {
         return get1QbRankByName(p.first_name + ' ' + p.last_name);
     }
 
     function get1QbRankByName(name: string) {
+        if (!weeklyLineups) return Infinity;
         const nickname = checkForNickname(name);
-        const rank = weeklyRanks.findIndex(
+        const rank = weeklyLineups.findIndex(
             r => r['1QB'] === nickname || r['1QB'] === name
         );
         if (rank === -1) return Infinity;
@@ -1563,8 +1589,9 @@ export function useWeeklyRanks() {
         return getSuperflexRankByName(p.first_name + ' ' + p.last_name);
     }
     function getSuperflexRankByName(name: string) {
+        if (!weeklyLineups) return Infinity;
         const nickname = checkForNickname(name);
-        const rank = weeklyRanks.findIndex(
+        const rank = weeklyLineups.findIndex(
             r => r['SF'] === nickname || r['SF'] === name
         );
         if (rank === -1) return Infinity;
@@ -1581,13 +1608,14 @@ export function useWeeklyRanks() {
         return aRank - bRank;
     }
     return {
-        weeklyRanks,
+        weeklyRanks: weeklyLineups,
         sortBy1QBRanks,
         sortBySuperflexRanks,
         get1QBRanks,
         getSuperflexRanks,
         getSuperflexRankByName,
         get1QbRankByName,
+        isLoading,
     };
 }
 
@@ -1606,6 +1634,7 @@ export function useProjectedLineup(
         sortBySuperflexRanks,
         getSuperflexRankByName,
         get1QbRankByName,
+        isLoading: weeklyLoading,
     } = useWeeklyRanks();
     const isSuperflex =
         rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1;
@@ -1625,7 +1654,7 @@ export function useProjectedLineup(
     }
 
     useEffect(() => {
-        if (!playerData || !playerIds || isLoading) return;
+        if (!playerData || !playerIds || isLoading || weeklyLoading) return;
         const remainingPlayers = new Set(playerIds);
         const starters: {player: Player; position: string}[] = [];
         Array.from(rosterSettings)

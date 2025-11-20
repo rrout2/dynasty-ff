@@ -152,7 +152,7 @@ function StartersGraphic(props: {
     } = props;
 
     const {findStoplight, isFetched} = useStoplights();
-    if (!isFetched) return <></>;
+    if (!isFetched) return <>loading stoplights...</>;
 
     return (
         <div
