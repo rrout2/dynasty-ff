@@ -1691,33 +1691,56 @@ export function useProjectedLineup(
     const [startingLineup, setStartingLineup] = useState<Lineup>([]);
     const [bench, setBench] = useState<Player[]>([]);
     const [benchString, setBenchString] = useState('');
-    const {getAdp, sortByAdp, isLoading} = useAdpData();
+    const {getAdp, sortByAdp, isLoading: isLoadingAdp, adpData} = useAdpData();
     const {
         sortBy1QBRanks,
         sortBySuperflexRanks,
         getSuperflexRankByName,
         get1QbRankByName,
         isLoading: weeklyLoading,
+        weeklyRanks,
     } = useWeeklyRanks();
-    const isSuperflex =
-        rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1;
-    let sortFn: (a: Player, b: Player) => number;
-    let getFn: (playerName: string) => number;
-    if (!weekly) {
-        sortFn = sortByAdp;
-        getFn = getAdp;
-    } else {
-        if (isSuperflex) {
-            sortFn = sortBySuperflexRanks;
-            getFn = getSuperflexRankByName;
-        } else {
-            sortFn = sortBy1QBRanks;
-            getFn = get1QbRankByName;
-        }
-    }
+    const [isSuperflex] =
+        useState(rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1);
+    const sortFn = useCallback(
+        (a: Player, b: Player) => {
+            if (weekly) {
+                if (isSuperflex) {
+                    return sortBySuperflexRanks(a, b);
+                } else {
+                    return sortBy1QBRanks(a, b);
+                }
+            } else {
+                return sortByAdp(a, b);
+            }
+        }, [
+            weekly,
+            isSuperflex,
+            weeklyRanks,
+            adpData,
+        ]
+    )
+    const getFn = useCallback(
+        (playerName: string) => {
+            if (weekly) {
+                if (isSuperflex) {
+                    return getSuperflexRankByName(playerName);
+                } else {
+                    return get1QbRankByName(playerName);
+                }
+            } else {
+                return getAdp(playerName);
+            }
+        }, [
+            weekly,
+            isSuperflex,
+            weeklyRanks,
+            adpData,
+        ]
+    )
 
     useEffect(() => {
-        if (!playerData || !playerIds || isLoading || weeklyLoading) return;
+        if (!playerData || !playerIds || isLoadingAdp || weeklyLoading || !getFn || !sortFn) return;
         const remainingPlayers = new Set(playerIds);
         const starters: {player: Player; position: string}[] = [];
         Array.from(rosterSettings)
@@ -1793,7 +1816,7 @@ export function useProjectedLineup(
             });
 
         setStartingLineup(starters);
-    }, [!!playerData, playerIds, rosterSettings, isLoading]);
+    }, [!!playerData, playerIds, rosterSettings, isLoadingAdp, getFn, sortFn]);
 
     useEffect(() => {
         if (!playerData || !playerIds) return;
