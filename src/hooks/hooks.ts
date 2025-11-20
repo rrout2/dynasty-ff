@@ -1216,6 +1216,10 @@ export const checkForNickname = (playerName: string) => {
             return 'Devon Achane';
         case 'Devon Achane':
             return "De'Von Achane";
+        case 'Harold Fannin':
+            return 'Harold Fannin Jr.';
+        case 'Harold Fannin Jr.':
+            return 'Harold Fannin';
         default:
             return playerName;
     }
