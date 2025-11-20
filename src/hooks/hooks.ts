@@ -1023,6 +1023,7 @@ type Rank = {
 function useRankingsApi(week: string | number = 12) {
     const {
         data: rankings,
+        isLoading,
     } = useQuery({
         queryKey: ['rankings', week],
         queryFn: async () => {
@@ -1035,14 +1036,15 @@ function useRankingsApi(week: string | number = 12) {
         },
         retry: false,
     });
-    return {rankings};
+    return {rankings, isLoading};
 }
 
 export function useAdpData() {
-    const {rankings} = useRankingsApi();
+    // const [rankings] = useState(rankingsJson);
+    const {rankings, isLoading} = useRankingsApi();
     const [adpData, setAdpData] = useState<adpDatum[]>([]);
     useEffect(() => {
-        if (!rankings) return;
+        if (!rankings || isLoading) return;
         setAdpData(
             (rankings as unknown as Rank[]).map((p: Rank) => {
                 return {
@@ -1051,7 +1053,7 @@ export function useAdpData() {
                 };
             })
         );
-    }, [rankings]);
+    }, [rankings, isLoading]);
 
     const getAdp = (playerName: string): number => {
         const playerNickname = checkForNickname(playerName);
@@ -1108,7 +1110,7 @@ export function useAdpData() {
     const sortNamesByAdp = (a: string, b: string): number =>
         getAdp(a) - getAdp(b);
 
-    return {adpData, getAdp, sortByAdp, getPositionalAdp, sortNamesByAdp};
+    return {adpData, getAdp, sortByAdp, getPositionalAdp, sortNamesByAdp, isLoading};
 }
 
 export const checkForNickname = (playerName: string) => {
@@ -1598,7 +1600,7 @@ export function useProjectedLineup(
     const [startingLineup, setStartingLineup] = useState<Lineup>([]);
     const [bench, setBench] = useState<Player[]>([]);
     const [benchString, setBenchString] = useState('');
-    const {getAdp, sortByAdp} = useAdpData();
+    const {getAdp, sortByAdp, isLoading} = useAdpData();
     const {
         sortBy1QBRanks,
         sortBySuperflexRanks,
@@ -1623,7 +1625,7 @@ export function useProjectedLineup(
     }
 
     useEffect(() => {
-        if (!playerData || !playerIds) return;
+        if (!playerData || !playerIds || isLoading) return;
         const remainingPlayers = new Set(playerIds);
         const starters: {player: Player; position: string}[] = [];
         Array.from(rosterSettings)
@@ -1699,7 +1701,7 @@ export function useProjectedLineup(
             });
 
         setStartingLineup(starters);
-    }, [!!playerData, playerIds, rosterSettings]);
+    }, [!!playerData, playerIds, rosterSettings, isLoading]);
 
     useEffect(() => {
         if (!playerData || !playerIds) return;

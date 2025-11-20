@@ -193,7 +193,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
     const league = useLeague(leagueId);
     const rosterSettings = useRosterSettingsFromId(leagueId);
     const isSuperFlex = rosterSettings.has(SUPER_FLEX);
-    const {sortByAdp, getAdp, getPositionalAdp} = useAdpData();
+    const {sortByAdp, getAdp, getPositionalAdp, isLoading: isLoadingRankings} = useAdpData();
     const {data: rosters} = useFetchRosters(leagueId);
     const playerData = usePlayerData();
     const {startingLineup, setStartingLineup, bench, benchString} =
@@ -267,7 +267,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
     }, [sells]);
 
     useEffect(() => {
-        if (!roster || !playerData) return;
+        if (!roster || !playerData || isLoadingRankings) return;
 
         const cornerstones = roster.players
             .map(playerId => playerData[playerId])
@@ -287,7 +287,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                 ])
             )
         );
-    }, [roster, playerData]);
+    }, [roster, playerData, isLoadingRankings]);
     const [depthScoreOverride, setDepthScoreOverride] = useState(-1);
 
     const [outlooks, setOutlooks] = useState<string[]>([]);
