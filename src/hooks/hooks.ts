@@ -73,9 +73,7 @@ const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 function useApiRisersFallers() {
     const currListId = 177;
     const prevListId = 157;
-    const {
-        data: risersFallers,
-    } = useQuery({
+    const {data: risersFallers} = useQuery({
         queryKey: ['risersFallers', currListId, prevListId],
         queryFn: async () => {
             const options = {
@@ -147,8 +145,7 @@ export function useStoplights(week: string | number = 12) {
         const nickname = checkForNickname(name);
         const foundPlayer = stoplights.find(
             player =>
-                player.playerName === name ||
-                player.playerName === nickname
+                player.playerName === name || player.playerName === nickname
         );
         if (!foundPlayer) {
             console.warn('no stoplight found for', name);
@@ -649,28 +646,25 @@ export type BuySellVerdict = {
 };
 
 export type BuySellHoldSchema = {
-    "PlayerId": number;
-    "PlayerSleeperId": number;
-    "Player": string;
-    "Position": string;
-    "Team": string;
-    "Age": number;
-    "Market ADP": number;
-    "Domain Rank": number;
-    "Difference": number;
-    "% Difference": string;
-    "Calculated Verdict": string;
-    "Manual Override": string;
-    "Overall": string;
-    "Contend Team": string;
-    "Rebuild Team": string;
+    PlayerId: number;
+    PlayerSleeperId: number;
+    Player: string;
+    Position: string;
+    Team: string;
+    Age: number;
+    'Market ADP': number;
+    'Domain Rank': number;
+    Difference: number;
+    '% Difference': string;
+    'Calculated Verdict': string;
+    'Manual Override': string;
+    Overall: string;
+    'Contend Team': string;
+    'Rebuild Team': string;
 };
 
 function useBuySellHoldApi(week: string | number = 12) {
-    const {
-        data: buySells,
-        isLoading,
-    } = useQuery({
+    const {data: buySells, isLoading} = useQuery({
         queryKey: ['buySells', week],
         queryFn: async () => {
             const options = {
@@ -678,24 +672,24 @@ function useBuySellHoldApi(week: string | number = 12) {
                 url: `${AZURE_API_URL}BuySellHold/${week}`,
             };
             const res = await axios.request(options);
-            const data =  res.data as BuySellHoldSchema[];
+            const data = res.data as BuySellHoldSchema[];
             return data.map(buySell => {
                 return {
                     name: buySell.Player,
                     alt_name: buySell.Player,
                     position: buySell.Position,
                     team: buySell.Team,
-                    pos_adp: buySell["Market ADP"],
-                    domain_rank: buySell["Domain Rank"],
+                    pos_adp: buySell['Market ADP'],
+                    domain_rank: buySell['Domain Rank'],
                     difference: buySell.Difference,
-                    verdict: buySell["Calculated Verdict"],
-                    explanation: buySell["Manual Override"],
+                    verdict: buySell['Calculated Verdict'],
+                    explanation: buySell['Manual Override'],
                     player_id: buySell.PlayerSleeperId.toString(),
                     age: buySell.Age,
-                    contend_verdict: buySell["Contend Team"],
-                    rebuild_verdict: buySell["Rebuild Team"],
-                } as BuySellVerdict
-            })
+                    contend_verdict: buySell['Contend Team'],
+                    rebuild_verdict: buySell['Rebuild Team'],
+                } as BuySellVerdict;
+            });
         },
         retry: false,
     });
@@ -1080,10 +1074,7 @@ type Rank = {
 };
 
 function useRankingsApi(week: string | number = 12) {
-    const {
-        data: rankings,
-        isLoading,
-    } = useQuery({
+    const {data: rankings, isLoading} = useQuery({
         queryKey: ['rankings', week],
         queryFn: async () => {
             const options = {
@@ -1143,7 +1134,9 @@ export function useAdpData() {
             const idx = getAdp(playerName) - 1;
             if (idx >= adpData.length) return Infinity;
 
-            const filteredAdpData = adpData.filter(player => player.Position === adpData[idx].Position);
+            const filteredAdpData = adpData.filter(
+                player => player.Position === adpData[idx].Position
+            );
             const adp = filteredAdpData.findIndex(
                 a =>
                     a.player_name.replace(/\W/g, '').toLowerCase() ===
@@ -1177,9 +1170,15 @@ export function useAdpData() {
             ),
         [sortNamesByAdp]
     );
-    
 
-    return {adpData, getAdp, sortByAdp, getPositionalAdp, sortNamesByAdp, isLoading};
+    return {
+        adpData,
+        getAdp,
+        sortByAdp,
+        getPositionalAdp,
+        sortNamesByAdp,
+        isLoading,
+    };
 }
 
 export const checkForNickname = (playerName: string) => {
@@ -1710,8 +1709,9 @@ export function useProjectedLineup(
         isLoading: weeklyLoading,
         weeklyRanks,
     } = useWeeklyRanks();
-    const [isSuperflex] =
-        useState(rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1);
+    const [isSuperflex] = useState(
+        rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1
+    );
     const sortFn = useCallback(
         (a: Player, b: Player) => {
             if (weekly) {
@@ -1723,13 +1723,9 @@ export function useProjectedLineup(
             } else {
                 return sortByAdp(a, b);
             }
-        }, [
-            weekly,
-            isSuperflex,
-            weeklyRanks,
-            adpData,
-        ]
-    )
+        },
+        [weekly, isSuperflex, weeklyRanks, adpData]
+    );
     const getFn = useCallback(
         (playerName: string) => {
             if (weekly) {
@@ -1741,16 +1737,20 @@ export function useProjectedLineup(
             } else {
                 return getAdp(playerName);
             }
-        }, [
-            weekly,
-            isSuperflex,
-            weeklyRanks,
-            adpData,
-        ]
-    )
+        },
+        [weekly, isSuperflex, weeklyRanks, adpData]
+    );
 
     useEffect(() => {
-        if (!playerData || !playerIds || isLoadingAdp || weeklyLoading || !getFn || !sortFn) return;
+        if (
+            !playerData ||
+            !playerIds ||
+            isLoadingAdp ||
+            weeklyLoading ||
+            !getFn ||
+            !sortFn
+        )
+            return;
         const remainingPlayers = new Set(playerIds);
         const starters: {player: Player; position: string}[] = [];
         Array.from(rosterSettings)

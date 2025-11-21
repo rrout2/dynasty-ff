@@ -24,6 +24,7 @@ import Weekly from './components/Blueprint/weekly/Weekly/Weekly';
 import Dashboard from './components/Blueprint/Dashboard/Dashboard';
 import BuySellHoldDashboard from './components/BuySellHoldDashboard/BuySellHoldDashboard';
 import UserIdHydrator from './components/UserIdHydrator/UserIdHydrator';
+import BlueprintModule from './components/Blueprint/BlueprintModule/BlueprintModule';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -65,7 +66,14 @@ root.render(
                         path="/buysellholddashboard"
                         element={<BuySellHoldDashboard />}
                     />
-                    <Route path="/useridhydrator" element={<UserIdHydrator />} />
+                    <Route
+                        path="/useridhydrator"
+                        element={<UserIdHydrator />}
+                    />
+                    <Route
+                        path="/BlueprintModule"
+                        element={<BlueprintModule />}
+                    />
                 </Routes>
             </HashRouter>
         </QueryClientProvider>

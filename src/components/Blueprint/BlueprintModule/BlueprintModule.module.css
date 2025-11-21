@@ -1,0 +1,33 @@
+.container {
+    background-color: #04121C;
+    width: 1500px;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.teamSelect {
+    display: flex;
+    flex-direction: column;
+}
+
+.teamSelectTitle {
+    color: white;
+    font-family: 'Acumin Pro';
+    font-size: 12px;
+    margin-left: 10px;;
+}
+
+.icons {
+    height: 15px;
+    margin-bottom: 3px;
+    margin-right: 3px;
+}
+
+.labels {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

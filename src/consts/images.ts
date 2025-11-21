@@ -288,6 +288,12 @@ import vRedLight from '../assets/weekly/V-red.png';
 
 import bakeryCard from '../assets/weekly/bakery/WK12_Bakery_Card.png';
 
+// Module
+import teamsIcon from '../assets/module/icons/teamsIcon.png';
+import sfIcon from '../assets/module/icons/sfIcon.png';
+import tepIcon from '../assets/module/icons/tepIcon.png';
+import pprIcon from '../assets/module/icons/pprIcon.png';
+
 const tierLogos: Map<string, string> = new Map([
     ['S', sTier],
     ['A', aTier],
@@ -692,4 +698,8 @@ export {
     vGreenLight,
     vRedLight,
     bakeryCard,
+    teamsIcon,
+    sfIcon,
+    tepIcon,
+    pprIcon,
 };

@@ -152,7 +152,7 @@ function StartersGraphic(props: {
     } = props;
 
     const {findStoplight, isFetched} = useStoplights();
-    if (!isFetched) return <div className='loading'>loading stoplights...</div>;
+    if (!isFetched) return <div className="loading">loading stoplights...</div>;
 
     return (
         <div
@@ -226,7 +226,9 @@ export function PlayerRow({
             {infinite && player.player_id && (
                 <DifferenceChip verdict={getVerdict(fullName)} />
             )}
-            {weekly && player.player_id && stoplight && <StopLights stoplight={stoplight} />}
+            {weekly && player.player_id && stoplight && (
+                <StopLights stoplight={stoplight} />
+            )}
         </div>
     );
 }

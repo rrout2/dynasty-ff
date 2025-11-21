@@ -193,7 +193,12 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
     const league = useLeague(leagueId);
     const rosterSettings = useRosterSettingsFromId(leagueId);
     const isSuperFlex = rosterSettings.has(SUPER_FLEX);
-    const {sortByAdp, getAdp, getPositionalAdp, isLoading: isLoadingRankings} = useAdpData();
+    const {
+        sortByAdp,
+        getAdp,
+        getPositionalAdp,
+        isLoading: isLoadingRankings,
+    } = useAdpData();
     const {data: rosters} = useFetchRosters(leagueId);
     const playerData = usePlayerData();
     const {startingLineup, setStartingLineup, bench, benchString} =
