@@ -1,4 +1,4 @@
-import {SetStateAction, useEffect, useState} from 'react';
+import {SetStateAction, useCallback, useEffect, useState} from 'react';
 import {
     blankRedraftBp,
     blankblueprint,
@@ -236,11 +236,14 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
     );
     const [searchParams, setSearchParams] = useSearchParams();
 
-    function isCornerstone(player?: Player) {
-        if (!player) return false;
-        const adp = getAdp(`${player.first_name} ${player.last_name}`);
-        return adp <= 75 && adp >= 0;
-    }
+    const isCornerstone = useCallback(
+        (player?: Player) => {
+            if (!player) return false;
+            const adp = getAdp(`${player.first_name} ${player.last_name}`);
+            return adp <= 75 && adp >= 0;
+        },
+        [getAdp]
+    );
 
     useEffect(() => {
         if (!buys || buys.length === 0 || searchParams.get(PLAYERS_TO_TARGET)) {
@@ -287,7 +290,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
                 ])
             )
         );
-    }, [roster, playerData, isLoadingRankings]);
+    }, [roster, playerData, isLoadingRankings, isCornerstone, sortByAdp]);
     const [depthScoreOverride, setDepthScoreOverride] = useState(-1);
 
     const [outlooks, setOutlooks] = useState<string[]>([]);

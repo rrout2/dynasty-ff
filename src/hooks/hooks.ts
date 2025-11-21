@@ -1114,60 +1114,70 @@ export function useAdpData() {
         );
     }, [rankings, isLoading]);
 
-    const getAdp = (playerName: string): number => {
-        const playerNickname = checkForNickname(playerName);
-        let adp = adpData.findIndex(
-            a =>
-                a.player_name.replace(/\W/g, '').toLowerCase() ===
-                playerName.replace(/\W/g, '').toLowerCase()
-        );
-        if (adp >= 0) {
-            return adp + 1;
-        }
-        adp = adpData.findIndex(
-            a =>
-                a.player_name.replace(/\W/g, '').toLowerCase() ===
-                playerNickname.replace(/\W/g, '').toLowerCase()
-        );
-        if (adp >= 0) {
-            return adp + 1;
-        }
-        return Infinity;
-    };
-    const getPositionalAdp = (playerName: string) => {
-        const playerNickname = checkForNickname(playerName);
-        const idx = getAdp(playerName) - 1;
-        if (idx >= adpData.length) return Infinity;
-
-        let adp = adpData
-            .filter(player => player.Position === adpData[idx].Position)
-            .findIndex(
+    const getAdp = useCallback(
+        (playerName: string): number => {
+            const playerNickname = checkForNickname(playerName);
+            let adp = adpData.findIndex(
                 a =>
                     a.player_name.replace(/\W/g, '').toLowerCase() ===
                     playerName.replace(/\W/g, '').toLowerCase()
             );
-        if (adp >= 0) {
-            return adp + 1;
-        }
-        adp = adpData
-            .filter(player => player.Position === adpData[idx].Position)
-            .findIndex(
+            if (adp >= 0) {
+                return adp + 1;
+            }
+            adp = adpData.findIndex(
                 a =>
                     a.player_name.replace(/\W/g, '').toLowerCase() ===
                     playerNickname.replace(/\W/g, '').toLowerCase()
             );
-        if (adp >= 0) {
-            return adp + 1;
-        }
-        return Infinity;
-    };
-    const sortByAdp = (a: Player, b: Player): number =>
-        sortNamesByAdp(
-            `${a.first_name} ${a.last_name}`,
-            `${b.first_name} ${b.last_name}`
-        );
-    const sortNamesByAdp = (a: string, b: string): number =>
-        getAdp(a) - getAdp(b);
+            if (adp >= 0) {
+                return adp + 1;
+            }
+            return Infinity;
+        },
+        [adpData]
+    );
+    const getPositionalAdp = useCallback(
+        (playerName: string): number => {
+            const playerNickname = checkForNickname(playerName);
+            const idx = getAdp(playerName) - 1;
+            if (idx >= adpData.length) return Infinity;
+
+            const filteredAdpData = adpData.filter(player => player.Position === adpData[idx].Position);
+            const adp = filteredAdpData.findIndex(
+                a =>
+                    a.player_name.replace(/\W/g, '').toLowerCase() ===
+                    playerName.replace(/\W/g, '').toLowerCase()
+            );
+            if (adp >= 0) {
+                return adp + 1;
+            }
+            const adpWithNickname = filteredAdpData.findIndex(
+                a =>
+                    a.player_name.replace(/\W/g, '').toLowerCase() ===
+                    playerNickname.replace(/\W/g, '').toLowerCase()
+            );
+            if (adpWithNickname >= 0) {
+                return adpWithNickname + 1;
+            }
+            return Infinity;
+        },
+        [adpData, getAdp]
+    );
+    const sortNamesByAdp = useCallback(
+        (a: string, b: string): number => getAdp(a) - getAdp(b),
+        [getAdp]
+    );
+
+    const sortByAdp = useCallback(
+        (a: Player, b: Player): number =>
+            sortNamesByAdp(
+                `${a.first_name} ${a.last_name}`,
+                `${b.first_name} ${b.last_name}`
+            ),
+        [sortNamesByAdp]
+    );
+    
 
     return {adpData, getAdp, sortByAdp, getPositionalAdp, sortNamesByAdp, isLoading};
 }
