@@ -1229,6 +1229,46 @@ export const checkForNickname = (playerName: string) => {
             return 'Harold Fannin Jr.';
         case 'Harold Fannin Jr.':
             return 'Harold Fannin';
+        case 'Chris Godwin':
+            return 'Chris Godwin Jr.';
+        case 'Chris Godwin Jr.':
+            return 'Chris Godwin';
+        case "Tre' Harris":
+            return 'Tre Harris';
+        case 'Tre Harris':
+            return "Tre' Harris";
+        case 'Oronde Gadsden':
+            return 'Oronde Gadsden II';
+        case 'Oronde Gadsden II':
+            return 'Oronde Gadsden';
+        case 'Kyle Pitts Sr.':
+            return 'Kyle Pitts';
+        case 'Kyle Pitts':
+            return 'Kyle Pitts Sr.';
+        case 'James Cook III':
+            return 'James Cook';
+        case 'James Cook':
+            return 'James Cook III';
+        case 'Ollie Gordon II':
+            return 'Ollie Gordon';
+        case 'Ollie Gordon':
+            return 'Ollie Gordon II';
+        case 'Luther Burden III':
+            return 'Luther Burden';
+        case 'Luther Burden':
+            return 'Luther Burden III';
+        case 'Michael Pittman Jr.':
+            return 'Michael Pittman';
+        case 'Michael Pittman':
+            return 'Michael Pittman Jr.';
+        case 'Aaron Jones Sr.':
+            return 'Aaron Jones';
+        case 'Aaron Jones':
+            return 'Aaron Jones Sr.';
+        case 'Travis Etienne':
+            return 'Travis Etienne Jr.';
+        case 'Travis Etienne Jr.':
+            return 'Travis Etienne';
         default:
             return playerName;
     }
