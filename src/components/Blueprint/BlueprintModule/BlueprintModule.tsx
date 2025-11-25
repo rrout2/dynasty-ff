@@ -1,7 +1,9 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styles from './BlueprintModule.module.css';
 import DomainDropdown from '../shared/DomainDropdown';
 import {pprIcon, sfIcon, teamsIcon, tepIcon} from '../../../consts/images';
+import { useLeague, useLeagueIdFromUrl, useRosterSettingsFromId } from '../../../hooks/hooks';
+import { SUPER_FLEX } from '../../../consts/fantasy';
 
 const PCT_OPTIONS = [
     '15%',
@@ -25,13 +27,26 @@ const PCT_OPTIONS = [
 ];
 
 export default function BlueprintModule() {
+    const [leagueId] = useLeagueIdFromUrl();
+    const league = useLeague(leagueId);
+    const rosterSettings = useRosterSettingsFromId(leagueId);
+    const rosterSettingsHasSuperFlex = rosterSettings.has(SUPER_FLEX);
     const [team, setTeam] = useState('Blitzburgh');
     const [numTeams, setNumTeams] = useState(12);
     const [isSuperFlex, setIsSuperFlex] = useState(true);
-    const [ppr, setPpr] = useState(1);
+    const [ppr, setPpr] = useState(0.5);
     const [tep, setTep] = useState(0.5);
     const [productionShare, setProductionShare] = useState('15%');
     const [valueShare, setValueShare] = useState('25%');
+    useEffect(() => {
+        if (!league) return;
+        setPpr(league.scoring_settings.rec);
+        setTep(league.scoring_settings.bonus_rec_te);
+        setNumTeams(league.total_rosters);
+    }, [league]);
+    useEffect(() => {
+        setIsSuperFlex(rosterSettingsHasSuperFlex);
+    }, [rosterSettingsHasSuperFlex]);
     return (
         <div>
             <div className={styles.dropdownContainer}>
@@ -95,7 +110,7 @@ export default function BlueprintModule() {
                             PPR
                         </div>
                     }
-                    options={[0.5, 1.0, 1.5, 2]}
+                    options={[0, 0.5, 1.0, 1.5, 2]}
                     value={ppr}
                     onChange={e => {
                         const {
