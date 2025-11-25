@@ -1436,168 +1436,192 @@ export function useLeagueIdFromUrl(): [
     Dispatch<SetStateAction<string>>
 ] {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [leagueId, setLeagueId] = useState('');
+    const leagueIdParam = searchParams.get(LEAGUE_ID) || '';
 
+    const [leagueId, setLeagueId] = useState(leagueIdParam);
+
+    // Sync URL -> state
     useEffect(() => {
-        const leagueIdFromUrl = searchParams.get(LEAGUE_ID);
-        if (!leagueIdFromUrl) return;
+        if (leagueId !== leagueIdParam) {
+            setLeagueId(leagueIdParam);
+        }
+    }, [leagueIdParam]);
 
-        setLeagueId(leagueIdFromUrl);
-    }, [searchParams]);
-
+    // Sync state -> URL
     useEffect(() => {
-        if (leagueId === searchParams.get(LEAGUE_ID) || !leagueId) return;
+        if (!leagueId || leagueId === leagueIdParam) return;
 
-        setSearchParams(searchParams => {
-            searchParams.set(LEAGUE_ID, leagueId);
-            return searchParams;
+        setSearchParams(prev => {
+            const next = new URLSearchParams(prev);
+            next.set(LEAGUE_ID, leagueId);
+            return next;
         });
     }, [leagueId]);
 
     return [leagueId, setLeagueId];
 }
 
+
 export function useDisallowedBuysFromUrl(): [
     string[],
     Dispatch<SetStateAction<string[]>>
 ] {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [disallowedBuys, setDisallowedBuys] = useState<string[]>([]);
+    const urlValue = searchParams.get(DISALLOWED_BUYS) || "";
+    const urlArray = urlValue ? urlValue.split(",") : [];
 
+    const [disallowedBuys, setDisallowedBuys] = useState<string[]>(urlArray);
+
+    // URL → state
     useEffect(() => {
-        const disallowedBuysFromUrl = searchParams.get(DISALLOWED_BUYS);
-        if (!disallowedBuysFromUrl) return;
+        if (JSON.stringify(disallowedBuys) !== JSON.stringify(urlArray)) {
+            setDisallowedBuys(urlArray);
+        }
+    }, [urlValue]); // depends only on the *string*, not searchParams
 
-        setDisallowedBuys(disallowedBuysFromUrl.split(','));
-    }, [searchParams]);
-
+    // state → URL
     useEffect(() => {
-        if (disallowedBuys === searchParams.get(DISALLOWED_BUYS)?.split(',')) {
-            return;
-        }
-        if (!disallowedBuys || disallowedBuys.length === 0) {
-            setSearchParams(searchParams => {
-                searchParams.delete(DISALLOWED_BUYS);
-                return searchParams;
-            });
-            return;
-        }
+        if (JSON.stringify(disallowedBuys) === JSON.stringify(urlArray)) return;
 
-        setSearchParams(searchParams => {
-            searchParams.set(DISALLOWED_BUYS, disallowedBuys.join(','));
-            return searchParams;
+        setSearchParams(prev => {
+            const next = new URLSearchParams(prev);
+            if (!disallowedBuys.length) {
+                next.delete(DISALLOWED_BUYS);
+            } else {
+                next.set(DISALLOWED_BUYS, disallowedBuys.join(","));
+            }
+            return next;
         });
     }, [disallowedBuys]);
 
     return [disallowedBuys, setDisallowedBuys];
 }
 
+
 export function useParamFromUrl(
     param: string,
     defaultValue?: string
 ): [string, Dispatch<SetStateAction<string>>] {
+
     const [searchParams, setSearchParams] = useSearchParams();
-    const [value, setValue] = useState('');
+    const urlValue = searchParams.get(param) ?? (defaultValue ?? "");
 
+    const [value, setValue] = useState(urlValue);
+
+    // URL → state
     useEffect(() => {
-        const valueFromUrl = searchParams.get(param);
-        if (!valueFromUrl) {
-            setValue(defaultValue ?? '');
-            return;
+        if (value !== urlValue) {
+            setValue(urlValue);
         }
+    }, [urlValue]);
 
-        setValue(valueFromUrl);
-    }, [searchParams, setValue]);
-
+    // state → URL
     useEffect(() => {
-        if (value === searchParams.get(param) || value === '') return;
+        if (value === urlValue || value === "") return;
 
-        setSearchParams(searchParams => {
-            searchParams.set(param, value);
-            return searchParams;
+        setSearchParams(prev => {
+            const next = new URLSearchParams(prev);
+            next.set(param, value);
+            return next;
         });
-    }, [value, setSearchParams]);
+    }, [value]);
 
     return [value, setValue];
 }
 
-export function useTeamIdFromUrl(): [string, Dispatch<SetStateAction<string>>] {
+
+export function useTeamIdFromUrl(): [
+    string,
+    Dispatch<SetStateAction<string>>
+] {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [teamId, setTeamId] = useState('');
+    const urlValue = searchParams.get(TEAM_ID) || NONE_TEAM_ID;
 
+    const [teamId, setTeamId] = useState(urlValue);
+
+    // URL → state
     useEffect(() => {
-        const teamIdFromUrl = searchParams.get(TEAM_ID);
-        if (teamIdFromUrl === teamId) return;
-        if (!teamIdFromUrl) {
-            setTeamId(NONE_TEAM_ID);
-            return;
+        if (teamId !== urlValue) {
+            setTeamId(urlValue);
         }
+    }, [urlValue]);
 
-        setTeamId(teamIdFromUrl);
-    }, [searchParams, setTeamId]);
-
+    // state → URL
     useEffect(() => {
-        if (teamId === searchParams.get(TEAM_ID) || teamId === '') return;
+        if (teamId === urlValue || teamId === "") return;
 
-        setSearchParams(searchParams => {
-            searchParams.set(TEAM_ID, teamId);
-            return searchParams;
+        setSearchParams(prev => {
+            const next = new URLSearchParams(prev);
+            next.set(TEAM_ID, teamId);
+            return next;
         });
-    }, [teamId, setSearchParams]);
+    }, [teamId]);
 
     return [teamId, setTeamId];
 }
 
-export function useUserIdFromUrl(): [string, Dispatch<SetStateAction<string>>] {
+
+export function useUserIdFromUrl(): [
+    string,
+    Dispatch<SetStateAction<string>>
+] {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [userId, setUserId] = useState('');
+    const urlValue = searchParams.get(USER_ID) || "";
 
+    const [userId, setUserId] = useState(urlValue);
+
+    // URL → state
     useEffect(() => {
-        const userIdFromUrl = searchParams.get(USER_ID);
-        if (userIdFromUrl === userId) return;
-        if (!userIdFromUrl) {
-            return;
+        if (userId !== urlValue) {
+            setUserId(urlValue);
         }
+    }, [urlValue]);
 
-        setUserId(userIdFromUrl);
-    }, [searchParams, setUserId]);
-
+    // state → URL
     useEffect(() => {
-        if (userId === searchParams.get(USER_ID) || userId === '') return;
+        if (userId === urlValue || userId === "") return;
 
-        setSearchParams(searchParams => {
-            searchParams.set(USER_ID, userId);
-            return searchParams;
+        setSearchParams(prev => {
+            const next = new URLSearchParams(prev);
+            next.set(USER_ID, userId);
+            return next;
         });
-    }, [userId, setSearchParams]);
+    }, [userId]);
 
     return [userId, setUserId];
 }
 
-export function useModuleFromUrl(): [Module, Dispatch<SetStateAction<Module>>] {
+export function useModuleFromUrl(): [
+    Module,
+    Dispatch<SetStateAction<Module>>
+] {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [module, setModule] = useState(Module.Unspecified);
+    const urlValue =
+        (searchParams.get(MODULE) as Module) ?? Module.Unspecified;
 
+    const [module, setModule] = useState<Module>(urlValue);
+
+    // URL → state
     useEffect(() => {
-        const module = searchParams.get(MODULE);
-        if (!module) {
-            setModule(Module.Unspecified);
-            return;
+        if (module !== urlValue) {
+            setModule(urlValue);
         }
-        setModule(module as Module);
-    }, [searchParams, setModule]);
+    }, [urlValue]);
 
+    // state → URL
     useEffect(() => {
-        if (module === searchParams.get(MODULE) || !module) return;
+        if (module === urlValue) return;
 
-        setSearchParams(searchParams => {
-            searchParams.set(MODULE, module);
-            return searchParams;
+        setSearchParams(prev => {
+            const next = new URLSearchParams(prev);
+            next.set(MODULE, module);
+            return next;
         });
-    }, [module, setSearchParams]);
+    }, [module]);
 
     return [module, setModule];
 }
+
 
 export function useRosterSettings(league?: League) {
     const [rosterSettings, setRosterSettings] = useState(
