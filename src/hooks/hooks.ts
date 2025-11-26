@@ -91,6 +91,7 @@ function useApiRisersFallers() {
 
 export function useWeeklyRisersFallers(roster?: Roster) {
     const {risersFallers} = useApiRisersFallers();
+    const {getAdp} = useAdpData();
     const [risers, setRisers] = useState<string[]>(['a', 'b', 'c']);
     const [fallers, setFallers] = useState<string[]>(['a', 'b', 'c']);
     const playerData = usePlayerData();
@@ -99,7 +100,8 @@ export function useWeeklyRisersFallers(roster?: Roster) {
         const rosterNames = roster.players
             .map(p => playerData[p])
             .filter(p => !!p)
-            .map(p => `${p.first_name} ${p.last_name}`);
+            .map(p => `${p.first_name} ${p.last_name}`)
+            .filter(name => getAdp(name) <= 140);
         const included = risersFallers.filter(
             rf =>
                 rosterNames.includes(rf.Name) ||
@@ -108,7 +110,7 @@ export function useWeeklyRisersFallers(roster?: Roster) {
         included.sort((a, b) => b.Difference - a.Difference);
         setRisers(included.slice(0, 3).map(rf => rf.Name));
         setFallers(included.slice(-3).map(rf => rf.Name));
-    }, [roster, risersFallers, playerData]);
+    }, [roster, risersFallers, playerData, getAdp]);
     return {risers, fallers};
 }
 
