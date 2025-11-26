@@ -14,7 +14,7 @@ import sfPickMovesJson from '../data/rookieBP/sf_pick_moves.json';
 import oneQbPickMovesJson from '../data/rookieBP/1qb_pick_moves.json';
 import sfRookieRankingsJson from '../data/rookieBP/sf_rookie_rankings_and_tiers_apr26.json';
 import oneQbRookieRankingsJson from '../data/rookieBP/1qb_rookie_rankings_and_tiers_apr26.json';
-import playerStoplightsJson from '../data/weekly/playerLightsWeek11.json';
+import playerStoplightsJson from '../data/weekly/playerLightsWeek13.json';
 import risersFallersJson from '../data/weekly/risersFallersWeek11.json';
 import weeklyRankingsJson from '../data/weekly/rankingsWeek11.json';
 
@@ -123,24 +123,26 @@ export type Stoplight = {
 };
 
 export function useStoplights(week: string | number = 13) {
-    const {
-        data: stoplights,
-        error,
-        isLoading,
-        isFetched,
-        isError,
-    } = useQuery({
-        queryKey: ['stoplights', week],
-        queryFn: async () => {
-            const options = {
-                method: 'GET',
-                url: `${AZURE_API_URL}PlayerLights/${week}`,
-            };
-            const res = await axios.request(options);
-            return res.data as Stoplight[];
-        },
-        retry: false,
-    });
+    const [stoplights] = useState<Stoplight[]>(playerStoplightsJson as unknown as Stoplight[]);
+    const isFetched = true;
+    // const {
+    //     data: stoplights,
+    //     error,
+    //     isLoading,
+    //     isFetched,
+    //     isError,
+    // } = useQuery({
+    //     queryKey: ['stoplights', week],
+    //     queryFn: async () => {
+    //         const options = {
+    //             method: 'GET',
+    //             url: `${AZURE_API_URL}PlayerLights/${week}`,
+    //         };
+    //         const res = await axios.request(options);
+    //         return res.data as Stoplight[];
+    //     },
+    //     retry: false,
+    // });
 
     function findStoplight(name: string): Stoplight | undefined {
         if (!stoplights) return;
@@ -153,7 +155,6 @@ export function useStoplights(week: string | number = 13) {
             console.warn('no stoplight found for', name);
             return;
         }
-        // console.log('found stoplight for', name);
         return foundPlayer;
     }
     return {stoplights, findStoplight, isFetched};
