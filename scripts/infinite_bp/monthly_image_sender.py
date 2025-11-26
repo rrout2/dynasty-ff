@@ -66,6 +66,13 @@ class ImageEmailSender:
         else:
             self.user_id_list = []
         
+        if isinstance(config['allow_list'], str):
+            self.allow_list = set([email.strip() for email in config['allow_list'].split(',')])
+        elif config['allow_list'] != None:
+            self.allow_list = set(config['allow_list'])
+        else:
+            self.allow_list = set()
+        
         if isinstance(config['skip_list'], str):
             self.skip_list = set([email.strip() for email in config['skip_list'].split(',')])
         elif config['skip_list'] != None:
@@ -428,6 +435,10 @@ def main():
                 print(f"Skipping {i + 1}/{len(sender.league_id_list)}: No team or user ID")
                 continue
             if sender.email_list[i] in sender.skip_list:
+                continue
+
+            if len(sender.allow_list) > 0 and not sender.email_list[i] in sender.allow_list:
+                print(f"Skipping {i + 1}/{len(sender.league_id_list)}: Not in allow list")
                 continue
             print(f"{i + 1}/{len(sender.league_id_list)}")
 
