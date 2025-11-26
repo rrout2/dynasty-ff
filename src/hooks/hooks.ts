@@ -71,8 +71,8 @@ import axios from 'axios';
 const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
 function useApiRisersFallers() {
-    const currListId = 177;
-    const prevListId = 157;
+    const currListId = 180;
+    const prevListId = 177;
     const {data: risersFallers} = useQuery({
         queryKey: ['risersFallers', currListId, prevListId],
         queryFn: async () => {
@@ -120,7 +120,7 @@ export type Stoplight = {
     vegasLight: string;
 };
 
-export function useStoplights(week: string | number = 12) {
+export function useStoplights(week: string | number = 13) {
     const {
         data: stoplights,
         error,
@@ -663,7 +663,7 @@ export type BuySellHoldSchema = {
     'Rebuild Team': string;
 };
 
-function useBuySellHoldApi(week: string | number = 12) {
+function useBuySellHoldApi(week: string | number = 13) {
     const {data: buySells, isLoading} = useQuery({
         queryKey: ['buySells', week],
         queryFn: async () => {
@@ -1073,7 +1073,7 @@ type Rank = {
     Position: string;
 };
 
-function useRankingsApi(week: string | number = 12) {
+function useRankingsApi(week: string | number = 13) {
     const {data: rankings, isLoading} = useQuery({
         queryKey: ['rankings', week],
         queryFn: async () => {
@@ -1683,7 +1683,7 @@ export function useRosterSettingsFromId(leagueId?: string) {
 
 function useWeeklyLineupsApi() {
     // TODO: better way to get this
-    const listId = 172;
+    const listId = 181;
     const {
         data: weeklyLineups,
         error,
