@@ -2,8 +2,29 @@ import {useEffect, useState} from 'react';
 import styles from './BlueprintModule.module.css';
 import DomainDropdown from '../shared/DomainDropdown';
 import {pprIcon, sfIcon, teamsIcon, tepIcon} from '../../../consts/images';
-import { useLeague, useLeagueIdFromUrl, useRosterSettingsFromId } from '../../../hooks/hooks';
-import { SUPER_FLEX } from '../../../consts/fantasy';
+import {
+    useAdpData,
+    useFetchRosters,
+    useLeague,
+    useLeagueIdFromUrl,
+    usePlayerData,
+    usePositionalGrades,
+    useRosterSettingsFromId,
+    useTeamIdFromUrl,
+} from '../../../hooks/hooks';
+import {QB, RB, SUPER_FLEX, TE, WR} from '../../../consts/fantasy';
+import {
+    getAllUsers,
+    Player,
+    Roster,
+    User,
+} from '../../../sleeper-api/sleeper-api';
+import {NONE_TEAM_ID} from '../../../consts/urlParams';
+import {
+    getDisplayName,
+    TeamSelectComponent,
+} from '../../Team/TeamPage/TeamPage';
+import {get} from 'http';
 
 const PCT_OPTIONS = [
     '15%',
@@ -26,13 +47,24 @@ const PCT_OPTIONS = [
     '100%',
 ];
 
+const GRADE_OPTIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
 export default function BlueprintModule() {
     const [leagueId] = useLeagueIdFromUrl();
+    const [teamId, setTeamId] = useTeamIdFromUrl();
+    const {data: rosters} = useFetchRosters(leagueId);
+    const [allUsers, setAllUsers] = useState<User[]>([]);
+    const [specifiedUser, setSpecifiedUser] = useState<User>();
+    const [roster, setRoster] = useState<Roster>();
+    const [rosterPlayers, setRosterPlayers] = useState<Player[]>([]);
+    const playerData = usePlayerData();
+    const {sortByAdp, getPositionalAdp} = useAdpData();
     const league = useLeague(leagueId);
     const rosterSettings = useRosterSettingsFromId(leagueId);
     const rosterSettingsHasSuperFlex = rosterSettings.has(SUPER_FLEX);
-    const [team, setTeam] = useState('Blitzburgh');
     const [numTeams, setNumTeams] = useState(12);
+    const {overall, setOverall, qb, setQb, rb, setRb, wr, setWr, te, setTe} =
+        usePositionalGrades(roster, numTeams);
     const [isSuperFlex, setIsSuperFlex] = useState(true);
     const [ppr, setPpr] = useState(0.5);
     const [tep, setTep] = useState(0.5);
@@ -47,24 +79,77 @@ export default function BlueprintModule() {
     useEffect(() => {
         setIsSuperFlex(rosterSettingsHasSuperFlex);
     }, [rosterSettingsHasSuperFlex]);
+    useEffect(() => {
+        if (!leagueId || !rosters) return;
+        const ownerIds = new Set(rosters.map(r => r.owner_id));
+        getAllUsers(leagueId).then(users =>
+            // filter to users included in owners.
+            // some leagues have users with no associated owner I think.
+            setAllUsers(users.filter(u => ownerIds.has(u.user_id)))
+        );
+    }, [leagueId, rosters]);
+    useEffect(() => {
+        if (!allUsers.length || !hasTeamId() || +teamId >= allUsers.length) {
+            return;
+        }
+        setSpecifiedUser(allUsers?.[+teamId]);
+    }, [allUsers, teamId]);
+    useEffect(() => {
+        if (!allUsers.length || !hasTeamId()) return;
+        if (+teamId >= allUsers.length) {
+            // if the teamId is out of bounds, reset it
+            setTeamId('0');
+        }
+    }, [allUsers, teamId]);
+    useEffect(() => {
+        if (
+            !rosters ||
+            rosters.length === 0 ||
+            !hasTeamId() ||
+            !playerData ||
+            allUsers.length === 0
+        ) {
+            return;
+        }
+        function getRosterFromTeamIdx(idx: number) {
+            if (allUsers.length === 0 || !rosters) return;
+            const ownerId = allUsers[idx].user_id;
+            return rosters.find(r => r.owner_id === ownerId);
+        }
+        if (+teamId >= allUsers.length) return;
+        const newRoster = getRosterFromTeamIdx(+teamId);
+        if (!newRoster) throw new Error('roster not found');
+        setRoster(newRoster);
+    }, [rosters, teamId, playerData, allUsers]);
+    useEffect(() => {
+        if (!roster || !playerData) return;
+        setRosterPlayers(
+            roster?.players
+                .map(playerId => playerData[playerId])
+                .sort(sortByAdp)
+        );
+    }, [roster, playerData, sortByAdp]);
+    function hasTeamId() {
+        return teamId !== '' && teamId !== NONE_TEAM_ID;
+    }
     return (
         <div>
             <div className={styles.dropdownContainer}>
                 <div className={styles.teamSelect}>
                     <div className={styles.teamSelectTitle}>TEAM</div>
                     <DomainDropdown
-                        options={[
-                            'Blitzburgh',
-                            'OPTION 2',
-                            'OPTION 3',
-                            'MUCH LONGER OPTION NAME',
-                        ]}
-                        value={team}
+                        options={allUsers.map(u => getDisplayName(u))}
+                        value={getDisplayName(specifiedUser)}
                         onChange={e => {
                             const {
                                 target: {value},
                             } = e;
-                            setTeam(value as string);
+                            allUsers.forEach((u, idx) => {
+                                if (getDisplayName(u) === value) {
+                                    setSpecifiedUser(u);
+                                    setTeamId(idx.toString());
+                                }
+                            });
                         }}
                         style={{width: '350px'}}
                     />
@@ -162,12 +247,150 @@ export default function BlueprintModule() {
                     style={{width: '80px'}}
                 />
             </div>
-            <div className={styles.rosterContainer}>
-                <div className={`${styles.positionTitle} ${styles.qbTitle}`}>QUARTERBACKS</div>
-                <div className={`${styles.positionTitle} ${styles.rbTitle}`}>RUNNING BACKS</div>
-                <div className={`${styles.positionTitle} ${styles.wrTitle}`}>WIDE RECEIVERS</div>
-                <div className={`${styles.positionTitle} ${styles.teTitle}`}>TIGHT ENDS</div>
-            </div>
+            {roster && (
+                <div className={styles.rosterContainer}>
+                    <div className={styles.positionContainer}>
+                        <div
+                            className={`${styles.positionTitle} ${styles.qbTitle}`}
+                        >
+                            QUARTERBACKS
+                        </div>
+                        <div className={styles.playersColumn}>
+                            {rosterPlayers
+                                .filter(p => p.position === QB)
+                                .map((p, idx) => {
+                                    const fullName = `${p.first_name} ${p.last_name}`;
+                                    return (
+                                        <div key={idx} className={styles.player}>
+                                            <div>{fullName}</div>
+                                            <div className={styles.adp}>
+                                                {getPositionalAdp(fullName)}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                        </div>
+                    </div>
+                    <DomainDropdown
+                        options={GRADE_OPTIONS}
+                        value={qb}
+                        onChange={e => {
+                            const {
+                                target: {value},
+                            } = e;
+                            if (value) {
+                                setQb(value as number);
+                            }
+                        }}
+                        outlineColor={'#E84D57'}
+                    />
+                    <div className={styles.positionContainer}>
+                        <div
+                            className={`${styles.positionTitle} ${styles.rbTitle}`}
+                        >
+                            Running Backs
+                        </div>
+                        <div className={styles.playersColumn}>
+                            {rosterPlayers
+                                .filter(p => p.position === RB)
+                                .map((p, idx) => {
+                                    const fullName = `${p.first_name} ${p.last_name}`;
+                                    return (
+                                        <div key={idx} className={styles.player}>
+                                            <div>{fullName}</div>
+                                            <div className={styles.adp}>
+                                                {getPositionalAdp(fullName)}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                        </div>
+                    </div>
+                    <DomainDropdown
+                        options={GRADE_OPTIONS}
+                        value={rb}
+                        onChange={e => {
+                            const {
+                                target: {value},
+                            } = e;
+                            if (value) {
+                                setRb(value as number);
+                            }
+                        }}
+                        outlineColor={'rgba(40, 171, 226, 1)'}
+                    />
+                    <div className={styles.positionContainer}>
+                        <div
+                            className={`${styles.positionTitle} ${styles.wrTitle}`}
+                        >
+                            Wide Receivers
+                        </div>
+                        <div className={styles.playersColumn}>
+                            {rosterPlayers
+                                .filter(p => p.position === WR)
+                                .map((p, idx) => {
+                                    const fullName = `${p.first_name} ${p.last_name}`;
+                                    return (
+                                        <div key={idx} className={styles.player}>
+                                            <div>{fullName}</div>
+                                            <div className={styles.adp}>
+                                                {getPositionalAdp(fullName)}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                        </div>
+                    </div>
+                    <DomainDropdown
+                        options={GRADE_OPTIONS}
+                        value={wr}
+                        onChange={e => {
+                            const {
+                                target: {value},
+                            } = e;
+                            if (value) {
+                                setWr(value as number);
+                            }
+                        }}
+                        outlineColor={'rgb(26, 224, 105)'}
+                    />
+                    <div className={styles.positionContainer}>
+                        <div
+                            className={`${styles.positionTitle} ${styles.teTitle}`}
+                        >
+                            Tight Ends
+                        </div>
+                        <div className={styles.playersColumn}>
+                            {rosterPlayers
+                                .filter(p => p.position === TE)
+                                .map((p, idx) => {
+                                    const fullName = `${p.first_name} ${p.last_name}`;
+                                    return (
+                                        <div key={idx} className={styles.player}>
+                                            <div>{fullName}</div>
+                                            <div className={styles.adp}>
+                                                {getPositionalAdp(fullName)}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                        </div>
+                    </div>
+                    <DomainDropdown
+                        options={GRADE_OPTIONS}
+                        value={te}
+                        onChange={e => {
+                            const {
+                                target: {value},
+                            } = e;
+                            if (value) {
+                                setTe(value as number);
+                            }
+                        }}
+                        outlineColor={'rgb(250, 191, 74)'}
+                    />
+                </div>
+            )}
         </div>
     );
 }

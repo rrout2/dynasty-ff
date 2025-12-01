@@ -164,7 +164,7 @@ export default function TeamPage() {
     );
 }
 
-function getDisplayName(user?: User) {
+export function getDisplayName(user?: User) {
     return `${user?.metadata?.team_name || user?.display_name}`;
 }
 

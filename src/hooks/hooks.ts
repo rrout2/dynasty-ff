@@ -123,7 +123,9 @@ export type Stoplight = {
 };
 
 export function useStoplights(week: string | number = 13) {
-    const [stoplights] = useState<Stoplight[]>(playerStoplightsJson as unknown as Stoplight[]);
+    const [stoplights] = useState<Stoplight[]>(
+        playerStoplightsJson as unknown as Stoplight[]
+    );
     const isFetched = true;
     // const {
     //     data: stoplights,
@@ -1272,6 +1274,42 @@ export const checkForNickname = (playerName: string) => {
             return 'Travis Etienne Jr.';
         case 'Travis Etienne Jr.':
             return 'Travis Etienne';
+        case 'Anthony Richardson':
+            return 'Anthony Richardson Sr.';
+        case 'Anthony Richardson Sr.':
+            return 'Anthony Richardson';
+        case 'Brian Robinson':
+            return 'Brian Robinson Jr.';
+        case 'Brian Robinson Jr.':
+            return 'Brian Robinson';
+        case 'Marvin Mims':
+            return 'Marvin Mims Jr.';
+        case 'Marvin Mims Jr.':
+            return 'Marvin Mims';
+        case 'Chris Rodriguez':
+            return 'Chris Rodriguez Jr.';
+        case 'Chris Rodriguez Jr.':
+            return 'Chris Rodriguez';
+        case 'Ray-Ray McCloud III':
+            return 'Ray-Ray McCloud';
+        case 'Ray-Ray McCloud':
+            return 'Ray-Ray McCloud III';
+        case 'LeQuint Allen':
+            return 'LeQuint Allen Jr.';
+        case 'LeQuint Allen Jr.':
+            return 'LeQuint Allen';
+        case 'Calvin Austin III':
+            return 'Calvin Austin';
+        case 'Calvin Austin':
+            return 'Calvin Austin III';
+        case "Dont'e Thornton":
+            return "Don'te Thornton Jr.";
+        case "Don'te Thornton Jr.":
+            return "Dont'e Thornton";
+        case 'Jimmy Horn Jr.':
+            return 'Jimmy Horn';
+        case 'Jimmy Horn':
+            return 'Jimmy Horn Jr.';
         default:
             return playerName;
     }
@@ -1464,14 +1502,13 @@ export function useLeagueIdFromUrl(): [
     return [leagueId, setLeagueId];
 }
 
-
 export function useDisallowedBuysFromUrl(): [
     string[],
     Dispatch<SetStateAction<string[]>>
 ] {
     const [searchParams, setSearchParams] = useSearchParams();
-    const urlValue = searchParams.get(DISALLOWED_BUYS) || "";
-    const urlArray = urlValue ? urlValue.split(",") : [];
+    const urlValue = searchParams.get(DISALLOWED_BUYS) || '';
+    const urlArray = urlValue ? urlValue.split(',') : [];
 
     const [disallowedBuys, setDisallowedBuys] = useState<string[]>(urlArray);
 
@@ -1491,7 +1528,7 @@ export function useDisallowedBuysFromUrl(): [
             if (!disallowedBuys.length) {
                 next.delete(DISALLOWED_BUYS);
             } else {
-                next.set(DISALLOWED_BUYS, disallowedBuys.join(","));
+                next.set(DISALLOWED_BUYS, disallowedBuys.join(','));
             }
             return next;
         });
@@ -1500,14 +1537,12 @@ export function useDisallowedBuysFromUrl(): [
     return [disallowedBuys, setDisallowedBuys];
 }
 
-
 export function useParamFromUrl(
     param: string,
     defaultValue?: string
 ): [string, Dispatch<SetStateAction<string>>] {
-
     const [searchParams, setSearchParams] = useSearchParams();
-    const urlValue = searchParams.get(param) ?? (defaultValue ?? "");
+    const urlValue = searchParams.get(param) ?? defaultValue ?? '';
 
     const [value, setValue] = useState(urlValue);
 
@@ -1520,7 +1555,7 @@ export function useParamFromUrl(
 
     // state → URL
     useEffect(() => {
-        if (value === urlValue || value === "") return;
+        if (value === urlValue || value === '') return;
 
         setSearchParams(prev => {
             const next = new URLSearchParams(prev);
@@ -1532,11 +1567,7 @@ export function useParamFromUrl(
     return [value, setValue];
 }
 
-
-export function useTeamIdFromUrl(): [
-    string,
-    Dispatch<SetStateAction<string>>
-] {
+export function useTeamIdFromUrl(): [string, Dispatch<SetStateAction<string>>] {
     const [searchParams, setSearchParams] = useSearchParams();
     const urlValue = searchParams.get(TEAM_ID) || NONE_TEAM_ID;
 
@@ -1551,7 +1582,7 @@ export function useTeamIdFromUrl(): [
 
     // state → URL
     useEffect(() => {
-        if (teamId === urlValue || teamId === "") return;
+        if (teamId === urlValue || teamId === '') return;
 
         setSearchParams(prev => {
             const next = new URLSearchParams(prev);
@@ -1563,13 +1594,9 @@ export function useTeamIdFromUrl(): [
     return [teamId, setTeamId];
 }
 
-
-export function useUserIdFromUrl(): [
-    string,
-    Dispatch<SetStateAction<string>>
-] {
+export function useUserIdFromUrl(): [string, Dispatch<SetStateAction<string>>] {
     const [searchParams, setSearchParams] = useSearchParams();
-    const urlValue = searchParams.get(USER_ID) || "";
+    const urlValue = searchParams.get(USER_ID) || '';
 
     const [userId, setUserId] = useState(urlValue);
 
@@ -1582,7 +1609,7 @@ export function useUserIdFromUrl(): [
 
     // state → URL
     useEffect(() => {
-        if (userId === urlValue || userId === "") return;
+        if (userId === urlValue || userId === '') return;
 
         setSearchParams(prev => {
             const next = new URLSearchParams(prev);
@@ -1594,13 +1621,9 @@ export function useUserIdFromUrl(): [
     return [userId, setUserId];
 }
 
-export function useModuleFromUrl(): [
-    Module,
-    Dispatch<SetStateAction<Module>>
-] {
+export function useModuleFromUrl(): [Module, Dispatch<SetStateAction<Module>>] {
     const [searchParams, setSearchParams] = useSearchParams();
-    const urlValue =
-        (searchParams.get(MODULE) as Module) ?? Module.Unspecified;
+    const urlValue = (searchParams.get(MODULE) as Module) ?? Module.Unspecified;
 
     const [module, setModule] = useState<Module>(urlValue);
 
@@ -1624,7 +1647,6 @@ export function useModuleFromUrl(): [
 
     return [module, setModule];
 }
-
 
 export function useRosterSettings(league?: League) {
     const [rosterSettings, setRosterSettings] = useState(
