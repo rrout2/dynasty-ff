@@ -5,7 +5,7 @@
 
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    gap: 30px;
 }
 
 .rosterContainer {
@@ -37,12 +37,17 @@
     height: 15px;
     margin-bottom: 3px;
     margin-right: 3px;
+    padding-top: 5px;
 }
 
 .labels {
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    font-family: 'Prohibition';
+    padding-bottom: 5px;
+    font-weight: normal;
 }
 
 .positionTitle {
@@ -80,6 +85,11 @@
     border: 2px solid rgba(250, 191, 74, 1);
 }
 
+.picksTitle {
+    background-color: rgba(244, 127, 32, 0.22);
+    border: 2px solid rgba(244, 127, 32, 1);
+}
+
 .positionContainer {
     display: flex;
     flex-direction: column;
@@ -108,5 +118,12 @@
 }
 
 .adp {
-    font-weight: bold;;
+    font-weight: bold;
+}
+
+.scoreContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
 }

@@ -5,6 +5,7 @@ import {pprIcon, sfIcon, teamsIcon, tepIcon} from '../../../consts/images';
 import {
     useAdpData,
     useFetchRosters,
+    useGetPicks,
     useLeague,
     useLeagueIdFromUrl,
     usePlayerData,
@@ -25,6 +26,7 @@ import {
     TeamSelectComponent,
 } from '../../Team/TeamPage/TeamPage';
 import {get} from 'http';
+import {calculateDepthScore} from '../v1/modules/DepthScore/DepthScore';
 
 const PCT_OPTIONS = [
     '15%',
@@ -47,7 +49,7 @@ const PCT_OPTIONS = [
     '100%',
 ];
 
-const GRADE_OPTIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const GRADE_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export default function BlueprintModule() {
     const [leagueId] = useLeagueIdFromUrl();
@@ -63,13 +65,30 @@ export default function BlueprintModule() {
     const rosterSettings = useRosterSettingsFromId(leagueId);
     const rosterSettingsHasSuperFlex = rosterSettings.has(SUPER_FLEX);
     const [numTeams, setNumTeams] = useState(12);
-    const {overall, setOverall, qb, setQb, rb, setRb, wr, setWr, te, setTe} =
-        usePositionalGrades(roster, numTeams);
+    const {
+        overall,
+        setOverall,
+        qb,
+        setQb,
+        rb,
+        setRb,
+        wr,
+        setWr,
+        te,
+        setTe,
+        depth,
+        setDepth,
+    } = usePositionalGrades(roster, numTeams);
+    const [draftCapitalScore, setDraftCapitalScore] = useState(8);
+    const [flexScore, setFlexScore] = useState(8);
+    const [sfScore, setSfScore] = useState(8);
     const [isSuperFlex, setIsSuperFlex] = useState(true);
     const [ppr, setPpr] = useState(0.5);
     const [tep, setTep] = useState(0.5);
     const [productionShare, setProductionShare] = useState('15%');
     const [valueShare, setValueShare] = useState('25%');
+    const {myPicks} = useGetPicks(leagueId, roster?.owner_id);
+
     useEffect(() => {
         if (!league) return;
         setPpr(league.scoring_settings.rec);
@@ -129,9 +148,11 @@ export default function BlueprintModule() {
                 .sort(sortByAdp)
         );
     }, [roster, playerData, sortByAdp]);
+
     function hasTeamId() {
         return teamId !== '' && teamId !== NONE_TEAM_ID;
     }
+
     return (
         <div>
             <div className={styles.dropdownContainer}>
@@ -169,7 +190,6 @@ export default function BlueprintModule() {
                         } = e;
                         setNumTeams(value as number);
                     }}
-                    style={{width: '65px'}}
                 />
                 <DomainDropdown
                     label={
@@ -186,7 +206,6 @@ export default function BlueprintModule() {
                         } = e;
                         setIsSuperFlex((value as string) === 'YES');
                     }}
-                    style={{width: '80px'}}
                 />
                 <DomainDropdown
                     label={
@@ -203,7 +222,6 @@ export default function BlueprintModule() {
                         } = e;
                         setPpr(value as number);
                     }}
-                    style={{width: '65px'}}
                 />
                 <DomainDropdown
                     label={
@@ -220,10 +238,13 @@ export default function BlueprintModule() {
                         } = e;
                         setTep(value as number);
                     }}
-                    style={{width: '70px'}}
                 />
                 <DomainDropdown
-                    label={<div style={{width: '60px'}}>PROD. SHARE</div>}
+                    label={
+                        <div style={{width: '40px'}} className={styles.labels}>
+                            PROD. SHARE
+                        </div>
+                    }
                     options={PCT_OPTIONS}
                     value={productionShare}
                     onChange={e => {
@@ -232,10 +253,13 @@ export default function BlueprintModule() {
                         } = e;
                         setProductionShare(value as string);
                     }}
-                    style={{width: '80px'}}
                 />
                 <DomainDropdown
-                    label={<div>VALUE SHARE</div>}
+                    label={
+                        <div style={{width: '40px'}} className={styles.labels}>
+                            VALUE SHARE
+                        </div>
+                    }
                     options={PCT_OPTIONS}
                     value={valueShare}
                     onChange={e => {
@@ -244,7 +268,6 @@ export default function BlueprintModule() {
                         } = e;
                         setValueShare(value as string);
                     }}
-                    style={{width: '80px'}}
                 />
             </div>
             {roster && (
@@ -261,7 +284,10 @@ export default function BlueprintModule() {
                                 .map((p, idx) => {
                                     const fullName = `${p.first_name} ${p.last_name}`;
                                     return (
-                                        <div key={idx} className={styles.player}>
+                                        <div
+                                            key={idx}
+                                            className={styles.player}
+                                        >
                                             <div>{fullName}</div>
                                             <div className={styles.adp}>
                                                 {getPositionalAdp(fullName)}
@@ -296,7 +322,10 @@ export default function BlueprintModule() {
                                 .map((p, idx) => {
                                     const fullName = `${p.first_name} ${p.last_name}`;
                                     return (
-                                        <div key={idx} className={styles.player}>
+                                        <div
+                                            key={idx}
+                                            className={styles.player}
+                                        >
                                             <div>{fullName}</div>
                                             <div className={styles.adp}>
                                                 {getPositionalAdp(fullName)}
@@ -331,7 +360,10 @@ export default function BlueprintModule() {
                                 .map((p, idx) => {
                                     const fullName = `${p.first_name} ${p.last_name}`;
                                     return (
-                                        <div key={idx} className={styles.player}>
+                                        <div
+                                            key={idx}
+                                            className={styles.player}
+                                        >
                                             <div>{fullName}</div>
                                             <div className={styles.adp}>
                                                 {getPositionalAdp(fullName)}
@@ -366,7 +398,10 @@ export default function BlueprintModule() {
                                 .map((p, idx) => {
                                     const fullName = `${p.first_name} ${p.last_name}`;
                                     return (
-                                        <div key={idx} className={styles.player}>
+                                        <div
+                                            key={idx}
+                                            className={styles.player}
+                                        >
                                             <div>{fullName}</div>
                                             <div className={styles.adp}>
                                                 {getPositionalAdp(fullName)}
@@ -389,6 +424,94 @@ export default function BlueprintModule() {
                         }}
                         outlineColor={'rgb(250, 191, 74)'}
                     />
+                    <div className={styles.positionContainer}>
+                        <div
+                            className={`${styles.positionTitle} ${styles.picksTitle}`}
+                        >
+                            Picks
+                        </div>
+                        <div className={styles.playersColumn}>
+                            {myPicks.map((p, idx) => {
+                                return (
+                                    <div key={idx} className={styles.player}>
+                                        {p.pick_name}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    <div className={styles.scoreContainer}>
+                        <DomainDropdown
+                            label={<div className={styles.labels}>DC</div>}
+                            options={GRADE_OPTIONS}
+                            value={draftCapitalScore}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                if (value) {
+                                    setDraftCapitalScore(value as number);
+                                }
+                            }}
+                            outlineColor={'rgb(252, 71, 26)'}
+                        />
+                        <DomainDropdown
+                            label={<div className={styles.labels}>FLEX</div>}
+                            options={GRADE_OPTIONS}
+                            value={flexScore}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                if (value) {
+                                    setFlexScore(value as number);
+                                }
+                            }}
+                            outlineColor={'rgb(180, 217, 228)'}
+                        />
+                        <DomainDropdown
+                            label={<div className={styles.labels}>SF</div>}
+                            options={GRADE_OPTIONS}
+                            value={sfScore}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                if (value) {
+                                    setSfScore(value as number);
+                                }
+                            }}
+                            outlineColor={'rgb(180, 217, 228)'}
+                        />
+                        <DomainDropdown
+                            label={<div className={styles.labels}>BN</div>}
+                            options={GRADE_OPTIONS}
+                            value={depth}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                if (value) {
+                                    setDepth(value as number);
+                                }
+                            }}
+                            outlineColor={'#CD1CFD'}
+                        />
+                        <DomainDropdown
+                            label={<div className={styles.labels}>OVERALL</div>}
+                            options={GRADE_OPTIONS}
+                            value={overall}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                if (value) {
+                                    setOverall(value as number);
+                                }
+                            }}
+                            outlineColor={'#B4D9E4'}
+                        />
+                    </div>
                 </div>
             )}
         </div>

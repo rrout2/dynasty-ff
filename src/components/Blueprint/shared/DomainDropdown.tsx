@@ -16,6 +16,7 @@ export default function DomainDropdown(props: DomainDropdownProps) {
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'center',
+                ...props.style,
             }}
         >
             {label && (
