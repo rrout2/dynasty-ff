@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import styles from './BlueprintModule.module.css';
 import DomainDropdown from '../shared/DomainDropdown';
 import {pprIcon, sfIcon, teamsIcon, tepIcon} from '../../../consts/images';
@@ -25,8 +25,6 @@ import {
     getDisplayName,
     TeamSelectComponent,
 } from '../../Team/TeamPage/TeamPage';
-import {get} from 'http';
-import {calculateDepthScore} from '../v1/modules/DepthScore/DepthScore';
 
 const PCT_OPTIONS = [
     '15%',
@@ -65,6 +63,9 @@ export default function BlueprintModule() {
     const rosterSettings = useRosterSettingsFromId(leagueId);
     const rosterSettingsHasSuperFlex = rosterSettings.has(SUPER_FLEX);
     const [numTeams, setNumTeams] = useState(12);
+    const [move1, setMove1] = useState<Move>(Move.DOWNTIER);
+    const [playerIdsToTrade, setPlayerIdsToTrade] = useState<string[]>([]);
+    const [playerIdsToTarget, setPlayerIdsToTarget] = useState<string[][]>([]);
     const {
         overall,
         setOverall,
@@ -514,6 +515,155 @@ export default function BlueprintModule() {
                     </div>
                 </div>
             )}
+            <div className={styles.tradeContainer}>
+                <div className={styles.tradeTitle}>Trade Strategy</div>
+                <SuggestedMove
+                    move={move1}
+                    setMove={setMove1}
+                    playerIdsToTrade={playerIdsToTrade}
+                    setPlayerIdsToTrade={setPlayerIdsToTrade}
+                    playerIdsToTarget={playerIdsToTarget}
+                    setPlayerIdsToTarget={setPlayerIdsToTarget}
+                    rosterPlayers={rosterPlayers}
+                />
+            </div>
         </div>
+    );
+}
+
+enum Move {
+    DOWNTIER = 'DOWNTIER',
+    UPTIER = 'UPTIER',
+    PIVOT = 'PIVOT',
+}
+
+type SuggestedMoveProps = {
+    move: Move;
+    setMove: Dispatch<SetStateAction<Move>>;
+    playerIdsToTrade: string[];
+    setPlayerIdsToTrade: Dispatch<SetStateAction<string[]>>;
+    playerIdsToTarget: string[][];
+    setPlayerIdsToTarget: Dispatch<SetStateAction<string[][]>>;
+    rosterPlayers: Player[];
+};
+
+function SuggestedMove({
+    move,
+    setMove,
+    rosterPlayers,
+    playerIdsToTrade,
+    setPlayerIdsToTrade,
+}: SuggestedMoveProps) {
+    const playerData = usePlayerData();
+    const nonIdPlayerOptions: string[] = [];
+    for (let i = 1; i < 15; i++) {
+        nonIdPlayerOptions.push(`Rookie Pick 1.${i < 10 ? `0${i}` : `${i}`}`);
+    }
+    nonIdPlayerOptions.push('2026 1st');
+    nonIdPlayerOptions.push('2027 1st');
+    const optionsToTrade = [
+        ...rosterPlayers.map(p => `${p.first_name} ${p.last_name}`),
+        ...nonIdPlayerOptions,
+    ];
+    useEffect(() => {
+        if (!playerData || !rosterPlayers[0]) return;
+        setPlayerIdsToTrade([
+            rosterPlayers[0].player_id,
+            rosterPlayers[1].player_id,
+        ]);
+    }, [rosterPlayers, playerData]);
+
+    function getDisplayValueFromId(id: string) {
+        if (!playerData) return id;
+        return !Number.isNaN(+id)
+            ? `${playerData[id].first_name} ${playerData[id].last_name}`
+            : id;
+    }
+
+    return (
+        playerIdsToTrade[0] &&
+        playerData && (
+            <div className={styles.toTradeContainer}>
+                <DomainDropdown
+                    options={[Move.DOWNTIER, Move.PIVOT, Move.UPTIER]}
+                    value={move}
+                    onChange={e => {
+                        const {
+                            target: {value},
+                        } = e;
+                        if (value) {
+                            setMove(value as Move);
+                        }
+                    }}
+                />
+                <div className={styles.toTradeRow}>
+                    <DomainDropdown
+                        options={optionsToTrade}
+                        value={getDisplayValueFromId(playerIdsToTrade[0])}
+                        onChange={e => {
+                            const {
+                                target: {value},
+                            } = e;
+                            if (value) {
+                                for (const p of rosterPlayers) {
+                                    if (
+                                        `${p.first_name} ${p.last_name}` ===
+                                        value
+                                    ) {
+                                        setPlayerIdsToTrade([
+                                            p.player_id,
+                                            playerIdsToTrade[1],
+                                        ]);
+                                        return;
+                                    }
+                                }
+                                setPlayerIdsToTrade([
+                                    value as string,
+                                    playerIdsToTrade[1],
+                                ]);
+                            }
+                        }}
+                    />
+                    {move === Move.UPTIER && (
+                        <>
+                            <img
+                                src={sfIcon}
+                                className={styles.icons}
+                                style={{margin: '0', padding: '0'}}
+                            />
+                            <DomainDropdown
+                                options={optionsToTrade}
+                                value={getDisplayValueFromId(
+                                    playerIdsToTrade[1]
+                                )}
+                                onChange={e => {
+                                    const {
+                                        target: {value},
+                                    } = e;
+                                    if (value) {
+                                        for (const p of rosterPlayers) {
+                                            if (
+                                                `${p.first_name} ${p.last_name}` ===
+                                                value
+                                            ) {
+                                                setPlayerIdsToTrade([
+                                                    playerIdsToTrade[0],
+                                                    p.player_id,
+                                                ]);
+                                                return;
+                                            }
+                                        }
+                                        setPlayerIdsToTrade([
+                                            playerIdsToTrade[0],
+                                            value as string,
+                                        ]);
+                                    }
+                                }}
+                            />
+                        </>
+                    )}
+                </div>
+            </div>
+        )
     );
 }
