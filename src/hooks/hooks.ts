@@ -2269,16 +2269,6 @@ function getBestNAtPosition(
                 .map(p => playerData[p])
                 .filter(p => !!p && p.fantasy_positions.includes(position))
                 .sort(sortFn)
-                .map(p => {
-                    if (position === WR) {
-                        console.log(
-                            `${p.first_name} ${p.last_name}: ${getFn(
-                                `${p.first_name} ${p.last_name}`
-                            )}`
-                        );
-
-                    return p;
-                })
                 .slice(0, count);
     }
 }
