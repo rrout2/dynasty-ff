@@ -424,7 +424,7 @@ def main():
                         sender.fail_indices.append(i)
         
 
-
+        print(f"Allow list length: {len(sender.allow_list)}")
         # print("No folder run, emailing directly")
         for i in range(start_idx, end_idx):
             if sender.league_id_list[i] == '' or sender.league_id_list[i] == None:
