@@ -151,7 +151,10 @@ export function useStoplights(week: string | number = 14) {
         const nickname = checkForNickname(name);
         const foundPlayer = stoplights.find(
             player =>
-                player.playerName === name || player.playerName === nickname
+                player.playerName.replace(/\W/g, '').toLowerCase() ===
+                    name.replace(/\W/g, '').toLowerCase() ||
+                player.playerName.replace(/\W/g, '').toLowerCase() ===
+                    nickname.replace(/\W/g, '').toLowerCase()
         );
         if (!foundPlayer) {
             console.warn('no stoplight found for', name);
