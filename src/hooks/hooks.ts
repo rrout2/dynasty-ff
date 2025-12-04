@@ -1225,9 +1225,9 @@ export const checkForNickname = (playerName: string) => {
         case 'Cameron Ward':
             return 'Cam Ward';
         case "De'von Achane":
-            return 'Devon Achane';
+            return 'DeVon Achane';
         case "De'Von Achane":
-            return 'Devon Achane';
+            return 'DeVon Achane';
         case 'Devon Achane':
             return "De'Von Achane";
         case 'Harold Fannin':
@@ -1741,7 +1741,11 @@ export function useWeeklyRanks() {
         if (!weeklyLineups) return Infinity;
         const nickname = checkForNickname(name);
         const rank = weeklyLineups.findIndex(
-            r => r['1QB'] === nickname || r['1QB'] === name
+            r =>
+                r['1QB'].replace(/\W/g, '').toLowerCase() ===
+                    nickname.replace(/\W/g, '').toLowerCase() ||
+                r['1QB'].replace(/\W/g, '').toLowerCase() ===
+                    name.replace(/\W/g, '').toLowerCase()
         );
         if (rank === -1) return Infinity;
         return rank;
@@ -1753,7 +1757,11 @@ export function useWeeklyRanks() {
         if (!weeklyLineups) return Infinity;
         const nickname = checkForNickname(name);
         const rank = weeklyLineups.findIndex(
-            r => r['SF'] === nickname || r['SF'] === name
+            r =>
+                r['SF'].replace(/\W/g, '').toLowerCase() ===
+                    nickname.replace(/\W/g, '').toLowerCase() ||
+                r['SF'].replace(/\W/g, '').toLowerCase() ===
+                    name.replace(/\W/g, '').toLowerCase()
         );
         if (rank === -1) return Infinity;
         return rank;
@@ -2261,6 +2269,16 @@ function getBestNAtPosition(
                 .map(p => playerData[p])
                 .filter(p => !!p && p.fantasy_positions.includes(position))
                 .sort(sortFn)
+                .map(p => {
+                    if (position === WR) {
+                        console.log(
+                            `${p.first_name} ${p.last_name}: ${getFn(
+                                `${p.first_name} ${p.last_name}`
+                            )}`
+                        );
+
+                    return p;
+                })
                 .slice(0, count);
     }
 }
