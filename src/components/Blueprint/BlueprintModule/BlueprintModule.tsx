@@ -25,6 +25,7 @@ import {
     getDisplayName,
     TeamSelectComponent,
 } from '../../Team/TeamPage/TeamPage';
+import DomainAutocomplete from '../shared/DomainAutocomplete';
 
 const PCT_OPTIONS = [
     '15%',
@@ -64,8 +65,26 @@ export default function BlueprintModule() {
     const rosterSettingsHasSuperFlex = rosterSettings.has(SUPER_FLEX);
     const [numTeams, setNumTeams] = useState(12);
     const [move1, setMove1] = useState<Move>(Move.DOWNTIER);
-    const [playerIdsToTrade, setPlayerIdsToTrade] = useState<string[]>([]);
-    const [playerIdsToTarget, setPlayerIdsToTarget] = useState<string[][]>([]);
+    const [playerIdsToTrade1, setPlayerIdsToTrade1] = useState<string[]>([]);
+    const [playerIdsToTarget1, setPlayerIdsToTarget1] = useState<string[][]>([
+        ['', ''],
+        ['', ''],
+        ['', ''],
+    ]);
+    const [move2, setMove2] = useState<Move>(Move.DOWNTIER);
+    const [playerIdsToTrade2, setPlayerIdsToTrade2] = useState<string[]>([]);
+    const [playerIdsToTarget2, setPlayerIdsToTarget2] = useState<string[][]>([
+        ['', ''],
+        ['', ''],
+        ['', ''],
+    ]);
+    const [move3, setMove3] = useState<Move>(Move.DOWNTIER);
+    const [playerIdsToTrade3, setPlayerIdsToTrade3] = useState<string[]>([]);
+    const [playerIdsToTarget3, setPlayerIdsToTarget3] = useState<string[][]>([
+        ['', ''],
+        ['', ''],
+        ['', ''],
+    ]);
     const {
         overall,
         setOverall,
@@ -517,15 +536,35 @@ export default function BlueprintModule() {
             )}
             <div className={styles.tradeContainer}>
                 <div className={styles.tradeTitle}>Trade Strategy</div>
-                <SuggestedMove
-                    move={move1}
-                    setMove={setMove1}
-                    playerIdsToTrade={playerIdsToTrade}
-                    setPlayerIdsToTrade={setPlayerIdsToTrade}
-                    playerIdsToTarget={playerIdsToTarget}
-                    setPlayerIdsToTarget={setPlayerIdsToTarget}
-                    rosterPlayers={rosterPlayers}
-                />
+                <div className={styles.suggestedMovesContainer}>
+                    <SuggestedMove
+                        move={move1}
+                        setMove={setMove1}
+                        playerIdsToTrade={playerIdsToTrade1}
+                        setPlayerIdsToTrade={setPlayerIdsToTrade1}
+                        playerIdsToTarget={playerIdsToTarget1}
+                        setPlayerIdsToTarget={setPlayerIdsToTarget1}
+                        rosterPlayers={rosterPlayers}
+                    />
+                    <SuggestedMove
+                        move={move2}
+                        setMove={setMove2}
+                        playerIdsToTrade={playerIdsToTrade2}
+                        setPlayerIdsToTrade={setPlayerIdsToTrade2}
+                        playerIdsToTarget={playerIdsToTarget2}
+                        setPlayerIdsToTarget={setPlayerIdsToTarget2}
+                        rosterPlayers={rosterPlayers}
+                    />
+                    <SuggestedMove
+                        move={move3}
+                        setMove={setMove3}
+                        playerIdsToTrade={playerIdsToTrade3}
+                        setPlayerIdsToTrade={setPlayerIdsToTrade3}
+                        playerIdsToTarget={playerIdsToTarget3}
+                        setPlayerIdsToTarget={setPlayerIdsToTarget3}
+                        rosterPlayers={rosterPlayers}
+                    />
+                </div>
             </div>
         </div>
     );
@@ -553,18 +592,25 @@ function SuggestedMove({
     rosterPlayers,
     playerIdsToTrade,
     setPlayerIdsToTrade,
+    playerIdsToTarget,
+    setPlayerIdsToTarget,
 }: SuggestedMoveProps) {
     const playerData = usePlayerData();
-    const nonIdPlayerOptions: string[] = [];
-    for (let i = 1; i < 15; i++) {
-        nonIdPlayerOptions.push(`Rookie Pick 1.${i < 10 ? `0${i}` : `${i}`}`);
-    }
-    nonIdPlayerOptions.push('2026 1st');
-    nonIdPlayerOptions.push('2027 1st');
-    const optionsToTrade = [
-        ...rosterPlayers.map(p => `${p.first_name} ${p.last_name}`),
-        ...nonIdPlayerOptions,
-    ];
+    const [optionsToTrade, setOptionsToTrade] = useState<string[]>([]);
+    useEffect(() => {
+        const nonIdPlayerOptions: string[] = [];
+        for (let i = 1; i < 15; i++) {
+            nonIdPlayerOptions.push(
+                `Rookie Pick 1.${i < 10 ? `0${i}` : `${i}`}`
+            );
+        }
+        nonIdPlayerOptions.push('2026 1st');
+        nonIdPlayerOptions.push('2027 1st');
+        setOptionsToTrade([
+            ...rosterPlayers.map(p => `${p.first_name} ${p.last_name}`),
+            ...nonIdPlayerOptions,
+        ]);
+    }, [rosterPlayers]);
     useEffect(() => {
         if (!playerData || !rosterPlayers[0]) return;
         setPlayerIdsToTrade([
@@ -660,6 +706,127 @@ function SuggestedMove({
                                     }
                                 }}
                             />
+                        </>
+                    )}
+                </div>
+                <div className={styles.toTargetContainer}>
+                    {move !== Move.DOWNTIER && (
+                        <>
+                            <DomainAutocomplete
+                                selectedPlayer={playerIdsToTarget[0][0]}
+                                setSelectedPlayer={(player: string) => {
+                                    setPlayerIdsToTarget([
+                                        [player, playerIdsToTarget[0][1]],
+                                        playerIdsToTarget[1],
+                                        playerIdsToTarget[2],
+                                    ]);
+                                }}
+                            />
+                            <DomainAutocomplete
+                                selectedPlayer={playerIdsToTarget[1][0]}
+                                setSelectedPlayer={(player: string) => {
+                                    setPlayerIdsToTarget([
+                                        playerIdsToTarget[0],
+                                        [player, playerIdsToTarget[1][1]],
+                                        playerIdsToTarget[2],
+                                    ]);
+                                }}
+                            />
+                            <DomainAutocomplete
+                                selectedPlayer={playerIdsToTarget[2][0]}
+                                setSelectedPlayer={(player: string) => {
+                                    setPlayerIdsToTarget([
+                                        playerIdsToTarget[0],
+                                        playerIdsToTarget[1],
+                                        [player, playerIdsToTarget[2][1]],
+                                    ]);
+                                }}
+                            />
+                        </>
+                    )}
+                    {move == Move.DOWNTIER && (
+                        <>
+                            <div className={styles.downtierRow}>
+                                <DomainAutocomplete
+                                    selectedPlayer={playerIdsToTarget[0][0]}
+                                    setSelectedPlayer={(player: string) => {
+                                        setPlayerIdsToTarget([
+                                            [player, playerIdsToTarget[0][1]],
+                                            playerIdsToTarget[1],
+                                            playerIdsToTarget[2],
+                                        ]);
+                                    }}
+                                />
+                                <img
+                                    src={sfIcon}
+                                    className={styles.icons}
+                                    style={{margin: '0', padding: '0'}}
+                                />
+                                <DomainAutocomplete
+                                    selectedPlayer={playerIdsToTarget[0][1]}
+                                    setSelectedPlayer={(player: string) => {
+                                        setPlayerIdsToTarget([
+                                            [playerIdsToTarget[0][0], player],
+                                            playerIdsToTarget[1],
+                                            playerIdsToTarget[2],
+                                        ]);
+                                    }}
+                                />
+                            </div>
+                            <div className={styles.downtierRow}>
+                                <DomainAutocomplete
+                                    selectedPlayer={playerIdsToTarget[1][0]}
+                                    setSelectedPlayer={(player: string) => {
+                                        setPlayerIdsToTarget([
+                                            playerIdsToTarget[0],
+                                            [player, playerIdsToTarget[1][1]],
+                                            playerIdsToTarget[2],
+                                        ]);
+                                    }}
+                                />
+                                <img
+                                    src={sfIcon}
+                                    className={styles.icons}
+                                    style={{margin: '0', padding: '0'}}
+                                />
+                                <DomainAutocomplete
+                                    selectedPlayer={playerIdsToTarget[1][1]}
+                                    setSelectedPlayer={(player: string) => {
+                                        setPlayerIdsToTarget([
+                                            playerIdsToTarget[0],
+                                            [playerIdsToTarget[1][0], player],
+                                            playerIdsToTarget[2],
+                                        ]);
+                                    }}
+                                />
+                            </div>
+                            <div className={styles.downtierRow}>
+                                <DomainAutocomplete
+                                    selectedPlayer={playerIdsToTarget[2][0]}
+                                    setSelectedPlayer={(player: string) => {
+                                        setPlayerIdsToTarget([
+                                            playerIdsToTarget[0],
+                                            playerIdsToTarget[1],
+                                            [player, playerIdsToTarget[2][1]],
+                                        ]);
+                                    }}
+                                />
+                                <img
+                                    src={sfIcon}
+                                    className={styles.icons}
+                                    style={{margin: '0', padding: '0'}}
+                                />
+                                <DomainAutocomplete
+                                    selectedPlayer={playerIdsToTarget[2][1]}
+                                    setSelectedPlayer={(player: string) => {
+                                        setPlayerIdsToTarget([
+                                            playerIdsToTarget[0],
+                                            playerIdsToTarget[1],
+                                            [playerIdsToTarget[2][0], player],
+                                        ]);
+                                    }}
+                                />
+                            </div>
                         </>
                     )}
                 </div>

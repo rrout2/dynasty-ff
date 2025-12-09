@@ -6,7 +6,7 @@ export type DomainDropdownProps = SelectProps & {
     label?: string | JSX.Element;
 };
 
-const DARK_BLUE = '#04121C';
+export const DARK_BLUE = '#04121C';
 
 export default function DomainDropdown(props: DomainDropdownProps) {
     const {options, outlineColor, label} = props;
