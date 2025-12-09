@@ -50,6 +50,32 @@ const PCT_OPTIONS = [
 
 const GRADE_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+enum ValueArchetype {
+    None = 'NONE',
+    EliteValue = 'ELITE VALUE',
+    StandardValue = 'STANDARD VALUE',
+    FutureValue = 'FUTURE VALUE',
+    AgingValue = 'AGING VALUE',
+    OneYearReload = 'ONE YEAR RELOAD',
+    HardRebuild = 'HARD REBUILD',
+}
+
+enum RosterArchetype {
+    None = 'NONE',
+    WellRounded = 'WELL ROUNDED',
+    WRFactory = 'WR FACTORY',
+    RBHeavy = 'RB HEAVY',
+    DualEliteQB = 'DUAL ELITE QB',
+    EliteQBTE = 'ELITE QB/TE',
+    PlayerDeficient = 'PLAYER DEFICIENT',
+}
+
+enum OutlookOption {
+    Rebuild = 'REBUILD',
+    Reload = 'RELOAD',
+    Contend = 'CONTEND',
+}
+
 export default function BlueprintModule() {
     const [leagueId] = useLeagueIdFromUrl();
     const [teamId, setTeamId] = useTeamIdFromUrl();
@@ -64,6 +90,16 @@ export default function BlueprintModule() {
     const rosterSettings = useRosterSettingsFromId(leagueId);
     const rosterSettingsHasSuperFlex = rosterSettings.has(SUPER_FLEX);
     const [numTeams, setNumTeams] = useState(12);
+    const [valueArchetype, setValueArchetype] = useState<ValueArchetype>(
+        ValueArchetype.None
+    );
+    const [rosterArchetype, setRosterArchetype] = useState<RosterArchetype>(
+        RosterArchetype.None
+    );
+    const [twoYearOutlook, setTwoYearOutlook] = useState<OutlookOption[]>([
+        OutlookOption.Rebuild,
+        OutlookOption.Reload,
+    ]);
     const [move1, setMove1] = useState<Move>(Move.DOWNTIER);
     const [playerIdsToTrade1, setPlayerIdsToTrade1] = useState<string[]>([]);
     const [playerIdsToTarget1, setPlayerIdsToTarget1] = useState<string[][]>([
@@ -532,6 +568,73 @@ export default function BlueprintModule() {
                             outlineColor={'#B4D9E4'}
                         />
                     </div>
+                    <div className={styles.archetypeContainer}>
+                        <div className={styles.archetypeTitle}>
+                            Value Archetype
+                        </div>
+                        <DomainDropdown
+                            style={{width: '250px'}}
+                            options={Object.values(ValueArchetype)}
+                            value={valueArchetype}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                if (value) {
+                                    setValueArchetype(value as ValueArchetype);
+                                }
+                            }}
+                        />
+                        <div className={styles.archetypeTitle}>
+                            Roster Archetype
+                        </div>
+                        <DomainDropdown
+                            style={{width: '250px'}}
+                            options={Object.values(RosterArchetype)}
+                            value={rosterArchetype}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                if (value) {
+                                    setRosterArchetype(
+                                        value as RosterArchetype
+                                    );
+                                }
+                            }}
+                        />
+                        <div className={styles.archetypeTitle}>
+                            2-Year Outlook
+                        </div>
+                        <DomainDropdown
+                            label={<div className={styles.labels}>1.</div>}
+                            style={{width: '250px'}}
+                            options={Object.values(OutlookOption)}
+                            value={twoYearOutlook[0]}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                if (value) {
+                                    setTwoYearOutlook([value as OutlookOption, twoYearOutlook[1]]);
+                                }
+                            }}
+                        />
+                        <DomainDropdown
+                            label={<div className={styles.labels}>2.</div>}
+                            style={{width: '250px'}}
+                            options={Object.values(OutlookOption)}
+                            value={twoYearOutlook[1]}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                if (value) {
+                                    setTwoYearOutlook([twoYearOutlook[0], value as OutlookOption]);
+                                }
+                            }}
+                        />
+                    </div>
                 </div>
             )}
             <div className={styles.tradeContainer}>
@@ -545,6 +648,7 @@ export default function BlueprintModule() {
                         playerIdsToTarget={playerIdsToTarget1}
                         setPlayerIdsToTarget={setPlayerIdsToTarget1}
                         rosterPlayers={rosterPlayers}
+                        moveNumber={1}
                     />
                     <SuggestedMove
                         move={move2}
@@ -554,6 +658,7 @@ export default function BlueprintModule() {
                         playerIdsToTarget={playerIdsToTarget2}
                         setPlayerIdsToTarget={setPlayerIdsToTarget2}
                         rosterPlayers={rosterPlayers}
+                        moveNumber={2}
                     />
                     <SuggestedMove
                         move={move3}
@@ -563,6 +668,7 @@ export default function BlueprintModule() {
                         playerIdsToTarget={playerIdsToTarget3}
                         setPlayerIdsToTarget={setPlayerIdsToTarget3}
                         rosterPlayers={rosterPlayers}
+                        moveNumber={3}
                     />
                 </div>
             </div>
@@ -584,6 +690,7 @@ type SuggestedMoveProps = {
     playerIdsToTarget: string[][];
     setPlayerIdsToTarget: Dispatch<SetStateAction<string[][]>>;
     rosterPlayers: Player[];
+    moveNumber: number;
 };
 
 function SuggestedMove({
@@ -594,6 +701,7 @@ function SuggestedMove({
     setPlayerIdsToTrade,
     playerIdsToTarget,
     setPlayerIdsToTarget,
+    moveNumber,
 }: SuggestedMoveProps) {
     const playerData = usePlayerData();
     const [optionsToTrade, setOptionsToTrade] = useState<string[]>([]);
@@ -630,6 +738,7 @@ function SuggestedMove({
         playerIdsToTrade[0] &&
         playerData && (
             <div className={styles.toTradeContainer}>
+                <div className={styles.moveTitle}>MOVE #{moveNumber}</div>
                 <DomainDropdown
                     options={[Move.DOWNTIER, Move.PIVOT, Move.UPTIER]}
                     value={move}

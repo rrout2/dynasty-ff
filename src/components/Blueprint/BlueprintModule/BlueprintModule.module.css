@@ -11,7 +11,7 @@
 .rosterContainer {
     background-color: #04121C;
 
-    width: 1500px;
+    width: 1800px;
     padding: 10px;
 
     display: flex;
@@ -138,6 +138,9 @@
     flex-direction: column;
     gap: 10px;
     width: 1500px;
+
+    border-right: 1px solid #ccc;
+    margin-right: 8px;
 }
 
 .tradeTitle {
@@ -176,4 +179,29 @@
     flex-direction: row;
     
     justify-content: space-between;
+}
+
+.moveTitle {
+    text-transform: uppercase;
+    color: white;
+    font-family: 'Prohibition';
+    font-size: 30px;
+    text-align: center;
+}
+
+.archetypeContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+
+    align-items: center;
+}
+
+.archetypeTitle {
+    text-transform: uppercase;
+    color: white;
+    font-family: 'Prohibition';
+    font-size: 25px;
+    text-align: center;
 }
