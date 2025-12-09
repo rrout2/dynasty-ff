@@ -12,6 +12,7 @@ import {
     usePositionalGrades,
     useRosterSettingsFromId,
     useTeamIdFromUrl,
+    useTitle,
 } from '../../../hooks/hooks';
 import {QB, RB, SUPER_FLEX, TE, WR} from '../../../consts/fantasy';
 import {
@@ -26,8 +27,17 @@ import {
     TeamSelectComponent,
 } from '../../Team/TeamPage/TeamPage';
 import DomainAutocomplete from '../shared/DomainAutocomplete';
+import {
+    getPicksInfo,
+} from '../../../sleeper-api/picks';
+import DomainTextField from '../shared/DomainTextField';
+import {IconButton} from '@mui/material';
+import {AddCircleOutline} from '@mui/icons-material';
 
 const PCT_OPTIONS = [
+    '0%',
+    '5%',
+    '10%',
     '15%',
     '20%',
     '25%',
@@ -77,6 +87,7 @@ enum OutlookOption {
 }
 
 export default function BlueprintModule() {
+    useTitle('Blueprint Module');
     const [leagueId] = useLeagueIdFromUrl();
     const [teamId, setTeamId] = useTeamIdFromUrl();
     const {data: rosters} = useFetchRosters(leagueId);
@@ -121,6 +132,12 @@ export default function BlueprintModule() {
         ['', ''],
         ['', ''],
     ]);
+    const [draftCapitalNotes2026, setDraftCapitalNotes2026] = useState(
+        'placeholder 2026 notes'
+    );
+    const [draftCapitalNotes2027, setDraftCapitalNotes2027] = useState(
+        'placeholder 2027 notes'
+    );
     const {
         overall,
         setOverall,
@@ -143,6 +160,8 @@ export default function BlueprintModule() {
     const [tep, setTep] = useState(0.5);
     const [productionShare, setProductionShare] = useState('15%');
     const [valueShare, setValueShare] = useState('25%');
+    const [addPickRound, setAddPickRound] = useState(1);
+    const [addPickSlot, setAddPickSlot] = useState(1);
     const {myPicks} = useGetPicks(leagueId, roster?.owner_id);
 
     useEffect(() => {
@@ -204,6 +223,14 @@ export default function BlueprintModule() {
                 .sort(sortByAdp)
         );
     }, [roster, playerData, sortByAdp]);
+
+    useEffect(() => {
+        if (myPicks.length === 0) return;
+        const nextYearInfo = getPicksInfo(myPicks, '2026');
+        setDraftCapitalNotes2026(nextYearInfo);
+        const followingYearInfo = getPicksInfo(myPicks, '2027');
+        setDraftCapitalNotes2027(followingYearInfo);
+    }, [myPicks]);
 
     function hasTeamId() {
         return teamId !== '' && teamId !== NONE_TEAM_ID;
@@ -616,7 +643,10 @@ export default function BlueprintModule() {
                                     target: {value},
                                 } = e;
                                 if (value) {
-                                    setTwoYearOutlook([value as OutlookOption, twoYearOutlook[1]]);
+                                    setTwoYearOutlook([
+                                        value as OutlookOption,
+                                        twoYearOutlook[1],
+                                    ]);
                                 }
                             }}
                         />
@@ -630,46 +660,125 @@ export default function BlueprintModule() {
                                     target: {value},
                                 } = e;
                                 if (value) {
-                                    setTwoYearOutlook([twoYearOutlook[0], value as OutlookOption]);
+                                    setTwoYearOutlook([
+                                        twoYearOutlook[0],
+                                        value as OutlookOption,
+                                    ]);
                                 }
                             }}
                         />
                     </div>
                 </div>
             )}
-            <div className={styles.tradeContainer}>
-                <div className={styles.tradeTitle}>Trade Strategy</div>
-                <div className={styles.suggestedMovesContainer}>
-                    <SuggestedMove
-                        move={move1}
-                        setMove={setMove1}
-                        playerIdsToTrade={playerIdsToTrade1}
-                        setPlayerIdsToTrade={setPlayerIdsToTrade1}
-                        playerIdsToTarget={playerIdsToTarget1}
-                        setPlayerIdsToTarget={setPlayerIdsToTarget1}
-                        rosterPlayers={rosterPlayers}
-                        moveNumber={1}
-                    />
-                    <SuggestedMove
-                        move={move2}
-                        setMove={setMove2}
-                        playerIdsToTrade={playerIdsToTrade2}
-                        setPlayerIdsToTrade={setPlayerIdsToTrade2}
-                        playerIdsToTarget={playerIdsToTarget2}
-                        setPlayerIdsToTarget={setPlayerIdsToTarget2}
-                        rosterPlayers={rosterPlayers}
-                        moveNumber={2}
-                    />
-                    <SuggestedMove
-                        move={move3}
-                        setMove={setMove3}
-                        playerIdsToTrade={playerIdsToTrade3}
-                        setPlayerIdsToTrade={setPlayerIdsToTrade3}
-                        playerIdsToTarget={playerIdsToTarget3}
-                        setPlayerIdsToTarget={setPlayerIdsToTarget3}
-                        rosterPlayers={rosterPlayers}
-                        moveNumber={3}
-                    />
+            <div className={styles.bottomSection}>
+                <div className={styles.tradeContainer}>
+                    <div className={styles.tradeTitle}>Trade Strategy</div>
+                    <div className={styles.suggestedMovesContainer}>
+                        <SuggestedMove
+                            move={move1}
+                            setMove={setMove1}
+                            playerIdsToTrade={playerIdsToTrade1}
+                            setPlayerIdsToTrade={setPlayerIdsToTrade1}
+                            playerIdsToTarget={playerIdsToTarget1}
+                            setPlayerIdsToTarget={setPlayerIdsToTarget1}
+                            rosterPlayers={rosterPlayers}
+                            moveNumber={1}
+                        />
+                        <SuggestedMove
+                            move={move2}
+                            setMove={setMove2}
+                            playerIdsToTrade={playerIdsToTrade2}
+                            setPlayerIdsToTrade={setPlayerIdsToTrade2}
+                            playerIdsToTarget={playerIdsToTarget2}
+                            setPlayerIdsToTarget={setPlayerIdsToTarget2}
+                            rosterPlayers={rosterPlayers}
+                            moveNumber={2}
+                        />
+                        <SuggestedMove
+                            move={move3}
+                            setMove={setMove3}
+                            playerIdsToTrade={playerIdsToTrade3}
+                            setPlayerIdsToTrade={setPlayerIdsToTrade3}
+                            playerIdsToTarget={playerIdsToTarget3}
+                            setPlayerIdsToTarget={setPlayerIdsToTarget3}
+                            rosterPlayers={rosterPlayers}
+                            moveNumber={3}
+                        />
+                    </div>
+                </div>
+                <div className={styles.draftCapitalContainer}>
+                    <div className={styles.draftCapitalHeaderRow}>
+                        <div className={styles.draftCapitalTitle}>
+                            Draft Capital
+                        </div>
+                        <div className={styles.addDraftPickContainer}>
+                            <DomainDropdown
+                                options={[0, 1, 2, 3, 4]}
+                                value={addPickRound}
+                                onChange={e => {
+                                    const {
+                                        target: {value},
+                                    } = e;
+                                    if (value || value === 0) {
+                                        setAddPickRound(value as number);
+                                    }
+                                }}
+                                renderValue={value => `Round ${value}`}
+                            />
+                            <DomainDropdown
+                                options={[
+                                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                                    14,
+                                ]}
+                                value={addPickSlot}
+                                onChange={e => {
+                                    const {
+                                        target: {value},
+                                    } = e;
+                                    if (value || value === 0) {
+                                        setAddPickSlot(value as number);
+                                    }
+                                }}
+                                renderValue={value => `Pick ${value}`}
+                            />
+                            <IconButton
+                                TouchRippleProps={{
+                                    style: {
+                                        color: 'white',
+                                    },
+                                }}
+                                onClick={() => {
+                                    // TODO: figure out year
+                                    const pickString = `${addPickRound}.${
+                                        addPickSlot < 10 ? '0' : ''
+                                    }${addPickSlot}`;
+                                    if (draftCapitalNotes2026) {
+                                        setDraftCapitalNotes2026(
+                                            `${draftCapitalNotes2026}, ${pickString}`
+                                        )
+                                    } else {
+                                        setDraftCapitalNotes2026(pickString);
+                                    }
+                                }}
+                            >
+                                <AddCircleOutline sx={{color: 'white'}} />
+                            </IconButton>
+                        </div>
+                    </div>
+                    <div className={styles.draftCapitalBody}>
+                        <DomainTextField
+                            flexGrow={1}
+                            label={'2026'}
+                            value={draftCapitalNotes2026}
+                            onChange={e => setDraftCapitalNotes2026(e.target.value)}
+                        />
+                        <DomainTextField
+                            flexGrow={1}
+                            label={'2027'}
+                            value={draftCapitalNotes2027}
+                            onChange={e => setDraftCapitalNotes2027(e.target.value)}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

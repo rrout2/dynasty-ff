@@ -71,6 +71,61 @@ export interface GetPicksResult {
 
 export const CURRENT_SEASON = '2025';
 
+/**
+ * Returns a string describing the number of picks in each round for a given year.
+ * For example, if a team has 2 first-round picks, 1 second-round pick, and 1 third-round pick,
+ * this function will return '2 1sts, 1 2nd, 1 3rd'.
+ * If the team has no picks in a given year, this function will return an empty string.
+ * @param {FinalPickData[]} picks - an array of picks for a given team
+ * @param {string} year - the year for which to generate the string
+ * @returns {string} - a string describing the number of picks in each round for the given year
+ */
+export const getPicksInfo = (picks: FinalPickData[], year: string) => {
+    if (picks.filter(p => p.season === year).length === 0) {
+        return '';
+    }
+    const numFirsts = picks.filter(
+        p => p.round === 1 && p.season === year
+    ).length;
+    const numSeconds = picks.filter(
+        p => p.round === 2 && p.season === year
+    ).length;
+    const numThirds = picks.filter(
+        p => p.round === 3 && p.season === year
+    ).length;
+    const numFourths = picks.filter(
+        p => p.round === 4 && p.season === year
+    ).length;
+    const firstInfo =
+        numFirsts > 0
+            ? `${numFirsts === 1 ? '' : numFirsts} 1st${
+                  numFirsts !== 1 ? 's' : ''
+              }`.trim()
+            : '';
+    const secondInfo =
+        numSeconds > 0
+            ? `${numSeconds === 1 ? '' : numSeconds} 2nd${
+                  numSeconds !== 1 ? 's' : ''
+              }`.trim()
+            : '';
+    const thirdInfo =
+        numThirds > 0
+            ? `${numThirds === 1 ? '' : numThirds} 3rd${
+                  numThirds !== 1 ? 's' : ''
+              }`.trim()
+            : '';
+    const fourthInfo =
+        numFourths > 0
+            ? `${numFourths === 1 ? '' : numFourths} 4th${
+                  numFourths !== 1 ? 's' : ''
+              }`.trim()
+            : '';
+    const allRoundsInfo = `${[firstInfo, secondInfo, thirdInfo, fourthInfo]
+        .filter(info => info !== '')
+        .join(', ')}`;
+    return allRoundsInfo;
+};
+
 // Convert "overallPickIndex" => "fantasy round + slot" for labeling
 function computeFantasyRoundAndSlot(
     overallPickIndex: number,

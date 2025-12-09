@@ -129,7 +129,11 @@ import {
 } from '../../../../../consts/images';
 import Add from '@mui/icons-material/Add';
 import Remove from '@mui/icons-material/Remove';
-import {CURRENT_SEASON, FinalPickData} from '../../../../../sleeper-api/picks';
+import {
+    CURRENT_SEASON,
+    FinalPickData,
+    getPicksInfo,
+} from '../../../../../sleeper-api/picks';
 
 export enum Archetype {
     HardRebuild = 'HARD REBUILD',
@@ -358,59 +362,7 @@ export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
         setOutlooks(ArchetypeDetails[archetype][0]);
     }, [archetype]);
     useEffect(() => {
-        if (!draftPicks || myPicks.length === 0) {
-            return;
-        }
-        const getPicksInfo = (picks: FinalPickData[], year: string) => {
-            if (picks.filter(p => p.season === year).length === 0) {
-                return '';
-            }
-            const numFirsts = picks.filter(
-                p => p.round === 1 && p.season === year
-            ).length;
-            const numSeconds = picks.filter(
-                p => p.round === 2 && p.season === year
-            ).length;
-            const numThirds = picks.filter(
-                p => p.round === 3 && p.season === year
-            ).length;
-            const numFourths = picks.filter(
-                p => p.round === 4 && p.season === year
-            ).length;
-            const firstInfo =
-                numFirsts > 0
-                    ? `${numFirsts === 1 ? '' : numFirsts} 1st${
-                          numFirsts !== 1 ? 's' : ''
-                      }`.trim()
-                    : '';
-            const secondInfo =
-                numSeconds > 0
-                    ? `${numSeconds === 1 ? '' : numSeconds} 2nd${
-                          numSeconds !== 1 ? 's' : ''
-                      }`.trim()
-                    : '';
-            const thirdInfo =
-                numThirds > 0
-                    ? `${numThirds === 1 ? '' : numThirds} 3rd${
-                          numThirds !== 1 ? 's' : ''
-                      }`.trim()
-                    : '';
-            const fourthInfo =
-                numFourths > 0
-                    ? `${numFourths === 1 ? '' : numFourths} 4th${
-                          numFourths !== 1 ? 's' : ''
-                      }`.trim()
-                    : '';
-            const allRoundsInfo = `${[
-                firstInfo,
-                secondInfo,
-                thirdInfo,
-                fourthInfo,
-            ]
-                .filter(info => info !== '')
-                .join(', ')}`;
-            return allRoundsInfo;
-        };
+        if (!draftPicks || myPicks.length === 0) return;
         const nextYearInfo = getPicksInfo(myPicks, '2026');
         setDraftCapitalNotes2026(nextYearInfo);
         const followingYearInfo = getPicksInfo(myPicks, '2027');
