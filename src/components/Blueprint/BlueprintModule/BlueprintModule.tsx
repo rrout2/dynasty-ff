@@ -27,9 +27,7 @@ import {
     TeamSelectComponent,
 } from '../../Team/TeamPage/TeamPage';
 import DomainAutocomplete from '../shared/DomainAutocomplete';
-import {
-    getPicksInfo,
-} from '../../../sleeper-api/picks';
+import {getPicksInfo} from '../../../sleeper-api/picks';
 import DomainTextField from '../shared/DomainTextField';
 import {IconButton} from '@mui/material';
 import {AddCircleOutline} from '@mui/icons-material';
@@ -118,14 +116,14 @@ export default function BlueprintModule() {
         ['', ''],
         ['', ''],
     ]);
-    const [move2, setMove2] = useState<Move>(Move.DOWNTIER);
+    const [move2, setMove2] = useState<Move>(Move.PIVOT);
     const [playerIdsToTrade2, setPlayerIdsToTrade2] = useState<string[]>([]);
     const [playerIdsToTarget2, setPlayerIdsToTarget2] = useState<string[][]>([
         ['', ''],
         ['', ''],
         ['', ''],
     ]);
-    const [move3, setMove3] = useState<Move>(Move.DOWNTIER);
+    const [move3, setMove3] = useState<Move>(Move.UPTIER);
     const [playerIdsToTrade3, setPlayerIdsToTrade3] = useState<string[]>([]);
     const [playerIdsToTarget3, setPlayerIdsToTarget3] = useState<string[][]>([
         ['', ''],
@@ -242,6 +240,14 @@ export default function BlueprintModule() {
                 <div className={styles.teamSelect}>
                     <div className={styles.teamSelectTitle}>TEAM</div>
                     <DomainDropdown
+                        renderValue={value => (
+                            <span
+                                style={{
+                                    fontStyle: 'italic',
+                                    fontWeight: 'normal',
+                                }}
+                            >{`${value}`}</span>
+                        )}
                         options={allUsers.map(u => getDisplayName(u))}
                         value={getDisplayName(specifiedUser)}
                         onChange={e => {
@@ -723,12 +729,16 @@ export default function BlueprintModule() {
                                         setAddPickRound(value as number);
                                     }
                                 }}
-                                renderValue={value => `Round ${value}`}
+                                renderValue={value => (
+                                    <span
+                                        style={{fontStyle: 'italic'}}
+                                    >{`Round ${value}`}</span>
+                                )}
                             />
                             <DomainDropdown
                                 options={[
-                                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-                                    14,
+                                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+                                    13, 14,
                                 ]}
                                 value={addPickSlot}
                                 onChange={e => {
@@ -739,7 +749,11 @@ export default function BlueprintModule() {
                                         setAddPickSlot(value as number);
                                     }
                                 }}
-                                renderValue={value => `Pick ${value}`}
+                                renderValue={value => (
+                                    <span
+                                        style={{fontStyle: 'italic'}}
+                                    >{`Pick ${value}`}</span>
+                                )}
                             />
                             <IconButton
                                 TouchRippleProps={{
@@ -755,7 +769,7 @@ export default function BlueprintModule() {
                                     if (draftCapitalNotes2026) {
                                         setDraftCapitalNotes2026(
                                             `${draftCapitalNotes2026}, ${pickString}`
-                                        )
+                                        );
                                     } else {
                                         setDraftCapitalNotes2026(pickString);
                                     }
@@ -770,13 +784,17 @@ export default function BlueprintModule() {
                             flexGrow={1}
                             label={'2026'}
                             value={draftCapitalNotes2026}
-                            onChange={e => setDraftCapitalNotes2026(e.target.value)}
+                            onChange={e =>
+                                setDraftCapitalNotes2026(e.target.value)
+                            }
                         />
                         <DomainTextField
                             flexGrow={1}
                             label={'2027'}
                             value={draftCapitalNotes2027}
-                            onChange={e => setDraftCapitalNotes2027(e.target.value)}
+                            onChange={e =>
+                                setDraftCapitalNotes2027(e.target.value)
+                            }
                         />
                     </div>
                 </div>
@@ -849,6 +867,11 @@ function SuggestedMove({
             <div className={styles.toTradeContainer}>
                 <div className={styles.moveTitle}>MOVE #{moveNumber}</div>
                 <DomainDropdown
+                    renderValue={value => (
+                        <span
+                            style={{fontStyle: 'italic', fontWeight: 'normal'}}
+                        >{`${value}`}</span>
+                    )}
                     options={[Move.DOWNTIER, Move.PIVOT, Move.UPTIER]}
                     value={move}
                     onChange={e => {
@@ -862,6 +885,15 @@ function SuggestedMove({
                 />
                 <div className={styles.toTradeRow}>
                     <DomainDropdown
+                        renderValue={value => (
+                            <span
+                                style={{
+                                    fontStyle: 'italic',
+                                    fontWeight: 'normal',
+                                    textTransform: 'uppercase',
+                                }}
+                            >{`${value}`}</span>
+                        )}
                         options={optionsToTrade}
                         value={getDisplayValueFromId(playerIdsToTrade[0])}
                         onChange={e => {
@@ -896,6 +928,15 @@ function SuggestedMove({
                                 style={{margin: '0', padding: '0'}}
                             />
                             <DomainDropdown
+                                renderValue={value => (
+                                    <span
+                                        style={{
+                                            fontStyle: 'italic',
+                                            fontWeight: 'normal',
+                                            textTransform: 'uppercase',
+                                        }}
+                                    >{`${value}`}</span>
+                                )}
                                 options={optionsToTrade}
                                 value={getDisplayValueFromId(
                                     playerIdsToTrade[1]
@@ -904,24 +945,23 @@ function SuggestedMove({
                                     const {
                                         target: {value},
                                     } = e;
-                                    if (value) {
-                                        for (const p of rosterPlayers) {
-                                            if (
-                                                `${p.first_name} ${p.last_name}` ===
-                                                value
-                                            ) {
-                                                setPlayerIdsToTrade([
-                                                    playerIdsToTrade[0],
-                                                    p.player_id,
-                                                ]);
-                                                return;
-                                            }
+                                    if (!value) return;
+                                    for (const p of rosterPlayers) {
+                                        if (
+                                            `${p.first_name} ${p.last_name}` ===
+                                            value
+                                        ) {
+                                            setPlayerIdsToTrade([
+                                                playerIdsToTrade[0],
+                                                p.player_id,
+                                            ]);
+                                            return;
                                         }
-                                        setPlayerIdsToTrade([
-                                            playerIdsToTrade[0],
-                                            value as string,
-                                        ]);
                                     }
+                                    setPlayerIdsToTrade([
+                                        playerIdsToTrade[0],
+                                        value as string,
+                                    ]);
                                 }}
                             />
                         </>

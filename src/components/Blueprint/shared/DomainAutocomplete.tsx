@@ -1,6 +1,5 @@
 import {
     Autocomplete,
-    AutocompleteProps,
     FormControl,
     TextField,
 } from '@mui/material';
@@ -99,8 +98,10 @@ export default function DomainAutocomplete(props: DomainAutocompleteProps) {
                         sx={{
                             input: {
                                 color: 'white',
-                                fontFamily: 'Acumin Pro',
-                                fontWeight: 'bold',
+                                fontFamily: 'Acumin Pro Condensed',
+                                textTransform: 'uppercase',
+                                fontStyle: 'italic',
+                                fontSize: '16px',
                             },
                         }}
                     />
