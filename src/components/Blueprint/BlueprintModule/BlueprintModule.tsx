@@ -100,6 +100,7 @@ enum PriorityOption {
 }
 
 export default function BlueprintModule() {
+    // Hooks
     useTitle('Blueprint Module');
     const [newLeagueModalOpen, setNewLeagueModalOpen] = useState(false);
     const [newLeagueId, setNewLeagueId] = useState('');
@@ -192,32 +193,7 @@ export default function BlueprintModule() {
         roster?.players
     );
 
-    function isStarting(playerName: string) {
-        return startingLineup.find(
-            ({player}) =>
-                `${player.first_name} ${player.last_name}` === playerName
-        )?.position;
-    }
-
-    function getClassName(playerName: string) {
-        const starting = isStarting(playerName);
-        switch (starting) {
-            case 'QB':
-                return styles.qbStarter;
-            case 'RB':
-                return styles.rbStarter;
-            case 'WR':
-                return styles.wrStarter;
-            case 'TE':
-                return styles.teStarter;
-        }
-        if (starting?.includes('FLEX')) {
-            return styles.flexStarter;
-        }
-        return '';
-    }
-
-    useEffect(() => {
+        useEffect(() => {
         if (!league) return;
         setPpr(league.scoring_settings.rec);
         setTep(league.scoring_settings.bonus_rec_te);
@@ -294,11 +270,49 @@ export default function BlueprintModule() {
             textfieldRef.current?.focus();
         }, 0);
     }, [newLeagueModalOpen]);
-
     const textfieldRef = useRef<HTMLInputElement>(null);
+
+    // -------------------------- End of hooks --------------------------
+
+    function isStarting(playerName: string) {
+        return startingLineup.find(
+            ({player}) =>
+                `${player.first_name} ${player.last_name}` === playerName
+        )?.position;
+    }
+
+    function getClassName(playerName: string) {
+        const starting = isStarting(playerName);
+        switch (starting) {
+            case 'QB':
+                return styles.qbStarter;
+            case 'RB':
+                return styles.rbStarter;
+            case 'WR':
+                return styles.wrStarter;
+            case 'TE':
+                return styles.teStarter;
+        }
+        if (starting?.includes('FLEX')) {
+            return styles.flexStarter;
+        }
+        return '';
+    }
 
     function hasTeamId() {
         return teamId !== '' && teamId !== NONE_TEAM_ID;
+    }
+
+    const bpActionButtonStyle = {
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: '10px',
+        '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        },
+        border: '2px solid white',
+        fontFamily: 'Acumin Pro',
+        fontWeight: 'bold',
+        fontSize: '20px',
     }
 
     return (
@@ -372,16 +386,8 @@ export default function BlueprintModule() {
                         variant="outlined"
                         endIcon={<FileDownload />}
                         sx={{
-                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            ...bpActionButtonStyle,
                             color: '#1AE069',
-                            borderRadius: '10px',
-                            '&:hover': {
-                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                            },
-                            border: '2px solid white',
-                            fontFamily: 'Acumin Pro',
-                            fontWeight: 'bold',
-                            fontSize: '20px',
                         }}
                         onClick={() => console.log('TODO: download blueprint')}
                     >
@@ -391,16 +397,8 @@ export default function BlueprintModule() {
                         variant="outlined"
                         endIcon={<Save />}
                         sx={{
-                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            ...bpActionButtonStyle,
                             color: '#FABF4A',
-                            borderRadius: '10px',
-                            '&:hover': {
-                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                            },
-                            border: '2px solid white',
-                            fontFamily: 'Acumin Pro',
-                            fontWeight: 'bold',
-                            fontSize: '20px',
                         }}
                         onClick={() => console.log('TODO: save')}
                     >
@@ -410,16 +408,8 @@ export default function BlueprintModule() {
                         variant="outlined"
                         endIcon={<Preview />}
                         sx={{
-                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            ...bpActionButtonStyle,
                             color: '#F47F20',
-                            borderRadius: '10px',
-                            '&:hover': {
-                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                            },
-                            border: '2px solid white',
-                            fontFamily: 'Acumin Pro',
-                            fontWeight: 'bold',
-                            fontSize: '20px',
                         }}
                         onClick={() => console.log('TODO: preview')}
                     >
