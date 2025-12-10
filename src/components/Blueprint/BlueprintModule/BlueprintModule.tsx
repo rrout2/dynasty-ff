@@ -10,6 +10,7 @@ import {
     useLeagueIdFromUrl,
     usePlayerData,
     usePositionalGrades,
+    useProjectedLineup,
     useRosterSettingsFromId,
     useTeamIdFromUrl,
     useTitle,
@@ -22,10 +23,7 @@ import {
     User,
 } from '../../../sleeper-api/sleeper-api';
 import {NONE_TEAM_ID} from '../../../consts/urlParams';
-import {
-    getDisplayName,
-    TeamSelectComponent,
-} from '../../Team/TeamPage/TeamPage';
+import {getDisplayName} from '../../Team/TeamPage/TeamPage';
 import DomainAutocomplete from '../shared/DomainAutocomplete';
 import {getPicksInfo} from '../../../sleeper-api/picks';
 import DomainTextField from '../shared/DomainTextField';
@@ -176,6 +174,35 @@ export default function BlueprintModule() {
     const [addPickRound, setAddPickRound] = useState(1);
     const [addPickSlot, setAddPickSlot] = useState(1);
     const {myPicks} = useGetPicks(leagueId, roster?.owner_id);
+    const {startingLineup} = useProjectedLineup(
+        rosterSettings,
+        roster?.players
+    );
+
+    function isStarting(playerName: string) {
+        return startingLineup.find(
+            ({player}) =>
+                `${player.first_name} ${player.last_name}` === playerName
+        )?.position;
+    }
+
+    function getClassName(playerName: string) {
+        const starting = isStarting(playerName);
+        switch (starting) {
+            case 'QB':
+                return styles.qbStarter;
+            case 'RB':
+                return styles.rbStarter;
+            case 'WR':
+                return styles.wrStarter;
+            case 'TE':
+                return styles.teStarter;
+        }
+        if (starting?.includes('FLEX')) {
+            return styles.flexStarter;
+        }
+        return '';
+    }
 
     useEffect(() => {
         if (!league) return;
@@ -412,7 +439,13 @@ export default function BlueprintModule() {
                                                     key={idx}
                                                     className={styles.player}
                                                 >
-                                                    <div>{fullName}</div>
+                                                    <div
+                                                        className={getClassName(
+                                                            fullName
+                                                        )}
+                                                    >
+                                                        {fullName}
+                                                    </div>
                                                     <div className={styles.adp}>
                                                         {getPositionalAdp(
                                                             fullName
@@ -452,7 +485,13 @@ export default function BlueprintModule() {
                                                     key={idx}
                                                     className={styles.player}
                                                 >
-                                                    <div>{fullName}</div>
+                                                    <div
+                                                        className={getClassName(
+                                                            fullName
+                                                        )}
+                                                    >
+                                                        {fullName}
+                                                    </div>
                                                     <div className={styles.adp}>
                                                         {getPositionalAdp(
                                                             fullName
@@ -492,7 +531,13 @@ export default function BlueprintModule() {
                                                     key={idx}
                                                     className={styles.player}
                                                 >
-                                                    <div>{fullName}</div>
+                                                    <div
+                                                        className={getClassName(
+                                                            fullName
+                                                        )}
+                                                    >
+                                                        {fullName}
+                                                    </div>
                                                     <div className={styles.adp}>
                                                         {getPositionalAdp(
                                                             fullName
@@ -532,7 +577,13 @@ export default function BlueprintModule() {
                                                     key={idx}
                                                     className={styles.player}
                                                 >
-                                                    <div>{fullName}</div>
+                                                    <div
+                                                        className={getClassName(
+                                                            fullName
+                                                        )}
+                                                    >
+                                                        {fullName}
+                                                    </div>
                                                     <div className={styles.adp}>
                                                         {getPositionalAdp(
                                                             fullName

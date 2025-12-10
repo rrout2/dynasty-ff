@@ -342,3 +342,32 @@
     font-family: 'Prohibition';
     font-size: 30px;
 }
+
+.flexStarter {
+    background: -webkit-linear-gradient(rgba(232, 77, 87, 1), rgba(40, 171, 226, 1), rgba(26, 224, 105, 1), rgba(250, 191, 74, 1));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    font-weight: bold;
+}
+
+.qbStarter {
+    color: #E84D57;
+    font-weight: bold;
+}
+
+.rbStarter {
+    color: #1AEAE9;
+    font-weight: bold;
+}
+
+.wrStarter {
+    color: #1AE069;
+    font-weight: bold;
+}
+
+.teStarter {
+    color: #FABF4A;
+    font-weight: bold;
+}
