@@ -1,7 +1,7 @@
 import {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import styles from './BlueprintModule.module.css';
 import DomainDropdown, {DARK_BLUE} from '../shared/DomainDropdown';
-import {pprIcon, sfIcon, teamsIcon, tepIcon} from '../../../consts/images';
+import {logoHorizontal, pprIcon, sfIcon, teamsIcon, tepIcon} from '../../../consts/images';
 import {
     useAdpData,
     useFetchRosters,
@@ -27,8 +27,13 @@ import {getDisplayName} from '../../Team/TeamPage/TeamPage';
 import DomainAutocomplete from '../shared/DomainAutocomplete';
 import {getPicksInfo} from '../../../sleeper-api/picks';
 import DomainTextField from '../shared/DomainTextField';
-import {IconButton} from '@mui/material';
-import {AddCircleOutline} from '@mui/icons-material';
+import {Box, Button, IconButton, Modal} from '@mui/material';
+import {
+    AddCircleOutline,
+    FileDownload,
+    Preview,
+    Save,
+} from '@mui/icons-material';
 
 const PCT_OPTIONS = [
     '0%',
@@ -90,7 +95,9 @@ enum PriorityOption {
 
 export default function BlueprintModule() {
     useTitle('Blueprint Module');
-    const [leagueId] = useLeagueIdFromUrl();
+    const [newLeagueModalOpen, setNewLeagueModalOpen] = useState(false);
+    const [newLeagueId, setNewLeagueId] = useState('');
+    const [leagueId, setLeagueId] = useLeagueIdFromUrl();
     const [teamId, setTeamId] = useTeamIdFromUrl();
     const {data: rosters} = useFetchRosters(leagueId);
     const [allUsers, setAllUsers] = useState<User[]>([]);
@@ -252,7 +259,10 @@ export default function BlueprintModule() {
         }
         if (+teamId >= allUsers.length) return;
         const newRoster = getRosterFromTeamIdx(+teamId);
-        if (!newRoster) throw new Error('roster not found');
+        if (!newRoster) {
+            console.warn(`roster not found for teamId '${teamId}'`);
+            return;
+        }
         setRoster(newRoster);
     }, [rosters, teamId, playerData, allUsers]);
     useEffect(() => {
@@ -265,7 +275,7 @@ export default function BlueprintModule() {
     }, [roster, playerData, sortByAdp]);
 
     useEffect(() => {
-        if (myPicks.length === 0) return;
+        if (!myPicks || myPicks.length === 0) return;
         const nextYearInfo = getPicksInfo(myPicks, '2026');
         setDraftCapitalNotes2026(nextYearInfo);
         const followingYearInfo = getPicksInfo(myPicks, '2027');
@@ -278,6 +288,128 @@ export default function BlueprintModule() {
 
     return (
         <div style={{backgroundColor: DARK_BLUE}}>
+            <div className={styles.headerContainer}>
+                <Button
+                    variant="outlined"
+                    startIcon={<AddCircleOutline />}
+                    style={{
+                        paddingBottom: '7px',
+                        height: '40px',
+                    }}
+                    sx={{
+                        backgroundColor: '#28ABE2',
+                        color: DARK_BLUE,
+                        borderRadius: '100px',
+                        '&:hover': {
+                            backgroundColor: '#006FDB',
+                            borderColor: '#006FDB',
+                        },
+                        fontFamily: 'Prohibition',
+                        fontSize: '30px',
+                    }}
+                    onClick={() => setNewLeagueModalOpen(true)}
+                >
+                    NEW LEAGUE
+                </Button>
+                <Modal
+                    open={newLeagueModalOpen}
+                    onClose={() => setNewLeagueModalOpen(false)}
+                >
+                    <Box className={styles.newLeagueModal}>
+                        <DomainTextField
+                            focused={true}
+                            label="New League ID"
+                            value={newLeagueId}
+                            onChange={e => setNewLeagueId(e.target.value)}
+                        />
+                        <Button
+                            sx={{
+                                fontFamily: 'Prohibition',
+                                '&:disabled': {
+                                    backgroundColor: 'gray',
+                                    borderColor: 'black',
+                                },
+                            }}
+                            variant="contained"
+                            onClick={() => {
+                                setRoster(undefined);
+                                setRosterPlayers([]);
+                                setTeamId('0');
+                                setSpecifiedUser(undefined);
+
+                                setLeagueId(newLeagueId.trim());
+
+                                setNewLeagueId('');
+                                setNewLeagueModalOpen(false);
+                            }}
+                            disabled={!newLeagueId.trim()}
+                        >
+                            Submit
+                        </Button>
+                    </Box>
+                </Modal>
+                <div className={styles.bpActions}>
+                    <Button
+                        variant="outlined"
+                        endIcon={<FileDownload />}
+                        sx={{
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            color: '#1AE069',
+                            borderRadius: '10px',
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                            },
+                            border: '2px solid white',
+                            fontFamily: 'Acumin Pro',
+                            fontWeight: 'bold',
+                            fontSize: '20px',
+                        }}
+                        onClick={() => console.log('TODO: download blueprint')}
+                    >
+                        DOWNLOAD BP
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        endIcon={<Save />}
+                        sx={{
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            color: '#FABF4A',
+                            borderRadius: '10px',
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                            },
+                            border: '2px solid white',
+                            fontFamily: 'Acumin Pro',
+                            fontWeight: 'bold',
+                            fontSize: '20px',
+                        }}
+                        onClick={() => console.log('TODO: save')}
+                    >
+                        SAVE
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        endIcon={<Preview />}
+                        sx={{
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            color: '#F47F20',
+                            borderRadius: '10px',
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                            },
+                            border: '2px solid white',
+                            fontFamily: 'Acumin Pro',
+                            fontWeight: 'bold',
+                            fontSize: '20px',
+                        }}
+                        onClick={() => console.log('TODO: preview')}
+                    >
+                        SHOW PREVIEW
+                    </Button>
+                </div>
+                <div className={styles.title}>BLUEPRINT MODULE</div>
+                <img src={logoHorizontal} className={styles.logo} />
+            </div>
             <div className={styles.topSection}>
                 <div>
                     <div className={styles.dropdownContainer}>
@@ -613,18 +745,20 @@ export default function BlueprintModule() {
                                 >
                                     Picks
                                 </div>
-                                <div className={styles.playersColumn}>
-                                    {myPicks.map((p, idx) => {
-                                        return (
-                                            <div
-                                                key={idx}
-                                                className={styles.player}
-                                            >
-                                                {p.pick_name}
-                                            </div>
-                                        );
-                                    })}
-                                </div>
+                                {myPicks && (
+                                    <div className={styles.playersColumn}>
+                                        {myPicks.map((p, idx) => {
+                                            return (
+                                                <div
+                                                    key={idx}
+                                                    className={styles.player}
+                                                >
+                                                    {p.pick_name}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
                             </div>
                             <div className={styles.scoreContainer}>
                                 <DomainDropdown

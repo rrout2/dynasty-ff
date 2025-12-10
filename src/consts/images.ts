@@ -293,6 +293,7 @@ import teamsIcon from '../assets/module/icons/teamsIcon.png';
 import sfIcon from '../assets/module/icons/sfIcon.png';
 import tepIcon from '../assets/module/icons/tepIcon.png';
 import pprIcon from '../assets/module/icons/pprIcon.png';
+import logoHorizontal from '../assets/module/logoHorizontal.png';
 
 const tierLogos: Map<string, string> = new Map([
     ['S', sTier],
@@ -702,4 +703,5 @@ export {
     sfIcon,
     tepIcon,
     pprIcon,
+    logoHorizontal,
 };
