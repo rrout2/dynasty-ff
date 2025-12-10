@@ -1044,6 +1044,11 @@ export default function BlueprintModule() {
                                     )}
                                 />
                                 <IconButton
+                                    sx={{
+                                        '&:hover': {
+                                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                        },
+                                    }}
                                     TouchRippleProps={{
                                         style: {
                                             color: 'white',
