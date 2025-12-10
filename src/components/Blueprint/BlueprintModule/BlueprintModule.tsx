@@ -1,7 +1,13 @@
 import {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import styles from './BlueprintModule.module.css';
 import DomainDropdown, {DARK_BLUE} from '../shared/DomainDropdown';
-import {logoHorizontal, pprIcon, sfIcon, teamsIcon, tepIcon} from '../../../consts/images';
+import {
+    logoHorizontal,
+    pprIcon,
+    sfIcon,
+    teamsIcon,
+    tepIcon,
+} from '../../../consts/images';
 import {
     useAdpData,
     useFetchRosters,

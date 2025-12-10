@@ -25,6 +25,7 @@ import Dashboard from './components/Blueprint/Dashboard/Dashboard';
 import BuySellHoldDashboard from './components/BuySellHoldDashboard/BuySellHoldDashboard';
 import UserIdHydrator from './components/UserIdHydrator/UserIdHydrator';
 import BlueprintModule from './components/Blueprint/BlueprintModule/BlueprintModule';
+import BodyBackgroundController from './BodyBackgroundController';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -36,6 +37,7 @@ root.render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
             <HashRouter basename="/">
+                <BodyBackgroundController />
                 <Routes>
                     <Route path="/" element={<App />} />
                     <Route path="/league" element={<LeaguePage />} />
