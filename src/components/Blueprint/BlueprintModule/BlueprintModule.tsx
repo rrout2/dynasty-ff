@@ -1,6 +1,6 @@
 import {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import styles from './BlueprintModule.module.css';
-import DomainDropdown from '../shared/DomainDropdown';
+import DomainDropdown, {DARK_BLUE} from '../shared/DomainDropdown';
 import {pprIcon, sfIcon, teamsIcon, tepIcon} from '../../../consts/images';
 import {
     useAdpData,
@@ -250,372 +250,448 @@ export default function BlueprintModule() {
     }
 
     return (
-        <div>
-            <div className={styles.dropdownContainer}>
-                <div className={styles.teamSelect}>
-                    <div className={styles.teamSelectTitle}>TEAM</div>
-                    <DomainDropdown
-                        renderValue={value => (
-                            <span
-                                style={{
-                                    fontStyle: 'italic',
-                                    fontWeight: 'normal',
+        <div style={{backgroundColor: DARK_BLUE}}>
+            <div className={styles.topSection}>
+                <div>
+                    <div className={styles.dropdownContainer}>
+                        <div className={styles.teamSelect}>
+                            <div className={styles.teamSelectTitle}>TEAM</div>
+                            <DomainDropdown
+                                renderValue={value => (
+                                    <span
+                                        style={{
+                                            fontStyle: 'italic',
+                                            fontWeight: 'normal',
+                                        }}
+                                    >{`${value}`}</span>
+                                )}
+                                options={allUsers.map(u => getDisplayName(u))}
+                                value={getDisplayName(specifiedUser)}
+                                onChange={e => {
+                                    const {
+                                        target: {value},
+                                    } = e;
+                                    allUsers.forEach((u, idx) => {
+                                        if (getDisplayName(u) === value) {
+                                            setSpecifiedUser(u);
+                                            setTeamId(idx.toString());
+                                        }
+                                    });
                                 }}
-                            >{`${value}`}</span>
-                        )}
-                        options={allUsers.map(u => getDisplayName(u))}
-                        value={getDisplayName(specifiedUser)}
-                        onChange={e => {
-                            const {
-                                target: {value},
-                            } = e;
-                            allUsers.forEach((u, idx) => {
-                                if (getDisplayName(u) === value) {
-                                    setSpecifiedUser(u);
-                                    setTeamId(idx.toString());
-                                }
-                            });
-                        }}
-                        style={{width: '350px'}}
-                    />
+                                style={{width: '350px'}}
+                            />
+                        </div>
+                        <DomainDropdown
+                            label={
+                                <div className={styles.labels}>
+                                    <img
+                                        src={teamsIcon}
+                                        className={styles.icons}
+                                    />
+                                    TEAMS
+                                </div>
+                            }
+                            options={[8, 10, 12, 14, 16, 18, 20]}
+                            value={numTeams}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                setNumTeams(value as number);
+                            }}
+                        />
+                        <DomainDropdown
+                            label={
+                                <div className={styles.labels}>
+                                    <img
+                                        src={sfIcon}
+                                        className={styles.icons}
+                                    />
+                                    SF?
+                                </div>
+                            }
+                            options={['YES', 'NO']}
+                            value={isSuperFlex ? 'YES' : 'NO'}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                setIsSuperFlex((value as string) === 'YES');
+                            }}
+                        />
+                        <DomainDropdown
+                            label={
+                                <div className={styles.labels}>
+                                    <img
+                                        src={pprIcon}
+                                        className={styles.icons}
+                                    />
+                                    PPR
+                                </div>
+                            }
+                            options={[0, 0.5, 1.0, 1.5, 2]}
+                            value={ppr}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                setPpr(value as number);
+                            }}
+                        />
+                        <DomainDropdown
+                            label={
+                                <div className={styles.labels}>
+                                    <img
+                                        src={tepIcon}
+                                        className={styles.icons}
+                                    />
+                                    TEP
+                                </div>
+                            }
+                            options={[0.5, 1.0, 1.5, 2]}
+                            value={tep}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                setTep(value as number);
+                            }}
+                        />
+                        <DomainDropdown
+                            label={
+                                <div
+                                    style={{width: '40px'}}
+                                    className={styles.labels}
+                                >
+                                    PROD. SHARE
+                                </div>
+                            }
+                            options={PCT_OPTIONS}
+                            value={productionShare}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                setProductionShare(value as string);
+                            }}
+                        />
+                        <DomainDropdown
+                            label={
+                                <div
+                                    style={{width: '40px'}}
+                                    className={styles.labels}
+                                >
+                                    VALUE SHARE
+                                </div>
+                            }
+                            options={PCT_OPTIONS}
+                            value={valueShare}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                setValueShare(value as string);
+                            }}
+                        />
+                    </div>
+                    {roster && (
+                        <div className={styles.rosterContainer}>
+                            <div className={styles.positionContainer}>
+                                <div
+                                    className={`${styles.positionTitle} ${styles.qbTitle}`}
+                                >
+                                    QUARTERBACKS
+                                </div>
+                                <div className={styles.playersColumn}>
+                                    {rosterPlayers
+                                        .filter(p => p.position === QB)
+                                        .map((p, idx) => {
+                                            const fullName = `${p.first_name} ${p.last_name}`;
+                                            return (
+                                                <div
+                                                    key={idx}
+                                                    className={styles.player}
+                                                >
+                                                    <div>{fullName}</div>
+                                                    <div className={styles.adp}>
+                                                        {getPositionalAdp(
+                                                            fullName
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                </div>
+                            </div>
+                            <DomainDropdown
+                                options={GRADE_OPTIONS}
+                                value={qb}
+                                onChange={e => {
+                                    const {
+                                        target: {value},
+                                    } = e;
+                                    if (value) {
+                                        setQb(value as number);
+                                    }
+                                }}
+                                outlineColor={'#E84D57'}
+                            />
+                            <div className={styles.positionContainer}>
+                                <div
+                                    className={`${styles.positionTitle} ${styles.rbTitle}`}
+                                >
+                                    Running Backs
+                                </div>
+                                <div className={styles.playersColumn}>
+                                    {rosterPlayers
+                                        .filter(p => p.position === RB)
+                                        .map((p, idx) => {
+                                            const fullName = `${p.first_name} ${p.last_name}`;
+                                            return (
+                                                <div
+                                                    key={idx}
+                                                    className={styles.player}
+                                                >
+                                                    <div>{fullName}</div>
+                                                    <div className={styles.adp}>
+                                                        {getPositionalAdp(
+                                                            fullName
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                </div>
+                            </div>
+                            <DomainDropdown
+                                options={GRADE_OPTIONS}
+                                value={rb}
+                                onChange={e => {
+                                    const {
+                                        target: {value},
+                                    } = e;
+                                    if (value) {
+                                        setRb(value as number);
+                                    }
+                                }}
+                                outlineColor={'rgba(40, 171, 226, 1)'}
+                            />
+                            <div className={styles.positionContainer}>
+                                <div
+                                    className={`${styles.positionTitle} ${styles.wrTitle}`}
+                                >
+                                    Wide Receivers
+                                </div>
+                                <div className={styles.playersColumn}>
+                                    {rosterPlayers
+                                        .filter(p => p.position === WR)
+                                        .map((p, idx) => {
+                                            const fullName = `${p.first_name} ${p.last_name}`;
+                                            return (
+                                                <div
+                                                    key={idx}
+                                                    className={styles.player}
+                                                >
+                                                    <div>{fullName}</div>
+                                                    <div className={styles.adp}>
+                                                        {getPositionalAdp(
+                                                            fullName
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                </div>
+                            </div>
+                            <DomainDropdown
+                                options={GRADE_OPTIONS}
+                                value={wr}
+                                onChange={e => {
+                                    const {
+                                        target: {value},
+                                    } = e;
+                                    if (value) {
+                                        setWr(value as number);
+                                    }
+                                }}
+                                outlineColor={'rgb(26, 224, 105)'}
+                            />
+                            <div className={styles.positionContainer}>
+                                <div
+                                    className={`${styles.positionTitle} ${styles.teTitle}`}
+                                >
+                                    Tight Ends
+                                </div>
+                                <div className={styles.playersColumn}>
+                                    {rosterPlayers
+                                        .filter(p => p.position === TE)
+                                        .map((p, idx) => {
+                                            const fullName = `${p.first_name} ${p.last_name}`;
+                                            return (
+                                                <div
+                                                    key={idx}
+                                                    className={styles.player}
+                                                >
+                                                    <div>{fullName}</div>
+                                                    <div className={styles.adp}>
+                                                        {getPositionalAdp(
+                                                            fullName
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                </div>
+                            </div>
+                            <DomainDropdown
+                                options={GRADE_OPTIONS}
+                                value={te}
+                                onChange={e => {
+                                    const {
+                                        target: {value},
+                                    } = e;
+                                    if (value) {
+                                        setTe(value as number);
+                                    }
+                                }}
+                                outlineColor={'rgb(250, 191, 74)'}
+                            />
+                            <div className={styles.positionContainer}>
+                                <div
+                                    className={`${styles.positionTitle} ${styles.picksTitle}`}
+                                >
+                                    Picks
+                                </div>
+                                <div className={styles.playersColumn}>
+                                    {myPicks.map((p, idx) => {
+                                        return (
+                                            <div
+                                                key={idx}
+                                                className={styles.player}
+                                            >
+                                                {p.pick_name}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                            <div className={styles.scoreContainer}>
+                                <DomainDropdown
+                                    label={
+                                        <div
+                                            className={styles.labels}
+                                            style={{color: 'rgb(252, 71, 26)'}}
+                                        >
+                                            DC
+                                        </div>
+                                    }
+                                    options={GRADE_OPTIONS}
+                                    value={draftCapitalScore}
+                                    onChange={e => {
+                                        const {
+                                            target: {value},
+                                        } = e;
+                                        if (value) {
+                                            setDraftCapitalScore(
+                                                value as number
+                                            );
+                                        }
+                                    }}
+                                    outlineColor={'rgb(252, 71, 26)'}
+                                />
+                                <DomainDropdown
+                                    label={
+                                        <div
+                                            className={styles.labels}
+                                            style={{
+                                                color: 'rgb(180, 217, 228)',
+                                            }}
+                                        >
+                                            FLEX
+                                        </div>
+                                    }
+                                    options={GRADE_OPTIONS}
+                                    value={flexScore}
+                                    onChange={e => {
+                                        const {
+                                            target: {value},
+                                        } = e;
+                                        if (value) {
+                                            setFlexScore(value as number);
+                                        }
+                                    }}
+                                    outlineColor={'rgb(180, 217, 228)'}
+                                />
+                                <DomainDropdown
+                                    label={
+                                        <div
+                                            className={styles.labels}
+                                            style={{
+                                                color: 'rgb(180, 217, 228)',
+                                            }}
+                                        >
+                                            SF
+                                        </div>
+                                    }
+                                    options={GRADE_OPTIONS}
+                                    value={sfScore}
+                                    onChange={e => {
+                                        const {
+                                            target: {value},
+                                        } = e;
+                                        if (value) {
+                                            setSfScore(value as number);
+                                        }
+                                    }}
+                                    outlineColor={'rgb(180, 217, 228)'}
+                                />
+                                <DomainDropdown
+                                    label={
+                                        <div
+                                            className={styles.labels}
+                                            style={{color: '#CD1CFD'}}
+                                        >
+                                            BN
+                                        </div>
+                                    }
+                                    options={GRADE_OPTIONS}
+                                    value={depth}
+                                    onChange={e => {
+                                        const {
+                                            target: {value},
+                                        } = e;
+                                        if (value) {
+                                            setDepth(value as number);
+                                        }
+                                    }}
+                                    outlineColor={'#CD1CFD'}
+                                />
+                                <DomainDropdown
+                                    label={
+                                        <div
+                                            className={styles.labels}
+                                            style={{color: '#B4D9E4'}}
+                                        >
+                                            OVERALL
+                                        </div>
+                                    }
+                                    options={GRADE_OPTIONS}
+                                    value={overall}
+                                    onChange={e => {
+                                        const {
+                                            target: {value},
+                                        } = e;
+                                        if (value) {
+                                            setOverall(value as number);
+                                        }
+                                    }}
+                                    outlineColor={'#B4D9E4'}
+                                />
+                            </div>
+                        </div>
+                    )}
                 </div>
-                <DomainDropdown
-                    label={
-                        <div className={styles.labels}>
-                            <img src={teamsIcon} className={styles.icons} />
-                            TEAMS
-                        </div>
-                    }
-                    options={[8, 10, 12, 14, 16, 18, 20]}
-                    value={numTeams}
-                    onChange={e => {
-                        const {
-                            target: {value},
-                        } = e;
-                        setNumTeams(value as number);
-                    }}
-                />
-                <DomainDropdown
-                    label={
-                        <div className={styles.labels}>
-                            <img src={sfIcon} className={styles.icons} />
-                            SF?
-                        </div>
-                    }
-                    options={['YES', 'NO']}
-                    value={isSuperFlex ? 'YES' : 'NO'}
-                    onChange={e => {
-                        const {
-                            target: {value},
-                        } = e;
-                        setIsSuperFlex((value as string) === 'YES');
-                    }}
-                />
-                <DomainDropdown
-                    label={
-                        <div className={styles.labels}>
-                            <img src={pprIcon} className={styles.icons} />
-                            PPR
-                        </div>
-                    }
-                    options={[0, 0.5, 1.0, 1.5, 2]}
-                    value={ppr}
-                    onChange={e => {
-                        const {
-                            target: {value},
-                        } = e;
-                        setPpr(value as number);
-                    }}
-                />
-                <DomainDropdown
-                    label={
-                        <div className={styles.labels}>
-                            <img src={tepIcon} className={styles.icons} />
-                            TEP
-                        </div>
-                    }
-                    options={[0.5, 1.0, 1.5, 2]}
-                    value={tep}
-                    onChange={e => {
-                        const {
-                            target: {value},
-                        } = e;
-                        setTep(value as number);
-                    }}
-                />
-                <DomainDropdown
-                    label={
-                        <div style={{width: '40px'}} className={styles.labels}>
-                            PROD. SHARE
-                        </div>
-                    }
-                    options={PCT_OPTIONS}
-                    value={productionShare}
-                    onChange={e => {
-                        const {
-                            target: {value},
-                        } = e;
-                        setProductionShare(value as string);
-                    }}
-                />
-                <DomainDropdown
-                    label={
-                        <div style={{width: '40px'}} className={styles.labels}>
-                            VALUE SHARE
-                        </div>
-                    }
-                    options={PCT_OPTIONS}
-                    value={valueShare}
-                    onChange={e => {
-                        const {
-                            target: {value},
-                        } = e;
-                        setValueShare(value as string);
-                    }}
-                />
-            </div>
-            {roster && (
-                <div className={styles.rosterContainer}>
-                    <div className={styles.positionContainer}>
-                        <div
-                            className={`${styles.positionTitle} ${styles.qbTitle}`}
-                        >
-                            QUARTERBACKS
-                        </div>
-                        <div className={styles.playersColumn}>
-                            {rosterPlayers
-                                .filter(p => p.position === QB)
-                                .map((p, idx) => {
-                                    const fullName = `${p.first_name} ${p.last_name}`;
-                                    return (
-                                        <div
-                                            key={idx}
-                                            className={styles.player}
-                                        >
-                                            <div>{fullName}</div>
-                                            <div className={styles.adp}>
-                                                {getPositionalAdp(fullName)}
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                        </div>
-                    </div>
-                    <DomainDropdown
-                        options={GRADE_OPTIONS}
-                        value={qb}
-                        onChange={e => {
-                            const {
-                                target: {value},
-                            } = e;
-                            if (value) {
-                                setQb(value as number);
-                            }
-                        }}
-                        outlineColor={'#E84D57'}
-                    />
-                    <div className={styles.positionContainer}>
-                        <div
-                            className={`${styles.positionTitle} ${styles.rbTitle}`}
-                        >
-                            Running Backs
-                        </div>
-                        <div className={styles.playersColumn}>
-                            {rosterPlayers
-                                .filter(p => p.position === RB)
-                                .map((p, idx) => {
-                                    const fullName = `${p.first_name} ${p.last_name}`;
-                                    return (
-                                        <div
-                                            key={idx}
-                                            className={styles.player}
-                                        >
-                                            <div>{fullName}</div>
-                                            <div className={styles.adp}>
-                                                {getPositionalAdp(fullName)}
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                        </div>
-                    </div>
-                    <DomainDropdown
-                        options={GRADE_OPTIONS}
-                        value={rb}
-                        onChange={e => {
-                            const {
-                                target: {value},
-                            } = e;
-                            if (value) {
-                                setRb(value as number);
-                            }
-                        }}
-                        outlineColor={'rgba(40, 171, 226, 1)'}
-                    />
-                    <div className={styles.positionContainer}>
-                        <div
-                            className={`${styles.positionTitle} ${styles.wrTitle}`}
-                        >
-                            Wide Receivers
-                        </div>
-                        <div className={styles.playersColumn}>
-                            {rosterPlayers
-                                .filter(p => p.position === WR)
-                                .map((p, idx) => {
-                                    const fullName = `${p.first_name} ${p.last_name}`;
-                                    return (
-                                        <div
-                                            key={idx}
-                                            className={styles.player}
-                                        >
-                                            <div>{fullName}</div>
-                                            <div className={styles.adp}>
-                                                {getPositionalAdp(fullName)}
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                        </div>
-                    </div>
-                    <DomainDropdown
-                        options={GRADE_OPTIONS}
-                        value={wr}
-                        onChange={e => {
-                            const {
-                                target: {value},
-                            } = e;
-                            if (value) {
-                                setWr(value as number);
-                            }
-                        }}
-                        outlineColor={'rgb(26, 224, 105)'}
-                    />
-                    <div className={styles.positionContainer}>
-                        <div
-                            className={`${styles.positionTitle} ${styles.teTitle}`}
-                        >
-                            Tight Ends
-                        </div>
-                        <div className={styles.playersColumn}>
-                            {rosterPlayers
-                                .filter(p => p.position === TE)
-                                .map((p, idx) => {
-                                    const fullName = `${p.first_name} ${p.last_name}`;
-                                    return (
-                                        <div
-                                            key={idx}
-                                            className={styles.player}
-                                        >
-                                            <div>{fullName}</div>
-                                            <div className={styles.adp}>
-                                                {getPositionalAdp(fullName)}
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                        </div>
-                    </div>
-                    <DomainDropdown
-                        options={GRADE_OPTIONS}
-                        value={te}
-                        onChange={e => {
-                            const {
-                                target: {value},
-                            } = e;
-                            if (value) {
-                                setTe(value as number);
-                            }
-                        }}
-                        outlineColor={'rgb(250, 191, 74)'}
-                    />
-                    <div className={styles.positionContainer}>
-                        <div
-                            className={`${styles.positionTitle} ${styles.picksTitle}`}
-                        >
-                            Picks
-                        </div>
-                        <div className={styles.playersColumn}>
-                            {myPicks.map((p, idx) => {
-                                return (
-                                    <div key={idx} className={styles.player}>
-                                        {p.pick_name}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                    <div className={styles.scoreContainer}>
-                        <DomainDropdown
-                            label={<div className={styles.labels}>DC</div>}
-                            options={GRADE_OPTIONS}
-                            value={draftCapitalScore}
-                            onChange={e => {
-                                const {
-                                    target: {value},
-                                } = e;
-                                if (value) {
-                                    setDraftCapitalScore(value as number);
-                                }
-                            }}
-                            outlineColor={'rgb(252, 71, 26)'}
-                        />
-                        <DomainDropdown
-                            label={<div className={styles.labels}>FLEX</div>}
-                            options={GRADE_OPTIONS}
-                            value={flexScore}
-                            onChange={e => {
-                                const {
-                                    target: {value},
-                                } = e;
-                                if (value) {
-                                    setFlexScore(value as number);
-                                }
-                            }}
-                            outlineColor={'rgb(180, 217, 228)'}
-                        />
-                        <DomainDropdown
-                            label={<div className={styles.labels}>SF</div>}
-                            options={GRADE_OPTIONS}
-                            value={sfScore}
-                            onChange={e => {
-                                const {
-                                    target: {value},
-                                } = e;
-                                if (value) {
-                                    setSfScore(value as number);
-                                }
-                            }}
-                            outlineColor={'rgb(180, 217, 228)'}
-                        />
-                        <DomainDropdown
-                            label={<div className={styles.labels}>BN</div>}
-                            options={GRADE_OPTIONS}
-                            value={depth}
-                            onChange={e => {
-                                const {
-                                    target: {value},
-                                } = e;
-                                if (value) {
-                                    setDepth(value as number);
-                                }
-                            }}
-                            outlineColor={'#CD1CFD'}
-                        />
-                        <DomainDropdown
-                            label={<div className={styles.labels}>OVERALL</div>}
-                            options={GRADE_OPTIONS}
-                            value={overall}
-                            onChange={e => {
-                                const {
-                                    target: {value},
-                                } = e;
-                                if (value) {
-                                    setOverall(value as number);
-                                }
-                            }}
-                            outlineColor={'#B4D9E4'}
-                        />
-                    </div>
+                <div className={styles.topRightSection}>
                     <div className={styles.archetypeContainer}>
                         <div className={styles.archetypeTitle}>
                             Value Archetype
@@ -651,6 +727,8 @@ export default function BlueprintModule() {
                                 }
                             }}
                         />
+                    </div>
+                    <div className={styles.twoYearOutlookContainer}>
                         <div className={styles.archetypeTitle}>
                             2-Year Outlook
                         </div>
@@ -690,7 +768,7 @@ export default function BlueprintModule() {
                         />
                     </div>
                 </div>
-            )}
+            </div>
             <div className={styles.bottomSection}>
                 <div className={styles.tradeContainer}>
                     <div className={styles.tradeTitle}>Trade Strategy</div>

@@ -1,6 +1,13 @@
+.topSection {
+    display: flex;
+    flex-direction: row;
+    background-color: #04121C;
+    width: fit-content;
+}
+
 .dropdownContainer {
     background-color: #04121C;
-    width: 1500px;
+    width: fit-content;
     padding: 10px;
 
     display: flex;
@@ -11,7 +18,7 @@
 .rosterContainer {
     background-color: #04121C;
 
-    width: 1800px;
+    width: fit-content;
     padding: 10px;
 
     display: flex;
@@ -19,6 +26,8 @@
     gap: 20px;
 
     align-items: flex-start;
+
+    border-top: 1px solid #ccc;
 }
 
 .teamSelect {
@@ -131,6 +140,8 @@
     background-color: #04121C;
 
     width: 1400px;
+
+    border-top: 1px solid #ccc;
 }
 
 .toTradeContainer {
@@ -140,7 +151,8 @@
     width: 1500px;
 
     border-right: 1px solid #ccc;
-    margin-right: 8px;
+
+    padding: 20px;
 }
 
 .toTradeContainer:last-child {
@@ -193,13 +205,38 @@
     text-align: center;
 }
 
+.topRightSection {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    background-color: #04121C;
+
+    align-items: center;
+    justify-content: space-between;
+
+    border-left: 1px solid #ccc;
+}
+
 .archetypeContainer {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 300px;
-
     align-items: center;
+
+    /* width: 100%; */
+
+    padding: 20px;
+
+    border-bottom: 1px solid #ccc;
+}
+
+.twoYearOutlookContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+
+    padding: 20px;
 }
 
 .archetypeTitle {
@@ -221,6 +258,9 @@
     width: 600px;
 
     padding: 20px;
+
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
 }
 
 .draftCapitalHeaderRow {
@@ -291,6 +331,9 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    border-left: 1px solid #ccc;
+
 }
 
 .topPrioritiesTitle {
