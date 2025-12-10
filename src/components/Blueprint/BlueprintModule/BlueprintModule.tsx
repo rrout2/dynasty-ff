@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction, useEffect, useState} from 'react';
+import {Dispatch, SetStateAction, useEffect, useRef, useState} from 'react';
 import styles from './BlueprintModule.module.css';
 import DomainDropdown, {DARK_BLUE} from '../shared/DomainDropdown';
 import {
@@ -288,6 +288,15 @@ export default function BlueprintModule() {
         setDraftCapitalNotes2027(followingYearInfo);
     }, [myPicks]);
 
+    useEffect(() => {
+        if (!newLeagueModalOpen) return;
+        setTimeout(() => {
+            textfieldRef.current?.focus();
+        }, 0);
+    }, [newLeagueModalOpen]);
+
+    const textfieldRef = useRef<HTMLInputElement>(null);
+
     function hasTeamId() {
         return teamId !== '' && teamId !== NONE_TEAM_ID;
     }
@@ -313,17 +322,22 @@ export default function BlueprintModule() {
                         fontFamily: 'Prohibition',
                         fontSize: '30px',
                     }}
-                    onClick={() => setNewLeagueModalOpen(true)}
+                    onClick={() => {
+                        setNewLeagueModalOpen(true);
+                    }}
                 >
                     NEW LEAGUE
                 </Button>
                 <Modal
                     open={newLeagueModalOpen}
-                    onClose={() => setNewLeagueModalOpen(false)}
+                    onClose={() => {
+                        setNewLeagueModalOpen(false);
+                        setNewLeagueId('');
+                    }}
                 >
                     <Box className={styles.newLeagueModal}>
                         <DomainTextField
-                            focused={true}
+                            inputRef={textfieldRef}
                             label="New League ID"
                             value={newLeagueId}
                             onChange={e => setNewLeagueId(e.target.value)}
