@@ -333,7 +333,6 @@ export default function BlueprintModule() {
                                 fontFamily: 'Prohibition',
                                 '&:disabled': {
                                     backgroundColor: 'gray',
-                                    borderColor: 'black',
                                 },
                             }}
                             variant="contained"
