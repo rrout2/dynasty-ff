@@ -1,8 +1,4 @@
-import {
-    Autocomplete,
-    FormControl,
-    TextField,
-} from '@mui/material';
+import {Autocomplete, FormControl, TextField} from '@mui/material';
 import {useState, useEffect} from 'react';
 import {usePlayerData} from '../../../hooks/hooks';
 import {Player} from '../../../sleeper-api/sleeper-api';

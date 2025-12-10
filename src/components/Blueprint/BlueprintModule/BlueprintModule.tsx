@@ -84,6 +84,12 @@ enum OutlookOption {
     Contend = 'CONTEND',
 }
 
+enum PriorityOption {
+    None = 'NONE',
+    Sample = 'SAMPLE 1',
+    Sample2 = 'SAMPLE 2',
+}
+
 export default function BlueprintModule() {
     useTitle('Blueprint Module');
     const [leagueId] = useLeagueIdFromUrl();
@@ -91,6 +97,15 @@ export default function BlueprintModule() {
     const {data: rosters} = useFetchRosters(leagueId);
     const [allUsers, setAllUsers] = useState<User[]>([]);
     const [specifiedUser, setSpecifiedUser] = useState<User>();
+    const [tradePartners, setTradePartners] = useState<(User | undefined)[]>([
+        undefined,
+        undefined,
+    ]);
+    const [topPriorities, setTopPriorities] = useState<PriorityOption[]>([
+        PriorityOption.None,
+        PriorityOption.None,
+        PriorityOption.None,
+    ]);
     const [roster, setRoster] = useState<Roster>();
     const [rosterPlayers, setRosterPlayers] = useState<Player[]>([]);
     const playerData = usePlayerData();
@@ -712,89 +727,276 @@ export default function BlueprintModule() {
                         />
                     </div>
                 </div>
-                <div className={styles.draftCapitalContainer}>
-                    <div className={styles.draftCapitalHeaderRow}>
-                        <div className={styles.draftCapitalTitle}>
-                            Draft Capital
+                <div className={styles.bottomRightSection}>
+                    <div className={styles.draftCapitalContainer}>
+                        <div className={styles.draftCapitalHeaderRow}>
+                            <div className={styles.draftCapitalTitle}>
+                                Draft Capital
+                            </div>
+                            <div className={styles.addDraftPickContainer}>
+                                <DomainDropdown
+                                    options={[0, 1, 2, 3, 4]}
+                                    value={addPickRound}
+                                    onChange={e => {
+                                        const {
+                                            target: {value},
+                                        } = e;
+                                        if (value || value === 0) {
+                                            setAddPickRound(value as number);
+                                        }
+                                    }}
+                                    renderValue={value => (
+                                        <span
+                                            style={{fontStyle: 'italic'}}
+                                        >{`Round ${value}`}</span>
+                                    )}
+                                />
+                                <DomainDropdown
+                                    options={[
+                                        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+                                        12, 13, 14,
+                                    ]}
+                                    value={addPickSlot}
+                                    onChange={e => {
+                                        const {
+                                            target: {value},
+                                        } = e;
+                                        if (value || value === 0) {
+                                            setAddPickSlot(value as number);
+                                        }
+                                    }}
+                                    renderValue={value => (
+                                        <span
+                                            style={{fontStyle: 'italic'}}
+                                        >{`Pick ${value}`}</span>
+                                    )}
+                                />
+                                <IconButton
+                                    TouchRippleProps={{
+                                        style: {
+                                            color: 'white',
+                                        },
+                                    }}
+                                    onClick={() => {
+                                        // TODO: figure out year
+                                        const pickString = `${addPickRound}.${
+                                            addPickSlot < 10 ? '0' : ''
+                                        }${addPickSlot}`;
+                                        if (draftCapitalNotes2026) {
+                                            setDraftCapitalNotes2026(
+                                                `${draftCapitalNotes2026}, ${pickString}`
+                                            );
+                                        } else {
+                                            setDraftCapitalNotes2026(
+                                                pickString
+                                            );
+                                        }
+                                    }}
+                                >
+                                    <AddCircleOutline sx={{color: 'white'}} />
+                                </IconButton>
+                            </div>
                         </div>
-                        <div className={styles.addDraftPickContainer}>
-                            <DomainDropdown
-                                options={[0, 1, 2, 3, 4]}
-                                value={addPickRound}
-                                onChange={e => {
-                                    const {
-                                        target: {value},
-                                    } = e;
-                                    if (value || value === 0) {
-                                        setAddPickRound(value as number);
-                                    }
-                                }}
-                                renderValue={value => (
-                                    <span
-                                        style={{fontStyle: 'italic'}}
-                                    >{`Round ${value}`}</span>
-                                )}
+                        <div className={styles.draftCapitalBody}>
+                            <DomainTextField
+                                flexGrow={1}
+                                label={'2026'}
+                                value={draftCapitalNotes2026}
+                                onChange={e =>
+                                    setDraftCapitalNotes2026(e.target.value)
+                                }
                             />
-                            <DomainDropdown
-                                options={[
-                                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-                                    13, 14,
-                                ]}
-                                value={addPickSlot}
-                                onChange={e => {
-                                    const {
-                                        target: {value},
-                                    } = e;
-                                    if (value || value === 0) {
-                                        setAddPickSlot(value as number);
-                                    }
-                                }}
-                                renderValue={value => (
-                                    <span
-                                        style={{fontStyle: 'italic'}}
-                                    >{`Pick ${value}`}</span>
-                                )}
+                            <DomainTextField
+                                flexGrow={1}
+                                label={'2027'}
+                                value={draftCapitalNotes2027}
+                                onChange={e =>
+                                    setDraftCapitalNotes2027(e.target.value)
+                                }
                             />
-                            <IconButton
-                                TouchRippleProps={{
-                                    style: {
-                                        color: 'white',
-                                    },
-                                }}
-                                onClick={() => {
-                                    // TODO: figure out year
-                                    const pickString = `${addPickRound}.${
-                                        addPickSlot < 10 ? '0' : ''
-                                    }${addPickSlot}`;
-                                    if (draftCapitalNotes2026) {
-                                        setDraftCapitalNotes2026(
-                                            `${draftCapitalNotes2026}, ${pickString}`
-                                        );
-                                    } else {
-                                        setDraftCapitalNotes2026(pickString);
-                                    }
-                                }}
-                            >
-                                <AddCircleOutline sx={{color: 'white'}} />
-                            </IconButton>
                         </div>
                     </div>
-                    <div className={styles.draftCapitalBody}>
-                        <DomainTextField
-                            flexGrow={1}
-                            label={'2026'}
-                            value={draftCapitalNotes2026}
-                            onChange={e =>
-                                setDraftCapitalNotes2026(e.target.value)
-                            }
+                    <div className={styles.idealTradePartnersContainer}>
+                        <div className={styles.idealTradePartnersTitle}>
+                            Ideal Trade Partners
+                        </div>
+                        <div className={styles.idealTradePartnersBody}>
+                            <DomainDropdown
+                                vertical={true}
+                                label={
+                                    <span
+                                        style={{
+                                            fontFamily: 'Prohibition',
+                                            fontWeight: 'normal',
+                                        }}
+                                    >
+                                        Trade Partner 1
+                                    </span>
+                                }
+                                style={{width: '270px'}}
+                                renderValue={value => (
+                                    <span
+                                        style={{
+                                            fontStyle: 'italic',
+                                            fontWeight: 'normal',
+                                        }}
+                                    >{`${value}`}</span>
+                                )}
+                                options={[
+                                    'Choose a team',
+                                    ...allUsers.map(u => getDisplayName(u)),
+                                ]}
+                                value={
+                                    tradePartners[0]
+                                        ? getDisplayName(tradePartners[0])
+                                        : 'Choose a team'
+                                }
+                                onChange={e => {
+                                    const {
+                                        target: {value},
+                                    } = e;
+                                    if (value === 'Choose a team') {
+                                        setTradePartners([
+                                            undefined,
+                                            tradePartners[1],
+                                        ]);
+                                        return;
+                                    }
+                                    allUsers.forEach(u => {
+                                        if (getDisplayName(u) === value) {
+                                            setTradePartners([
+                                                u,
+                                                tradePartners[1],
+                                            ]);
+                                        }
+                                    });
+                                }}
+                            />
+                            <DomainDropdown
+                                vertical={true}
+                                label={
+                                    <span
+                                        style={{
+                                            fontFamily: 'Prohibition',
+                                            fontWeight: 'normal',
+                                        }}
+                                    >
+                                        Trade Partner 2
+                                    </span>
+                                }
+                                style={{width: '270px'}}
+                                renderValue={value => (
+                                    <span
+                                        style={{
+                                            fontStyle: 'italic',
+                                            fontWeight: 'normal',
+                                        }}
+                                    >{`${value}`}</span>
+                                )}
+                                options={[
+                                    'Choose a team',
+                                    ...allUsers.map(u => getDisplayName(u)),
+                                ]}
+                                value={
+                                    tradePartners[1]
+                                        ? getDisplayName(tradePartners[1])
+                                        : 'Choose a team'
+                                }
+                                onChange={e => {
+                                    const {
+                                        target: {value},
+                                    } = e;
+                                    if (value === 'Choose a team') {
+                                        setTradePartners([
+                                            tradePartners[0],
+                                            undefined,
+                                        ]);
+                                        return;
+                                    }
+                                    allUsers.forEach(u => {
+                                        if (getDisplayName(u) === value) {
+                                            setTradePartners([
+                                                tradePartners[0],
+                                                u,
+                                            ]);
+                                        }
+                                    });
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.topPrioritiesContainer}>
+                        <div className={styles.topPrioritiesTitle}>
+                            Top Priorities
+                        </div>
+                        <DomainDropdown
+                            style={{width: '600px'}}
+                            renderValue={value => (
+                                <span
+                                    style={{
+                                        fontStyle: 'italic',
+                                        fontWeight: 'normal',
+                                    }}
+                                >{`${value}`}</span>
+                            )}
+                            value={topPriorities[0]}
+                            options={Object.values(PriorityOption)}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                setTopPriorities([
+                                    value as PriorityOption,
+                                    topPriorities[1],
+                                    topPriorities[2],
+                                ]);
+                            }}
                         />
-                        <DomainTextField
-                            flexGrow={1}
-                            label={'2027'}
-                            value={draftCapitalNotes2027}
-                            onChange={e =>
-                                setDraftCapitalNotes2027(e.target.value)
-                            }
+                        <DomainDropdown
+                            style={{width: '600px'}}
+                            renderValue={value => (
+                                <span
+                                    style={{
+                                        fontStyle: 'italic',
+                                        fontWeight: 'normal',
+                                    }}
+                                >{`${value}`}</span>
+                            )}
+                            value={topPriorities[1]}
+                            options={Object.values(PriorityOption)}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                setTopPriorities([
+                                    topPriorities[0],
+                                    value as PriorityOption,
+                                    topPriorities[2],
+                                ]);
+                            }}
+                        />
+                        <DomainDropdown
+                            style={{width: '600px'}}
+                            renderValue={value => (
+                                <span
+                                    style={{
+                                        fontStyle: 'italic',
+                                        fontWeight: 'normal',
+                                    }}
+                                >{`${value}`}</span>
+                            )}
+                            value={topPriorities[2]}
+                            options={Object.values(PriorityOption)}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                setTopPriorities([
+                                    topPriorities[0],
+                                    topPriorities[1],
+                                    value as PriorityOption,
+                                ]);
+                            }}
                         />
                     </div>
                 </div>

@@ -4,18 +4,19 @@ export type DomainDropdownProps = SelectProps & {
     options: string[] | number[];
     outlineColor?: string;
     label?: string | JSX.Element;
+    vertical?: boolean;
 };
 
 export const DARK_BLUE = '#04121C';
 
 export default function DomainDropdown(props: DomainDropdownProps) {
-    const {options, outlineColor, label} = props;
+    const {options, outlineColor, label, vertical = false} = props;
     return (
         <div
             style={{
                 display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
+                flexDirection: vertical ? 'column' : 'row',
+                alignItems: vertical ? 'flex-start' : 'center',
                 ...props.style,
             }}
         >
@@ -25,7 +26,8 @@ export default function DomainDropdown(props: DomainDropdownProps) {
                         color: 'white',
                         fontFamily: 'Acumin Pro',
                         fontWeight: 'bold',
-                        marginRight: '6px',
+                        marginRight: vertical ? 0 : '6px',
+                        marginBottom: vertical ? '6px' : 0,
                     }}
                 >
                     {label}
