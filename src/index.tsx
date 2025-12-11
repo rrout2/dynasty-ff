@@ -76,6 +76,10 @@ root.render(
                         path="/BlueprintModule"
                         element={<BlueprintModule />}
                     />
+                    <Route
+                        path="/BlueprintPremiumModule"
+                        element={<BlueprintModule premium />}
+                    />
                 </Routes>
             </HashRouter>
         </QueryClientProvider>

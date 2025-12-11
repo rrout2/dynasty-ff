@@ -9,9 +9,10 @@ export default function BodyBackgroundController() {
         const routeBg: Record<string, string> = {
             '/': '#ffffff',
             '/blueprintmodule': '#04121C',
+            '/blueprintpremiummodule': '#04121C',
         };
 
-        const bg = routeBg[location.pathname] || '#ffffff';
+        const bg = routeBg[location.pathname.toLowerCase()] || '#ffffff';
         document.body.style.backgroundColor = bg;
 
         // Cleanup to avoid leftover styling when component unmounts

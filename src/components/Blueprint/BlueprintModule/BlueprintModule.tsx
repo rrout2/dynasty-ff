@@ -99,7 +99,11 @@ enum PriorityOption {
     Sample2 = 'SAMPLE 2',
 }
 
-export default function BlueprintModule() {
+type BlueprintModuleProps = {
+    premium?: boolean;
+}
+
+export default function BlueprintModule({premium = false}: BlueprintModuleProps) {
     // Hooks
     useTitle('Blueprint Module');
     const [newLeagueModalOpen, setNewLeagueModalOpen] = useState(false);
@@ -153,6 +157,27 @@ export default function BlueprintModule() {
     const [move3, setMove3] = useState<Move>(Move.UPTIER);
     const [playerIdsToTrade3, setPlayerIdsToTrade3] = useState<string[]>([]);
     const [playerIdsToTarget3, setPlayerIdsToTarget3] = useState<string[][]>([
+        ['', ''],
+        ['', ''],
+        ['', ''],
+    ]);
+    const [move4, setMove4] = useState<Move>(Move.PIVOT);
+    const [playerIdsToTrade4, setPlayerIdsToTrade4] = useState<string[]>([]);
+    const [playerIdsToTarget4, setPlayerIdsToTarget4] = useState<string[][]>([
+        ['', ''],
+        ['', ''],
+        ['', ''],
+    ]);
+    const [move5, setMove5] = useState<Move>(Move.DOWNTIER);
+    const [playerIdsToTrade5, setPlayerIdsToTrade5] = useState<string[]>([]);
+    const [playerIdsToTarget5, setPlayerIdsToTarget5] = useState<string[][]>([
+        ['', ''],
+        ['', ''],
+        ['', ''],
+    ]);
+    const [move6, setMove6] = useState<Move>(Move.UPTIER);
+    const [playerIdsToTrade6, setPlayerIdsToTrade6] = useState<string[]>([]);
+    const [playerIdsToTarget6, setPlayerIdsToTarget6] = useState<string[][]>([
         ['', ''],
         ['', ''],
         ['', ''],
@@ -998,6 +1023,38 @@ export default function BlueprintModule() {
                             moveNumber={3}
                         />
                     </div>
+                    {premium && <div className={styles.suggestedMovesContainer}>
+                        <SuggestedMove
+                            move={move4}
+                            setMove={setMove4}
+                            playerIdsToTrade={playerIdsToTrade4}
+                            setPlayerIdsToTrade={setPlayerIdsToTrade4}
+                            playerIdsToTarget={playerIdsToTarget4}
+                            setPlayerIdsToTarget={setPlayerIdsToTarget4}
+                            rosterPlayers={rosterPlayers}
+                            moveNumber={4}
+                        />
+                        <SuggestedMove
+                            move={move5}
+                            setMove={setMove5}
+                            playerIdsToTrade={playerIdsToTrade5}
+                            setPlayerIdsToTrade={setPlayerIdsToTrade5}
+                            playerIdsToTarget={playerIdsToTarget5}
+                            setPlayerIdsToTarget={setPlayerIdsToTarget5}
+                            rosterPlayers={rosterPlayers}
+                            moveNumber={5}
+                        />
+                        <SuggestedMove
+                            move={move6}
+                            setMove={setMove6}
+                            playerIdsToTrade={playerIdsToTrade6}
+                            setPlayerIdsToTrade={setPlayerIdsToTrade6}
+                            playerIdsToTarget={playerIdsToTarget6}
+                            setPlayerIdsToTarget={setPlayerIdsToTarget6}
+                            rosterPlayers={rosterPlayers}
+                            moveNumber={6}
+                        />
+                    </div>}
                 </div>
                 <div className={styles.bottomRightSection}>
                     <div className={styles.draftCapitalContainer}>
