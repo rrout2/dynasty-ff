@@ -339,6 +339,17 @@ export default function BlueprintModule({premium = false}: BlueprintModuleProps)
         fontWeight: 'bold',
         fontSize: '20px',
     }
+    const submitModal = () => {
+        setRoster(undefined);
+        setRosterPlayers([]);
+        setTeamId('0');
+        setSpecifiedUser(undefined);
+
+        setLeagueId(newLeagueId.trim());
+
+        setNewLeagueId('');
+        setNewLeagueModalOpen(false);
+    }
 
     return (
         <div style={{backgroundColor: DARK_BLUE}}>
@@ -380,6 +391,12 @@ export default function BlueprintModule({premium = false}: BlueprintModuleProps)
                             label="New League ID"
                             value={newLeagueId}
                             onChange={e => setNewLeagueId(e.target.value)}
+                            onKeyUp={e => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    submitModal();
+                                }
+                            }}
                         />
                         <Button
                             sx={{
@@ -390,15 +407,7 @@ export default function BlueprintModule({premium = false}: BlueprintModuleProps)
                             }}
                             variant="contained"
                             onClick={() => {
-                                setRoster(undefined);
-                                setRosterPlayers([]);
-                                setTeamId('0');
-                                setSpecifiedUser(undefined);
-
-                                setLeagueId(newLeagueId.trim());
-
-                                setNewLeagueId('');
-                                setNewLeagueModalOpen(false);
+                                submitModal();
                             }}
                             disabled={!newLeagueId.trim()}
                         >
