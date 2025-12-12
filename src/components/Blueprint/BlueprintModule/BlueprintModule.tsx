@@ -40,6 +40,7 @@ import {
     Preview,
     Save,
 } from '@mui/icons-material';
+import NewV1 from '../NewV1/NewV1';
 
 const PCT_OPTIONS = [
     '0%',
@@ -115,6 +116,7 @@ export default function BlueprintModule({
     // Hooks
     useTitle('Blueprint Module');
     const [newLeagueModalOpen, setNewLeagueModalOpen] = useState(false);
+    const [previewModalOpen, setPreviewModalOpen] = useState(false);
     const [newLeagueId, setNewLeagueId] = useState('');
     const [leagueId, setLeagueId] = useLeagueIdFromUrl();
     const [teamId, setTeamId] = useTeamIdFromUrl();
@@ -467,10 +469,22 @@ export default function BlueprintModule({
                             ...bpActionButtonStyle,
                             color: '#F47F20',
                         }}
-                        onClick={() => console.log('TODO: preview')}
+                        onClick={() => {
+                            setPreviewModalOpen(true);
+                        }}
                     >
                         SHOW PREVIEW
                     </Button>
+                    <Modal
+                        open={previewModalOpen}
+                        onClose={() => {
+                            setPreviewModalOpen(false);
+                        }}
+                    >
+                        <div className={styles.previewModal}>
+                            <NewV1 />
+                        </div>
+                    </Modal>
                 </div>
                 <div className={styles.title}>BLUEPRINT MODULE</div>
                 <img src={logoHorizontal} className={styles.logo} />

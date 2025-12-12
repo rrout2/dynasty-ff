@@ -295,6 +295,9 @@ import tepIcon from '../assets/module/icons/tepIcon.png';
 import pprIcon from '../assets/module/icons/pprIcon.png';
 import logoHorizontal from '../assets/module/logoHorizontal.png';
 
+// New 1.0
+import new1_0Background from '../assets/new1.0/new1.0background.png';
+
 const tierLogos: Map<string, string> = new Map([
     ['S', sTier],
     ['A', aTier],
@@ -704,4 +707,5 @@ export {
     tepIcon,
     pprIcon,
     logoHorizontal,
+    new1_0Background,
 };

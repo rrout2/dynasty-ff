@@ -219,8 +219,7 @@ export function WeeklyBlueprint({
                     roster.settings.losses +
                     roster.settings.ties)) *
             100;
-        const weightedPercentile =
-            winPercentage * 1 + pointsForPercentile * 0;
+        const weightedPercentile = winPercentage * 1 + pointsForPercentile * 0;
         if (weightedPercentile > 65) {
             setInSeasonVerdict('SOLID');
         } else if (weightedPercentile > 35) {
