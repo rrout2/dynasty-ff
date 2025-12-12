@@ -482,7 +482,15 @@ export default function BlueprintModule({
                         }}
                     >
                         <div className={styles.previewModal}>
-                            <NewV1 />
+                            {!premium && (
+                                <NewV1
+                                    teamName={getDisplayName(specifiedUser)}
+                                    numTeams={numTeams}
+                                    isSuperFlex={isSuperFlex}
+                                    ppr={ppr}
+                                    tep={tep}
+                                />
+                            )}
                         </div>
                     </Modal>
                 </div>
