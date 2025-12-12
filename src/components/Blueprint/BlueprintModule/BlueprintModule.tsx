@@ -101,9 +101,17 @@ enum PriorityOption {
 
 type BlueprintModuleProps = {
     premium?: boolean;
-}
+};
 
-export default function BlueprintModule({premium = false}: BlueprintModuleProps) {
+type FullMove = {
+    move: Move;
+    playerIdsToTrade: string[];
+    playerIdsToTarget: string[][];
+};
+
+export default function BlueprintModule({
+    premium = false,
+}: BlueprintModuleProps) {
     // Hooks
     useTitle('Blueprint Module');
     const [newLeagueModalOpen, setNewLeagueModalOpen] = useState(false);
@@ -140,47 +148,61 @@ export default function BlueprintModule({premium = false}: BlueprintModuleProps)
         OutlookOption.Rebuild,
         OutlookOption.Reload,
     ]);
-    const [move1, setMove1] = useState<Move>(Move.DOWNTIER);
-    const [playerIdsToTrade1, setPlayerIdsToTrade1] = useState<string[]>([]);
-    const [playerIdsToTarget1, setPlayerIdsToTarget1] = useState<string[][]>([
-        ['', ''],
-        ['', ''],
-        ['', ''],
-    ]);
-    const [move2, setMove2] = useState<Move>(Move.PIVOT);
-    const [playerIdsToTrade2, setPlayerIdsToTrade2] = useState<string[]>([]);
-    const [playerIdsToTarget2, setPlayerIdsToTarget2] = useState<string[][]>([
-        ['', ''],
-        ['', ''],
-        ['', ''],
-    ]);
-    const [move3, setMove3] = useState<Move>(Move.UPTIER);
-    const [playerIdsToTrade3, setPlayerIdsToTrade3] = useState<string[]>([]);
-    const [playerIdsToTarget3, setPlayerIdsToTarget3] = useState<string[][]>([
-        ['', ''],
-        ['', ''],
-        ['', ''],
-    ]);
-    const [move4, setMove4] = useState<Move>(Move.PIVOT);
-    const [playerIdsToTrade4, setPlayerIdsToTrade4] = useState<string[]>([]);
-    const [playerIdsToTarget4, setPlayerIdsToTarget4] = useState<string[][]>([
-        ['', ''],
-        ['', ''],
-        ['', ''],
-    ]);
-    const [move5, setMove5] = useState<Move>(Move.DOWNTIER);
-    const [playerIdsToTrade5, setPlayerIdsToTrade5] = useState<string[]>([]);
-    const [playerIdsToTarget5, setPlayerIdsToTarget5] = useState<string[][]>([
-        ['', ''],
-        ['', ''],
-        ['', ''],
-    ]);
-    const [move6, setMove6] = useState<Move>(Move.UPTIER);
-    const [playerIdsToTrade6, setPlayerIdsToTrade6] = useState<string[]>([]);
-    const [playerIdsToTarget6, setPlayerIdsToTarget6] = useState<string[][]>([
-        ['', ''],
-        ['', ''],
-        ['', ''],
+    const [fullMoves, setFullMoves] = useState<FullMove[]>([
+        {
+            move: Move.DOWNTIER,
+            playerIdsToTrade: [],
+            playerIdsToTarget: [
+                ['', ''],
+                ['', ''],
+                ['', ''],
+            ],
+        },
+        {
+            move: Move.PIVOT,
+            playerIdsToTrade: [],
+            playerIdsToTarget: [
+                ['', ''],
+                ['', ''],
+                ['', ''],
+            ],
+        },
+        {
+            move: Move.UPTIER,
+            playerIdsToTrade: [],
+            playerIdsToTarget: [
+                ['', ''],
+                ['', ''],
+                ['', ''],
+            ],
+        },
+        {
+            move: Move.DOWNTIER,
+            playerIdsToTrade: [],
+            playerIdsToTarget: [
+                ['', ''],
+                ['', ''],
+                ['', ''],
+            ],
+        },
+        {
+            move: Move.PIVOT,
+            playerIdsToTrade: [],
+            playerIdsToTarget: [
+                ['', ''],
+                ['', ''],
+                ['', ''],
+            ],
+        },
+        {
+            move: Move.UPTIER,
+            playerIdsToTrade: [],
+            playerIdsToTarget: [
+                ['', ''],
+                ['', ''],
+                ['', ''],
+            ],
+        },
     ]);
     const [draftCapitalNotes2026, setDraftCapitalNotes2026] = useState(
         'placeholder 2026 notes'
@@ -218,7 +240,7 @@ export default function BlueprintModule({premium = false}: BlueprintModuleProps)
         roster?.players
     );
 
-        useEffect(() => {
+    useEffect(() => {
         if (!league) return;
         setPpr(league.scoring_settings.rec);
         setTep(league.scoring_settings.bonus_rec_te);
@@ -338,7 +360,7 @@ export default function BlueprintModule({premium = false}: BlueprintModuleProps)
         fontFamily: 'Acumin Pro',
         fontWeight: 'bold',
         fontSize: '20px',
-    }
+    };
     const submitModal = () => {
         setRoster(undefined);
         setRosterPlayers([]);
@@ -349,7 +371,7 @@ export default function BlueprintModule({premium = false}: BlueprintModuleProps)
 
         setNewLeagueId('');
         setNewLeagueModalOpen(false);
-    }
+    };
 
     return (
         <div style={{backgroundColor: DARK_BLUE}}>
@@ -1001,69 +1023,75 @@ export default function BlueprintModule({premium = false}: BlueprintModuleProps)
                 <div className={styles.tradeContainer}>
                     <div className={styles.tradeTitle}>Trade Strategy</div>
                     <div className={styles.suggestedMovesContainer}>
-                        <SuggestedMove
-                            move={move1}
-                            setMove={setMove1}
-                            playerIdsToTrade={playerIdsToTrade1}
-                            setPlayerIdsToTrade={setPlayerIdsToTrade1}
-                            playerIdsToTarget={playerIdsToTarget1}
-                            setPlayerIdsToTarget={setPlayerIdsToTarget1}
-                            rosterPlayers={rosterPlayers}
-                            moveNumber={1}
-                        />
-                        <SuggestedMove
-                            move={move2}
-                            setMove={setMove2}
-                            playerIdsToTrade={playerIdsToTrade2}
-                            setPlayerIdsToTrade={setPlayerIdsToTrade2}
-                            playerIdsToTarget={playerIdsToTarget2}
-                            setPlayerIdsToTarget={setPlayerIdsToTarget2}
-                            rosterPlayers={rosterPlayers}
-                            moveNumber={2}
-                        />
-                        <SuggestedMove
-                            move={move3}
-                            setMove={setMove3}
-                            playerIdsToTrade={playerIdsToTrade3}
-                            setPlayerIdsToTrade={setPlayerIdsToTrade3}
-                            playerIdsToTarget={playerIdsToTarget3}
-                            setPlayerIdsToTarget={setPlayerIdsToTarget3}
-                            rosterPlayers={rosterPlayers}
-                            moveNumber={3}
-                        />
+                        {[0, 1, 2].map(i => (
+                            <SuggestedMove
+                                key={i}
+                                move={fullMoves[i].move}
+                                setMove={(move: Move) => {
+                                    const newMoves = [...fullMoves];
+                                    newMoves[i].move = move;
+                                    setFullMoves(newMoves);
+                                }}
+                                playerIdsToTrade={fullMoves[i].playerIdsToTrade}
+                                setPlayerIdsToTrade={(playerIds: string[]) => {
+                                    const newMoves = [...fullMoves];
+                                    newMoves[i].playerIdsToTrade = playerIds;
+                                    setFullMoves(newMoves);
+                                }}
+                                playerIdsToTarget={
+                                    fullMoves[i].playerIdsToTarget
+                                }
+                                setPlayerIdsToTarget={(
+                                    playerIds: string[][]
+                                ) => {
+                                    const newMoves = [...fullMoves];
+                                    newMoves[i].playerIdsToTarget = playerIds;
+                                    setFullMoves(newMoves);
+                                }}
+                                rosterPlayers={rosterPlayers}
+                                moveNumber={i + 1}
+                            />
+                        ))}
                     </div>
-                    {premium && <div className={styles.suggestedMovesContainer}>
-                        <SuggestedMove
-                            move={move4}
-                            setMove={setMove4}
-                            playerIdsToTrade={playerIdsToTrade4}
-                            setPlayerIdsToTrade={setPlayerIdsToTrade4}
-                            playerIdsToTarget={playerIdsToTarget4}
-                            setPlayerIdsToTarget={setPlayerIdsToTarget4}
-                            rosterPlayers={rosterPlayers}
-                            moveNumber={4}
-                        />
-                        <SuggestedMove
-                            move={move5}
-                            setMove={setMove5}
-                            playerIdsToTrade={playerIdsToTrade5}
-                            setPlayerIdsToTrade={setPlayerIdsToTrade5}
-                            playerIdsToTarget={playerIdsToTarget5}
-                            setPlayerIdsToTarget={setPlayerIdsToTarget5}
-                            rosterPlayers={rosterPlayers}
-                            moveNumber={5}
-                        />
-                        <SuggestedMove
-                            move={move6}
-                            setMove={setMove6}
-                            playerIdsToTrade={playerIdsToTrade6}
-                            setPlayerIdsToTrade={setPlayerIdsToTrade6}
-                            playerIdsToTarget={playerIdsToTarget6}
-                            setPlayerIdsToTarget={setPlayerIdsToTarget6}
-                            rosterPlayers={rosterPlayers}
-                            moveNumber={6}
-                        />
-                    </div>}
+                    {premium && (
+                        <div className={styles.suggestedMovesContainer}>
+                            {[3, 4, 5].map(i => (
+                                <SuggestedMove
+                                    key={i}
+                                    move={fullMoves[i].move}
+                                    setMove={(move: Move) => {
+                                        const newMoves = [...fullMoves];
+                                        newMoves[i].move = move;
+                                        setFullMoves(newMoves);
+                                    }}
+                                    playerIdsToTrade={
+                                        fullMoves[i].playerIdsToTrade
+                                    }
+                                    setPlayerIdsToTrade={(
+                                        playerIds: string[]
+                                    ) => {
+                                        const newMoves = [...fullMoves];
+                                        newMoves[i].playerIdsToTrade =
+                                            playerIds;
+                                        setFullMoves(newMoves);
+                                    }}
+                                    playerIdsToTarget={
+                                        fullMoves[i].playerIdsToTarget
+                                    }
+                                    setPlayerIdsToTarget={(
+                                        playerIds: string[][]
+                                    ) => {
+                                        const newMoves = [...fullMoves];
+                                        newMoves[i].playerIdsToTarget =
+                                            playerIds;
+                                        setFullMoves(newMoves);
+                                    }}
+                                    rosterPlayers={rosterPlayers}
+                                    moveNumber={i + 1}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
                 <div className={styles.bottomRightSection}>
                     <div className={styles.draftCapitalContainer}>
@@ -1112,7 +1140,8 @@ export default function BlueprintModule({premium = false}: BlueprintModuleProps)
                                 <IconButton
                                     sx={{
                                         '&:hover': {
-                                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                            backgroundColor:
+                                                'rgba(255, 255, 255, 0.2)',
                                         },
                                     }}
                                     TouchRippleProps={{
@@ -1356,11 +1385,11 @@ enum Move {
 
 type SuggestedMoveProps = {
     move: Move;
-    setMove: Dispatch<SetStateAction<Move>>;
+    setMove: (move: Move) => void;
     playerIdsToTrade: string[];
-    setPlayerIdsToTrade: Dispatch<SetStateAction<string[]>>;
+    setPlayerIdsToTrade: (playerIds: string[]) => void;
     playerIdsToTarget: string[][];
-    setPlayerIdsToTarget: Dispatch<SetStateAction<string[][]>>;
+    setPlayerIdsToTarget: (playerIds: string[][]) => void;
     rosterPlayers: Player[];
     moveNumber: number;
 };
