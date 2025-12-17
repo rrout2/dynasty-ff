@@ -90,7 +90,7 @@
 .positionalGradeDisc {
     position: absolute;
     color: #FFF;
-    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
     font-family: 'Erbaum';
     font-size: 32px;
 
@@ -122,7 +122,6 @@
     position: absolute;
 
     color: #FFF;
-    /* text-align: center; */
     font-family: "Acumin Pro Condensed";
     font-size: 20px;
     font-weight: 600;
@@ -141,4 +140,69 @@
 
     padding-top: 6px;
     padding-bottom: 2px;
+}
+
+.roster {
+    position: absolute;
+
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.playerCard {
+    color: #FFF;
+    font-family: "Acumin Pro ExtraCondensed";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-transform: uppercase;
+
+    display: flex;
+    flex-direction: row;
+    
+    justify-content: space-between;
+    align-items: center;
+
+    width: 102px;
+
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.1);
+
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.headshot {
+    height: 14.5px;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+}
+
+
+.playerName {
+    padding-top: 3px;
+
+    width: 60px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.teamLogo {
+    height: 14.5px;;
+}
+
+.playerInfo {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    align-items: center;
+}
+
+.playersColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }

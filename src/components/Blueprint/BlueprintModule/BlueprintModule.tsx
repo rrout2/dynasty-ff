@@ -323,7 +323,7 @@ export default function BlueprintModule({
 
     // -------------------------- End of hooks --------------------------
 
-    function isStarting(playerName: string) {
+    function getStartingPosition(playerName: string) {
         return startingLineup.find(
             ({player}) =>
                 `${player.first_name} ${player.last_name}` === playerName
@@ -331,7 +331,7 @@ export default function BlueprintModule({
     }
 
     function getClassName(playerName: string) {
-        const starting = isStarting(playerName);
+        const starting = getStartingPosition(playerName);
         switch (starting) {
             case 'QB':
                 return styles.qbStarter;
@@ -497,6 +497,8 @@ export default function BlueprintModule({
                                     benchGrade={depth}
                                     draftCapitalScore={draftCapitalScore}
                                     twoYearOutlook={twoYearOutlook}
+                                    rosterPlayers={rosterPlayers}
+                                    getStartingPosition={getStartingPosition}
                                 />
                             )}
                         </div>

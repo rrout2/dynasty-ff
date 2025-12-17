@@ -1,10 +1,15 @@
 import styles from './NewV1.module.css';
-import {new1_0Background} from '../../../consts/images';
+import {new1_0Background, nflSilhouette} from '../../../consts/images';
 import {
     OutlookOption,
     RosterArchetype,
 } from '../BlueprintModule/BlueprintModule';
 import {CSSProperties} from 'react';
+import {Player} from '../../../sleeper-api/sleeper-api';
+import {NONE_PLAYER_ID} from '../v2/modules/CornerstonesModule/CornerstonesModule';
+import {logoImage} from '../shared/Utilities';
+import {useAdpData} from '../../../hooks/hooks';
+import {QB, RB, TE, WR} from '../../../consts/fantasy';
 
 type NewV1Props = {
     teamName: string;
@@ -20,6 +25,8 @@ type NewV1Props = {
     benchGrade: number;
     draftCapitalScore: number;
     twoYearOutlook: OutlookOption[];
+    rosterPlayers: Player[];
+    getStartingPosition: (playerName: string) => string | undefined;
 };
 
 export default function NewV1({
@@ -36,6 +43,8 @@ export default function NewV1({
     benchGrade,
     draftCapitalScore,
     twoYearOutlook,
+    rosterPlayers,
+    getStartingPosition,
 }: NewV1Props) {
     return (
         <div className={styles.fullBlueprint}>
@@ -95,7 +104,124 @@ export default function NewV1({
                 color={'#FF4200'}
                 style={{left: '426px', top: '430px'}}
             />
+            <Roster
+                rosterPlayers={rosterPlayers}
+                getStartingPosition={getStartingPosition}
+                style={{left: '62px', top: '207px'}}
+            />
             <img src={new1_0Background} className={styles.backgroundImg} />
+        </div>
+    );
+}
+
+export function Roster({
+    rosterPlayers,
+    getStartingPosition,
+    style,
+}: {
+    rosterPlayers: Player[];
+    getStartingPosition: (playerName: string) => string | undefined;
+    style?: CSSProperties;
+}) {
+    const positionDisplayLimit = 9;
+    return (
+        <div className={styles.roster} style={style}>
+            {[QB, RB, WR, TE].map(pos => (
+                <div className={styles.playersColumn}>
+                    {rosterPlayers
+                        .filter(p => p.position === pos)
+                        .slice(0, positionDisplayLimit)
+                        .map((p, idx) => (
+                            <PlayerCard
+                                key={idx}
+                                player={p}
+                                getStartingPosition={getStartingPosition}
+                            />
+                        ))}
+                </div>
+            ))}
+        </div>
+    );
+}
+
+export function PlayerCard({
+    player,
+    getStartingPosition,
+}: {
+    player: Player;
+    getStartingPosition: (playerName: string) => string | undefined;
+}) {
+    const {getPositionalAdp} = useAdpData();
+    const posAdp = getPositionalAdp(`${player.first_name} ${player.last_name}`);
+    function getColorFromAdp(adp: number) {
+        if (adp <= 20) return '#1AFF00';
+        if (adp <= 35) return '#F1BA4C';
+        return '#E31837';
+    }
+    function getBackgroundColor(player: Player) {
+        const pos = getStartingPosition(
+            `${player.first_name} ${player.last_name}`
+        );
+        if (pos) {
+            switch (player.position) {
+                case 'QB':
+                    return 'rgba(232, 77, 87, 0.22)';
+                case 'RB':
+                    return 'rgba(40, 171, 226, 0.22)';
+                case 'WR':
+                    return 'rgba(26, 224, 105, 0.22)';
+                case 'TE':
+                    return 'rgba(250, 191, 74, 0.22)';
+            }
+        }
+        return 'none';
+    }
+    function getBorderColor(player: Player) {
+        const pos = getStartingPosition(
+            `${player.first_name} ${player.last_name}`
+        );
+        if (pos) {
+            switch (player.position) {
+                case 'QB':
+                    return 'rgba(232, 77, 87, 1)';
+                case 'RB':
+                    return 'rgba(40, 171, 226, 1)';
+                case 'WR':
+                    return 'rgba(26, 224, 105, 1)';
+                case 'TE':
+                    return 'rgba(250, 191, 74, 1)';
+            }
+        }
+        return 'none';
+    }
+    return (
+        <div
+            className={styles.playerCard}
+            style={{
+                backgroundColor: getBackgroundColor(player),
+                outline: `1px solid ${getBorderColor(player)}`,
+            }}
+        >
+            <div className={styles.playerInfo}>
+                {logoImage(player.team, styles.teamLogo)}
+                <img
+                    src={
+                        player.player_id === NONE_PLAYER_ID
+                            ? nflSilhouette
+                            : `https://sleepercdn.com/content/nfl/players/${player.player_id}.jpg`
+                    }
+                    onError={({currentTarget}) => {
+                        currentTarget.onerror = null;
+                        currentTarget.src =
+                            'https://sleepercdn.com/images/v2/icons/player_default.webp';
+                    }}
+                    className={styles.headshot}
+                />
+                <div className={styles.playerName}>
+                    {player.first_name} {player.last_name}
+                </div>
+            </div>
+            <div style={{color: getColorFromAdp(posAdp)}}>{posAdp}</div>
         </div>
     );
 }
@@ -131,13 +257,19 @@ export function TwoYearOutlook({
         <div className={styles.twoYearOutlook} style={style}>
             <div
                 className={styles.outlookCard}
-                style={{backgroundColor: getBackgroundColor(twoYearOutlook[0]), borderColor: getBorderColor(twoYearOutlook[0])}}
+                style={{
+                    backgroundColor: getBackgroundColor(twoYearOutlook[0]),
+                    borderColor: getBorderColor(twoYearOutlook[0]),
+                }}
             >
                 {twoYearOutlook[0]}
             </div>
             <div
                 className={styles.outlookCard}
-                style={{backgroundColor: getBackgroundColor(twoYearOutlook[1]), borderColor: getBorderColor(twoYearOutlook[1])}}
+                style={{
+                    backgroundColor: getBackgroundColor(twoYearOutlook[1]),
+                    borderColor: getBorderColor(twoYearOutlook[1]),
+                }}
             >
                 {twoYearOutlook[1]}
             </div>

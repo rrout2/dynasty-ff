@@ -13,7 +13,7 @@ interface CornerstonesModuleProps {
     teamName?: string;
 }
 
-const NONE_PLAYER_ID = 'None';
+export const NONE_PLAYER_ID = 'None';
 
 export function useCornerstones(roster?: Roster) {
     const [cornerstones, setCornerstones] = useState<string[]>([]);
