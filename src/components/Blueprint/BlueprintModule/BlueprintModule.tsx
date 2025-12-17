@@ -78,7 +78,7 @@ enum ValueArchetype {
     HardRebuild = 'HARD REBUILD',
 }
 
-enum RosterArchetype {
+export enum RosterArchetype {
     None = 'NONE',
     WellRounded = 'WELL ROUNDED',
     WRFactory = 'WR FACTORY',
@@ -88,7 +88,7 @@ enum RosterArchetype {
     PlayerDeficient = 'PLAYER DEFICIENT',
 }
 
-enum OutlookOption {
+export enum OutlookOption {
     Rebuild = 'REBUILD',
     Reload = 'RELOAD',
     Contend = 'CONTEND',
@@ -489,6 +489,14 @@ export default function BlueprintModule({
                                     isSuperFlex={isSuperFlex}
                                     ppr={ppr}
                                     tep={tep}
+                                    rosterArchetype={rosterArchetype}
+                                    qbGrade={qb}
+                                    rbGrade={rb}
+                                    wrGrade={wr}
+                                    teGrade={te}
+                                    benchGrade={depth}
+                                    draftCapitalScore={draftCapitalScore}
+                                    twoYearOutlook={twoYearOutlook}
                                 />
                             )}
                         </div>

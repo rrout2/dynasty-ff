@@ -23,9 +23,8 @@
 .numTeams {
     position: absolute;
     color: white;
-    right: 204px;
-    top: 28px;
     font-family: 'Erbaum';
+    font-weight: 500;
     font-size: 25px;
 
     width: 48px;
@@ -35,8 +34,6 @@
 .isSuperFlex {
     position: absolute;
     color: white;
-    right: 145px;
-    top: 28px;
     font-family: 'Erbaum';
     font-size: 25px;
 
@@ -47,8 +44,6 @@
 .ppr {
     position: absolute;
     color: white;
-    right: 86px;
-    top: 28px;
     font-family: 'Erbaum';
     font-size: 25px;
 
@@ -59,11 +54,91 @@
 .tep {
     position: absolute;
     color: white;
-    right: 27px;
-    top: 28px;
     font-family: 'Erbaum';
     font-size: 25px;
 
     width: 48px;
     text-align: center;
+}
+
+.rosterArchetype {
+    position: absolute;
+    font-family: 'Prohibition';
+    font-size: 32px;
+    color: white;
+}
+
+.rosterGrades {
+    font-family: "Acumin Pro ExtraCondensed";
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    position: absolute;
+    width: 375px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* text-align: left; */
+}
+
+.rosterGrade {
+    width: 20px;
+    text-align: center;
+}
+
+.positionalGradeDisc {
+    position: absolute;
+    color: #FFF;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: 'Erbaum';
+    font-size: 32px;
+
+    width: 53px;
+    height: 53px;
+    text-align: center;
+}
+
+.positionalGradeDiscInner {
+    position: relative;
+}
+
+.pie {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.pieGrade {
+    position: absolute;
+    top: 4px;
+    left: 0px;
+
+    width: 56px;
+    height: 56px;
+}
+
+.twoYearOutlook {
+    position: absolute;
+
+    color: #FFF;
+    /* text-align: center; */
+    font-family: "Acumin Pro Condensed";
+    font-size: 20px;
+    font-weight: 600;
+
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.outlookCard {
+    width: 100px;
+    text-align: center;
+
+    border: 2px solid white;
+    border-radius: 5px;
+
+    padding-top: 6px;
+    padding-bottom: 2px;
 }
