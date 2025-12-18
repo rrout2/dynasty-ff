@@ -37,6 +37,8 @@ type NewV1Props = {
     twoYearOutlook: OutlookOption[];
     rosterPlayers: Player[];
     getStartingPosition: (playerName: string) => string | undefined;
+    productionShare: string;
+    valueShare: string;
 };
 
 export default function NewV1({
@@ -56,6 +58,8 @@ export default function NewV1({
     twoYearOutlook,
     rosterPlayers,
     getStartingPosition,
+    productionShare,
+    valueShare,
 }: NewV1Props) {
     return (
         <div className={styles.fullBlueprint}>
@@ -73,6 +77,14 @@ export default function NewV1({
             <RosterArchetypeComponent
                 rosterArchetype={rosterArchetype}
                 style={{left: '315px', top: '130px'}}
+            />
+            <ProductionValueShare
+                share={productionShare}
+                style={{left: '640px', top: '125px'}}
+            />
+            <ProductionValueShare
+                share={valueShare}
+                style={{left: '645px', top: '215px'}}
             />
             <TwoYearOutlook
                 twoYearOutlook={twoYearOutlook}
@@ -265,6 +277,20 @@ export function PlayerCard({
     );
 }
 
+export function ProductionValueShare({
+    share,
+    style,
+}: {
+    share: string;
+    style?: CSSProperties;
+}) {
+    return (
+        <div className={styles.productionValueShare} style={style}>
+            {share}
+        </div>
+    );
+}
+
 export function TwoYearOutlook({
     twoYearOutlook,
     style,
@@ -329,7 +355,6 @@ export function OverallGrade({
         </div>
     );
 }
-
 
 export function NumTeams({
     numTeams,

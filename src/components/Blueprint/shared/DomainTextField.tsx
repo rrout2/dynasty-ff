@@ -10,7 +10,12 @@ export type DomainTextFieldProps = TextFieldProps & {
 export const DARK_BLUE = '#04121C';
 
 export default function DomainTextField(props: DomainTextFieldProps) {
-    const {outlineColor, label, flexGrow = 0, labelMarginRight = '20px'} = props;
+    const {
+        outlineColor,
+        label,
+        flexGrow = 0,
+        labelMarginRight = '20px',
+    } = props;
 
     return (
         <div

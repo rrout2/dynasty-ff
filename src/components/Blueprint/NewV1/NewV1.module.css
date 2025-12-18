@@ -118,6 +118,16 @@
     height: 56px;
 }
 
+.productionValueShare {
+    position: absolute;
+
+    color: #FFF;
+
+    font-family: Erbaum;
+    font-size: 35px;
+    font-weight: 400;
+}
+
 .twoYearOutlook {
     position: absolute;
 

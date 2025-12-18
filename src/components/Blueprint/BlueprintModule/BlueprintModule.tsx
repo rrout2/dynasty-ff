@@ -500,6 +500,8 @@ export default function BlueprintModule({
                                     twoYearOutlook={twoYearOutlook}
                                     rosterPlayers={rosterPlayers}
                                     getStartingPosition={getStartingPosition}
+                                    productionShare={productionShare}
+                                    valueShare={valueShare}
                                 />
                             )}
                         </div>
@@ -963,7 +965,10 @@ export default function BlueprintModule({
                                         onChange={e => {
                                             let val = +e.target.value;
                                             if (Number.isNaN(val)) {
-                                                console.log(e.target.value, 'is not a number');
+                                                console.log(
+                                                    e.target.value,
+                                                    'is not a number'
+                                                );
                                                 return;
                                             }
                                             while (val > 10) {
