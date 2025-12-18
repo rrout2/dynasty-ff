@@ -228,3 +228,26 @@
     flex-direction: column;
     gap: 4px;
 }
+
+.draftCapital {
+    position: absolute;
+
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    align-items: center;
+}
+
+.draftCapitalYear {
+    font-family: Erbaum;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.draftCapitalNotes {
+    color: #FFF;
+    font-family: "Acumin Pro Condensed";
+    font-size: 12px;
+    font-weight: 600;
+    padding-top: 3px;
+}

@@ -39,6 +39,7 @@ type NewV1Props = {
     getStartingPosition: (playerName: string) => string | undefined;
     productionShare: string;
     valueShare: string;
+    draftCapitalNotes: Map<number, string>;
 };
 
 export default function NewV1({
@@ -60,6 +61,7 @@ export default function NewV1({
     getStartingPosition,
     productionShare,
     valueShare,
+    draftCapitalNotes,
 }: NewV1Props) {
     return (
         <div className={styles.fullBlueprint}>
@@ -135,6 +137,18 @@ export default function NewV1({
                 rosterPlayers={rosterPlayers}
                 getStartingPosition={getStartingPosition}
                 style={{left: '62px', top: '207px'}}
+            />
+            <DraftCapitalNotes
+                labelColor='#CD00FF'
+                year={2026}
+                notes={draftCapitalNotes.get(2026) || ''}
+                style={{left: '70px', top: '580px'}}
+            />
+            <DraftCapitalNotes
+                labelColor='#F05A28'
+                year={2027}
+                notes={draftCapitalNotes.get(2027) || ''}
+                style={{left: '70px', top: '620px'}}
             />
             <img src={new1_0Background} className={styles.backgroundImg} />
         </div>
@@ -497,5 +511,24 @@ export function PieSlice({percentage, radius, fill}: PieSliceProps) {
             {/* Pie slice */}
             <path d={pathData} fill={fill} stroke="none" />
         </svg>
+    );
+}
+
+export function DraftCapitalNotes({
+    year,
+    notes,
+    style,
+    labelColor,
+}: {
+    year: number;
+    notes: string;
+    labelColor: string;
+    style?: CSSProperties;
+}) {
+    return (
+        <div className={styles.draftCapital} style={style}>
+            <div className={styles.draftCapitalYear} style={{color: labelColor}}>{year}</div>
+            <div className={styles.draftCapitalNotes}>{notes}</div>
+        </div>
     );
 }

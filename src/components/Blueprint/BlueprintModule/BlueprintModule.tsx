@@ -212,6 +212,12 @@ export default function BlueprintModule({
     const [draftCapitalNotes2027, setDraftCapitalNotes2027] = useState(
         'placeholder 2027 notes'
     );
+    const [draftCapitalNotes, setDraftCapitalNotes] = useState(
+        new Map<number, string>()
+    );
+    useEffect(() => {
+        setDraftCapitalNotes(new Map([[2026, draftCapitalNotes2026], [2027, draftCapitalNotes2027]]));
+    }, [draftCapitalNotes2026, draftCapitalNotes2027]);
     const {
         overall,
         setOverall,
@@ -502,6 +508,7 @@ export default function BlueprintModule({
                                     getStartingPosition={getStartingPosition}
                                     productionShare={productionShare}
                                     valueShare={valueShare}
+                                    draftCapitalNotes={draftCapitalNotes}
                                 />
                             )}
                         </div>
