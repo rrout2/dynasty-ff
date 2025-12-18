@@ -9,7 +9,16 @@ import {Player} from '../../../sleeper-api/sleeper-api';
 import {NONE_PLAYER_ID} from '../v2/modules/CornerstonesModule/CornerstonesModule';
 import {logoImage} from '../shared/Utilities';
 import {useAdpData} from '../../../hooks/hooks';
-import {QB, RB, TE, WR} from '../../../consts/fantasy';
+import {
+    FLEX,
+    QB,
+    RB,
+    SUPER_FLEX,
+    TE,
+    WR,
+    WR_RB_FLEX,
+    WR_TE_FLEX,
+} from '../../../consts/fantasy';
 
 type NewV1Props = {
     teamName: string;
@@ -158,24 +167,7 @@ export function PlayerCard({
         if (adp <= 35) return '#F1BA4C';
         return '#E31837';
     }
-    function getBackgroundColor(player: Player) {
-        const pos = getStartingPosition(
-            `${player.first_name} ${player.last_name}`
-        );
-        if (pos) {
-            switch (player.position) {
-                case 'QB':
-                    return 'rgba(232, 77, 87, 0.22)';
-                case 'RB':
-                    return 'rgba(40, 171, 226, 0.22)';
-                case 'WR':
-                    return 'rgba(26, 224, 105, 0.22)';
-                case 'TE':
-                    return 'rgba(250, 191, 74, 0.22)';
-            }
-        }
-        return 'none';
-    }
+
     function getBorderColor(player: Player) {
         const pos = getStartingPosition(
             `${player.first_name} ${player.last_name}`
@@ -194,14 +186,53 @@ export function PlayerCard({
         }
         return 'none';
     }
+
+    function getCardStyle(player: Player): CSSProperties {
+        const pos = getStartingPosition(
+            `${player.first_name} ${player.last_name}`
+        );
+        if (!pos) return {};
+        switch (pos) {
+            case QB:
+                return {
+                    outline: '1px solid rgba(232, 77, 87, 1)',
+                    backgroundColor: 'rgba(232, 77, 87, 0.22)',
+                };
+            case RB:
+                return {
+                    outline: '1px solid rgba(40, 171, 226, 1)',
+                    backgroundColor: 'rgba(40, 171, 226, 0.22)',
+                };
+            case WR:
+                return {
+                    outline: '1px solid rgba(26, 224, 105, 1)',
+                    backgroundColor: 'rgba(26, 224, 105, 0.22)',
+                };
+            case TE:
+                return {
+                    outline: '1px solid rgba(250, 191, 74, 1)',
+                    backgroundColor: 'rgba(250, 191, 74, 0.22)',
+                };
+            case SUPER_FLEX:
+                return {
+                    outline: `1px solid ${getBorderColor(player)}`,
+                    background:
+                        'linear-gradient(90deg, rgba(219, 35, 53, 0.20) 1.44%, rgba(40, 171, 226, 0.20) 36.67%, rgba(26, 224, 105, 0.20) 69.86%, rgba(255, 170, 0, 0.20) 100%)',
+                };
+            case FLEX:
+            case WR_RB_FLEX:
+            case WR_TE_FLEX:
+                return {
+                    outline: `1px solid ${getBorderColor(player)}`,
+                    background:
+                        'linear-gradient(90deg, rgba(40, 171, 226, 0.20) 0%, rgba(26, 224, 105, 0.20) 48.79%, rgba(255, 170, 0, 0.20) 100%)',
+                };
+            default:
+                return {};
+        }
+    }
     return (
-        <div
-            className={styles.playerCard}
-            style={{
-                backgroundColor: getBackgroundColor(player),
-                outline: `1px solid ${getBorderColor(player)}`,
-            }}
-        >
+        <div className={styles.playerCard} style={getCardStyle(player)}>
             <div className={styles.playerInfo}>
                 {logoImage(player.team, styles.teamLogo)}
                 <img
@@ -221,7 +252,9 @@ export function PlayerCard({
                     {player.first_name} {player.last_name}
                 </div>
             </div>
-            <div style={{color: getColorFromAdp(posAdp)}}>{posAdp}</div>
+            <div style={{color: getColorFromAdp(posAdp)}}>
+                {posAdp === Infinity ? '-' : posAdp}
+            </div>
         </div>
     );
 }
