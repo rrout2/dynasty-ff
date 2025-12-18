@@ -286,7 +286,7 @@ import vGreenLight from '../assets/weekly/V-green.png';
 import vYellowLight from '../assets/weekly/V-yellow.png';
 import vRedLight from '../assets/weekly/V-red.png';
 
-import bakeryCard from '../assets/weekly/bakery/WK14_Bakery_Card.png';
+import bakeryCard from '../assets/weekly/bakery/WK16_Bakery_Card.png';
 
 // Module
 import teamsIcon from '../assets/module/icons/teamsIcon.png';
