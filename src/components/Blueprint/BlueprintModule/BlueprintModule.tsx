@@ -225,7 +225,7 @@ export default function BlueprintModule({
         setTe,
         depth,
         setDepth,
-    } = usePositionalGrades(roster, numTeams);
+    } = usePositionalGrades(roster, numTeams, /* roundOverall= */ false);
     const [draftCapitalScore, setDraftCapitalScore] = useState(8);
     const [flexScore, setFlexScore] = useState(8);
     const [sfScore, setSfScore] = useState(8);
@@ -495,6 +495,7 @@ export default function BlueprintModule({
                                     wrGrade={wr}
                                     teGrade={te}
                                     benchGrade={depth}
+                                    overallGrade={overall}
                                     draftCapitalScore={draftCapitalScore}
                                     twoYearOutlook={twoYearOutlook}
                                     rosterPlayers={rosterPlayers}
@@ -948,27 +949,32 @@ export default function BlueprintModule({
                                     }}
                                     outlineColor={'#CD1CFD'}
                                 />
-                                <DomainDropdown
-                                    label={
-                                        <div
-                                            className={styles.labels}
-                                            style={{color: '#B4D9E4'}}
-                                        >
-                                            OVERALL
-                                        </div>
-                                    }
-                                    options={GRADE_OPTIONS}
-                                    value={overall}
-                                    onChange={e => {
-                                        const {
-                                            target: {value},
-                                        } = e;
-                                        if (value) {
-                                            setOverall(value as number);
+                                {overall > -1 && (
+                                    <DomainTextField
+                                        label={
+                                            <div
+                                                className={styles.labels}
+                                                style={{color: '#B4D9E4'}}
+                                            >
+                                                OVERALL
+                                            </div>
                                         }
-                                    }}
-                                    outlineColor={'#B4D9E4'}
-                                />
+                                        value={overall}
+                                        onChange={e => {
+                                            let val = +e.target.value;
+                                            if (Number.isNaN(val)) {
+                                                console.log(e.target.value, 'is not a number');
+                                                return;
+                                            }
+                                            while (val > 10) {
+                                                val = val / 10;
+                                            }
+                                            setOverall(val);
+                                        }}
+                                        outlineColor={'#B4D9E4'}
+                                        labelMarginRight={'10px'}
+                                    />
+                                )}
                             </div>
                         </div>
                     )}

@@ -32,6 +32,7 @@ type NewV1Props = {
     wrGrade: number;
     teGrade: number;
     benchGrade: number;
+    overallGrade: number;
     draftCapitalScore: number;
     twoYearOutlook: OutlookOption[];
     rosterPlayers: Player[];
@@ -50,6 +51,7 @@ export default function NewV1({
     wrGrade,
     teGrade,
     benchGrade,
+    overallGrade,
     draftCapitalScore,
     twoYearOutlook,
     rosterPlayers,
@@ -75,6 +77,10 @@ export default function NewV1({
             <TwoYearOutlook
                 twoYearOutlook={twoYearOutlook}
                 style={{right: '10px', top: '349px'}}
+            />
+            <OverallGrade
+                overallGrade={overallGrade}
+                style={{right: '40px', top: '422px'}}
             />
             <RosterGrades
                 qbGrade={qbGrade}
@@ -309,6 +315,21 @@ export function TwoYearOutlook({
         </div>
     );
 }
+
+export function OverallGrade({
+    overallGrade,
+    style,
+}: {
+    overallGrade: number;
+    style?: CSSProperties;
+}) {
+    return (
+        <div className={styles.overallGrade} style={style}>
+            {overallGrade}
+        </div>
+    );
+}
+
 
 export function NumTeams({
     numTeams,

@@ -444,7 +444,11 @@ export function usePositionalRanks(rosters?: Roster[], roster?: Roster) {
     return {qbRank, rbRank, wrRank, teRank};
 }
 
-export function usePositionalGrades(roster?: Roster, leagueSize?: number) {
+export function usePositionalGrades(
+    roster?: Roster,
+    leagueSize?: number,
+    roundOverall = true
+) {
     const playerData = usePlayerData();
     const {getPlayerValue} = usePlayerValues();
     const [leagueId] = useLeagueIdFromUrl();
@@ -501,12 +505,19 @@ export function usePositionalGrades(roster?: Roster, leagueSize?: number) {
         setWr(newWr);
         setTe(newTe);
         setDepth(newDepth);
-        setOverall(
-            Math.min(
-                10,
-                Math.round((newQb + newRb + newWr + newTe + newDepth) / 5) + 1
-            )
-        );
+        if (roundOverall) {
+            setOverall(
+                Math.min(
+                    10,
+                    Math.round((newQb + newRb + newWr + newTe + newDepth) / 5) +
+                        1
+                )
+            );
+        } else {
+            setOverall(
+                Math.min(10, (newQb + newRb + newWr + newTe + newDepth) / 5 + 1)
+            );
+        }
     }, [playerData, roster, bench]);
     return {
         overall,

@@ -4,12 +4,13 @@ export type DomainTextFieldProps = TextFieldProps & {
     outlineColor?: string;
     label?: string | JSX.Element;
     flexGrow?: number;
+    labelMarginRight?: string;
 };
 
 export const DARK_BLUE = '#04121C';
 
 export default function DomainTextField(props: DomainTextFieldProps) {
-    const {outlineColor, label, flexGrow = 0} = props;
+    const {outlineColor, label, flexGrow = 0, labelMarginRight = '20px'} = props;
 
     return (
         <div
@@ -26,7 +27,7 @@ export default function DomainTextField(props: DomainTextFieldProps) {
                         color: 'white',
                         fontFamily: 'Prohibition',
                         fontSize: '20px',
-                        marginRight: '20px',
+                        marginRight: labelMarginRight,
                     }}
                 >
                     {label}
@@ -51,6 +52,7 @@ export default function DomainTextField(props: DomainTextFieldProps) {
                     }}
                     sx={{
                         '& .MuiInputBase-input': {
+                            padding: '6px 12px',
                             color: 'white',
                         },
                         '& .MuiOutlinedInput-notchedOutline': {
