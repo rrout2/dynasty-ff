@@ -509,6 +509,7 @@ export default function BlueprintModule({
                                     productionShare={productionShare}
                                     valueShare={valueShare}
                                     draftCapitalNotes={draftCapitalNotes}
+                                    tradePartners={tradePartners}
                                 />
                             )}
                         </div>

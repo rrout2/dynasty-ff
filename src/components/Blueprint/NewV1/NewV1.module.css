@@ -251,3 +251,24 @@
     font-weight: 600;
     padding-top: 3px;
 }
+
+.tradePartners {
+    position: absolute;
+
+    color: #FFF;
+    font-family: "Acumin Pro Condensed";
+    font-size: 20.771px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    align-items: center;
+}
+
+.tradePartner {
+    width: 115px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

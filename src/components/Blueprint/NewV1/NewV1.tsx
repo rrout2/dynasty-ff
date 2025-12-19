@@ -5,7 +5,7 @@ import {
     RosterArchetype,
 } from '../BlueprintModule/BlueprintModule';
 import {CSSProperties} from 'react';
-import {Player} from '../../../sleeper-api/sleeper-api';
+import {Player, User} from '../../../sleeper-api/sleeper-api';
 import {NONE_PLAYER_ID} from '../v2/modules/CornerstonesModule/CornerstonesModule';
 import {logoImage} from '../shared/Utilities';
 import {useAdpData} from '../../../hooks/hooks';
@@ -19,6 +19,7 @@ import {
     WR_RB_FLEX,
     WR_TE_FLEX,
 } from '../../../consts/fantasy';
+import { getDisplayName } from '../../Team/TeamPage/TeamPage';
 
 type NewV1Props = {
     teamName: string;
@@ -40,6 +41,7 @@ type NewV1Props = {
     productionShare: string;
     valueShare: string;
     draftCapitalNotes: Map<number, string>;
+    tradePartners: (User | undefined)[];
 };
 
 export default function NewV1({
@@ -62,6 +64,7 @@ export default function NewV1({
     productionShare,
     valueShare,
     draftCapitalNotes,
+    tradePartners,
 }: NewV1Props) {
     return (
         <div className={styles.fullBlueprint}>
@@ -149,6 +152,10 @@ export default function NewV1({
                 year={2027}
                 notes={draftCapitalNotes.get(2027) || ''}
                 style={{left: '70px', top: '620px'}}
+            />
+            <TradePartners
+                tradePartners={tradePartners}
+                style={{right: '20px', bottom: '35px'}}
             />
             <img src={new1_0Background} className={styles.backgroundImg} />
         </div>
@@ -529,6 +536,22 @@ export function DraftCapitalNotes({
         <div className={styles.draftCapital} style={style}>
             <div className={styles.draftCapitalYear} style={{color: labelColor}}>{year}</div>
             <div className={styles.draftCapitalNotes}>{notes}</div>
+        </div>
+    );
+}
+
+export function TradePartners({
+    tradePartners,
+    style,
+}: {
+    tradePartners: (User | undefined)[];
+    style?: CSSProperties;
+}) {
+    return (
+        <div className={styles.tradePartners} style={style}>
+            {tradePartners.map((tp, idx) => (
+                <div key={idx} className={styles.tradePartner}>{getDisplayName(tp)}</div>
+            ))}
         </div>
     );
 }
