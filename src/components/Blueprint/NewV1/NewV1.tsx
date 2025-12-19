@@ -107,7 +107,7 @@ export default function NewV1({
                 rbGrade={rbGrade}
                 wrGrade={wrGrade}
                 teGrade={teGrade}
-                style={{left: '152px', top: '187px'}}
+                style={{left: '148px', top: '187px'}}
             />
             <PositionalGradeDisc
                 grade={qbGrade}
@@ -298,7 +298,7 @@ export function PlayerCard({
                     {player.first_name} {player.last_name}
                 </div>
             </div>
-            <div style={{color: getColorFromAdp(posAdp)}}>
+            <div style={{color: getColorFromAdp(posAdp), paddingTop: '3px'}}>
                 {posAdp === Infinity ? '-' : posAdp}
             </div>
         </div>
