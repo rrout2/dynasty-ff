@@ -94,10 +94,11 @@ export enum OutlookOption {
     Contend = 'CONTEND',
 }
 
-enum PriorityOption {
+export enum PriorityOption {
     None = 'NONE',
     Sample = 'SAMPLE 1',
     Sample2 = 'SAMPLE 2',
+    Sample3 = 'Sample 3 with much longer text, to see how it wraps.',
 }
 
 type BlueprintModuleProps = {
@@ -510,6 +511,7 @@ export default function BlueprintModule({
                                     valueShare={valueShare}
                                     draftCapitalNotes={draftCapitalNotes}
                                     tradePartners={tradePartners}
+                                    topPriorities={topPriorities}
                                 />
                             )}
                         </div>

@@ -2,6 +2,7 @@ import styles from './NewV1.module.css';
 import {new1_0Background, nflSilhouette} from '../../../consts/images';
 import {
     OutlookOption,
+    PriorityOption,
     RosterArchetype,
 } from '../BlueprintModule/BlueprintModule';
 import {CSSProperties} from 'react';
@@ -42,6 +43,7 @@ type NewV1Props = {
     valueShare: string;
     draftCapitalNotes: Map<number, string>;
     tradePartners: (User | undefined)[];
+    topPriorities: PriorityOption[];
 };
 
 export default function NewV1({
@@ -65,6 +67,7 @@ export default function NewV1({
     valueShare,
     draftCapitalNotes,
     tradePartners,
+    topPriorities,
 }: NewV1Props) {
     return (
         <div className={styles.fullBlueprint}>
@@ -152,6 +155,10 @@ export default function NewV1({
                 year={2027}
                 notes={draftCapitalNotes.get(2027) || ''}
                 style={{left: '70px', top: '620px'}}
+            />
+            <TopPriorities
+                topPriorities={topPriorities}
+                style={{left: '130px', top: '745px'}}
             />
             <TradePartners
                 tradePartners={tradePartners}
@@ -536,6 +543,22 @@ export function DraftCapitalNotes({
         <div className={styles.draftCapital} style={style}>
             <div className={styles.draftCapitalYear} style={{color: labelColor}}>{year}</div>
             <div className={styles.draftCapitalNotes}>{notes}</div>
+        </div>
+    );
+}
+
+export function TopPriorities({
+    topPriorities,
+    style,
+}: {
+    topPriorities: PriorityOption[];
+    style?: CSSProperties;
+}) {
+    return (
+        <div className={styles.topPriorities} style={style}>
+            {topPriorities.map((tp, idx) => (
+                <div key={idx} className={styles.topPriority}>{tp}</div>
+            ))}
         </div>
     );
 }
