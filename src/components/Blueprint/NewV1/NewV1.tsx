@@ -1,6 +1,8 @@
 import styles from './NewV1.module.css';
 import {new1_0Background, nflSilhouette} from '../../../consts/images';
 import {
+    FullMove,
+    Move,
     OutlookOption,
     PriorityOption,
     RosterArchetype,
@@ -9,7 +11,7 @@ import {CSSProperties} from 'react';
 import {Player, User} from '../../../sleeper-api/sleeper-api';
 import {NONE_PLAYER_ID} from '../v2/modules/CornerstonesModule/CornerstonesModule';
 import {logoImage} from '../shared/Utilities';
-import {useAdpData} from '../../../hooks/hooks';
+import {useAdpData, usePlayerData} from '../../../hooks/hooks';
 import {
     FLEX,
     QB,
@@ -20,7 +22,7 @@ import {
     WR_RB_FLEX,
     WR_TE_FLEX,
 } from '../../../consts/fantasy';
-import { getDisplayName } from '../../Team/TeamPage/TeamPage';
+import {getDisplayName} from '../../Team/TeamPage/TeamPage';
 
 type NewV1Props = {
     teamName: string;
@@ -44,6 +46,7 @@ type NewV1Props = {
     draftCapitalNotes: Map<number, string>;
     tradePartners: (User | undefined)[];
     topPriorities: PriorityOption[];
+    tradeStrategy: FullMove[];
 };
 
 export default function NewV1({
@@ -68,6 +71,7 @@ export default function NewV1({
     draftCapitalNotes,
     tradePartners,
     topPriorities,
+    tradeStrategy,
 }: NewV1Props) {
     return (
         <div className={styles.fullBlueprint}>
@@ -145,13 +149,13 @@ export default function NewV1({
                 style={{left: '62px', top: '207px'}}
             />
             <DraftCapitalNotes
-                labelColor='#CD00FF'
+                labelColor="#CD00FF"
                 year={2026}
                 notes={draftCapitalNotes.get(2026) || ''}
                 style={{left: '70px', top: '580px'}}
             />
             <DraftCapitalNotes
-                labelColor='#F05A28'
+                labelColor="#F05A28"
                 year={2027}
                 notes={draftCapitalNotes.get(2027) || ''}
                 style={{left: '70px', top: '620px'}}
@@ -159,6 +163,18 @@ export default function NewV1({
             <TopPriorities
                 topPriorities={topPriorities}
                 style={{left: '130px', top: '745px'}}
+            />
+            <TradeStrategyItem
+                trade={tradeStrategy[0]}
+                style={{left: '300px', top: '558px'}}
+            />
+            <TradeStrategyItem
+                trade={tradeStrategy[1]}
+                style={{left: '300px', top: '695px'}}
+            />
+            <TradeStrategyItem
+                trade={tradeStrategy[2]}
+                style={{left: '300px', top: '832px'}}
             />
             <TradePartners
                 tradePartners={tradePartners}
@@ -541,7 +557,12 @@ export function DraftCapitalNotes({
 }) {
     return (
         <div className={styles.draftCapital} style={style}>
-            <div className={styles.draftCapitalYear} style={{color: labelColor}}>{year}</div>
+            <div
+                className={styles.draftCapitalYear}
+                style={{color: labelColor}}
+            >
+                {year}
+            </div>
             <div className={styles.draftCapitalNotes}>{notes}</div>
         </div>
     );
@@ -557,8 +578,135 @@ export function TopPriorities({
     return (
         <div className={styles.topPriorities} style={style}>
             {topPriorities.map((tp, idx) => (
-                <div key={idx} className={styles.topPriority}>{tp}</div>
+                <div key={idx} className={styles.topPriority}>
+                    {tp}
+                </div>
             ))}
+        </div>
+    );
+}
+
+export function TradeStrategyItem({
+    trade,
+    style,
+}: {
+    trade: FullMove;
+    style?: CSSProperties;
+}) {
+    function getLabelFromMove(move: Move) {
+        switch (move) {
+            case Move.DOWNTIER:
+                return 'DOWN';
+            case Move.UPTIER:
+                return 'UPTIER';
+            case Move.PIVOT:
+                return 'TRADE';
+        }
+    }
+    return (
+        <div className={styles.tradeStrategyItem} style={style}>
+            <div className={styles.tradeType}>
+                {getLabelFromMove(trade.move)}
+            </div>
+            <TradePlayerCard playerId={trade.playerIdsToTrade[0]} />
+            {trade.move === Move.UPTIER && (
+                <>
+                    <TradePlus />
+                    <TradePlayerCard playerId={trade.playerIdsToTrade[1]} />
+                </>
+            )}
+            <TradeArrow />
+        </div>
+    );
+}
+
+function TradeArrow() {
+    return (
+        <div className={styles.tradeArrow}>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14.75"
+                height="13.25"
+                viewBox="0 0 59 53"
+                fill="none"
+            >
+                <path
+                    d="M58.652 26.5546L27.796 -4.57764e-05V15.3773H0V36.576H27.796V52.8213L58.652 26.5546Z"
+                    fill="#003049"
+                />
+            </svg>
+        </div>
+    );
+}
+
+function TradePlus({size = 11.35}: {size?: number}) {
+    return (
+        <div className={styles.tradeArrow}>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={size}
+                height={size}
+                viewBox="0 0 47 47"
+                fill="none"
+            >
+                <path
+                    d="M46.884 30.884H31.256V46.512H15.6267V30.884H0V15.6293H15.6267V-3.43323e-05H31.256V15.6293H46.884V30.884Z"
+                    fill="#003049"
+                />
+            </svg>
+        </div>
+    );
+}
+
+function TradePlayerCard({playerId}: {playerId: string}) {
+    const playerData = usePlayerData();
+    if (!playerData) return null;
+    // TODO: handle rookie picks
+    const player = playerData[playerId];
+
+    function getBackgroundColor(pos: string) {
+        switch (pos) {
+            case QB:
+                return '#DB2335';
+            case RB:
+                return '#00B1FF';
+            case WR:
+                return '#00FF06';
+            case TE:
+                return '#FFBC00';
+        }
+        return 'none';
+    }
+    return (
+        <div className={styles.tradePlayerCard}>
+            <img
+                src={
+                    playerId === NONE_PLAYER_ID
+                        ? nflSilhouette
+                        : `https://sleepercdn.com/content/nfl/players/${playerId}.jpg`
+                }
+                onError={({currentTarget}) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src =
+                        'https://sleepercdn.com/images/v2/icons/player_default.webp';
+                }}
+                className={styles.largeHeadshot}
+            />
+            <div
+                className={styles.tradeAwayPlayerName}
+            >{`${player.first_name} ${player.last_name}`}</div>
+            <div className={styles.tradeAwayInfo}>
+                <div
+                    className={styles.tradeAwayPosition}
+                    style={{
+                        backgroundColor: getBackgroundColor(player.position),
+                    }}
+                >
+                    {player.position}
+                </div>
+                <div className={styles.tradeAwayTeam}>—</div>
+                <div className={styles.tradeAwayTeam}>{player.team}</div>
+            </div>
         </div>
     );
 }
@@ -573,7 +721,9 @@ export function TradePartners({
     return (
         <div className={styles.tradePartners} style={style}>
             {tradePartners.map((tp, idx) => (
-                <div key={idx} className={styles.tradePartner}>{getDisplayName(tp)}</div>
+                <div key={idx} className={styles.tradePartner}>
+                    {getDisplayName(tp)}
+                </div>
             ))}
         </div>
     );

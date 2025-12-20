@@ -105,7 +105,7 @@ type BlueprintModuleProps = {
     premium?: boolean;
 };
 
-type FullMove = {
+export type FullMove = {
     move: Move;
     playerIdsToTrade: string[];
     playerIdsToTarget: string[][];
@@ -217,7 +217,12 @@ export default function BlueprintModule({
         new Map<number, string>()
     );
     useEffect(() => {
-        setDraftCapitalNotes(new Map([[2026, draftCapitalNotes2026], [2027, draftCapitalNotes2027]]));
+        setDraftCapitalNotes(
+            new Map([
+                [2026, draftCapitalNotes2026],
+                [2027, draftCapitalNotes2027],
+            ])
+        );
     }, [draftCapitalNotes2026, draftCapitalNotes2027]);
     const {
         overall,
@@ -512,6 +517,7 @@ export default function BlueprintModule({
                                     draftCapitalNotes={draftCapitalNotes}
                                     tradePartners={tradePartners}
                                     topPriorities={topPriorities}
+                                    tradeStrategy={fullMoves}
                                 />
                             )}
                         </div>
@@ -1430,7 +1436,7 @@ export default function BlueprintModule({
     );
 }
 
-enum Move {
+export enum Move {
     DOWNTIER = 'DOWNTIER',
     UPTIER = 'UPTIER',
     PIVOT = 'PIVOT',
