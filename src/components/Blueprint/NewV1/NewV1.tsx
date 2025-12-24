@@ -6,6 +6,7 @@ import {
     OutlookOption,
     PriorityOption,
     RosterArchetype,
+    ValueArchetype,
 } from '../BlueprintModule/BlueprintModule';
 import {CSSProperties} from 'react';
 import {Player, User} from '../../../sleeper-api/sleeper-api';
@@ -30,6 +31,7 @@ type NewV1Props = {
     isSuperFlex: boolean;
     ppr: number;
     tep: number;
+    valueArchetype: ValueArchetype;
     rosterArchetype: RosterArchetype;
     qbGrade: number;
     rbGrade: number;
@@ -55,6 +57,7 @@ export default function NewV1({
     isSuperFlex,
     ppr,
     tep,
+    valueArchetype,
     rosterArchetype,
     qbGrade,
     rbGrade,
@@ -86,6 +89,10 @@ export default function NewV1({
             />
             <Ppr ppr={ppr} style={{right: '86px', top: '28px'}} />
             <Tep tep={tep} style={{right: '27px', top: '28px'}} />
+            <ValueArchetypeComponent
+                valueArchetype={valueArchetype}
+                style={{left: '70px', top: '130px'}}
+            />
             <RosterArchetypeComponent
                 rosterArchetype={rosterArchetype}
                 style={{left: '315px', top: '130px'}}
@@ -453,6 +460,20 @@ export function RosterArchetypeComponent({
     return (
         <div className={styles.rosterArchetype} style={style}>
             {rosterArchetype}
+        </div>
+    );
+}
+
+export function ValueArchetypeComponent({
+    valueArchetype,
+    style,
+}: {
+    valueArchetype: ValueArchetype;
+    style?: CSSProperties;
+}) {
+    return (
+        <div className={styles.valueArchetype} style={style}>
+            {valueArchetype}
         </div>
     );
 }

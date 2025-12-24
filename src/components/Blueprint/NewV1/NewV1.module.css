@@ -68,6 +68,13 @@
     color: white;
 }
 
+.valueArchetype {
+    position: absolute;
+    font-family: 'Prohibition';
+    font-size: 32px;
+    color: white;
+}
+
 .rosterGrades {
     font-family: "Acumin Pro ExtraCondensed";
     font-size: 16px;
