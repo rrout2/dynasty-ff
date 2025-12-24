@@ -616,7 +616,90 @@ export function TradeStrategyItem({
                 </>
             )}
             <TradeArrow />
+            {trade.move === Move.UPTIER && (
+                <div className={styles.targetColumn}>
+                    <div className={styles.orRow}>
+                        <div className={styles.or}></div>
+                        <TargetPlayerCard
+                            playerId={trade.playerIdsToTarget[0][0]}
+                        />
+                    </div>
+                    <DividerLine />
+                    <div className={styles.orRow}>
+                        <div className={styles.or}>OR</div>
+                        <TargetPlayerCard
+                            playerId={trade.playerIdsToTarget[1][0]}
+                        />
+                    </div>
+                    <DividerLine />
+                    <div className={styles.orRow}>
+                        <div className={styles.or}>OR</div>
+                        <TargetPlayerCard
+                            playerId={trade.playerIdsToTarget[2][0]}
+                        />
+                    </div>
+                </div>
+            )}
+            {trade.move === Move.PIVOT && (
+                <>
+                    <TradePlayerCard playerId={trade.playerIdsToTarget[0][0]} />
+                    <div className={styles.or}>OR</div>
+                    <TradePlayerCard playerId={trade.playerIdsToTarget[1][0]} />
+                    <div className={styles.or}>OR</div>
+                    <TradePlayerCard playerId={trade.playerIdsToTarget[2][0]} />
+                </>
+            )}
+            {trade.move === Move.DOWNTIER && (
+                <div className={styles.targetColumn}>
+                    <div className={styles.orRow}>
+                        <div className={styles.or}></div>
+                        <TargetPlayerCard
+                            playerId={trade.playerIdsToTarget[0][0]}
+                        />
+                        <TradePlus size={5} />
+                        <TargetPlayerCard playerId={trade.playerIdsToTarget[0][1]} />
+                    </div>
+                    <DividerLine width={260} />
+                    <div className={styles.orRow}>
+                        <div className={styles.or}>OR</div>
+                        <TargetPlayerCard
+                            playerId={trade.playerIdsToTarget[1][0]}
+                        />
+                        <TradePlus size={5} />
+                        <TargetPlayerCard playerId={trade.playerIdsToTarget[1][1]} />
+                    </div>
+                    <DividerLine width={260} />
+                    <div className={styles.orRow}>
+                        <div className={styles.or}>OR</div>
+                        <TargetPlayerCard
+                            playerId={trade.playerIdsToTarget[2][0]}
+                        />
+                        <TradePlus size={5} />
+                        <TargetPlayerCard playerId={trade.playerIdsToTarget[2][1]} />
+                    </div>
+                </div>
+            )}
         </div>
+    );
+}
+
+function DividerLine({width = 120}: {width?: number}) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={width}
+            height="2"
+            viewBox="0 0 539 2"
+            fill="none"
+        >
+            <path
+                d="M0 0.666748H538.345"
+                stroke="white"
+                stroke-width="1.33333"
+                stroke-miterlimit="10"
+                stroke-dasharray="6.61 6.61"
+            />
+        </svg>
     );
 }
 
@@ -641,7 +724,7 @@ function TradeArrow() {
 
 function TradePlus({size = 11.35}: {size?: number}) {
     return (
-        <div className={styles.tradeArrow}>
+        <div className={styles.tradeArrow} style={{width: `${size*2.2}px`, height: `${size*2.2}px`}}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={size}
@@ -677,6 +760,11 @@ function TradePlayerCard({playerId}: {playerId: string}) {
         }
         return 'none';
     }
+
+    if (playerId === '') {
+        return null;
+    }
+
     return (
         <div className={styles.tradePlayerCard}>
             <img
@@ -706,6 +794,66 @@ function TradePlayerCard({playerId}: {playerId: string}) {
                 </div>
                 <div className={styles.tradeAwayTeam}>—</div>
                 <div className={styles.tradeAwayTeam}>{player.team}</div>
+            </div>
+        </div>
+    );
+}
+
+function TargetPlayerCard({playerId}: {playerId: string}) {
+    const playerData = usePlayerData();
+    if (!playerData) return null;
+    // TODO: handle rookie picks
+    const player = playerData[playerId];
+
+    function getBackgroundColor(pos: string) {
+        switch (pos) {
+            case QB:
+                return '#DB2335';
+            case RB:
+                return '#00B1FF';
+            case WR:
+                return '#00FF06';
+            case TE:
+                return '#FFBC00';
+        }
+        return 'none';
+    }
+    if (playerId === '') {
+        return null;
+    }
+    return (
+        <div className={styles.targetPlayerCard}>
+            <img
+                src={
+                    playerId === NONE_PLAYER_ID
+                        ? nflSilhouette
+                        : `https://sleepercdn.com/content/nfl/players/${playerId}.jpg`
+                }
+                onError={({currentTarget}) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src =
+                        'https://sleepercdn.com/images/v2/icons/player_default.webp';
+                }}
+                className={styles.mediumHeadshot}
+            />
+            <div className={styles.targetInfo}>
+                <div
+                    className={styles.targetPlayerName}
+                >{`${player.first_name} ${player.last_name}`}</div>
+                <div className={styles.targetPlayerInfo}>
+                    <div
+                        className={styles.targetPosition}
+                        style={{
+                            backgroundColor: getBackgroundColor(
+                                player.position
+                            ),
+                        }}
+                    >
+                        {player.position}
+                    </div>
+                    <div className={styles.targetTeam}>—</div>
+                    <div className={styles.targetTeam}>{player.team}</div>
+                </div>
             </div>
         </div>
     );

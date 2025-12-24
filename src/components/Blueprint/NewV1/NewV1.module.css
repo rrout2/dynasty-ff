@@ -306,6 +306,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    justify-content: space-between;
 }
 
 .tradeType {
@@ -329,6 +331,20 @@
     align-items: center;
 }
 
+.targetPlayerCard {
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+
+    align-items: center;
+}
+
+.mediumHeadshot {
+    height: 32px;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+}
+
 .largeHeadshot {
     height: 64px;
     object-fit: cover;
@@ -347,11 +363,35 @@
     padding-top: 4px;
 }
 
+.targetPlayerName {
+    color: #FFF;
+    font-family: "Acumin Pro ExtraCondensed";
+    text-transform: uppercase;
+    font-size: 15.667px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 70%;
+
+    padding-top: 3px;
+}
+
 .tradeAwayInfo {
     display: flex;
     flex-direction: row;
     gap: 2px;
     align-items: center;
+}
+
+.targetPlayerInfo {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    align-items: center;
+}
+
+.targetInfo {
+    display: flex;
+    flex-direction: column;
 }
 
 .tradeAwayPosition {
@@ -369,10 +409,32 @@
     border-radius: 4px;
 }
 
+.targetPosition {
+    color: #003049;
+    font-family: Prohibition;
+    font-size: 12px;
+    font-weight: 400;
+
+    width: 20px;
+    text-align: center;
+    padding-bottom: 1px;
+    line-height: 95%;
+
+    border-radius: 4px;
+}
+
 .tradeAwayTeam {
     color: #FFF;
     font-family: "Acumin Pro ExtraCondensed";
     font-size: 20px;
+    font-weight: 400;
+    padding-top: 3px;
+}
+
+.targetTeam {
+    color: #FFF;
+    font-family: "Acumin Pro ExtraCondensed";
+    font-size: 14px;
     font-weight: 400;
     padding-top: 3px;
 }
@@ -386,4 +448,28 @@
     display: flex;
     justify-content: center;
     align-items: center
+}
+
+.targetColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5px;
+}
+
+.orRow {
+    display: flex;
+    flex-direction: row;
+    gap: 2.5px;
+
+    align-items: center;
+}
+
+
+.or {
+    color: #FFF;
+    font-family: "Acumin Pro Condensed";
+    font-size: 9.333px;
+    font-weight: 700;
+
+    width: 9px;
 }
