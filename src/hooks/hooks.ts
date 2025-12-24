@@ -14,7 +14,7 @@ import sfPickMovesJson from '../data/rookieBP/sf_pick_moves.json';
 import oneQbPickMovesJson from '../data/rookieBP/1qb_pick_moves.json';
 import sfRookieRankingsJson from '../data/rookieBP/sf_rookie_rankings_and_tiers_apr26.json';
 import oneQbRookieRankingsJson from '../data/rookieBP/1qb_rookie_rankings_and_tiers_apr26.json';
-import playerStoplightsJson from '../data/weekly/playerLightsWeek13.json';
+import playerStoplightsJson from '../data/weekly/playerLightsWeek17.json';
 import risersFallersJson from '../data/weekly/risersFallersWeek11.json';
 import weeklyRankingsJson from '../data/weekly/rankingsWeek11.json';
 
@@ -71,8 +71,8 @@ import axios from 'axios';
 const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
 function useApiRisersFallers() {
-    const currListId = 194;
-    const prevListId = 186;
+    const currListId = 200;
+    const prevListId = 194;
     const {data: risersFallers} = useQuery({
         queryKey: ['risersFallers', currListId, prevListId],
         queryFn: async () => {
@@ -122,29 +122,29 @@ export type Stoplight = {
     vegasLight: string;
 };
 
-export function useStoplights(week: string | number = 16) {
-    // const [stoplights] = useState<Stoplight[]>(
-    //     playerStoplightsJson as unknown as Stoplight[]
-    // );
-    // const isFetched = true;
-    const {
-        data: stoplights,
-        error,
-        isLoading,
-        isFetched,
-        isError,
-    } = useQuery({
-        queryKey: ['stoplights', week],
-        queryFn: async () => {
-            const options = {
-                method: 'GET',
-                url: `${AZURE_API_URL}PlayerLights/${week}`,
-            };
-            const res = await axios.request(options);
-            return res.data as Stoplight[];
-        },
-        retry: false,
-    });
+export function useStoplights(week: string | number = 17) {
+    const [stoplights] = useState<Stoplight[]>(
+        playerStoplightsJson as unknown as Stoplight[]
+    );
+    const isFetched = true;
+    // const {
+    //     data: stoplights,
+    //     error,
+    //     isLoading,
+    //     isFetched,
+    //     isError,
+    // } = useQuery({
+    //     queryKey: ['stoplights', week],
+    //     queryFn: async () => {
+    //         const options = {
+    //             method: 'GET',
+    //             url: `${AZURE_API_URL}PlayerLights/${week}`,
+    //         };
+    //         const res = await axios.request(options);
+    //         return res.data as Stoplight[];
+    //     },
+    //     retry: false,
+    // });
 
     function findStoplight(name: string): Stoplight | undefined {
         if (!stoplights) return;
@@ -682,7 +682,7 @@ export type BuySellHoldSchema = {
     'Rebuild Team': string;
 };
 
-function useBuySellHoldApi(week: string | number = 16) {
+function useBuySellHoldApi(week: string | number = 17) {
     const {data: buySells, isLoading} = useQuery({
         queryKey: ['buySells', week],
         queryFn: async () => {
@@ -1092,7 +1092,7 @@ type Rank = {
     Position: string;
 };
 
-function useRankingsApi(week: string | number = 16) {
+function useRankingsApi(week: string | number = 17) {
     const {data: rankings, isLoading} = useQuery({
         queryKey: ['rankings', week],
         queryFn: async () => {
@@ -1722,7 +1722,7 @@ export function useRosterSettingsFromId(leagueId?: string) {
 
 function useWeeklyLineupsApi() {
     // TODO: better way to get this
-    const listId = 195;
+    const listId = 202;
     const {
         data: weeklyLineups,
         error,
