@@ -428,3 +428,21 @@
     left: -9999px;
     top: -9999px;
 }
+
+.draftStrategyTitle {
+    text-transform: uppercase;
+    color: white;
+    font-family: 'Prohibition';
+    font-size: 30px;
+}
+
+.draftStrategyContainer {
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    border-left: 1px solid #ccc;
+
+}

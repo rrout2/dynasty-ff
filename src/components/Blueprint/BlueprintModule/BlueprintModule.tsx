@@ -70,6 +70,28 @@ const PCT_OPTIONS = [
 
 const GRADE_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+const DRAFT_STRAT_OPTIONS_2026 = [
+    'Don\'t plan on targeting any picks unless you get an early to mid 1st for "cheap"',
+    'Don\'t invest in anymore picks unless you get one in the 1.02-1.06 range',
+    'Consider using one or two of your 1sts for a premier RB or WR option',
+    'Use your expected late 1sts to move up for an earlier pick or a proven player',
+    'See if you can get any pick from the 1.02-1.05 for a fair price or even discount',
+    'Don\'t invest in anymore picks that aren\'t in the 1.02-1.06 range',
+    'Look into moving one or two picks for a young asset with high value upside',
+];
+
+const DRAFT_STRAT_OPTIONS_2027 = [
+    'Don\'t trade away anymore future 1sts beyond this year for now',
+    'Hold your picks at least until midseason in case you need a production push',
+    'Feel free to move one or two of your picks to get some positional upgrades',
+    'Try getting some picks at a discount before they gain value later this year',
+    'Hold your current picks & feel free to target more at a discount while you can',
+    'Hold all your 1sts at least until next offseason when they reach peak value',
+    'Try getting some picks at a discount before they gain value later this year',
+    'Hold your current picks & feel free to target more at a discount while you can',
+    'Hold all your 1sts at least until next offseason when they reach peak value',
+];
+
 export enum ValueArchetype {
     None = 'NONE',
     EliteValue = 'ELITE VALUE',
@@ -255,6 +277,7 @@ export default function BlueprintModule({
         rosterSettings,
         roster?.players
     );
+    const [draftStrategy, setDraftStrategy] = useState(['', '']);
     const [isDownloading, setIsDownloading] = useState(false);
 
     useEffect(() => {
@@ -1495,6 +1518,55 @@ export default function BlueprintModule({
                             }}
                         />
                     </div>
+                    {premium && <div className={styles.draftStrategyContainer}>
+                        <div className={styles.draftStrategyTitle}>
+                            Draft Strategy
+                        </div>
+                        <DomainDropdown
+                            style={{width: '600px'}}
+                            renderValue={value => (
+                                <span
+                                    style={{
+                                        fontStyle: 'italic',
+                                        fontWeight: 'normal',
+                                    }}
+                                >{`${value}`}</span>
+                            )}
+                            value={draftStrategy[0]}
+                            options={DRAFT_STRAT_OPTIONS_2026}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                setDraftStrategy([
+                                    value as string,
+                                    draftStrategy[1],
+                                ]);
+                            }}
+                        />
+                        <DomainDropdown
+                            style={{width: '600px'}}
+                            renderValue={value => (
+                                <span
+                                    style={{
+                                        fontStyle: 'italic',
+                                        fontWeight: 'normal',
+                                    }}
+                                >{`${value}`}</span>
+                            )}
+                            value={draftStrategy[1]}
+                            options={DRAFT_STRAT_OPTIONS_2027}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                setDraftStrategy([
+                                    draftStrategy[0],
+                                    value as string,                                    
+                                ]);
+                            }}
+                        />
+                    </div>}
                 </div>
             </div>
             <div
