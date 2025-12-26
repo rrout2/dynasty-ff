@@ -9,8 +9,8 @@
 .teamName {
     position: absolute;
     color: white;
-    left: 125px;
-    top: 10px;
+    left: 120px;
+    top: 13px;
     font-family: 'Prohibition';
     font-size: 50px;
 
@@ -18,6 +18,11 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .numTeams {

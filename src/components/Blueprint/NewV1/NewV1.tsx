@@ -53,6 +53,12 @@ type NewV1Props = {
     tradeStrategy: FullMove[];
 };
 
+function getFontSize(teamName: string) {
+    if (teamName.length >= 24) return '35px';
+    if (teamName.length >= 20) return '40px';
+    return '50px';
+}
+
 export default function NewV1({
     teamName,
     numTeams,
@@ -82,7 +88,7 @@ export default function NewV1({
 }: NewV1Props) {
     return (
         <div className={`exportableClassV1 ${styles.fullBlueprint}`}>
-            <div className={styles.teamName}>{teamName}</div>
+            <div className={styles.teamName} style={{fontSize: getFontSize(teamName)}}>{teamName}</div>
             <NumTeams
                 numTeams={numTeams}
                 style={{right: '204px', top: '28px'}}
