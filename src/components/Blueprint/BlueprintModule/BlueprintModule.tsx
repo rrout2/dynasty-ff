@@ -406,7 +406,7 @@ export default function BlueprintModule({
 
             const link = document.createElement('a');
             link.href = dataUrl;
-            link.download = 'default_name.png';
+            link.download = `${getDisplayName(specifiedUser)}.png` || 'default_name.png';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
