@@ -154,7 +154,9 @@ export default function Premium({
             <PositionalGradeDisc
                 grade={qbGrade}
                 color={'#DB2335'}
-                style={{left: '772px', top: '203px',
+                style={{
+                    left: '772px',
+                    top: '203px',
                     transform: 'scale(0.96)',
                     transformOrigin: 'top left',
                 }}
@@ -162,7 +164,9 @@ export default function Premium({
             <PositionalGradeDisc
                 grade={rbGrade}
                 color={'#00B1FF'}
-                style={{left: '836px', top: '203px',
+                style={{
+                    left: '836px',
+                    top: '203px',
                     transform: 'scale(0.96)',
                     transformOrigin: 'top left',
                 }}
@@ -170,7 +174,9 @@ export default function Premium({
             <PositionalGradeDisc
                 grade={wrGrade}
                 color={'#1AE069'}
-                style={{left: '900px', top: '203px',
+                style={{
+                    left: '900px',
+                    top: '203px',
                     transform: 'scale(0.96)',
                     transformOrigin: 'top left',
                 }}
@@ -178,7 +184,9 @@ export default function Premium({
             <PositionalGradeDisc
                 grade={teGrade}
                 color={'#FFBC00'}
-                style={{left: '964px', top: '203px',
+                style={{
+                    left: '964px',
+                    top: '203px',
                     transform: 'scale(0.96)',
                     transformOrigin: 'top left',
                 }}
@@ -186,7 +194,9 @@ export default function Premium({
             <PositionalGradeDisc
                 grade={benchGrade}
                 color={'#CD00FF'}
-                style={{left: '1028px', top: '203px',
+                style={{
+                    left: '1028px',
+                    top: '203px',
                     transform: 'scale(0.96)',
                     transformOrigin: 'top left',
                 }}
@@ -194,7 +204,9 @@ export default function Premium({
             <PositionalGradeDisc
                 grade={draftCapitalScore}
                 color={'#FF4200'}
-                style={{left: '166px', top: '561px',
+                style={{
+                    left: '166px',
+                    top: '561px',
                     transform: 'scale(0.96)',
                     transformOrigin: 'top left',
                 }}

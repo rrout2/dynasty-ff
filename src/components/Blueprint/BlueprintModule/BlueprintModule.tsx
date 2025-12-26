@@ -255,6 +255,7 @@ export default function BlueprintModule({
         rosterSettings,
         roster?.players
     );
+    const [isDownloading, setIsDownloading] = useState(false);
 
     useEffect(() => {
         if (!league) return;
@@ -390,29 +391,30 @@ export default function BlueprintModule({
     };
 
     const handleExport = async () => {
+        setIsDownloading(true);
         let elements: HTMLElement[] = [];
-        const elementClassName = 'exportableClassV1';
-        if (typeof elementClassName === 'string') {
-            elements = Array.from(
-                document.getElementsByClassName(elementClassName)
-            ) as HTMLElement[];
-            elements = [elements[0]];
-        }
+        const elementClassName = premium
+            ? 'exportableClassPremium'
+            : 'exportableClassV1';
+        elements = Array.from(
+            document.getElementsByClassName(elementClassName)
+        ) as HTMLElement[];
+        elements = [elements[0]];
 
-        if (elements.length === 1) {
-            const dataUrl = await toPng(elements[0], {
-                backgroundColor: 'rgba(0, 0, 0, 0)',
-                cacheBust: true,
-            });
+        const dataUrl = await toPng(elements[0], {
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            cacheBust: true,
+        });
 
-            const link = document.createElement('a');
-            link.href = dataUrl;
-            link.download =
-                `${getDisplayName(specifiedUser)}.png` || 'default_name.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download =
+            `${getDisplayName(specifiedUser)}.png` || 'default_name.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setIsDownloading(false);
     };
 
     return (
@@ -481,11 +483,15 @@ export default function BlueprintModule({
                 </Modal>
                 <div className={styles.bpActions}>
                     <Button
+                        loading={isDownloading}
                         variant="outlined"
                         endIcon={<FileDownload />}
                         sx={{
                             ...bpActionButtonStyle,
                             color: '#1AE069',
+                            '.MuiButton-loadingIndicator': {
+                                color: '#1AE069', 
+                            },
                         }}
                         onClick={() => handleExport()}
                     >
@@ -1491,8 +1497,38 @@ export default function BlueprintModule({
                     </div>
                 </div>
             </div>
-            <div className={styles.offScreen}>
+            <div
+                className={styles.offScreen}
+                style={{width: premium ? '1900px' : '800px'}}
+            >
                 <NewV1
+                    teamName={getDisplayName(specifiedUser)}
+                    numTeams={numTeams}
+                    isSuperFlex={isSuperFlex}
+                    ppr={ppr}
+                    tep={tep}
+                    valueArchetype={valueArchetype}
+                    rosterArchetype={rosterArchetype}
+                    qbGrade={qb}
+                    rbGrade={rb}
+                    wrGrade={wr}
+                    teGrade={te}
+                    benchGrade={depth}
+                    overallGrade={overall}
+                    draftCapitalScore={draftCapitalScore}
+                    twoYearOutlook={twoYearOutlook}
+                    rosterPlayers={rosterPlayers}
+                    getStartingPosition={getStartingPosition}
+                    productionShare={productionShare}
+                    valueShare={valueShare}
+                    productionShareRank={productionShareRank}
+                    valueShareRank={valueShareRank}
+                    draftCapitalNotes={draftCapitalNotes}
+                    tradePartners={tradePartners}
+                    topPriorities={topPriorities}
+                    tradeStrategy={fullMoves}
+                />
+                <Premium
                     teamName={getDisplayName(specifiedUser)}
                     numTeams={numTeams}
                     isSuperFlex={isSuperFlex}
