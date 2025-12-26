@@ -77,7 +77,7 @@ export default function NewV1({
     tradeStrategy,
 }: NewV1Props) {
     return (
-        <div className={styles.fullBlueprint}>
+        <div className={`exportableClassV1 ${styles.fullBlueprint}`}>
             <div className={styles.teamName}>{teamName}</div>
             <NumTeams
                 numTeams={numTeams}
@@ -782,7 +782,7 @@ function TradePlayerCard({playerId}: {playerId: string}) {
         return 'none';
     }
 
-    if (playerId === '') {
+    if (playerId === '' || !player) {
         return null;
     }
 

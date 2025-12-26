@@ -41,6 +41,7 @@ import {
     Save,
 } from '@mui/icons-material';
 import NewV1 from '../NewV1/NewV1';
+import { toPng } from 'html-to-image';
 
 const PCT_OPTIONS = [
     '0%',
@@ -387,6 +388,31 @@ export default function BlueprintModule({
         setNewLeagueModalOpen(false);
     };
 
+    const handleExport = async () => {
+        let elements: HTMLElement[] = [];
+        let elementClassName = 'exportableClassV1';
+        if (typeof elementClassName === 'string') {
+            elements = Array.from(
+                document.getElementsByClassName(elementClassName)
+            ) as HTMLElement[];
+            elements = [elements[0]];
+        }
+
+        if (elements.length === 1) {
+            const dataUrl = await toPng(elements[0], {
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                cacheBust: true,
+            });
+
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = 'default_name.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    };
+
     return (
         <div style={{backgroundColor: DARK_BLUE}}>
             <div className={styles.headerContainer}>
@@ -459,7 +485,7 @@ export default function BlueprintModule({
                             ...bpActionButtonStyle,
                             color: '#1AE069',
                         }}
-                        onClick={() => console.log('TODO: download blueprint')}
+                        onClick={() => handleExport()}
                     >
                         DOWNLOAD BP
                     </Button>
@@ -1432,6 +1458,33 @@ export default function BlueprintModule({
                         />
                     </div>
                 </div>
+            </div>
+            <div className={styles.offScreen}>
+                <NewV1
+                    teamName={getDisplayName(specifiedUser)}
+                    numTeams={numTeams}
+                    isSuperFlex={isSuperFlex}
+                    ppr={ppr}
+                    tep={tep}
+                    valueArchetype={valueArchetype}
+                    rosterArchetype={rosterArchetype}
+                    qbGrade={qb}
+                    rbGrade={rb}
+                    wrGrade={wr}
+                    teGrade={te}
+                    benchGrade={depth}
+                    overallGrade={overall}
+                    draftCapitalScore={draftCapitalScore}
+                    twoYearOutlook={twoYearOutlook}
+                    rosterPlayers={rosterPlayers}
+                    getStartingPosition={getStartingPosition}
+                    productionShare={productionShare}
+                    valueShare={valueShare}
+                    draftCapitalNotes={draftCapitalNotes}
+                    tradePartners={tradePartners}
+                    topPriorities={topPriorities}
+                    tradeStrategy={fullMoves}
+                />
             </div>
         </div>
     );
