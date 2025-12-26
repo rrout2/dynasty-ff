@@ -554,7 +554,35 @@ export default function BlueprintModule({
                                     tradeStrategy={fullMoves}
                                 />
                             )}
-                            {premium && <Premium />}
+                            {premium && (
+                                <Premium
+                                    teamName={getDisplayName(specifiedUser)}
+                                    numTeams={numTeams}
+                                    isSuperFlex={isSuperFlex}
+                                    ppr={ppr}
+                                    tep={tep}
+                                    valueArchetype={valueArchetype}
+                                    rosterArchetype={rosterArchetype}
+                                    qbGrade={qb}
+                                    rbGrade={rb}
+                                    wrGrade={wr}
+                                    teGrade={te}
+                                    benchGrade={depth}
+                                    overallGrade={overall}
+                                    draftCapitalScore={draftCapitalScore}
+                                    twoYearOutlook={twoYearOutlook}
+                                    rosterPlayers={rosterPlayers}
+                                    getStartingPosition={getStartingPosition}
+                                    productionShare={productionShare}
+                                    valueShare={valueShare}
+                                    productionShareRank={productionShareRank}
+                                    valueShareRank={valueShareRank}
+                                    draftCapitalNotes={draftCapitalNotes}
+                                    tradePartners={tradePartners}
+                                    topPriorities={topPriorities}
+                                    tradeStrategy={fullMoves}
+                                />
+                            )}
                         </div>
                     </Modal>
                 </div>
