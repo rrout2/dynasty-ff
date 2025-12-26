@@ -10,3 +10,23 @@
 .backgroundImg {
     width: 100%;
 }
+
+.teamName {
+    position: absolute;
+    color: white;
+    left: 120px;
+    top: 13px;
+    
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.teamNameText {
+    font-family: 'Prohibition';
+    width: 380px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

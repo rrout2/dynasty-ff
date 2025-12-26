@@ -490,7 +490,7 @@ export default function BlueprintModule({
                             ...bpActionButtonStyle,
                             color: '#1AE069',
                             '.MuiButton-loadingIndicator': {
-                                color: '#1AE069', 
+                                color: '#1AE069',
                             },
                         }}
                         onClick={() => handleExport()}

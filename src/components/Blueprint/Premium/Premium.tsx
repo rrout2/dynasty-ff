@@ -20,9 +20,18 @@ import {
     RosterArchetypeComponent,
     RosterGrades,
     Tep,
+    TopPriorities,
+    TradePartners,
+    TradeStrategyItem,
     TwoYearOutlook,
     ValueArchetypeComponent,
 } from '../NewV1/NewV1';
+
+function getFontSize(teamName: string) {
+    if (teamName.length >= 24) return '32px';
+    if (teamName.length >= 20) return '38px';
+    return '50px';
+}
 
 type PremiumProps = {
     teamName: string;
@@ -82,6 +91,12 @@ export default function Premium({
     return (
         <div className={`exportableClassPremium ${styles.fullBlueprint}`}>
             <img src={premiumAssets} className={styles.assets} />
+            <div
+                className={styles.teamName}
+                style={{fontSize: getFontSize(teamName)}}
+            >
+                <div className={styles.teamNameText}>{teamName}</div>
+            </div>
             <NumTeams
                 numTeams={numTeams}
                 style={{left: '504px', top: '32px'}}
@@ -232,6 +247,45 @@ export default function Premium({
                 year={2027}
                 notes={draftCapitalNotes.get(2027) || ''}
                 style={{left: '85px', top: '670px'}}
+            />
+            <TopPriorities
+                topPriorities={topPriorities}
+                style={{
+                    left: '130px',
+                    top: '798px',
+                    transform: 'scale(0.88)',
+                    transformOrigin: 'top left',
+                }}
+            />
+            <TradePartners
+                tradePartners={tradePartners}
+                style={{right: '755px', bottom: '477px',
+                    transform: 'scale(0.95)',
+                    transformOrigin: 'bottom right', gap: '30px'}}
+            />
+            <TradeStrategyItem
+                trade={tradeStrategy[0]}
+                style={{left: '280px', top: '578px', width: '420px'}}
+            />
+            <TradeStrategyItem
+                trade={tradeStrategy[1]}
+                style={{left: '280px', top: '725px', width: '420px'}}
+            />
+            <TradeStrategyItem
+                trade={tradeStrategy[2]}
+                style={{left: '280px', top: '872px', width: '420px'}}
+            />
+            <TradeStrategyItem
+                trade={tradeStrategy[3]}
+                style={{left: '700px', top: '578px', width: '420px'}}
+            />
+            <TradeStrategyItem
+                trade={tradeStrategy[4]}
+                style={{left: '700px', top: '725px', width: '420px'}}
+            />
+            <TradeStrategyItem
+                trade={tradeStrategy[5]}
+                style={{left: '700px', top: '872px', width: '420px'}}
             />
         </div>
     );
