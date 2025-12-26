@@ -117,7 +117,7 @@ export default function BlueprintModule({
     premium = false,
 }: BlueprintModuleProps) {
     // Hooks
-    useTitle('Blueprint Module');
+    useTitle(premium ? 'Premium Blueprint Module' : 'Blueprint Module');
     const [newLeagueModalOpen, setNewLeagueModalOpen] = useState(false);
     const [previewModalOpen, setPreviewModalOpen] = useState(false);
     const [newLeagueId, setNewLeagueId] = useState('');
