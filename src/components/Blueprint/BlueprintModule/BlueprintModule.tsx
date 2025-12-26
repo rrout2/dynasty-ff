@@ -240,8 +240,6 @@ export default function BlueprintModule({
         setDepth,
     } = usePositionalGrades(roster, numTeams, /* roundOverall= */ false);
     const [draftCapitalScore, setDraftCapitalScore] = useState(8);
-    const [flexScore, setFlexScore] = useState(8);
-    const [sfScore, setSfScore] = useState(8);
     const [isSuperFlex, setIsSuperFlex] = useState(true);
     const [ppr, setPpr] = useState(0.5);
     const [tep, setTep] = useState(0.5);
@@ -249,6 +247,8 @@ export default function BlueprintModule({
     const [valueShare, setValueShare] = useState('25%');
     const [addPickRound, setAddPickRound] = useState(1);
     const [addPickSlot, setAddPickSlot] = useState(1);
+    const [productionShareRank, setProductionShareRank] = useState(1);
+    const [valueShareRank, setValueShareRank] = useState(1);
     const {myPicks} = useGetPicks(leagueId, roster?.owner_id);
     const {startingLineup} = useProjectedLineup(
         rosterSettings,
@@ -541,6 +541,8 @@ export default function BlueprintModule({
                                     getStartingPosition={getStartingPosition}
                                     productionShare={productionShare}
                                     valueShare={valueShare}
+                                    productionShareRank={productionShareRank}
+                                    valueShareRank={valueShareRank}
                                     draftCapitalNotes={draftCapitalNotes}
                                     tradePartners={tradePartners}
                                     topPriorities={topPriorities}
@@ -683,6 +685,24 @@ export default function BlueprintModule({
                                     style={{width: '40px'}}
                                     className={styles.labels}
                                 >
+                                    PROD. SHARE RANK
+                                </div>
+                            }
+                            options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
+                            value={productionShareRank}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                setProductionShareRank(value as number);
+                            }}
+                        />
+                        <DomainDropdown
+                            label={
+                                <div
+                                    style={{width: '40px'}}
+                                    className={styles.labels}
+                                >
                                     VALUE SHARE
                                 </div>
                             }
@@ -693,6 +713,24 @@ export default function BlueprintModule({
                                     target: {value},
                                 } = e;
                                 setValueShare(value as string);
+                            }}
+                        />
+                        <DomainDropdown
+                            label={
+                                <div
+                                    style={{width: '40px'}}
+                                    className={styles.labels}
+                                >
+                                    VALUE SHARE RANK
+                                </div>
+                            }
+                            options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
+                            value={valueShareRank}
+                            onChange={e => {
+                                const {
+                                    target: {value},
+                                } = e;
+                                setValueShareRank(value as number);
                             }}
                         />
                     </div>
@@ -926,52 +964,6 @@ export default function BlueprintModule({
                                         }
                                     }}
                                     outlineColor={'rgb(252, 71, 26)'}
-                                />
-                                <DomainDropdown
-                                    label={
-                                        <div
-                                            className={styles.labels}
-                                            style={{
-                                                color: 'rgb(180, 217, 228)',
-                                            }}
-                                        >
-                                            FLEX
-                                        </div>
-                                    }
-                                    options={GRADE_OPTIONS}
-                                    value={flexScore}
-                                    onChange={e => {
-                                        const {
-                                            target: {value},
-                                        } = e;
-                                        if (value) {
-                                            setFlexScore(value as number);
-                                        }
-                                    }}
-                                    outlineColor={'rgb(180, 217, 228)'}
-                                />
-                                <DomainDropdown
-                                    label={
-                                        <div
-                                            className={styles.labels}
-                                            style={{
-                                                color: 'rgb(180, 217, 228)',
-                                            }}
-                                        >
-                                            SF
-                                        </div>
-                                    }
-                                    options={GRADE_OPTIONS}
-                                    value={sfScore}
-                                    onChange={e => {
-                                        const {
-                                            target: {value},
-                                        } = e;
-                                        if (value) {
-                                            setSfScore(value as number);
-                                        }
-                                    }}
-                                    outlineColor={'rgb(180, 217, 228)'}
                                 />
                                 <DomainDropdown
                                     label={
@@ -1480,6 +1472,8 @@ export default function BlueprintModule({
                     getStartingPosition={getStartingPosition}
                     productionShare={productionShare}
                     valueShare={valueShare}
+                    productionShareRank={productionShareRank}
+                    valueShareRank={valueShareRank}
                     draftCapitalNotes={draftCapitalNotes}
                     tradePartners={tradePartners}
                     topPriorities={topPriorities}

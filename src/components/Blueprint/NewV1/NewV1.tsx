@@ -45,6 +45,8 @@ type NewV1Props = {
     getStartingPosition: (playerName: string) => string | undefined;
     productionShare: string;
     valueShare: string;
+    productionShareRank: number;
+    valueShareRank: number;
     draftCapitalNotes: Map<number, string>;
     tradePartners: (User | undefined)[];
     topPriorities: PriorityOption[];
@@ -71,6 +73,8 @@ export default function NewV1({
     getStartingPosition,
     productionShare,
     valueShare,
+    productionShareRank,
+    valueShareRank,
     draftCapitalNotes,
     tradePartners,
     topPriorities,
@@ -99,10 +103,12 @@ export default function NewV1({
             />
             <ProductionValueShare
                 share={productionShare}
+                leagueRank={productionShareRank}
                 style={{left: '640px', top: '125px'}}
             />
             <ProductionValueShare
                 share={valueShare}
+                leagueRank={valueShareRank}
                 style={{left: '645px', top: '215px'}}
             />
             <TwoYearOutlook
@@ -330,14 +336,17 @@ export function PlayerCard({
 
 export function ProductionValueShare({
     share,
+    leagueRank,
     style,
 }: {
     share: string;
+    leagueRank: number;
     style?: CSSProperties;
 }) {
     return (
         <div className={styles.productionValueShare} style={style}>
-            {share}
+            <div className={styles.productionValueShareNumber}>{share}</div>
+            <div className={styles.leagueRank}>LEAGUE RANK: #{leagueRank}</div>
         </div>
     );
 }
