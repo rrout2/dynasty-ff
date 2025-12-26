@@ -298,6 +298,10 @@ import logoHorizontal from '../assets/module/logoHorizontal.png';
 // New 1.0
 import new1_0Background from '../assets/new1.0/new1.0background.png';
 
+// Premium
+import premiumBkg from '../assets/premium/premiumBkg.png';
+import premiumAssets from '../assets/premium/premiumAssets.png';
+
 const tierLogos: Map<string, string> = new Map([
     ['S', sTier],
     ['A', aTier],
@@ -708,4 +712,6 @@ export {
     pprIcon,
     logoHorizontal,
     new1_0Background,
+    premiumBkg,
+    premiumAssets,
 };

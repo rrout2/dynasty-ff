@@ -41,7 +41,8 @@ import {
     Save,
 } from '@mui/icons-material';
 import NewV1 from '../NewV1/NewV1';
-import { toPng } from 'html-to-image';
+import {toPng} from 'html-to-image';
+import Premium from '../Premium/Premium';
 
 const PCT_OPTIONS = [
     '0%',
@@ -390,7 +391,7 @@ export default function BlueprintModule({
 
     const handleExport = async () => {
         let elements: HTMLElement[] = [];
-        let elementClassName = 'exportableClassV1';
+        const elementClassName = 'exportableClassV1';
         if (typeof elementClassName === 'string') {
             elements = Array.from(
                 document.getElementsByClassName(elementClassName)
@@ -406,7 +407,8 @@ export default function BlueprintModule({
 
             const link = document.createElement('a');
             link.href = dataUrl;
-            link.download = `${getDisplayName(specifiedUser)}.png` || 'default_name.png';
+            link.download =
+                `${getDisplayName(specifiedUser)}.png` || 'default_name.png';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -519,7 +521,10 @@ export default function BlueprintModule({
                             setPreviewModalOpen(false);
                         }}
                     >
-                        <div className={styles.previewModal}>
+                        <div
+                            className={styles.previewModal}
+                            style={{width: premium ? '1900px' : '800px'}}
+                        >
                             {!premium && (
                                 <NewV1
                                     teamName={getDisplayName(specifiedUser)}
@@ -549,6 +554,7 @@ export default function BlueprintModule({
                                     tradeStrategy={fullMoves}
                                 />
                             )}
+                            {premium && <Premium />}
                         </div>
                     </Modal>
                 </div>
@@ -688,7 +694,10 @@ export default function BlueprintModule({
                                     PROD. SHARE RANK
                                 </div>
                             }
-                            options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
+                            options={[
+                                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+                                15, 16, 17, 18, 19, 20,
+                            ]}
                             value={productionShareRank}
                             onChange={e => {
                                 const {
@@ -724,7 +733,10 @@ export default function BlueprintModule({
                                     VALUE SHARE RANK
                                 </div>
                             }
-                            options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
+                            options={[
+                                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+                                15, 16, 17, 18, 19, 20,
+                            ]}
                             value={valueShareRank}
                             onChange={e => {
                                 const {

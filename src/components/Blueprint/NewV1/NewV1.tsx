@@ -88,7 +88,12 @@ export default function NewV1({
 }: NewV1Props) {
     return (
         <div className={`exportableClassV1 ${styles.fullBlueprint}`}>
-            <div className={styles.teamName} style={{fontSize: getFontSize(teamName)}}>{teamName}</div>
+            <div
+                className={styles.teamName}
+                style={{fontSize: getFontSize(teamName)}}
+            >
+                {teamName}
+            </div>
             <NumTeams
                 numTeams={numTeams}
                 style={{right: '204px', top: '28px'}}
@@ -693,7 +698,9 @@ export function TradeStrategyItem({
                             playerId={trade.playerIdsToTarget[0][0]}
                         />
                         <TradePlus size={5} />
-                        <TargetPlayerCard playerId={trade.playerIdsToTarget[0][1]} />
+                        <TargetPlayerCard
+                            playerId={trade.playerIdsToTarget[0][1]}
+                        />
                     </div>
                     <DividerLine width={260} />
                     <div className={styles.orRow}>
@@ -702,7 +709,9 @@ export function TradeStrategyItem({
                             playerId={trade.playerIdsToTarget[1][0]}
                         />
                         <TradePlus size={5} />
-                        <TargetPlayerCard playerId={trade.playerIdsToTarget[1][1]} />
+                        <TargetPlayerCard
+                            playerId={trade.playerIdsToTarget[1][1]}
+                        />
                     </div>
                     <DividerLine width={260} />
                     <div className={styles.orRow}>
@@ -711,7 +720,9 @@ export function TradeStrategyItem({
                             playerId={trade.playerIdsToTarget[2][0]}
                         />
                         <TradePlus size={5} />
-                        <TargetPlayerCard playerId={trade.playerIdsToTarget[2][1]} />
+                        <TargetPlayerCard
+                            playerId={trade.playerIdsToTarget[2][1]}
+                        />
                     </div>
                 </div>
             )}
@@ -760,7 +771,10 @@ function TradeArrow() {
 
 function TradePlus({size = 11.35}: {size?: number}) {
     return (
-        <div className={styles.tradeArrow} style={{width: `${size*2.2}px`, height: `${size*2.2}px`}}>
+        <div
+            className={styles.tradeArrow}
+            style={{width: `${size * 2.2}px`, height: `${size * 2.2}px`}}
+        >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={size}

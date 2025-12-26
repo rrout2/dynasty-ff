@@ -1,0 +1,12 @@
+.fullBlueprint {
+    position: relative;
+}
+
+.assets {
+    position: absolute;
+    width: 100%;;
+}
+
+.backgroundImg {
+    width: 100%;
+}
