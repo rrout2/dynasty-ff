@@ -27,8 +27,8 @@ import {
     TwoYearOutlook,
     ValueArchetypeComponent,
 } from '../NewV1/NewV1';
-import { CSSProperties, useEffect, useState } from 'react';
-import { QB, RB, TE, WR } from '../../../consts/fantasy';
+import {CSSProperties, useEffect, useState} from 'react';
+import {QB, RB, TE, WR} from '../../../consts/fantasy';
 
 function getFontSize(teamName: string) {
     if (teamName.length >= 24) return '32px';
@@ -99,7 +99,7 @@ export default function Premium({
     const [startingTeAge, setStartingTeAge] = useState(0);
     useEffect(() => {
         const starters = new Map<string, Player[]>();
-        rosterPlayers.forEach((player) => {
+        rosterPlayers.forEach(player => {
             const name = `${player.first_name} ${player.last_name}`;
             const position = getStartingPosition(name);
             if (position) {
@@ -344,27 +344,31 @@ export default function Premium({
                 style={{left: '700px', top: '872px', width: '420px'}}
             />
             <DraftStrategyItem
-                labelColor='#CD00FF'
+                labelColor="#CD00FF"
                 draftStrategyLabel={draftStrategy[0]}
                 year={2026}
                 outlook={twoYearOutlook[0]}
                 draftCapitalNotes={draftCapitalNotes}
-                style={{left: '1560px', top: '340px'}}
+                style={{left: '1560px', top: '311px'}}
             />
             <DraftStrategyItem
-                labelColor='rgb(240, 90, 40)'
+                labelColor="rgb(240, 90, 40)"
                 draftStrategyLabel={draftStrategy[1]}
                 year={2027}
                 outlook={twoYearOutlook[1]}
                 draftCapitalNotes={draftCapitalNotes}
-                style={{left: '1560px', top: '466px'}}
+                style={{left: '1560px', top: '438px'}}
             />
         </div>
     );
 }
 
 function Age({age, style}: {age: number; style?: CSSProperties}) {
-    return <div className={styles.age} style={style}>{age}</div>;
+    return (
+        <div className={styles.age} style={style}>
+            {age}
+        </div>
+    );
 }
 
 function DraftStrategyItem({
@@ -373,7 +377,7 @@ function DraftStrategyItem({
     outlook,
     draftCapitalNotes,
     labelColor,
-    style
+    style,
 }: {
     draftStrategyLabel: DraftStrategyLabel;
     year: number;
@@ -443,8 +447,14 @@ function DraftStrategyItem({
 
     return (
         <div className={styles.draftStrategyItem} style={style}>
-            <div className={styles.draftStrategyPicks}>{draftCapitalNotes.get(year)}</div>
-            <div className={styles.draftStrategyLabel} style={{color: labelColor}}>
+            <div className={styles.draftStrategyYear} style={{color: labelColor}}>{year}</div>
+            <div className={styles.draftStrategyPicks}>
+                {draftCapitalNotes.get(year)}
+            </div>
+            <div
+                className={styles.draftStrategyLabel}
+                style={{color: labelColor}}
+            >
                 {draftStrategyLabel}
             </div>
             <div className={styles.draftStrategyText}>{getStrategyText()}</div>

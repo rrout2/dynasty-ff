@@ -35,6 +35,14 @@
     position: absolute;
 }
 
+.draftStrategyYear {
+    font-family: Erbaum;
+    font-size: 20px;
+    font-weight: 700;
+
+    margin-left: -15px;
+}
+
 .draftStrategyPicks {
     color: #FFF;
     font-family: Erbaum;
