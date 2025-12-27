@@ -7,6 +7,7 @@ import {
     OutlookOption,
     PriorityOption,
     FullMove,
+    DraftStrategyLabel,
 } from '../BlueprintModule/BlueprintModule';
 import {
     DraftCapitalNotes,
@@ -26,6 +27,7 @@ import {
     TwoYearOutlook,
     ValueArchetypeComponent,
 } from '../NewV1/NewV1';
+import { CSSProperties } from 'react';
 
 function getFontSize(teamName: string) {
     if (teamName.length >= 24) return '32px';
@@ -59,6 +61,7 @@ type PremiumProps = {
     tradePartners: (User | undefined)[];
     topPriorities: PriorityOption[];
     tradeStrategy: FullMove[];
+    draftStrategy: DraftStrategyLabel[];
 };
 
 export default function Premium({
@@ -87,6 +90,7 @@ export default function Premium({
     tradePartners,
     topPriorities,
     tradeStrategy,
+    draftStrategy,
 }: PremiumProps) {
     return (
         <div className={`exportableClassPremium ${styles.fullBlueprint}`}>
@@ -259,9 +263,13 @@ export default function Premium({
             />
             <TradePartners
                 tradePartners={tradePartners}
-                style={{right: '755px', bottom: '477px',
+                style={{
+                    right: '755px',
+                    bottom: '477px',
                     transform: 'scale(0.95)',
-                    transformOrigin: 'bottom right', gap: '30px'}}
+                    transformOrigin: 'bottom right',
+                    gap: '30px',
+                }}
             />
             <TradeStrategyItem
                 trade={tradeStrategy[0]}
@@ -287,6 +295,107 @@ export default function Premium({
                 trade={tradeStrategy[5]}
                 style={{left: '700px', top: '872px', width: '420px'}}
             />
+            <DraftStrategyItem
+                labelColor='#CD00FF'
+                draftStrategyLabel={draftStrategy[0]}
+                year={2026}
+                outlook={twoYearOutlook[0]}
+                draftCapitalNotes={draftCapitalNotes}
+                style={{left: '1560px', top: '340px'}}
+            />
+            <DraftStrategyItem
+                labelColor='rgb(240, 90, 40)'
+                draftStrategyLabel={draftStrategy[1]}
+                year={2027}
+                outlook={twoYearOutlook[1]}
+                draftCapitalNotes={draftCapitalNotes}
+                style={{left: '1560px', top: '466px'}}
+            />
+        </div>
+    );
+}
+
+function DraftStrategyItem({
+    draftStrategyLabel,
+    year,
+    outlook,
+    draftCapitalNotes,
+    labelColor,
+    style
+}: {
+    draftStrategyLabel: DraftStrategyLabel;
+    year: number;
+    draftCapitalNotes: Map<number, string>;
+    outlook: OutlookOption;
+    labelColor: string;
+    style?: CSSProperties;
+}) {
+    function getStrategyText() {
+        if (draftStrategyLabel === DraftStrategyLabel.None) {
+            return 'no draft strategy set';
+        }
+        switch (outlook) {
+            case OutlookOption.Contend:
+                if (year === 2026) {
+                    switch (draftStrategyLabel) {
+                        case DraftStrategyLabel.Deficient:
+                            return 'Don\'t plan on targeting any picks unless you get an early to mid 1st for "cheap"';
+                        case DraftStrategyLabel.Adequate:
+                            return "Don't invest in anymore picks unless you get one in the 1.02-1.06 range";
+                        case DraftStrategyLabel.Surplus:
+                            return 'Consider using one or two of your 1sts for a premier RB or WR option';
+                        case DraftStrategyLabel.Overload:
+                            return 'Use your expected late 1sts to move up for an earlier pick or a proven player';
+                    }
+                }
+                if (year === 2027) {
+                    switch (draftStrategyLabel) {
+                        case DraftStrategyLabel.Deficient:
+                            return "Don't trade away anymore future 1sts beyond this year for now";
+                        case DraftStrategyLabel.Adequate:
+                        case DraftStrategyLabel.Surplus:
+                            return 'Hold your picks at least until midseason in case you need a production push';
+                        case DraftStrategyLabel.Overload:
+                            return 'Feel free to move one or two of your picks to get some positional upgrades';
+                    }
+                }
+                return 'unexpected year';
+            case OutlookOption.Rebuild:
+            case OutlookOption.Reload:
+                if (year === 2026) {
+                    switch (draftStrategyLabel) {
+                        case DraftStrategyLabel.Deficient:
+                            return 'See if you can get any pick from the 1.02-1.05 for a fair price or even discount';
+                        case DraftStrategyLabel.Adequate:
+                            return "Don't invest in anymore picks that aren't in the 1.02-1.06 range";
+                        case DraftStrategyLabel.Surplus:
+                            return 'Look into moving one or two picks for a young asset with high value upside';
+                        case DraftStrategyLabel.Overload:
+                            return 'Use your expected late 1sts to move up for an earlier pick or a proven player';
+                    }
+                }
+                if (year === 2027) {
+                    switch (draftStrategyLabel) {
+                        case DraftStrategyLabel.Deficient:
+                            return 'Try getting some picks at a discount before they gain value later this year';
+                        case DraftStrategyLabel.Adequate:
+                            return 'Hold your current picks & feel free to target more at a discount while you can';
+                        case DraftStrategyLabel.Surplus:
+                        case DraftStrategyLabel.Overload:
+                            return 'Hold all your 1sts at least until next offseason when they reach peak value';
+                    }
+                }
+                return 'unexpected year';
+        }
+    }
+
+    return (
+        <div className={styles.draftStrategyItem} style={style}>
+            <div className={styles.draftStrategyPicks}>{draftCapitalNotes.get(year)}</div>
+            <div className={styles.draftStrategyLabel} style={{color: labelColor}}>
+                {draftStrategyLabel}
+            </div>
+            <div className={styles.draftStrategyText}>{getStrategyText()}</div>
         </div>
     );
 }

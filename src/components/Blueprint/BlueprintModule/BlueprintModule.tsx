@@ -72,16 +72,16 @@ const GRADE_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const DRAFT_STRAT_OPTIONS_2026 = [
     'Don\'t plan on targeting any picks unless you get an early to mid 1st for "cheap"',
-    'Don\'t invest in anymore picks unless you get one in the 1.02-1.06 range',
+    "Don't invest in anymore picks unless you get one in the 1.02-1.06 range",
     'Consider using one or two of your 1sts for a premier RB or WR option',
     'Use your expected late 1sts to move up for an earlier pick or a proven player',
     'See if you can get any pick from the 1.02-1.05 for a fair price or even discount',
-    'Don\'t invest in anymore picks that aren\'t in the 1.02-1.06 range',
+    "Don't invest in anymore picks that aren't in the 1.02-1.06 range",
     'Look into moving one or two picks for a young asset with high value upside',
 ];
 
 const DRAFT_STRAT_OPTIONS_2027 = [
-    'Don\'t trade away anymore future 1sts beyond this year for now',
+    "Don't trade away anymore future 1sts beyond this year for now",
     'Hold your picks at least until midseason in case you need a production push',
     'Feel free to move one or two of your picks to get some positional upgrades',
     'Try getting some picks at a discount before they gain value later this year',
@@ -123,6 +123,14 @@ export enum PriorityOption {
     Sample = 'SAMPLE 1',
     Sample2 = 'SAMPLE 2',
     Sample3 = 'Sample 3 with much longer text, to see how it wraps.',
+}
+
+export enum DraftStrategyLabel {
+    None = 'None',
+    Deficient = 'Deficient',
+    Adequate = 'Adequate',
+    Surplus = 'Surplus',
+    Overload = 'Overload',
 }
 
 type BlueprintModuleProps = {
@@ -277,7 +285,10 @@ export default function BlueprintModule({
         rosterSettings,
         roster?.players
     );
-    const [draftStrategy, setDraftStrategy] = useState(['', '']);
+    const [draftStrategy, setDraftStrategy] = useState<DraftStrategyLabel[]>([
+        DraftStrategyLabel.None,
+        DraftStrategyLabel.None,
+    ]);
     const [isDownloading, setIsDownloading] = useState(false);
 
     useEffect(() => {
@@ -610,6 +621,7 @@ export default function BlueprintModule({
                                     tradePartners={tradePartners}
                                     topPriorities={topPriorities}
                                     tradeStrategy={fullMoves}
+                                    draftStrategy={draftStrategy}
                                 />
                             )}
                         </div>
@@ -1518,55 +1530,57 @@ export default function BlueprintModule({
                             }}
                         />
                     </div>
-                    {premium && <div className={styles.draftStrategyContainer}>
-                        <div className={styles.draftStrategyTitle}>
-                            Draft Strategy
+                    {premium && (
+                        <div className={styles.draftStrategyContainer}>
+                            <div className={styles.draftStrategyTitle}>
+                                Draft Strategy
+                            </div>
+                            <DomainDropdown
+                                style={{width: '600px'}}
+                                renderValue={value => (
+                                    <span
+                                        style={{
+                                            fontStyle: 'italic',
+                                            fontWeight: 'normal',
+                                        }}
+                                    >{`${value}`}</span>
+                                )}
+                                value={draftStrategy[0]}
+                                options={Object.values(DraftStrategyLabel)}
+                                onChange={e => {
+                                    const {
+                                        target: {value},
+                                    } = e;
+                                    setDraftStrategy([
+                                        value as DraftStrategyLabel,
+                                        draftStrategy[1],
+                                    ]);
+                                }}
+                            />
+                            <DomainDropdown
+                                style={{width: '600px'}}
+                                renderValue={value => (
+                                    <span
+                                        style={{
+                                            fontStyle: 'italic',
+                                            fontWeight: 'normal',
+                                        }}
+                                    >{`${value}`}</span>
+                                )}
+                                value={draftStrategy[1]}
+                                options={Object.values(DraftStrategyLabel)}
+                                onChange={e => {
+                                    const {
+                                        target: {value},
+                                    } = e;
+                                    setDraftStrategy([
+                                        draftStrategy[0],
+                                        value as DraftStrategyLabel,
+                                    ]);
+                                }}
+                            />
                         </div>
-                        <DomainDropdown
-                            style={{width: '600px'}}
-                            renderValue={value => (
-                                <span
-                                    style={{
-                                        fontStyle: 'italic',
-                                        fontWeight: 'normal',
-                                    }}
-                                >{`${value}`}</span>
-                            )}
-                            value={draftStrategy[0]}
-                            options={DRAFT_STRAT_OPTIONS_2026}
-                            onChange={e => {
-                                const {
-                                    target: {value},
-                                } = e;
-                                setDraftStrategy([
-                                    value as string,
-                                    draftStrategy[1],
-                                ]);
-                            }}
-                        />
-                        <DomainDropdown
-                            style={{width: '600px'}}
-                            renderValue={value => (
-                                <span
-                                    style={{
-                                        fontStyle: 'italic',
-                                        fontWeight: 'normal',
-                                    }}
-                                >{`${value}`}</span>
-                            )}
-                            value={draftStrategy[1]}
-                            options={DRAFT_STRAT_OPTIONS_2027}
-                            onChange={e => {
-                                const {
-                                    target: {value},
-                                } = e;
-                                setDraftStrategy([
-                                    draftStrategy[0],
-                                    value as string,                                    
-                                ]);
-                            }}
-                        />
-                    </div>}
+                    )}
                 </div>
             </div>
             <div
@@ -1626,6 +1640,7 @@ export default function BlueprintModule({
                     tradePartners={tradePartners}
                     topPriorities={topPriorities}
                     tradeStrategy={fullMoves}
+                    draftStrategy={draftStrategy}
                 />
             </div>
         </div>

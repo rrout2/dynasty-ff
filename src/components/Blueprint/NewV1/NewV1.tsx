@@ -24,7 +24,7 @@ import {
     WR_TE_FLEX,
 } from '../../../consts/fantasy';
 import {getDisplayName} from '../../Team/TeamPage/TeamPage';
-import { isRookiePickId } from '../v1/modules/playerstotarget/PlayersToTargetModule';
+import {isRookiePickId} from '../v1/modules/playerstotarget/PlayersToTargetModule';
 
 type NewV1Props = {
     teamName: string;
@@ -813,8 +813,10 @@ function TradePlayerCard({playerId}: {playerId: string}) {
 
     if (playerId && isRookiePickId(playerId)) {
         return (
-            <div className={styles.targetRookieCard}>{rookiePickIdToString(playerId)}</div>
-        )
+            <div className={styles.targetRookieCard}>
+                {rookiePickIdToString(playerId)}
+            </div>
+        );
     }
 
     if (playerId === '' || !player) {
@@ -848,9 +850,7 @@ function TradePlayerCard({playerId}: {playerId: string}) {
                 }}
                 className={styles.largeHeadshot}
             />
-            <div
-                className={styles.tradeAwayPlayerName}
-            >{getDisplayName()}</div>
+            <div className={styles.tradeAwayPlayerName}>{getDisplayName()}</div>
             <div className={styles.tradeAwayInfo}>
                 <div
                     className={styles.tradeAwayPosition}
@@ -912,8 +912,10 @@ function TargetPlayerCard({playerId}: {playerId: string}) {
 
     if (isRookiePickId(playerId)) {
         return (
-            <div className={styles.targetRookieCard}>{rookiePickIdToString(playerId)}</div>
-        )
+            <div className={styles.targetRookieCard}>
+                {rookiePickIdToString(playerId)}
+            </div>
+        );
     }
 
     if (playerId === '' || !player) {
@@ -936,9 +938,9 @@ function TargetPlayerCard({playerId}: {playerId: string}) {
                 className={styles.mediumHeadshot}
             />
             <div className={styles.targetInfo}>
-                <div
-                    className={styles.targetPlayerName}
-                >{getDisplayName()}</div>
+                <div className={styles.targetPlayerName}>
+                    {getDisplayName()}
+                </div>
                 <div className={styles.targetPlayerInfo}>
                     <div
                         className={styles.targetPosition}

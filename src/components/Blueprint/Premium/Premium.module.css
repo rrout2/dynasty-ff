@@ -30,3 +30,37 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.draftStrategyItem {
+    position: absolute;
+}
+
+.draftStrategyPicks {
+    color: #FFF;
+    font-family: Erbaum;
+    font-size: 15.18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.draftStrategyLabel {
+    font-family: Prohibition;
+    font-size: 40.18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    margin-top: -12px;
+}
+
+.draftStrategyText {
+    color: #FFF;
+    font-family: "Acumin Pro";
+    font-size: 12.18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    width: 220px;
+}
