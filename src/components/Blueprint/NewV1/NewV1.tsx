@@ -821,6 +821,18 @@ function TradePlayerCard({playerId}: {playerId: string}) {
         return null;
     }
 
+    function getDisplayName() {
+        const longName = `${player.first_name} ${player.last_name}`;
+
+        const shortName = `${player.first_name[0]}. ${player.last_name}`;
+
+        if (longName.length >= 13) {
+            return shortName;
+        }
+
+        return longName;
+    }
+
     return (
         <div className={styles.tradePlayerCard}>
             <img
@@ -838,7 +850,7 @@ function TradePlayerCard({playerId}: {playerId: string}) {
             />
             <div
                 className={styles.tradeAwayPlayerName}
-            >{`${player.first_name} ${player.last_name}`}</div>
+            >{getDisplayName()}</div>
             <div className={styles.tradeAwayInfo}>
                 <div
                     className={styles.tradeAwayPosition}
@@ -871,6 +883,18 @@ function TargetPlayerCard({playerId}: {playerId: string}) {
     const playerData = usePlayerData();
     if (!playerData) return null;
     const player = playerData[playerId];
+
+    function getDisplayName() {
+        const longName = `${player.first_name} ${player.last_name}`;
+
+        const shortName = `${player.first_name[0]}. ${player.last_name}`;
+
+        if (longName.length >= 13) {
+            return shortName;
+        }
+
+        return longName;
+    }
 
     function getBackgroundColor(pos: string) {
         switch (pos) {
@@ -914,7 +938,7 @@ function TargetPlayerCard({playerId}: {playerId: string}) {
             <div className={styles.targetInfo}>
                 <div
                     className={styles.targetPlayerName}
-                >{`${player.first_name} ${player.last_name}`}</div>
+                >{getDisplayName()}</div>
                 <div className={styles.targetPlayerInfo}>
                     <div
                         className={styles.targetPosition}

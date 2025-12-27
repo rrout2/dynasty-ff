@@ -15,9 +15,6 @@
     font-size: 50px;
 
     width: 53%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     
     height: 60px;
     display: flex;
@@ -388,6 +385,12 @@
     line-height: normal;
 
     padding-top: 4px;
+
+    width: 70px;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .targetPlayerName {
