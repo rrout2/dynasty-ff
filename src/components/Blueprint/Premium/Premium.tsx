@@ -27,7 +27,8 @@ import {
     TwoYearOutlook,
     ValueArchetypeComponent,
 } from '../NewV1/NewV1';
-import { CSSProperties } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
+import { QB, RB, TE, WR } from '../../../consts/fantasy';
 
 function getFontSize(teamName: string) {
     if (teamName.length >= 24) return '32px';
@@ -92,9 +93,53 @@ export default function Premium({
     tradeStrategy,
     draftStrategy,
 }: PremiumProps) {
+    const [startingQbAge, setStartingQbAge] = useState(0);
+    const [startingRbAge, setStartingRbAge] = useState(0);
+    const [startingWrAge, setStartingWrAge] = useState(0);
+    const [startingTeAge, setStartingTeAge] = useState(0);
+    useEffect(() => {
+        const starters = new Map<string, Player[]>();
+        rosterPlayers.forEach((player) => {
+            const name = `${player.first_name} ${player.last_name}`;
+            const position = getStartingPosition(name);
+            if (position) {
+                const pos = player.position;
+                if (starters.has(pos)) {
+                    starters.get(pos)?.push(player);
+                } else {
+                    starters.set(pos, [player]);
+                }
+            }
+        });
+        const qb = starters.get(QB);
+        if (qb && qb.length > 0) {
+            const totalAge = qb.reduce((acc, player) => acc + player.age, 0);
+            setStartingQbAge(Math.round(10 * (totalAge / qb.length)) / 10);
+        }
+
+        const rb = starters.get(RB);
+        if (rb && rb.length > 0) {
+            const totalAge = rb.reduce((acc, player) => acc + player.age, 0);
+            setStartingRbAge(Math.round(10 * (totalAge / rb.length)) / 10);
+        }
+
+        const wr = starters.get(WR);
+        if (wr && wr.length > 0) {
+            const totalAge = wr.reduce((acc, player) => acc + player.age, 0);
+            setStartingWrAge(Math.round(10 * (totalAge / wr.length)) / 10);
+        }
+
+        const te = starters.get(TE);
+        if (te && te.length > 0) {
+            const totalAge = te.reduce((acc, player) => acc + player.age, 0);
+            setStartingTeAge(Math.round(10 * (totalAge / te.length)) / 10);
+        }
+    }, [rosterPlayers, getStartingPosition]);
+
     return (
         <div className={`exportableClassPremium ${styles.fullBlueprint}`}>
             <img src={premiumAssets} className={styles.assets} />
+            <img src={premiumBkg} className={styles.backgroundImg} />
             <div
                 className={styles.teamName}
                 style={{fontSize: getFontSize(teamName)}}
@@ -111,7 +156,10 @@ export default function Premium({
             />
             <Ppr ppr={ppr} style={{left: '632px', top: '32px'}} />
             <Tep tep={tep} style={{left: '696px', top: '32px'}} />
-            <img src={premiumBkg} className={styles.backgroundImg} />
+            <Age age={startingQbAge} style={{left: '1215px', top: '36px'}} />
+            <Age age={startingRbAge} style={{left: '1285.5px', top: '36px'}} />
+            <Age age={startingWrAge} style={{left: '1356px', top: '36px'}} />
+            <Age age={startingTeAge} style={{left: '1426px', top: '36px'}} />
             <ValueArchetypeComponent
                 valueArchetype={valueArchetype}
                 style={{left: '90px', top: '140px', fontSize: '40px'}}
@@ -313,6 +361,10 @@ export default function Premium({
             />
         </div>
     );
+}
+
+function Age({age, style}: {age: number; style?: CSSProperties}) {
+    return <div className={styles.age} style={style}>{age}</div>;
 }
 
 function DraftStrategyItem({
