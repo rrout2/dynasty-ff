@@ -328,7 +328,7 @@
     position: absolute;
 
     height: 135px;
-    width: 440px;
+    width: 475px;
 
     display: flex;
     flex-direction: row;
@@ -499,4 +499,21 @@
     font-weight: 700;
 
     width: 9px;
+}
+
+.targetRookieCard {
+    color: #FFF;
+    font-family: "Acumin Pro ExtraCondensed";
+    text-transform: uppercase;
+    font-size: 15.667px;
+    font-style: normal;
+    font-weight: 700;
+
+    padding-top: 3px;
+
+    border-radius: 5.798px;
+    border: 2px solid #EABA10;
+
+    width: 100px;
+    text-align: center;
 }

@@ -24,6 +24,7 @@ import {
     WR_TE_FLEX,
 } from '../../../consts/fantasy';
 import {getDisplayName} from '../../Team/TeamPage/TeamPage';
+import { isRookiePickId } from '../v1/modules/playerstotarget/PlayersToTargetModule';
 
 type NewV1Props = {
     teamName: string;
@@ -794,7 +795,6 @@ function TradePlus({size = 11.35}: {size?: number}) {
 function TradePlayerCard({playerId}: {playerId: string}) {
     const playerData = usePlayerData();
     if (!playerData) return null;
-    // TODO: handle rookie picks
     const player = playerData[playerId];
 
     function getBackgroundColor(pos: string) {
@@ -809,6 +809,12 @@ function TradePlayerCard({playerId}: {playerId: string}) {
                 return '#FFBC00';
         }
         return 'none';
+    }
+
+    if (playerId && isRookiePickId(playerId)) {
+        return (
+            <div className={styles.targetRookieCard}>{rookiePickIdToString(playerId)}</div>
+        )
     }
 
     if (playerId === '' || !player) {
@@ -849,10 +855,21 @@ function TradePlayerCard({playerId}: {playerId: string}) {
     );
 }
 
+export function rookiePickIdToString(rookiePickId: string) {
+    if (!isRookiePickId(rookiePickId)) {
+        throw new Error(
+            `Expected rookie pick ID to begin with 'RP-', instead got '${rookiePickId}'`
+        );
+    }
+    if (rookiePickId.substring(3, 9) === 'FIRST-') {
+        return `${rookiePickId.substring(9)} 1st Round`;
+    }
+    return `${rookiePickId.substring(3)} Rookie Picks`;
+}
+
 function TargetPlayerCard({playerId}: {playerId: string}) {
     const playerData = usePlayerData();
     if (!playerData) return null;
-    // TODO: handle rookie picks
     const player = playerData[playerId];
 
     function getBackgroundColor(pos: string) {
@@ -868,9 +885,17 @@ function TargetPlayerCard({playerId}: {playerId: string}) {
         }
         return 'none';
     }
-    if (playerId === '') {
+
+    if (isRookiePickId(playerId)) {
+        return (
+            <div className={styles.targetRookieCard}>{rookiePickIdToString(playerId)}</div>
+        )
+    }
+
+    if (playerId === '' || !player) {
         return null;
     }
+
     return (
         <div className={styles.targetPlayerCard}>
             <img
