@@ -489,7 +489,8 @@
 .orRow {
     display: flex;
     flex-direction: row;
-    gap: 2.5px;
+
+    justify-content: space-evenly;
 
     align-items: center;
 }
