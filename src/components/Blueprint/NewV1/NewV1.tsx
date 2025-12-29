@@ -350,15 +350,17 @@ export function ProductionValueShare({
     share,
     leagueRank,
     style,
+    live = false,
 }: {
     share: string;
     leagueRank: number;
     style?: CSSProperties;
+    live?: boolean;
 }) {
     return (
         <div className={styles.productionValueShare} style={style}>
             <div className={styles.productionValueShareNumber}>{share}</div>
-            <div className={styles.leagueRank}>LEAGUE RANK: #{leagueRank}</div>
+            <div className={styles.leagueRank} style={{marginRight: live ? 0 : '30px'}}>LEAGUE RANK: #{leagueRank}</div>
         </div>
     );
 }

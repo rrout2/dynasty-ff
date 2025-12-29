@@ -179,6 +179,7 @@ import domainLogo from '../assets/infinite/domain_logo.png';
 
 // Live BP
 import blankLive from '../assets/live/Livestream_background.png';
+import blankLive2 from '../assets/live/live_bg_2.png';
 import dualEliteQb from '../assets/live/archetypes/Dual Elite QB.png';
 import eliteQbTe from '../assets/live/archetypes/Elite QB-TE.png';
 import eliteValue from '../assets/live/archetypes/Elite Value.png';
@@ -714,4 +715,5 @@ export {
     new1_0Background,
     premiumBkg,
     premiumAssets,
+    blankLive2,
 };

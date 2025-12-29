@@ -44,7 +44,7 @@ import NewV1 from '../NewV1/NewV1';
 import {toPng} from 'html-to-image';
 import Premium from '../Premium/Premium';
 
-const PCT_OPTIONS = [
+export const PCT_OPTIONS = [
     '0%',
     '5%',
     '10%',

@@ -26,6 +26,7 @@ import BuySellHoldDashboard from './components/BuySellHoldDashboard/BuySellHoldD
 import UserIdHydrator from './components/UserIdHydrator/UserIdHydrator';
 import BlueprintModule from './components/Blueprint/BlueprintModule/BlueprintModule';
 import BodyBackgroundController from './BodyBackgroundController';
+import NewLive from './components/Blueprint/NewLive/NewLive';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -59,7 +60,7 @@ root.render(
                         path="/nonsleeperinfinite"
                         element={<NonSleeeperInfinite />}
                     />
-                    <Route path="live" element={<Live />} />
+                    <Route path="live" element={<NewLive />} />
                     <Route path="/rookie" element={<RookieDraft />} />
                     <Route path="/whiteboard" element={<WhiteboardBase />} />
                     <Route path="/weekly" element={<Weekly />} />

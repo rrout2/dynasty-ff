@@ -10,6 +10,7 @@ export default function BodyBackgroundController() {
             '/': '#ffffff',
             '/blueprintmodule': '#04121C',
             '/blueprintpremiummodule': '#04121C',
+            '/live': '#04121C',
         };
 
         const bg = routeBg[location.pathname.toLowerCase()] || '#ffffff';

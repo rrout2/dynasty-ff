@@ -447,7 +447,12 @@ function DraftStrategyItem({
 
     return (
         <div className={styles.draftStrategyItem} style={style}>
-            <div className={styles.draftStrategyYear} style={{color: labelColor}}>{year}</div>
+            <div
+                className={styles.draftStrategyYear}
+                style={{color: labelColor}}
+            >
+                {year}
+            </div>
             <div className={styles.draftStrategyPicks}>
                 {draftCapitalNotes.get(year)}
             </div>
