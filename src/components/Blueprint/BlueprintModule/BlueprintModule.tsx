@@ -95,6 +95,7 @@ const DRAFT_STRAT_OPTIONS_2027 = [
 export enum ValueArchetype {
     None = 'NONE',
     EliteValue = 'ELITE VALUE',
+    EnhancedValue = 'ENHANCED VALUE',
     StandardValue = 'STANDARD VALUE',
     FutureValue = 'FUTURE VALUE',
     AgingValue = 'AGING VALUE',
