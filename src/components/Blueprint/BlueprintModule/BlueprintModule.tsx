@@ -24,6 +24,7 @@ import {
     useTeamValueArchetype,
     useTeamValueShare,
     useTitle,
+    useTwoYearOutlook,
 } from '../../../hooks/hooks';
 import {QB, RB, SUPER_FLEX, TE, WR} from '../../../consts/fantasy';
 import {
@@ -213,10 +214,7 @@ export default function BlueprintModule({
     const [numTeams, setNumTeams] = useState(12);
     const {valueArchetype, setValueArchetype} = useTeamValueArchetype(leagueId, '' + getRosterIdFromUser(specifiedUser));
     const {rosterArchetype, setRosterArchetype} = useTeamRosterArchetype(leagueId, '' + getRosterIdFromUser(specifiedUser));
-    const [twoYearOutlook, setTwoYearOutlook] = useState<OutlookOption[]>([
-        OutlookOption.Rebuild,
-        OutlookOption.Reload,
-    ]);
+    const {twoYearOutlook, setTwoYearOutlook} = useTwoYearOutlook(leagueId, '' + getRosterIdFromUser(specifiedUser));
     const [fullMoves, setFullMoves] = useState<FullMove[]>([
         {
             move: Move.DOWNTIER,

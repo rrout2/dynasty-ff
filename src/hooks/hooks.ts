@@ -67,7 +67,7 @@ import {calculateDepthScore} from '../components/Blueprint/v1/modules/DepthScore
 import {Archetype} from '../components/Blueprint/v1/modules/BigBoy/BigBoy';
 import {FinalPickData, getPicks, GetPicksResult} from '../sleeper-api/picks';
 import axios from 'axios';
-import { RosterArchetype, ValueArchetype } from '../components/Blueprint/BlueprintModule/BlueprintModule';
+import { OutlookOption, RosterArchetype, ValueArchetype } from '../components/Blueprint/BlueprintModule/BlueprintModule';
 
 const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
@@ -215,6 +215,46 @@ export function useTeamRosterArchetype(leagueId: string, teamId: string) {
     }, [data]);
     return {
         rosterArchetype, setRosterArchetype
+    };
+}
+
+export function useTwoYearOutlook(leagueId: string, teamId: string) {
+    const [twoYearOutlook, setTwoYearOutlook] = useState<OutlookOption[]>([
+        OutlookOption.Rebuild,
+        OutlookOption.Reload,
+    ]);
+    function convertStringToOutlookOption(str: string): OutlookOption {
+        switch (str) {
+            case 'Rebuild':
+                return OutlookOption.Rebuild;
+            case 'Reload':
+                return OutlookOption.Reload;
+            case 'Contend':
+                return OutlookOption.Contend;
+            default:
+                return OutlookOption.Reload;
+        }
+    }
+    const {data} = useQuery({
+        queryKey: ['twoYearOutlook', leagueId, teamId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Grades/two-year-outlook?leagueId=${leagueId}&rosterId=${
+                    +teamId + 1
+                }&gradeRunVersionNumber=1`,
+            };
+            const res = await axios.request(options);
+            return res.data;
+        },
+        retry: false,
+        enabled: +teamId > -1,
+    });
+    useEffect(() => {
+        setTwoYearOutlook([convertStringToOutlookOption(data?.year1 as string || ''), convertStringToOutlookOption(data?.year2 as string || '')]);
+    }, [data]);
+    return {
+        twoYearOutlook, setTwoYearOutlook
     };
 }
 
