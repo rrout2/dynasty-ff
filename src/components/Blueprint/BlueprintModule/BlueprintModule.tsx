@@ -20,6 +20,8 @@ import {
     useRosterSettingsFromId,
     useTeamIdFromUrl,
     useTeamProductionShare,
+    useTeamRosterArchetype,
+    useTeamValueArchetype,
     useTeamValueShare,
     useTitle,
 } from '../../../hooks/hooks';
@@ -209,12 +211,8 @@ export default function BlueprintModule({
     const rosterSettings = useRosterSettingsFromId(leagueId);
     const rosterSettingsHasSuperFlex = rosterSettings.has(SUPER_FLEX);
     const [numTeams, setNumTeams] = useState(12);
-    const [valueArchetype, setValueArchetype] = useState<ValueArchetype>(
-        ValueArchetype.None
-    );
-    const [rosterArchetype, setRosterArchetype] = useState<RosterArchetype>(
-        RosterArchetype.None
-    );
+    const {valueArchetype, setValueArchetype} = useTeamValueArchetype(leagueId, '' + getRosterIdFromUser(specifiedUser));
+    const {rosterArchetype, setRosterArchetype} = useTeamRosterArchetype(leagueId, '' + getRosterIdFromUser(specifiedUser));
     const [twoYearOutlook, setTwoYearOutlook] = useState<OutlookOption[]>([
         OutlookOption.Rebuild,
         OutlookOption.Reload,

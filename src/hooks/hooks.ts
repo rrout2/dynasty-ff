@@ -67,6 +67,7 @@ import {calculateDepthScore} from '../components/Blueprint/v1/modules/DepthScore
 import {Archetype} from '../components/Blueprint/v1/modules/BigBoy/BigBoy';
 import {FinalPickData, getPicks, GetPicksResult} from '../sleeper-api/picks';
 import axios from 'axios';
+import { RosterArchetype, ValueArchetype } from '../components/Blueprint/BlueprintModule/BlueprintModule';
 
 const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
@@ -122,6 +123,98 @@ export function useTeamProductionShare(leagueId: string, teamId: string) {
         setProductionSharePercent,
         leagueRank,
         setLeagueRank,
+    };
+}
+
+export function useTeamValueArchetype(leagueId: string, teamId: string) {
+    const [valueArchetype, setValueArchetype] = useState<ValueArchetype>(
+        ValueArchetype.None
+    );
+    function convertStringToValueArchetype(str: string): ValueArchetype {
+        switch (str) {
+            case 'EliteValue':
+                return ValueArchetype.EliteValue;
+            case 'EnhancedValue':
+                return ValueArchetype.EnhancedValue;
+            case 'StandardValue':
+                return ValueArchetype.StandardValue;
+            case 'FutureValue':
+                return ValueArchetype.FutureValue;
+            case 'AgingValue':
+                return ValueArchetype.AgingValue;
+            case 'OneYearReload':
+                return ValueArchetype.OneYearReload;
+            case 'HardRebuild':
+                return ValueArchetype.HardRebuild;
+            default:
+                return ValueArchetype.None;
+        }
+    }
+    const {data} = useQuery({
+        queryKey: ['teamValueArchetype', leagueId, teamId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Grades/team-value-archetype?leagueId=${leagueId}&rosterId=${
+                    +teamId + 1
+                }&gradeRunVersionNumber=1`,
+            };
+            const res = await axios.request(options);
+            return res.data;
+        },
+        retry: false,
+        enabled: +teamId > -1,
+    });
+    useEffect(() => {
+        setValueArchetype(convertStringToValueArchetype(data?.archetype as string || ''));
+    }, [data]);
+    return {
+        valueArchetype, setValueArchetype
+    };
+}
+
+export function useTeamRosterArchetype(leagueId: string, teamId: string) {
+    const [rosterArchetype, setRosterArchetype] = useState<RosterArchetype>(
+        RosterArchetype.None
+    );
+    function convertStringToRosterArchetype(str: string): RosterArchetype {
+        switch (str) {
+            case 'WellRounded':
+                return RosterArchetype.WellRounded;
+            case 'WRFactory':
+                return RosterArchetype.WRFactory;
+            case 'RBHeavy':
+                return RosterArchetype.RBHeavy;
+            case 'DualEliteQB':
+                return RosterArchetype.DualEliteQB;
+            case 'EliteQBTE':
+                return RosterArchetype.EliteQBTE;
+            case 'PlayerDeficient':
+                return RosterArchetype.PlayerDeficient;
+            default:
+                return RosterArchetype.None;
+        }
+    }
+    const {data} = useQuery({
+        queryKey: ['teamRosterArchetype', leagueId, teamId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Grades/team-roster-archetype?leagueId=${leagueId}&rosterId=${
+                    +teamId + 1
+                }&gradeRunVersionNumber=1`,
+            };
+            const res = await axios.request(options);
+            return res.data;
+        },
+        retry: false,
+        enabled: +teamId > -1,
+    });
+    useEffect(() => {
+        setRosterArchetype(convertStringToRosterArchetype(data?.archetype as string || ''));
+    }, [data]);
+    return {
+        rosterArchetype, setRosterArchetype
     };
 }
 
