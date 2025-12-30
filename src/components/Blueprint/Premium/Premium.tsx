@@ -5,7 +5,6 @@ import {
     ValueArchetype,
     RosterArchetype,
     OutlookOption,
-    PriorityOption,
     FullMove,
     DraftStrategyLabel,
 } from '../BlueprintModule/BlueprintModule';
@@ -60,7 +59,7 @@ type PremiumProps = {
     valueShareRank: number;
     draftCapitalNotes: Map<number, string>;
     tradePartners: (User | undefined)[];
-    topPriorities: PriorityOption[];
+    topPriorities: string[];
     tradeStrategy: FullMove[];
     draftStrategy: DraftStrategyLabel[];
 };
@@ -177,6 +176,7 @@ export default function Premium({
                     transform: 'scale(0.9)',
                     transformOrigin: 'top left',
                 }}
+                production={true}
             />
             <ProductionValueShare
                 share={valueShare}
@@ -187,6 +187,7 @@ export default function Premium({
                     transform: 'scale(0.9)',
                     transformOrigin: 'top left',
                 }}
+                production={false}
             />
             <TwoYearOutlook
                 twoYearOutlook={twoYearOutlook}
