@@ -30,8 +30,8 @@ export default function NewLive() {
     const [benchGrade, setBenchGrade] = useState(1);
     const [draftCapitalScore, setDraftCapitalScore] = useState(1);
     const [overallGrade, setOverallGrade] = useState(1);
-    const [productionShare, setProductionShare] = useState('15%');
-    const [valueShare, setValueShare] = useState('25%');
+    const [productionShare, setProductionShare] = useState('15');
+    const [valueShare, setValueShare] = useState('25');
     const [productionShareRank, setProductionShareRank] = useState(1);
     const [valueShareRank, setValueShareRank] = useState(1);
     const [twoYearOutlook, setTwoYearOutlook] = useState<OutlookOption[]>([
@@ -189,13 +189,12 @@ export default function NewLive() {
                         labelMarginRight={'10px'}
                     />
                 )}
-                <DomainDropdown
+                <DomainTextField
                     label={
                         <div style={{width: '40px'}} className={styles.labels}>
                             PROD. SHARE
                         </div>
                     }
-                    options={PCT_OPTIONS}
                     value={productionShare}
                     onChange={e => {
                         const {
@@ -222,13 +221,12 @@ export default function NewLive() {
                         setProductionShareRank(value as number);
                     }}
                 />
-                <DomainDropdown
+                <DomainTextField
                     label={
                         <div style={{width: '40px'}} className={styles.labels}>
                             VALUE SHARE
                         </div>
                     }
-                    options={PCT_OPTIONS}
                     value={valueShare}
                     onChange={e => {
                         const {
@@ -376,27 +374,27 @@ export default function NewLive() {
                     style={{right: '105px', top: '605px'}}
                 />
                 <ProductionValueShare
-                    share={productionShare}
+                    share={`${productionShare}%`}
                     leagueRank={productionShareRank}
                     style={{
-                        left: '45px',
-                        top: '770px',
+                        left: '50px',
+                        top: '775px',
                         transformOrigin: 'top left',
-                        scale: '1.4',
-                        width: '125px',
+                        scale: '1.1',
+                        width: '155px',
                     }}
                     production={true}
                     live={true}
                 />
                 <ProductionValueShare
-                    share={valueShare}
+                    share={`${valueShare}%`}
                     leagueRank={valueShareRank}
                     style={{
-                        left: '262px',
-                        top: '770px',
+                        left: '266px',
+                        top: '775px',
                         transformOrigin: 'top left',
-                        scale: '1.4',
-                        width: '125px',
+                        scale: '1.1',
+                        width: '155px',
                     }}
                     production={false}
                     live={true}
