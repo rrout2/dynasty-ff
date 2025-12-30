@@ -645,16 +645,16 @@ export function TradeStrategyItem({
     function getLabelFromMove(move: Move) {
         switch (move) {
             case Move.DOWNTIER:
-                return 'DOWN';
+                return 'DOWNTIER';
             case Move.UPTIER:
                 return 'UPTIER';
             case Move.PIVOT:
-                return 'TRADE';
+                return 'PIVOT';
         }
     }
     return (
         <div className={styles.tradeStrategyItem} style={style}>
-            <div className={styles.tradeType}>
+            <div className={styles.tradeType} style={{fontSize: trade.move === Move.DOWNTIER ? '30px' : ''}}>
                 {getLabelFromMove(trade.move)}
             </div>
             <TradePlayerCard playerId={trade.playerIdsToTrade[0]} />
