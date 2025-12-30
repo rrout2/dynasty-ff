@@ -425,8 +425,13 @@
 
 .offScreen {
     position: absolute;
-    left: -9999px;
-    top: -9999px;
+    left: -99999px;
+    top: -99999px;
+}
+
+.offScreenInner {
+    transform: scale(16);
+    transform-origin: top left;
 }
 
 .draftStrategyTitle {

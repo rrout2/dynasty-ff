@@ -1799,63 +1799,66 @@ export default function BlueprintModule({
             </div>
             <div
                 className={styles.offScreen}
-                style={{width: premium ? '1900px' : '800px'}}
             >
-                <NewV1
-                    teamName={getDisplayName(specifiedUser)}
-                    numTeams={numTeams}
-                    isSuperFlex={isSuperFlex}
-                    ppr={ppr}
-                    tep={tep}
-                    valueArchetype={valueArchetype}
-                    rosterArchetype={rosterArchetype}
-                    qbGrade={qb}
-                    rbGrade={rb}
-                    wrGrade={wr}
-                    teGrade={te}
-                    benchGrade={depth}
-                    overallGrade={overall}
-                    draftCapitalScore={draftCapitalScore}
-                    twoYearOutlook={twoYearOutlook}
-                    rosterPlayers={rosterPlayers}
-                    getStartingPosition={getStartingPosition}
-                    productionShare={`${productionSharePercent}%`}
-                    valueShare={`${valueSharePercent}%`}
-                    productionShareRank={productionShareRank}
-                    valueShareRank={valueShareRank}
-                    draftCapitalNotes={draftCapitalNotes}
-                    tradePartners={tradePartners}
-                    topPriorities={topPriorities}
-                    tradeStrategy={fullMoves}
-                />
-                <Premium
-                    teamName={getDisplayName(specifiedUser)}
-                    numTeams={numTeams}
-                    isSuperFlex={isSuperFlex}
-                    ppr={ppr}
-                    tep={tep}
-                    valueArchetype={valueArchetype}
-                    rosterArchetype={rosterArchetype}
-                    qbGrade={qb}
-                    rbGrade={rb}
-                    wrGrade={wr}
-                    teGrade={te}
-                    benchGrade={depth}
-                    overallGrade={overall}
-                    draftCapitalScore={draftCapitalScore}
-                    twoYearOutlook={twoYearOutlook}
-                    rosterPlayers={rosterPlayers}
-                    getStartingPosition={getStartingPosition}
-                    productionShare={`${productionSharePercent}%`}
-                    valueShare={`${valueSharePercent}%`}
-                    productionShareRank={productionShareRank}
-                    valueShareRank={valueShareRank}
-                    draftCapitalNotes={draftCapitalNotes}
-                    tradePartners={tradePartners}
-                    topPriorities={topPriorities}
-                    tradeStrategy={fullMoves}
-                    draftStrategy={draftStrategy}
-                />
+                <div className={'exportableClassV1'} style={{width: '12800px', height: '16971px'}}>
+                    <div className={styles.offScreenInner}>
+                        <NewV1
+                            teamName={getDisplayName(specifiedUser)}
+                            numTeams={numTeams}
+                            isSuperFlex={isSuperFlex}
+                            ppr={ppr}
+                            tep={tep}
+                            valueArchetype={valueArchetype}
+                            rosterArchetype={rosterArchetype}
+                            qbGrade={qb}
+                            rbGrade={rb}
+                            wrGrade={wr}
+                            teGrade={te}
+                            benchGrade={depth}
+                            overallGrade={overall}
+                            draftCapitalScore={draftCapitalScore}
+                            twoYearOutlook={twoYearOutlook}
+                            rosterPlayers={rosterPlayers}
+                            getStartingPosition={getStartingPosition}
+                            productionShare={`${productionSharePercent}%`}
+                            valueShare={`${valueSharePercent}%`}
+                            productionShareRank={productionShareRank}
+                            valueShareRank={valueShareRank}
+                            draftCapitalNotes={draftCapitalNotes}
+                            tradePartners={tradePartners}
+                            topPriorities={topPriorities}
+                            tradeStrategy={fullMoves}
+                        />
+                        {/* <Premium
+                            teamName={getDisplayName(specifiedUser)}
+                            numTeams={numTeams}
+                            isSuperFlex={isSuperFlex}
+                            ppr={ppr}
+                            tep={tep}
+                            valueArchetype={valueArchetype}
+                            rosterArchetype={rosterArchetype}
+                            qbGrade={qb}
+                            rbGrade={rb}
+                            wrGrade={wr}
+                            teGrade={te}
+                            benchGrade={depth}
+                            overallGrade={overall}
+                            draftCapitalScore={draftCapitalScore}
+                            twoYearOutlook={twoYearOutlook}
+                            rosterPlayers={rosterPlayers}
+                            getStartingPosition={getStartingPosition}
+                            productionShare={`${productionSharePercent}%`}
+                            valueShare={`${valueSharePercent}%`}
+                            productionShareRank={productionShareRank}
+                            valueShareRank={valueShareRank}
+                            draftCapitalNotes={draftCapitalNotes}
+                            tradePartners={tradePartners}
+                            topPriorities={topPriorities}
+                            tradeStrategy={fullMoves}
+                            draftStrategy={draftStrategy}
+                        /> */}
+                    </div>
+                </div>
             </div>
         </div>
     );
