@@ -360,7 +360,12 @@ export function ProductionValueShare({
     return (
         <div className={styles.productionValueShare} style={style}>
             <div className={styles.productionValueShareNumber}>{share}</div>
-            <div className={styles.leagueRank} style={{marginRight: live ? 0 : '30px'}}>LEAGUE RANK: #{leagueRank}</div>
+            <div
+                className={styles.leagueRank}
+                style={{marginRight: live ? 0 : '30px'}}
+            >
+                LEAGUE RANK: #{leagueRank}
+            </div>
         </div>
     );
 }

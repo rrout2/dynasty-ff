@@ -17,7 +17,7 @@ import {
 } from '../NewV1/NewV1';
 import DomainDropdown from '../shared/DomainDropdown';
 import DomainTextField from '../shared/DomainTextField';
-import { useTitle } from '../../../hooks/hooks';
+import {useTitle} from '../../../hooks/hooks';
 
 const GRADE_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 

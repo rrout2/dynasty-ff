@@ -413,7 +413,7 @@ export default function BlueprintModule({
         fontWeight: 'bold',
         fontSize: '20px',
     };
-    const submitModal = () => {
+    const submitNewLeague = () => {
         setRoster(undefined);
         setRosterPlayers([]);
         setTeamId('0');
@@ -423,6 +423,71 @@ export default function BlueprintModule({
 
         setNewLeagueId('');
         setNewLeagueModalOpen(false);
+        setTradePartners([undefined, undefined]);
+        setTopPriorities([
+            PriorityOption.None,
+            PriorityOption.None,
+            PriorityOption.None,
+        ]);
+        setValueArchetype(ValueArchetype.None);
+        setRosterArchetype(RosterArchetype.None);
+        setFullMoves([
+            {
+                move: Move.DOWNTIER,
+                playerIdsToTrade: [],
+                playerIdsToTarget: [
+                    ['', ''],
+                    ['', ''],
+                    ['', ''],
+                ],
+            },
+            {
+                move: Move.PIVOT,
+                playerIdsToTrade: [],
+                playerIdsToTarget: [
+                    ['', ''],
+                    ['', ''],
+                    ['', ''],
+                ],
+            },
+            {
+                move: Move.UPTIER,
+                playerIdsToTrade: [],
+                playerIdsToTarget: [
+                    ['', ''],
+                    ['', ''],
+                    ['', ''],
+                ],
+            },
+            {
+                move: Move.DOWNTIER,
+                playerIdsToTrade: [],
+                playerIdsToTarget: [
+                    ['', ''],
+                    ['', ''],
+                    ['', ''],
+                ],
+            },
+            {
+                move: Move.PIVOT,
+                playerIdsToTrade: [],
+                playerIdsToTarget: [
+                    ['', ''],
+                    ['', ''],
+                    ['', ''],
+                ],
+            },
+            {
+                move: Move.UPTIER,
+                playerIdsToTrade: [],
+                playerIdsToTarget: [
+                    ['', ''],
+                    ['', ''],
+                    ['', ''],
+                ],
+            },
+        ]);
+        setDraftStrategy([DraftStrategyLabel.None, DraftStrategyLabel.None]);
     };
 
     const handleExport = async () => {
@@ -495,7 +560,7 @@ export default function BlueprintModule({
                             onKeyUp={e => {
                                 if (e.key === 'Enter') {
                                     e.preventDefault();
-                                    submitModal();
+                                    submitNewLeague();
                                 }
                             }}
                         />
@@ -508,7 +573,7 @@ export default function BlueprintModule({
                             }}
                             variant="contained"
                             onClick={() => {
-                                submitModal();
+                                submitNewLeague();
                             }}
                             disabled={!newLeagueId.trim()}
                         >
