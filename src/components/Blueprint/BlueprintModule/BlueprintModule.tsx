@@ -19,6 +19,8 @@ import {
     useProjectedLineup,
     useRosterSettingsFromId,
     useTeamIdFromUrl,
+    useTeamProductionShare,
+    useTeamValueShare,
     useTitle,
 } from '../../../hooks/hooks';
 import {QB, RB, SUPER_FLEX, TE, WR} from '../../../consts/fantasy';
@@ -275,12 +277,8 @@ export default function BlueprintModule({
     const [isSuperFlex, setIsSuperFlex] = useState(true);
     const [ppr, setPpr] = useState(0.5);
     const [tep, setTep] = useState(0.5);
-    const [productionShare, setProductionShare] = useState('15%');
-    const [valueShare, setValueShare] = useState('25%');
     const [addPickRound, setAddPickRound] = useState(1);
     const [addPickSlot, setAddPickSlot] = useState(1);
-    const [productionShareRank, setProductionShareRank] = useState(1);
-    const [valueShareRank, setValueShareRank] = useState(1);
     const {myPicks} = useGetPicks(leagueId, roster?.owner_id);
     const {startingLineup} = useProjectedLineup(
         rosterSettings,
@@ -290,6 +288,18 @@ export default function BlueprintModule({
         DraftStrategyLabel.None,
         DraftStrategyLabel.None,
     ]);
+    const {
+        valueSharePercent,
+        leagueRank: valueShareRank,
+        setValueSharePercent,
+        setLeagueRank: setValueShareRank,
+    } = useTeamValueShare(leagueId, teamId);
+    const {
+        productionSharePercent,
+        leagueRank: productionShareRank,
+        setProductionSharePercent,
+        setLeagueRank: setProductionShareRank,
+    } = useTeamProductionShare(leagueId, teamId);
     const [isDownloading, setIsDownloading] = useState(false);
 
     useEffect(() => {
@@ -650,8 +660,8 @@ export default function BlueprintModule({
                                     twoYearOutlook={twoYearOutlook}
                                     rosterPlayers={rosterPlayers}
                                     getStartingPosition={getStartingPosition}
-                                    productionShare={productionShare}
-                                    valueShare={valueShare}
+                                    productionShare={`${productionSharePercent}%`}
+                                    valueShare={`${valueSharePercent}%`}
                                     productionShareRank={productionShareRank}
                                     valueShareRank={valueShareRank}
                                     draftCapitalNotes={draftCapitalNotes}
@@ -679,8 +689,8 @@ export default function BlueprintModule({
                                     twoYearOutlook={twoYearOutlook}
                                     rosterPlayers={rosterPlayers}
                                     getStartingPosition={getStartingPosition}
-                                    productionShare={productionShare}
-                                    valueShare={valueShare}
+                                    productionShare={`${productionSharePercent}%`}
+                                    valueShare={`${valueSharePercent}%`}
                                     productionShareRank={productionShareRank}
                                     valueShareRank={valueShareRank}
                                     draftCapitalNotes={draftCapitalNotes}
@@ -802,7 +812,7 @@ export default function BlueprintModule({
                                 setTep(value as number);
                             }}
                         />
-                        <DomainDropdown
+                        <DomainTextField
                             label={
                                 <div
                                     style={{width: '40px'}}
@@ -811,13 +821,14 @@ export default function BlueprintModule({
                                     PROD. SHARE
                                 </div>
                             }
-                            options={PCT_OPTIONS}
-                            value={productionShare}
+                            // options={PCT_OPTIONS}
+                            value={productionSharePercent}
                             onChange={e => {
                                 const {
                                     target: {value},
                                 } = e;
-                                setProductionShare(value as string);
+                                if (Number.isNaN(+value)) return;
+                                setProductionSharePercent(+value);
                             }}
                         />
                         <DomainDropdown
@@ -841,7 +852,7 @@ export default function BlueprintModule({
                                 setProductionShareRank(value as number);
                             }}
                         />
-                        <DomainDropdown
+                        <DomainTextField
                             label={
                                 <div
                                     style={{width: '40px'}}
@@ -850,13 +861,13 @@ export default function BlueprintModule({
                                     VALUE SHARE
                                 </div>
                             }
-                            options={PCT_OPTIONS}
-                            value={valueShare}
+                            value={valueSharePercent}
                             onChange={e => {
                                 const {
                                     target: {value},
                                 } = e;
-                                setValueShare(value as string);
+                                if (Number.isNaN(+value)) return;
+                                setValueSharePercent(+value);
                             }}
                         />
                         <DomainDropdown
@@ -1671,8 +1682,8 @@ export default function BlueprintModule({
                     twoYearOutlook={twoYearOutlook}
                     rosterPlayers={rosterPlayers}
                     getStartingPosition={getStartingPosition}
-                    productionShare={productionShare}
-                    valueShare={valueShare}
+                    productionShare={`${productionSharePercent}%`}
+                    valueShare={`${valueSharePercent}%`}
                     productionShareRank={productionShareRank}
                     valueShareRank={valueShareRank}
                     draftCapitalNotes={draftCapitalNotes}
@@ -1698,8 +1709,8 @@ export default function BlueprintModule({
                     twoYearOutlook={twoYearOutlook}
                     rosterPlayers={rosterPlayers}
                     getStartingPosition={getStartingPosition}
-                    productionShare={productionShare}
-                    valueShare={valueShare}
+                    productionShare={`${productionSharePercent}%`}
+                    valueShare={`${valueSharePercent}%`}
                     productionShareRank={productionShareRank}
                     valueShareRank={valueShareRank}
                     draftCapitalNotes={draftCapitalNotes}

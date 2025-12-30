@@ -70,6 +70,54 @@ import axios from 'axios';
 
 const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
+export function useTeamValueShare(leagueId: string, teamId: string) {
+    const [valueSharePercent, setValueSharePercent] = useState(1);
+    const [leagueRank, setLeagueRank] = useState(1);
+    const {data} = useQuery({
+        queryKey: ['teamValueShare', leagueId, teamId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Grades/team-value-share?leagueId=${leagueId}&rosterId=${
+                    +teamId + 1
+                }`,
+            };
+            const res = await axios.request(options);
+            return res.data;
+        },
+        retry: false,
+    });
+    useEffect(() => {
+        setValueSharePercent(data?.valueSharePercent || 0);
+        setLeagueRank(data?.leagueRank || 0);
+    }, [data]);
+    return {valueSharePercent, setValueSharePercent, leagueRank, setLeagueRank};
+}
+
+export function useTeamProductionShare(leagueId: string, teamId: string) {
+    const [productionSharePercent, setProductionSharePercent] = useState(1);
+    const [leagueRank, setLeagueRank] = useState(1);
+    const {data} = useQuery({
+        queryKey: ['teamProductionShare', leagueId, teamId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Grades/team-production-share?leagueId=${leagueId}&rosterId=${
+                    +teamId + 1
+                }&gradeRunVersionNumber=1`,
+            };
+            const res = await axios.request(options);
+            return res.data;
+        },
+        retry: false,
+    });
+    useEffect(() => {
+        setProductionSharePercent(data?.productionSharePercent || 0);
+        setLeagueRank(data?.leagueRank || 0);
+    }, [data]);
+    return {productionSharePercent, setProductionSharePercent, leagueRank, setLeagueRank};
+}
+
 function useApiRisersFallers() {
     const currListId = 200;
     const prevListId = 194;
