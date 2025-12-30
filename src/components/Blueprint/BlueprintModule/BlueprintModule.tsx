@@ -472,6 +472,8 @@ export default function BlueprintModule({
         fontSize: '20px',
     };
     const submitNewLeague = () => {
+        clearUrlSave();
+
         setRoster(undefined);
         setRosterPlayers([]);
         setTeamId('0');
@@ -632,6 +634,22 @@ export default function BlueprintModule({
         }
         setFullMoves(moves);
         
+    }
+
+    function clearUrlSave() {
+        setSearchParams(searchParams => {
+            searchParams.delete(VALUE_ARCHETYPE);
+            searchParams.delete(ROSTER_ARCHETYPE);
+            searchParams.delete(TOP_PRIORITIES);
+            searchParams.delete(TRADE_PARTNERS);
+            searchParams.delete(TWO_YEAR_OUTLOOK);
+            for (let i = 0; i < 6; i++) {
+                searchParams.delete(`${MOVE}_${i}`);
+                searchParams.delete(`${TO_TRADE}_${i}`);
+                searchParams.delete(`${TO_TARGET}_${i}`);
+            }
+            return searchParams;
+        });
     }
 
     return (
@@ -1009,7 +1027,7 @@ export default function BlueprintModule({
                                 </div>
                                 <div className={styles.playersColumn}>
                                     {rosterPlayers
-                                        .filter(p => p.position === QB)
+                                        .filter(p => p && p.position === QB)
                                         .map((p, idx) => {
                                             const fullName = `${p.first_name} ${p.last_name}`;
                                             return (
@@ -1055,7 +1073,7 @@ export default function BlueprintModule({
                                 </div>
                                 <div className={styles.playersColumn}>
                                     {rosterPlayers
-                                        .filter(p => p.position === RB)
+                                        .filter(p => p && p.position === RB)
                                         .map((p, idx) => {
                                             const fullName = `${p.first_name} ${p.last_name}`;
                                             return (
@@ -1101,7 +1119,7 @@ export default function BlueprintModule({
                                 </div>
                                 <div className={styles.playersColumn}>
                                     {rosterPlayers
-                                        .filter(p => p.position === WR)
+                                        .filter(p => p && p.position === WR)
                                         .map((p, idx) => {
                                             const fullName = `${p.first_name} ${p.last_name}`;
                                             return (
@@ -1147,7 +1165,7 @@ export default function BlueprintModule({
                                 </div>
                                 <div className={styles.playersColumn}>
                                     {rosterPlayers
-                                        .filter(p => p.position === TE)
+                                        .filter(p => p && p.position === TE)
                                         .map((p, idx) => {
                                             const fullName = `${p.first_name} ${p.last_name}`;
                                             return (
@@ -1882,7 +1900,7 @@ function SuggestedMove({
         nonIdPlayerOptions.push('2026 1st');
         nonIdPlayerOptions.push('2027 1st');
         setOptionsToTrade([
-            ...rosterPlayers.map(p => `${p.first_name} ${p.last_name}`),
+            ...rosterPlayers.filter(p => !!p).map(p => `${p.first_name} ${p.last_name}`),
             ...nonIdPlayerOptions,
         ]);
     }, [rosterPlayers]);

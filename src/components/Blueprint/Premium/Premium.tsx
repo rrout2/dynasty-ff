@@ -98,7 +98,7 @@ export default function Premium({
     const [startingTeAge, setStartingTeAge] = useState(0);
     useEffect(() => {
         const starters = new Map<string, Player[]>();
-        rosterPlayers.forEach(player => {
+        rosterPlayers.filter(p => !!p).forEach(player => {
             const name = `${player.first_name} ${player.last_name}`;
             const position = getStartingPosition(name);
             if (position) {

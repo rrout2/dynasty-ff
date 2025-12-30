@@ -226,7 +226,7 @@ export function Roster({
             {[QB, RB, WR, TE].map(pos => (
                 <div className={styles.playersColumn}>
                     {rosterPlayers
-                        .filter(p => p.position === pos)
+                        .filter(p => p && p.position === pos)
                         .slice(0, positionDisplayLimit)
                         .map((p, idx) => (
                             <PlayerCard
