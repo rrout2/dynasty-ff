@@ -73,13 +73,13 @@ export const PCT_OPTIONS = [
 const GRADE_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const PRIORITY_OPTIONS = [
-    'Don\'t hold a top TE on a rebuild',
+    "Don't hold a top TE on a rebuild",
     'Make as many trades as possible to build value wins',
     'You should be getting an absolute haul for your top QBs when trading',
     'Target Assets that have yet to reach their value ceiling',
-    'Upside is everything in this format, so don\'t downtier too much or too far',
+    "Upside is everything in this format, so don't downtier too much or too far",
     'Downtier from one or both of your QBs to spread out your value',
-    'Don\'t hold more than two top 20 QBs on your roster',
+    "Don't hold more than two top 20 QBs on your roster",
     'Take advantage of market disconnects',
     'Get productive vets at a discount before they gain value closer to the season',
     'Shift any volatile RB value into more stable, long-term assets',
@@ -87,18 +87,18 @@ const PRIORITY_OPTIONS = [
     'Target injured cornerstones & perceived under-performers at a discount',
     'Move off assets that have reached their value ceiling',
     'Upside QBs are particularly risky, try to solidify the position by consolidating',
-    'Don\'t go out of your way to target any rookie picks further than two years out',
+    "Don't go out of your way to target any rookie picks further than two years out",
     'Be active - multiple small market wins is easier than one masive trade',
     'Primarily build through the insulated positions (WR & RB)',
     'Rebuilding is about gaining value, less about immediate positional needs',
     'Worry less about age & more about 9 month market plays & value insulation',
     'It is safer to hold an elite QB/WR than an elite TE',
     'Take advantage of your value at QB and reinvest in skill positions',
-    'Don\'t hold all your RB value at the expense of WR insulation',
-    'Work on insulating QB, but don\'t pay up for a premier option',
+    "Don't hold all your RB value at the expense of WR insulation",
+    "Work on insulating QB, but don't pay up for a premier option",
     'Insulate value/production for next year',
     'The more you play the market, the quicker the reload will be',
-    'Don\'t uptier too far from top assets, no further than one or two tiers',
+    "Don't uptier too far from top assets, no further than one or two tiers",
     'Make as many trades as possible to build small value wins',
     'Shop your productive vets at a premium when they produce midseason',
     'Use rookie picks to gain value wins, not to plug holes',
@@ -106,26 +106,26 @@ const PRIORITY_OPTIONS = [
     'Use your positional dominance to answer any upside questions at other positions',
     'Use strategic uptiering to raise your production ceiling',
     'Maximize flex spot upside as much as possible',
-    'Don\'t be afraid to add some productive vets to this team',
+    "Don't be afraid to add some productive vets to this team",
     'Uptier where you can to raise starting lineup upside',
     'Shift mindset from upside shots to production',
     'Try decreasing your value volatility to avoid an eventual hard rebuild',
     'Utilize depth to extend contention window',
     'If you have a poor start to the season, you can always reload midseason',
     'Rebuilds & reloads are your most likely trade partners when looking to uptier',
-    'Don\'t make unecessary moves that fail to improve your upside opportunity',
-    'Production matters closer to the season; don\'t neglect value wins now',
+    "Don't make unecessary moves that fail to improve your upside opportunity",
+    "Production matters closer to the season; don't neglect value wins now",
     'Avoid volatile situational outlooks heading into the NFL draft',
-    'Don\'t superload one position at the expense of others',
+    "Don't superload one position at the expense of others",
 ];
 
 const ELITE_PRIORITY_OPTIONS = [
     'Get the best players at every position & win your league',
-    'Don\'t make any trades that don\'t improve production upside opportunity',
-    'Don\'t be afraid to pay the price for highly productive vets',
+    "Don't make any trades that don't improve production upside opportunity",
+    "Don't be afraid to pay the price for highly productive vets",
     'You have the value to comfortably take on some volatile assets',
     'You have all the value leverage in this league, take advantage when trading',
-]
+];
 
 export enum ValueArchetype {
     None = 'NONE',
@@ -196,9 +196,7 @@ export default function BlueprintModule({
         undefined,
         undefined,
     ]);
-    const [topPriorities, setTopPriorities] = useState<string[]>([
-        '', '', '',
-    ]);
+    const [topPriorities, setTopPriorities] = useState<string[]>(['', '', '']);
     const [roster, setRoster] = useState<Roster>();
     const [rosterPlayers, setRosterPlayers] = useState<Player[]>([]);
     const playerData = usePlayerData();
@@ -330,7 +328,10 @@ export default function BlueprintModule({
         leagueRank: productionShareRank,
         setProductionSharePercent,
         setLeagueRank: setProductionShareRank,
-    } = useTeamProductionShare(leagueId, '' + getRosterIdFromUser(specifiedUser));
+    } = useTeamProductionShare(
+        leagueId,
+        '' + getRosterIdFromUser(specifiedUser)
+    );
     const [isDownloading, setIsDownloading] = useState(false);
 
     useEffect(() => {
@@ -470,9 +471,7 @@ export default function BlueprintModule({
         setNewLeagueId('');
         setNewLeagueModalOpen(false);
         setTradePartners([undefined, undefined]);
-        setTopPriorities([
-            '', '', '',
-        ]);
+        setTopPriorities(['', '', '']);
         setValueArchetype(ValueArchetype.None);
         setRosterArchetype(RosterArchetype.None);
         setFullMoves([
@@ -1582,7 +1581,11 @@ export default function BlueprintModule({
                                 >{`${value}`}</span>
                             )}
                             value={topPriorities[0]}
-                            options={valueArchetype === ValueArchetype.EliteValue ? ELITE_PRIORITY_OPTIONS : PRIORITY_OPTIONS}
+                            options={
+                                valueArchetype === ValueArchetype.EliteValue
+                                    ? ELITE_PRIORITY_OPTIONS
+                                    : PRIORITY_OPTIONS
+                            }
                             onChange={e => {
                                 const {
                                     target: {value},
@@ -1605,7 +1608,11 @@ export default function BlueprintModule({
                                 >{`${value}`}</span>
                             )}
                             value={topPriorities[1]}
-                            options={valueArchetype === ValueArchetype.EliteValue ? ELITE_PRIORITY_OPTIONS : PRIORITY_OPTIONS}
+                            options={
+                                valueArchetype === ValueArchetype.EliteValue
+                                    ? ELITE_PRIORITY_OPTIONS
+                                    : PRIORITY_OPTIONS
+                            }
                             onChange={e => {
                                 const {
                                     target: {value},
@@ -1628,7 +1635,11 @@ export default function BlueprintModule({
                                 >{`${value}`}</span>
                             )}
                             value={topPriorities[2]}
-                            options={valueArchetype === ValueArchetype.EliteValue ? ELITE_PRIORITY_OPTIONS : PRIORITY_OPTIONS}
+                            options={
+                                valueArchetype === ValueArchetype.EliteValue
+                                    ? ELITE_PRIORITY_OPTIONS
+                                    : PRIORITY_OPTIONS
+                            }
                             onChange={e => {
                                 const {
                                     target: {value},

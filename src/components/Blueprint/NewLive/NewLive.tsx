@@ -379,22 +379,26 @@ export default function NewLive() {
                     share={productionShare}
                     leagueRank={productionShareRank}
                     style={{
-                        left: '70px',
+                        left: '45px',
                         top: '770px',
                         transformOrigin: 'top left',
                         scale: '1.4',
+                        width: '125px',
                     }}
+                    production={true}
                     live={true}
                 />
                 <ProductionValueShare
                     share={valueShare}
                     leagueRank={valueShareRank}
                     style={{
-                        left: '290px',
+                        left: '262px',
                         top: '770px',
                         transformOrigin: 'top left',
                         scale: '1.4',
+                        width: '125px',
                     }}
+                    production={false}
                     live={true}
                 />
                 <TwoYearOutlook

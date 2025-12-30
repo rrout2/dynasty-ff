@@ -117,7 +117,12 @@ export function useTeamProductionShare(leagueId: string, teamId: string) {
         setProductionSharePercent(data?.productionSharePercent || 0);
         setLeagueRank(data?.leagueRank || 0);
     }, [data]);
-    return {productionSharePercent, setProductionSharePercent, leagueRank, setLeagueRank};
+    return {
+        productionSharePercent,
+        setProductionSharePercent,
+        leagueRank,
+        setLeagueRank,
+    };
 }
 
 function useApiRisersFallers() {
