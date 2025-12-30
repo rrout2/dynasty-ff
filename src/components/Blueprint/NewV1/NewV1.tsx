@@ -4,7 +4,6 @@ import {
     FullMove,
     Move,
     OutlookOption,
-    PriorityOption,
     RosterArchetype,
     ValueArchetype,
 } from '../BlueprintModule/BlueprintModule';
@@ -50,7 +49,7 @@ type NewV1Props = {
     valueShareRank: number;
     draftCapitalNotes: Map<number, string>;
     tradePartners: (User | undefined)[];
-    topPriorities: PriorityOption[];
+    topPriorities: string[];
     tradeStrategy: FullMove[];
 };
 
@@ -621,7 +620,7 @@ export function TopPriorities({
     topPriorities,
     style,
 }: {
-    topPriorities: PriorityOption[];
+    topPriorities: string[];
     style?: CSSProperties;
 }) {
     return (

@@ -72,27 +72,60 @@ export const PCT_OPTIONS = [
 
 const GRADE_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const DRAFT_STRAT_OPTIONS_2026 = [
-    'Don\'t plan on targeting any picks unless you get an early to mid 1st for "cheap"',
-    "Don't invest in anymore picks unless you get one in the 1.02-1.06 range",
-    'Consider using one or two of your 1sts for a premier RB or WR option',
-    'Use your expected late 1sts to move up for an earlier pick or a proven player',
-    'See if you can get any pick from the 1.02-1.05 for a fair price or even discount',
-    "Don't invest in anymore picks that aren't in the 1.02-1.06 range",
-    'Look into moving one or two picks for a young asset with high value upside',
+const PRIORITY_OPTIONS = [
+    'Don\'t hold a top TE on a rebuild',
+    'Make as many trades as possible to build value wins',
+    'You should be getting an absolute haul for your top QBs when trading',
+    'Target Assets that have yet to reach their value ceiling',
+    'Upside is everything in this format, so don\'t downtier too much or too far',
+    'Downtier from one or both of your QBs to spread out your value',
+    'Don\'t hold more than two top 20 QBs on your roster',
+    'Take advantage of market disconnects',
+    'Get productive vets at a discount before they gain value closer to the season',
+    'Shift any volatile RB value into more stable, long-term assets',
+    'Your starting lineup does not matter in the offseason; increase your value portfolio',
+    'Target injured cornerstones & perceived under-performers at a discount',
+    'Move off assets that have reached their value ceiling',
+    'Upside QBs are particularly risky, try to solidify the position by consolidating',
+    'Don\'t go out of your way to target any rookie picks further than two years out',
+    'Be active - multiple small market wins is easier than one masive trade',
+    'Primarily build through the insulated positions (WR & RB)',
+    'Rebuilding is about gaining value, less about immediate positional needs',
+    'Worry less about age & more about 9 month market plays & value insulation',
+    'It is safer to hold an elite QB/WR than an elite TE',
+    'Take advantage of your value at QB and reinvest in skill positions',
+    'Don\'t hold all your RB value at the expense of WR insulation',
+    'Work on insulating QB, but don\'t pay up for a premier option',
+    'Insulate value/production for next year',
+    'The more you play the market, the quicker the reload will be',
+    'Don\'t uptier too far from top assets, no further than one or two tiers',
+    'Make as many trades as possible to build small value wins',
+    'Shop your productive vets at a premium when they produce midseason',
+    'Use rookie picks to gain value wins, not to plug holes',
+    'Try targeting rookie picks at a discount from "contenders" in your league',
+    'Use your positional dominance to answer any upside questions at other positions',
+    'Use strategic uptiering to raise your production ceiling',
+    'Maximize flex spot upside as much as possible',
+    'Don\'t be afraid to add some productive vets to this team',
+    'Uptier where you can to raise starting lineup upside',
+    'Shift mindset from upside shots to production',
+    'Try decreasing your value volatility to avoid an eventual hard rebuild',
+    'Utilize depth to extend contention window',
+    'If you have a poor start to the season, you can always reload midseason',
+    'Rebuilds & reloads are your most likely trade partners when looking to uptier',
+    'Don\'t make unecessary moves that fail to improve your upside opportunity',
+    'Production matters closer to the season; don\'t neglect value wins now',
+    'Avoid volatile situational outlooks heading into the NFL draft',
+    'Don\'t superload one position at the expense of others',
 ];
 
-const DRAFT_STRAT_OPTIONS_2027 = [
-    "Don't trade away anymore future 1sts beyond this year for now",
-    'Hold your picks at least until midseason in case you need a production push',
-    'Feel free to move one or two of your picks to get some positional upgrades',
-    'Try getting some picks at a discount before they gain value later this year',
-    'Hold your current picks & feel free to target more at a discount while you can',
-    'Hold all your 1sts at least until next offseason when they reach peak value',
-    'Try getting some picks at a discount before they gain value later this year',
-    'Hold your current picks & feel free to target more at a discount while you can',
-    'Hold all your 1sts at least until next offseason when they reach peak value',
-];
+const ELITE_PRIORITY_OPTIONS = [
+    'Get the best players at every position & win your league',
+    'Don\'t make any trades that don\'t improve production upside opportunity',
+    'Don\'t be afraid to pay the price for highly productive vets',
+    'You have the value to comfortably take on some volatile assets',
+    'You have all the value leverage in this league, take advantage when trading',
+]
 
 export enum ValueArchetype {
     None = 'NONE',
@@ -121,12 +154,12 @@ export enum OutlookOption {
     Contend = 'CONTEND',
 }
 
-export enum PriorityOption {
-    None = 'NONE',
-    Sample = 'SAMPLE 1',
-    Sample2 = 'SAMPLE 2',
-    Sample3 = 'Sample 3 with much longer text, to see how it wraps.',
-}
+// export enum PriorityOption {
+//     None = 'NONE',
+//     Sample = 'SAMPLE 1',
+//     Sample2 = 'SAMPLE 2',
+//     Sample3 = 'Sample 3 with much longer text, to see how it wraps.',
+// }
 
 export enum DraftStrategyLabel {
     None = 'None',
@@ -163,10 +196,8 @@ export default function BlueprintModule({
         undefined,
         undefined,
     ]);
-    const [topPriorities, setTopPriorities] = useState<PriorityOption[]>([
-        PriorityOption.None,
-        PriorityOption.None,
-        PriorityOption.None,
+    const [topPriorities, setTopPriorities] = useState<string[]>([
+        '', '', '',
     ]);
     const [roster, setRoster] = useState<Roster>();
     const [rosterPlayers, setRosterPlayers] = useState<Player[]>([]);
@@ -435,9 +466,7 @@ export default function BlueprintModule({
         setNewLeagueModalOpen(false);
         setTradePartners([undefined, undefined]);
         setTopPriorities([
-            PriorityOption.None,
-            PriorityOption.None,
-            PriorityOption.None,
+            '', '', '',
         ]);
         setValueArchetype(ValueArchetype.None);
         setRosterArchetype(RosterArchetype.None);
@@ -1548,13 +1577,13 @@ export default function BlueprintModule({
                                 >{`${value}`}</span>
                             )}
                             value={topPriorities[0]}
-                            options={Object.values(PriorityOption)}
+                            options={valueArchetype === ValueArchetype.EliteValue ? ELITE_PRIORITY_OPTIONS : PRIORITY_OPTIONS}
                             onChange={e => {
                                 const {
                                     target: {value},
                                 } = e;
                                 setTopPriorities([
-                                    value as PriorityOption,
+                                    value as string,
                                     topPriorities[1],
                                     topPriorities[2],
                                 ]);
@@ -1571,14 +1600,14 @@ export default function BlueprintModule({
                                 >{`${value}`}</span>
                             )}
                             value={topPriorities[1]}
-                            options={Object.values(PriorityOption)}
+                            options={valueArchetype === ValueArchetype.EliteValue ? ELITE_PRIORITY_OPTIONS : PRIORITY_OPTIONS}
                             onChange={e => {
                                 const {
                                     target: {value},
                                 } = e;
                                 setTopPriorities([
                                     topPriorities[0],
-                                    value as PriorityOption,
+                                    value as string,
                                     topPriorities[2],
                                 ]);
                             }}
@@ -1594,7 +1623,7 @@ export default function BlueprintModule({
                                 >{`${value}`}</span>
                             )}
                             value={topPriorities[2]}
-                            options={Object.values(PriorityOption)}
+                            options={valueArchetype === ValueArchetype.EliteValue ? ELITE_PRIORITY_OPTIONS : PRIORITY_OPTIONS}
                             onChange={e => {
                                 const {
                                     target: {value},
@@ -1602,7 +1631,7 @@ export default function BlueprintModule({
                                 setTopPriorities([
                                     topPriorities[0],
                                     topPriorities[1],
-                                    value as PriorityOption,
+                                    value as string,
                                 ]);
                             }}
                         />
