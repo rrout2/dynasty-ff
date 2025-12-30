@@ -43,3 +43,16 @@ export const SUGGESTIONS_AND_COMMENTS = 'suggestions';
 
 // Infinite
 export const DISALLOWED_BUYS = 'disallowedBuys';
+
+// New V1
+export const TRADE_PARTNERS = 'tradePartners';
+export const TOP_PRIORITIES = 'topPriorities';
+export const VALUE_ARCHETYPE = 'valueArchetype';
+export const ROSTER_ARCHETYPE = 'rosterArchetype';
+export const MOVE = 'move';
+export const TO_TRADE = 'toTrade';
+export const TO_TARGET = 'toTarget';
+export const TWO_YEAR_OUTLOOK = 'twoYearOutlook';
+
+// New V2 (TODO)
+export const DRAFT_STRATEGY = 'draftStrategy';

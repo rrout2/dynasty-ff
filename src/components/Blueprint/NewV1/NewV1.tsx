@@ -919,7 +919,10 @@ export function rookiePickIdToString(rookiePickId: string) {
     if (rookiePickId.substring(3, 9) === 'FIRST-') {
         return `${rookiePickId.substring(9)} 1st Round`;
     }
-    return `${rookiePickId.substring(3)} Rookie Picks`;
+    if (rookiePickId.substring(0, 3) === 'RP-') {
+        return `${rookiePickId.substring(3)} Rookie Picks`;
+    }
+    return rookiePickId;
 }
 
 function TargetPlayerCard({playerId}: {playerId: string}) {

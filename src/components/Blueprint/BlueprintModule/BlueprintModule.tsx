@@ -30,7 +30,17 @@ import {
     Roster,
     User,
 } from '../../../sleeper-api/sleeper-api';
-import {NONE_TEAM_ID} from '../../../consts/urlParams';
+import {
+    MOVE,
+    NONE_TEAM_ID,
+    ROSTER_ARCHETYPE,
+    TO_TARGET,
+    TO_TRADE,
+    TOP_PRIORITIES,
+    TRADE_PARTNERS,
+    TWO_YEAR_OUTLOOK,
+    VALUE_ARCHETYPE,
+} from '../../../consts/urlParams';
 import {getDisplayName} from '../../Team/TeamPage/TeamPage';
 import DomainAutocomplete from '../shared/DomainAutocomplete';
 import {getPicksInfo} from '../../../sleeper-api/picks';
@@ -45,6 +55,7 @@ import {
 import NewV1 from '../NewV1/NewV1';
 import {toPng} from 'html-to-image';
 import Premium from '../Premium/Premium';
+import {useSearchParams} from 'react-router-dom';
 
 export const PCT_OPTIONS = [
     '0%',
@@ -153,13 +164,6 @@ export enum OutlookOption {
     Reload = 'RELOAD',
     Contend = 'CONTEND',
 }
-
-// export enum PriorityOption {
-//     None = 'NONE',
-//     Sample = 'SAMPLE 1',
-//     Sample2 = 'SAMPLE 2',
-//     Sample3 = 'Sample 3 with much longer text, to see how it wraps.',
-// }
 
 export enum DraftStrategyLabel {
     None = 'None',
@@ -332,6 +336,7 @@ export default function BlueprintModule({
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
+    const [searchParams, setSearchParams] = useSearchParams();
     const [isDownloading, setIsDownloading] = useState(false);
 
     useEffect(() => {
@@ -412,6 +417,12 @@ export default function BlueprintModule({
         }, 0);
     }, [newLeagueModalOpen]);
     const textfieldRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (!playerData || !allUsers || !searchParams.get(ROSTER_ARCHETYPE)) return;
+        // not sure why this is necessary
+        setTimeout(loadFromUrl, 200);
+    }, [playerData, allUsers, searchParams]);
 
     // -------------------------- End of hooks --------------------------
 
@@ -560,6 +571,69 @@ export default function BlueprintModule({
         setIsDownloading(false);
     };
 
+    function saveToUrl() {
+        setSearchParams(searchParams => {
+            searchParams.set(VALUE_ARCHETYPE, valueArchetype);
+            searchParams.set(ROSTER_ARCHETYPE, rosterArchetype);
+            searchParams.set(TOP_PRIORITIES, topPriorities.join('-'));
+            searchParams.set(
+                TRADE_PARTNERS,
+                tradePartners.map(p => p?.user_id || '').join('-')
+            );
+            fullMoves.forEach((move, idx) => {
+                console.log(move);
+                searchParams.set(`${MOVE}_${idx}`, move.move);
+                // these are em dashes! to prevent breaking up rookie pick IDs
+                searchParams.set(
+                    `${TO_TRADE}_${idx}`,
+                    move.playerIdsToTrade.join('—')
+                );
+                searchParams.set(
+                    `${TO_TARGET}_${idx}`,
+                    move.playerIdsToTarget
+                        .map(p => p.join('—'))
+                        .join('|')
+                )
+            })
+            searchParams.set(TWO_YEAR_OUTLOOK, twoYearOutlook.join('-'));
+
+            return searchParams;
+        });
+    }
+
+    function loadFromUrl() {
+        setValueArchetype(
+            (searchParams.get(VALUE_ARCHETYPE) as ValueArchetype) ||
+                ValueArchetype.None
+        );
+        setRosterArchetype(
+            (searchParams.get(ROSTER_ARCHETYPE) as RosterArchetype) ||
+                RosterArchetype.None
+        );
+        setTopPriorities(
+            (searchParams.get(TOP_PRIORITIES) || '').split('-')
+        );
+        setTradePartners(
+            allUsers.filter(
+                u => (searchParams.get(TRADE_PARTNERS) || '').split('-').includes(u.user_id)
+            )
+        );
+        setTwoYearOutlook(
+            (searchParams.get(TWO_YEAR_OUTLOOK) || '').split('-').map(o => o as OutlookOption)
+        );
+
+        const moves = [];
+        for (let i = 0; i < 6; i++) {
+            moves.push({
+                move: (searchParams.get(`${MOVE}_${i}`) as Move) || Move.DOWNTIER,
+                playerIdsToTrade: (searchParams.get(`${TO_TRADE}_${i}`) || '').split('—'),
+                playerIdsToTarget: (searchParams.get(`${TO_TARGET}_${i}`) || '').split('|').map(p => p.split('—')),
+            });
+        }
+        setFullMoves(moves);
+        
+    }
+
     return (
         <div style={{backgroundColor: DARK_BLUE}}>
             <div className={styles.headerContainer}>
@@ -647,7 +721,7 @@ export default function BlueprintModule({
                             ...bpActionButtonStyle,
                             color: '#FABF4A',
                         }}
-                        onClick={() => console.log('TODO: save')}
+                        onClick={() => saveToUrl()}
                     >
                         SAVE
                     </Button>
@@ -1813,7 +1887,7 @@ function SuggestedMove({
         ]);
     }, [rosterPlayers]);
     useEffect(() => {
-        if (!playerData || !rosterPlayers[0]) return;
+        if (!playerData || !rosterPlayers[0] || playerIdsToTrade[0]) return;
         setPlayerIdsToTrade([
             rosterPlayers[0].player_id,
             rosterPlayers[1].player_id,
