@@ -324,13 +324,13 @@ export default function BlueprintModule({
         leagueRank: valueShareRank,
         setValueSharePercent,
         setLeagueRank: setValueShareRank,
-    } = useTeamValueShare(leagueId, teamId);
+    } = useTeamValueShare(leagueId, '' + getRosterIdFromUser(specifiedUser));
     const {
         productionSharePercent,
         leagueRank: productionShareRank,
         setProductionSharePercent,
         setLeagueRank: setProductionShareRank,
-    } = useTeamProductionShare(leagueId, teamId);
+    } = useTeamProductionShare(leagueId, '' + getRosterIdFromUser(specifiedUser));
     const [isDownloading, setIsDownloading] = useState(false);
 
     useEffect(() => {
@@ -413,6 +413,11 @@ export default function BlueprintModule({
     const textfieldRef = useRef<HTMLInputElement>(null);
 
     // -------------------------- End of hooks --------------------------
+
+    function getRosterIdFromUser(user?: User) {
+        if (!rosters || !user) return -1;
+        return rosters.findIndex(r => r.owner_id === user.user_id) ?? -1;
+    }
 
     function getStartingPosition(playerName: string) {
         return startingLineup.find(

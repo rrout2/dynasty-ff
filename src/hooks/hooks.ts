@@ -86,6 +86,7 @@ export function useTeamValueShare(leagueId: string, teamId: string) {
             return res.data;
         },
         retry: false,
+        enabled: +teamId > -1,
     });
     useEffect(() => {
         setValueSharePercent(data?.valueSharePercent || 0);
@@ -110,6 +111,7 @@ export function useTeamProductionShare(leagueId: string, teamId: string) {
             return res.data;
         },
         retry: false,
+        enabled: +teamId > -1,
     });
     useEffect(() => {
         setProductionSharePercent(data?.productionSharePercent || 0);
