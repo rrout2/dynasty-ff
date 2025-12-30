@@ -16,6 +16,7 @@ import {
     useLeagueIdFromUrl,
     usePlayerData,
     usePositionalGrades,
+    usePositionalValueGrades,
     useProjectedLineup,
     useRosterSettingsFromId,
     useTeamIdFromUrl,
@@ -291,17 +292,17 @@ export default function BlueprintModule({
     const {
         overall,
         setOverall,
-        qb,
+        depth,
+        setDepth,
+    } = usePositionalGrades(roster, numTeams, /* roundOverall= */ false);
+    const {qb,
         setQb,
         rb,
         setRb,
         wr,
         setWr,
         te,
-        setTe,
-        depth,
-        setDepth,
-    } = usePositionalGrades(roster, numTeams, /* roundOverall= */ false);
+        setTe,} = usePositionalValueGrades(leagueId, '' + getRosterIdFromUser(specifiedUser));
     const [draftCapitalScore, setDraftCapitalScore] = useState(8);
     const [isSuperFlex, setIsSuperFlex] = useState(true);
     const [ppr, setPpr] = useState(0.5);

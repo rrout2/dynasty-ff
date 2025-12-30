@@ -258,6 +258,41 @@ export function useTwoYearOutlook(leagueId: string, teamId: string) {
     };
 }
 
+export function usePositionalValueGrades(leagueId: string, teamId: string) {
+    const [qb, setQb] = useState(0);
+    const [rb, setRb] = useState(0);
+    const [wr, setWr] = useState(0);
+    const [te, setTe] = useState(0);
+    const {data} = useQuery({
+        queryKey: ['positionalValueGrades', leagueId, teamId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Grades/positional-value-grades?leagueId=${leagueId}&rosterId=${
+                    +teamId + 1
+                }&gradeRunVersionNumber=1`,
+            };
+            const res = await axios.request(options);
+            return res.data;
+        },
+        retry: false,
+        enabled: +teamId > -1,
+    });
+    useEffect(() => {
+        console.log(data);
+        setQb(data?.positionalValueGrades[0].grade || 0);
+        setRb(data?.positionalValueGrades[1].grade || 0);
+        setWr(data?.positionalValueGrades[2].grade || 0);
+        setTe(data?.positionalValueGrades[3].grade || 0);
+    }, [data]);
+    return {
+        qb, setQb,
+        rb, setRb,
+        wr, setWr,
+        te, setTe
+    };
+}
+
 function useApiRisersFallers() {
     const currListId = 200;
     const prevListId = 194;
