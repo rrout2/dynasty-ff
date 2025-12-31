@@ -85,7 +85,7 @@ export const PCT_OPTIONS = [
     '100%',
 ];
 
-const GRADE_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const GRADE_OPTIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const PRIORITY_OPTIONS = [
     "Don't hold a top TE on a rebuild",
