@@ -190,7 +190,6 @@
 }
 
 .threeFactorCell {
-    color: #80CD82;
     font-family: Prohibition;
     font-size: 14.92px;
     font-style: normal;
@@ -199,3 +198,27 @@
     width: 90px;
     text-align: center;
 }
+
+.rosterMakeup {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+
+    height: 220px;
+    justify-content: space-between;
+}
+
+.archetypeRow {
+    display: flex;
+    flex-direction: row;
+
+    width: 160px;
+    justify-content: space-between
+}
+.archPercent {
+    color: #FFF;
+
+    font-family: Erbaum;
+    font-size: 15.18px;
+    font-weight: 700;
+    }

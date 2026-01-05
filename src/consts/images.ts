@@ -373,6 +373,8 @@ const teamLogos: Map<string, string> = new Map([
     ['nep', ne],
     ['no', no],
     ['NO', no],
+    ['nos', no],
+    ['NOS', no],
     ['nyg', nyg],
     ['NYG', nyg],
     ['nyj', nyj],

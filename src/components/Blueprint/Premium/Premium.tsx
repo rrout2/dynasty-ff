@@ -41,6 +41,13 @@ function getFontSize(teamName: string) {
     return '50px';
 }
 
+function camelCaseToTitleCase(str: string) {
+    const spaced = str
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/JAG/g, 'JAG ');
+    return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+}
+
 function getArchetypeBackground(archetype: string) {
     switch (archetype.toLowerCase()) {
         case 'cornerstone':
@@ -416,6 +423,87 @@ export default function Premium({
                     left: '1227px',
                 }}
             />
+            <RosterMakeUp
+                domainTrueRanks={domainTrueRanks}
+                style={{
+                    top: '334px',
+                    left: '1337px',
+                }}
+            />
+        </div>
+    );
+}
+
+function RosterMakeUp({
+    domainTrueRanks,
+    style,
+}: {
+    domainTrueRanks: DomainTrueRank[];
+    style?: CSSProperties;
+}) {
+    const [makeup, setMakeup] = useState(new Map<string, number>());
+    console.log(domainTrueRanks);
+    useEffect(() => {
+        const makeup = new Map<string, number>();
+        for (const dtr of domainTrueRanks) {
+            const archetype = dtr.dynastyAssetCategory;
+            const count = (makeup.get(archetype) || 0) + 1;
+            makeup.set(archetype, count);
+        }
+        setMakeup(new Map(makeup));
+    }, [domainTrueRanks]);
+
+    function getFontColor(archetype: string) {
+        switch (archetype.toLowerCase()) {
+            case 'cornerstone':
+            case 'foundational':
+            case 'mainstay':
+            case 'shorttermleaguewinner':
+            case 'shorttermproduction':
+                return '#07223F';
+        }
+        return 'white';
+    }
+
+    function getFontSize(archetype: string) {
+        const len = camelCaseToTitleCase(archetype).length;
+        if (len >= 24) return '7.5px';
+        if (len >= 20) return '9px';
+        if (len >= 17) return '10px';
+        return '14px';
+    }
+
+    function getPaddingTop(archetype: string) {
+        const len = camelCaseToTitleCase(archetype).length;
+        if (len >= 20) return '5px';
+        if (len >= 17) return '4px';
+        return 'none';
+    }
+
+    return (
+        <div className={styles.rosterMakeup} style={style}>
+            {Array.from(makeup)
+                .sort((a, b) => b[1] - a[1])
+                .map(([archetype, count]) => (
+                    <div key={archetype} className={styles.archetypeRow}>
+                        <div
+                            className={styles.archetypeCard}
+                            style={{
+                                background: getArchetypeBackground(archetype),
+                                color: getFontColor(archetype),
+                                fontSize: getFontSize(archetype),
+                                paddingTop: getPaddingTop(archetype),
+                            }}
+                        >
+                            {camelCaseToTitleCase(archetype)}
+                        </div>
+                        <div className={styles.archPercent}>
+                            {((100 * count) / domainTrueRanks.length).toFixed(
+                                1
+                            )}%
+                        </div>
+                    </div>
+                ))}
         </div>
     );
 }
@@ -745,12 +833,6 @@ function ArchetypeCard({archetype}: {archetype: string}) {
                 return '#07223F';
         }
         return 'white';
-    }
-    function camelCaseToTitleCase(str: string) {
-        const spaced = str
-            .replace(/([a-z])([A-Z])/g, '$1 $2')
-            .replace(/JAG/g, 'JAG ');
-        return spaced.charAt(0).toUpperCase() + spaced.slice(1);
     }
 
     function isLong() {
