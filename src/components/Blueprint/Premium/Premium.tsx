@@ -28,6 +28,8 @@ import {
 } from '../NewV1/NewV1';
 import {CSSProperties, useEffect, useState} from 'react';
 import {QB, RB, TE, WR} from '../../../consts/fantasy';
+import {DomainTrueRank, useAdpData} from '../../../hooks/hooks';
+import {logoImage} from '../shared/Utilities';
 
 function getFontSize(teamName: string) {
     if (teamName.length >= 24) return '32px';
@@ -62,6 +64,7 @@ type PremiumProps = {
     topPriorities: string[];
     tradeStrategy: FullMove[];
     draftStrategy: DraftStrategyLabel[];
+    domainTrueRanks: DomainTrueRank[];
 };
 
 export default function Premium({
@@ -91,6 +94,7 @@ export default function Premium({
     topPriorities,
     tradeStrategy,
     draftStrategy,
+    domainTrueRanks,
 }: PremiumProps) {
     const [startingQbAge, setStartingQbAge] = useState(0);
     const [startingRbAge, setStartingRbAge] = useState(0);
@@ -98,18 +102,20 @@ export default function Premium({
     const [startingTeAge, setStartingTeAge] = useState(0);
     useEffect(() => {
         const starters = new Map<string, Player[]>();
-        rosterPlayers.filter(p => !!p).forEach(player => {
-            const name = `${player.first_name} ${player.last_name}`;
-            const position = getStartingPosition(name);
-            if (position) {
-                const pos = player.position;
-                if (starters.has(pos)) {
-                    starters.get(pos)?.push(player);
-                } else {
-                    starters.set(pos, [player]);
+        rosterPlayers
+            .filter(p => !!p)
+            .forEach(player => {
+                const name = `${player.first_name} ${player.last_name}`;
+                const position = getStartingPosition(name);
+                if (position) {
+                    const pos = player.position;
+                    if (starters.has(pos)) {
+                        starters.get(pos)?.push(player);
+                    } else {
+                        starters.set(pos, [player]);
+                    }
                 }
-            }
-        });
+            });
         const qb = starters.get(QB);
         if (qb && qb.length > 0) {
             const totalAge = qb.reduce((acc, player) => acc + player.age, 0);
@@ -362,6 +368,131 @@ export default function Premium({
                 draftCapitalNotes={draftCapitalNotes}
                 style={{left: '1560px', top: '438px'}}
             />
+            <TrueRanks
+                domainTrueRanks={domainTrueRanks}
+                style={{
+                    left: '1163px',
+                    top: '649px',
+                }}
+            />
+        </div>
+    );
+}
+
+function TrueRanks({
+    domainTrueRanks,
+    style,
+}: {
+    domainTrueRanks: DomainTrueRank[];
+    style?: CSSProperties;
+}) {
+    const {sortNamesByAdp} = useAdpData();
+    const top20DomainTrueRanks = new Set([...domainTrueRanks]
+        .sort((a, b) => sortNamesByAdp(a.playerName, b.playerName))
+        .slice(0, 20));
+    return (
+        <div className={styles.trueRanks} style={style}>
+            {domainTrueRanks
+                .filter(dtr => top20DomainTrueRanks.has(dtr))
+                .map((dtr, idx) => (
+                    <TrueRankRow key={idx} domainTrueRank={dtr} idx={idx} />
+                ))}
+        </div>
+    );
+}
+
+function TrueRankRow({
+    domainTrueRank,
+    idx,
+}: {
+    domainTrueRank: DomainTrueRank;
+    idx: number;
+}) {
+    return (
+        <div className={styles.trueRankRow}>
+            <div className={styles.playerName}>
+                {idx + 1}. {domainTrueRank.playerName}
+            </div>
+            <PosTeamCard
+                position={domainTrueRank.nflPosition}
+                team={domainTrueRank.teamAbbreviation}
+            />
+            <Score score={domainTrueRank.insulationScore} />
+            <Score score={domainTrueRank.productionScore} />
+            <Score score={domainTrueRank.situationalScore} />
+            <ArchetypeCard archetype={domainTrueRank.dynastyAssetCategory} />
+            <div className={styles.compositePosRank}>
+                {domainTrueRank.compositePosRank}
+            </div>
+        </div>
+    );
+}
+
+function PosTeamCard({position, team}: {position: string; team: string}) {
+    function getBackgroundColor() {
+        switch (position) {
+            case QB:
+                return '#DB2335';
+            case RB:
+                return '#00B1FF';
+            case WR:
+                return '#00FF06';
+            case TE:
+                return '#FFBC00';
+        }
+        return 'none';
+    }
+    function getFontColor() {
+        switch (position) {
+            case QB:
+            case RB:
+                return 'white';
+            case WR:
+            case TE:
+                return 'black';
+        }
+        return 'none';
+    }
+    return (
+        <div
+            className={styles.posTeamCard}
+            style={{backgroundColor: getBackgroundColor()}}
+        >
+            <div
+                className={styles.posTeamCardPosition}
+                style={{color: getFontColor()}}
+            >
+                {position}
+            </div>
+            {logoImage(team, styles.teamLogo)}
+        </div>
+    );
+}
+
+function Score({score}: {score: number}) {
+    function getFontColor() {
+        if (score > 80) {
+            return '#00FF06';
+        }
+        if (score > 60) {
+            return '#80CD82';
+        }
+        if (score > 40) {
+            return '#FFAA00';
+        }
+        return '#E31837';
+    }
+    return (
+        <div className={styles.score} style={{color: getFontColor()}}>
+            {(score / 10).toFixed(1)}
+        </div>
+    );
+}
+
+function ArchetypeCard({archetype}: {archetype: string}) {
+    return (
+        <div className={styles.archetypeCard}>
+            {archetype}
         </div>
     );
 }

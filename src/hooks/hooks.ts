@@ -67,9 +67,52 @@ import {calculateDepthScore} from '../components/Blueprint/v1/modules/DepthScore
 import {Archetype} from '../components/Blueprint/v1/modules/BigBoy/BigBoy';
 import {FinalPickData, getPicks, GetPicksResult} from '../sleeper-api/picks';
 import axios from 'axios';
-import { OutlookOption, RosterArchetype, ValueArchetype } from '../components/Blueprint/BlueprintModule/BlueprintModule';
+import {
+    OutlookOption,
+    RosterArchetype,
+    ValueArchetype,
+} from '../components/Blueprint/BlueprintModule/BlueprintModule';
 
 const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
+
+export type DomainTrueRank = {
+    playerId: number;
+    playerSleeperId: number;
+    playerName: string;
+    nflPosition: string;
+    teamAbbreviation: string;
+    insulationScore: number;
+    productionScore: number;
+    situationalScore: number;
+    dynastyAssetCategory: string;
+    compositePosRank: string;
+};
+
+export function useDomainTrueRanks(leagueId: string, teamId: string) {
+    const [domainTrueRanks, setDomainTrueRanks] = useState<DomainTrueRank[]>(
+        []
+    );
+    const {data} = useQuery({
+        queryKey: ['domainTrueRanks', leagueId, teamId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Grades/domain-true-ranks?leagueId=${leagueId}&rosterId=${
+                    +teamId + 1
+                }&gradeRunVersionNumber=1`,
+            };
+            const res = await axios.request(options);
+            return res.data.domainTrueRanks as DomainTrueRank[];
+        },
+        retry: false,
+        enabled: +teamId > -1,
+    });
+    useEffect(() => {
+        if (!data) return;
+        setDomainTrueRanks(data);
+    }, [data]);
+    return {domainTrueRanks, setDomainTrueRanks};
+}
 
 export function useTeamValueShare(leagueId: string, teamId: string) {
     const [valueSharePercent, setValueSharePercent] = useState(1);
@@ -166,10 +209,13 @@ export function useTeamValueArchetype(leagueId: string, teamId: string) {
         enabled: +teamId > -1,
     });
     useEffect(() => {
-        setValueArchetype(convertStringToValueArchetype(data?.archetype as string || ''));
+        setValueArchetype(
+            convertStringToValueArchetype((data?.archetype as string) || '')
+        );
     }, [data]);
     return {
-        valueArchetype, setValueArchetype
+        valueArchetype,
+        setValueArchetype,
     };
 }
 
@@ -211,10 +257,13 @@ export function useTeamRosterArchetype(leagueId: string, teamId: string) {
         enabled: +teamId > -1,
     });
     useEffect(() => {
-        setRosterArchetype(convertStringToRosterArchetype(data?.archetype as string || ''));
+        setRosterArchetype(
+            convertStringToRosterArchetype((data?.archetype as string) || '')
+        );
     }, [data]);
     return {
-        rosterArchetype, setRosterArchetype
+        rosterArchetype,
+        setRosterArchetype,
     };
 }
 
@@ -251,10 +300,14 @@ export function useTwoYearOutlook(leagueId: string, teamId: string) {
         enabled: +teamId > -1,
     });
     useEffect(() => {
-        setTwoYearOutlook([convertStringToOutlookOption(data?.year1 as string || ''), convertStringToOutlookOption(data?.year2 as string || '')]);
+        setTwoYearOutlook([
+            convertStringToOutlookOption((data?.year1 as string) || ''),
+            convertStringToOutlookOption((data?.year2 as string) || ''),
+        ]);
     }, [data]);
     return {
-        twoYearOutlook, setTwoYearOutlook
+        twoYearOutlook,
+        setTwoYearOutlook,
     };
 }
 
@@ -286,10 +339,14 @@ export function usePositionalValueGrades(leagueId: string, teamId: string) {
         setTe(data?.positionalValueGrades[3].grade || 0);
     }, [data]);
     return {
-        qb, setQb,
-        rb, setRb,
-        wr, setWr,
-        te, setTe
+        qb,
+        setQb,
+        rb,
+        setRb,
+        wr,
+        setWr,
+        te,
+        setTe,
     };
 }
 

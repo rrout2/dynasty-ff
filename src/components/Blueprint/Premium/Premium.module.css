@@ -89,3 +89,86 @@
     white-space: nowrap;
     text-overflow: clip;
 }
+
+.trueRanks {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 350px;
+
+    justify-content: space-between;
+}
+
+.trueRankRow {
+    display: flex;
+    flex-direction: row;
+}
+
+.playerName {
+    color: #FFF;
+    font-family: Erbaum;
+    font-size: 9.18px;
+    font-weight: 400;
+    width: 144px;
+}
+
+.posTeamCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    width: 70px;
+    justify-content: space-evenly;
+
+    background-color: aqua;
+    border-radius: 1000px;
+}
+
+.posTeamCardPosition {
+    color: #FFF;
+    font-family: Erbaum;
+    font-size: 9.18px;
+    font-weight: 400;
+}
+
+.teamLogo {
+    width: 12px;
+}
+
+.score {
+    color: #FFF;
+    font-family: Erbaum;
+    font-size: 9.18px;
+    font-weight: 400;
+
+    text-align: center;
+    width: 90px;
+}
+
+.archetypeCard {
+    color: #FFF;
+    font-family: Erbaum;
+    font-size: 9.18px;
+    font-weight: 400;
+
+    text-align: center;
+    width: 90px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    background-color: grey;
+    border-radius: 1000px;
+}
+
+.compositePosRank {
+    color: #FFF;
+    font-family: Erbaum;
+    font-size: 9.18px;
+    font-weight: 400;
+
+    text-align: center;
+    width: 110px;
+}

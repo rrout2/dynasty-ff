@@ -10,6 +10,7 @@ import {
 } from '../../../consts/images';
 import {
     useAdpData,
+    useDomainTrueRanks,
     useFetchRosters,
     useGetPicks,
     useLeague,
@@ -213,9 +214,18 @@ export default function BlueprintModule({
     const rosterSettings = useRosterSettingsFromId(leagueId);
     const rosterSettingsHasSuperFlex = rosterSettings.has(SUPER_FLEX);
     const [numTeams, setNumTeams] = useState(12);
-    const {valueArchetype, setValueArchetype} = useTeamValueArchetype(leagueId, '' + getRosterIdFromUser(specifiedUser));
-    const {rosterArchetype, setRosterArchetype} = useTeamRosterArchetype(leagueId, '' + getRosterIdFromUser(specifiedUser));
-    const {twoYearOutlook, setTwoYearOutlook} = useTwoYearOutlook(leagueId, '' + getRosterIdFromUser(specifiedUser));
+    const {valueArchetype, setValueArchetype} = useTeamValueArchetype(
+        leagueId,
+        '' + getRosterIdFromUser(specifiedUser)
+    );
+    const {rosterArchetype, setRosterArchetype} = useTeamRosterArchetype(
+        leagueId,
+        '' + getRosterIdFromUser(specifiedUser)
+    );
+    const {twoYearOutlook, setTwoYearOutlook} = useTwoYearOutlook(
+        leagueId,
+        '' + getRosterIdFromUser(specifiedUser)
+    );
     const [fullMoves, setFullMoves] = useState<FullMove[]>([
         {
             move: Move.DOWNTIER,
@@ -289,20 +299,16 @@ export default function BlueprintModule({
             ])
         );
     }, [draftCapitalNotes2026, draftCapitalNotes2027]);
-    const {
-        overall,
-        setOverall,
-        depth,
-        setDepth,
-    } = usePositionalGrades(roster, numTeams, /* roundOverall= */ false);
-    const {qb,
-        setQb,
-        rb,
-        setRb,
-        wr,
-        setWr,
-        te,
-        setTe,} = usePositionalValueGrades(leagueId, '' + getRosterIdFromUser(specifiedUser));
+    const {overall, setOverall, depth, setDepth} = usePositionalGrades(
+        roster,
+        numTeams,
+        /* roundOverall= */ false
+    );
+    const {qb, setQb, rb, setRb, wr, setWr, te, setTe} =
+        usePositionalValueGrades(
+            leagueId,
+            '' + getRosterIdFromUser(specifiedUser)
+        );
     const [draftCapitalScore, setDraftCapitalScore] = useState(8);
     const [isSuperFlex, setIsSuperFlex] = useState(true);
     const [ppr, setPpr] = useState(0.5);
@@ -330,6 +336,10 @@ export default function BlueprintModule({
         setProductionSharePercent,
         setLeagueRank: setProductionShareRank,
     } = useTeamProductionShare(
+        leagueId,
+        '' + getRosterIdFromUser(specifiedUser)
+    );
+    const {domainTrueRanks} = useDomainTrueRanks(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
@@ -416,7 +426,8 @@ export default function BlueprintModule({
     const textfieldRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        if (!playerData || !allUsers || !searchParams.get(ROSTER_ARCHETYPE)) return;
+        if (!playerData || !allUsers || !searchParams.get(ROSTER_ARCHETYPE))
+            return;
         // not sure why this is necessary
         setTimeout(loadFromUrl, 200);
     }, [playerData, allUsers, searchParams]);
@@ -589,11 +600,9 @@ export default function BlueprintModule({
                 );
                 searchParams.set(
                     `${TO_TARGET}_${idx}`,
-                    move.playerIdsToTarget
-                        .map(p => p.join('—'))
-                        .join('|')
-                )
-            })
+                    move.playerIdsToTarget.map(p => p.join('—')).join('|')
+                );
+            });
             searchParams.set(TWO_YEAR_OUTLOOK, twoYearOutlook.join('-'));
 
             return searchParams;
@@ -609,28 +618,34 @@ export default function BlueprintModule({
             (searchParams.get(ROSTER_ARCHETYPE) as RosterArchetype) ||
                 RosterArchetype.None
         );
-        setTopPriorities(
-            (searchParams.get(TOP_PRIORITIES) || '').split('-')
-        );
+        setTopPriorities((searchParams.get(TOP_PRIORITIES) || '').split('-'));
         setTradePartners(
-            allUsers.filter(
-                u => (searchParams.get(TRADE_PARTNERS) || '').split('-').includes(u.user_id)
+            allUsers.filter(u =>
+                (searchParams.get(TRADE_PARTNERS) || '')
+                    .split('-')
+                    .includes(u.user_id)
             )
         );
         setTwoYearOutlook(
-            (searchParams.get(TWO_YEAR_OUTLOOK) || '').split('-').map(o => o as OutlookOption)
+            (searchParams.get(TWO_YEAR_OUTLOOK) || '')
+                .split('-')
+                .map(o => o as OutlookOption)
         );
 
         const moves = [];
         for (let i = 0; i < 6; i++) {
             moves.push({
-                move: (searchParams.get(`${MOVE}_${i}`) as Move) || Move.DOWNTIER,
-                playerIdsToTrade: (searchParams.get(`${TO_TRADE}_${i}`) || '').split('—'),
-                playerIdsToTarget: (searchParams.get(`${TO_TARGET}_${i}`) || '').split('|').map(p => p.split('—')),
+                move:
+                    (searchParams.get(`${MOVE}_${i}`) as Move) || Move.DOWNTIER,
+                playerIdsToTrade: (
+                    searchParams.get(`${TO_TRADE}_${i}`) || ''
+                ).split('—'),
+                playerIdsToTarget: (searchParams.get(`${TO_TARGET}_${i}`) || '')
+                    .split('|')
+                    .map(p => p.split('—')),
             });
         }
         setFullMoves(moves);
-        
     }
 
     function clearUrlSave() {
@@ -820,6 +835,7 @@ export default function BlueprintModule({
                                     topPriorities={topPriorities}
                                     tradeStrategy={fullMoves}
                                     draftStrategy={draftStrategy}
+                                    domainTrueRanks={domainTrueRanks}
                                 />
                             )}
                         </div>
@@ -1794,10 +1810,11 @@ export default function BlueprintModule({
                     )}
                 </div>
             </div>
-            <div
-                className={styles.offScreen}
-            >
-                <div className={'exportableClassV1'} style={{width: '12800px', height: '16971px'}}>
+            <div className={styles.offScreen}>
+                <div
+                    className={'exportableClassV1'}
+                    style={{width: '12800px', height: '16971px'}}
+                >
                     <div className={styles.offScreenInner}>
                         <NewV1
                             teamName={getDisplayName(specifiedUser)}
@@ -1900,7 +1917,9 @@ function SuggestedMove({
         nonIdPlayerOptions.push('2026 1st');
         nonIdPlayerOptions.push('2027 1st');
         setOptionsToTrade([
-            ...rosterPlayers.filter(p => !!p).map(p => `${p.first_name} ${p.last_name}`),
+            ...rosterPlayers
+                .filter(p => !!p)
+                .map(p => `${p.first_name} ${p.last_name}`),
             ...nonIdPlayerOptions,
         ]);
     }, [rosterPlayers]);
