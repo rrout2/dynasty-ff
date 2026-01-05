@@ -171,10 +171,11 @@ export default function Premium({
                 share={productionShare}
                 leagueRank={productionShareRank}
                 style={{
-                    left: '800px',
+                    left: '765px',
                     top: '360px',
                     transform: 'scale(0.9)',
                     transformOrigin: 'top left',
+                    width: '152px',
                 }}
                 production={true}
             />
@@ -182,10 +183,11 @@ export default function Premium({
                 share={valueShare}
                 leagueRank={valueShareRank}
                 style={{
-                    left: '810px',
+                    left: '765px',
                     top: '437px',
                     transform: 'scale(0.9)',
                     transformOrigin: 'top left',
+                    width: '152px',
                 }}
                 production={false}
             />
