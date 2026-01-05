@@ -75,6 +75,123 @@ import {
 
 const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
+export type ThreeFactorGrades = {
+    qbInsulationScoreGrade: number;
+    rbInsulationScoreGrade: number;
+    wrInsulationScoreGrade: number;
+    teInsulationScoreGrade: number;
+    qbProductionScoreGrade: number;
+    rbProductionScoreGrade: number;
+    wrProductionScoreGrade: number;
+    teProductionScoreGrade: number;
+    qbSituationalScoreGrade: number;
+    rbSituationalScoreGrade: number;
+    wrSituationalScoreGrade: number;
+    teSituationalScoreGrade: number;
+};
+
+export function useThreeFactorGrades(leagueId: string, teamId: string) {
+    const [qbInsulationScoreGrade, setQbInsulationScoreGrade] = useState(1);
+    const [rbInsulationScoreGrade, setRbInsulationScoreGrade] = useState(1);
+    const [wrInsulationScoreGrade, setWrInsulationScoreGrade] = useState(1);
+    const [teInsulationScoreGrade, setTeInsulationScoreGrade] = useState(1);
+    const [qbProductionScoreGrade, setQbProductionScoreGrade] = useState(1);
+    const [rbProductionScoreGrade, setRbProductionScoreGrade] = useState(1);
+    const [wrProductionScoreGrade, setWrProductionScoreGrade] = useState(1);
+    const [teProductionScoreGrade, setTeProductionScoreGrade] = useState(1);
+    const [qbSituationalScoreGrade, setQbSituationalScoreGrade] = useState(1);
+    const [rbSituationalScoreGrade, setRbSituationalScoreGrade] = useState(1);
+    const [wrSituationalScoreGrade, setWrSituationalScoreGrade] = useState(1);
+    const [teSituationalScoreGrade, setTeSituationalScoreGrade] = useState(1);
+
+    const {data: insulationData} = useQuery({
+        queryKey: ['insulationGrades', leagueId, teamId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Grades/insulation-grades?leagueId=${leagueId}&rosterId=${
+                    +teamId + 1
+                }&gradeRunVersionNumber=1`,
+            };
+            const res = await axios.request(options);
+            return res.data;
+        },
+        retry: false,
+        enabled: +teamId > -1,
+    });
+
+    const {data: productionData} = useQuery({
+        queryKey: ['productionGrades', leagueId, teamId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Grades/production-grades?leagueId=${leagueId}&rosterId=${
+                    +teamId + 1
+                }&gradeRunVersionNumber=1`,
+            };
+            const res = await axios.request(options);
+            return res.data;
+        },
+        retry: false,
+        enabled: +teamId > -1,
+    });
+
+    const {data: situationalData} = useQuery({
+        queryKey: ['situationalGrades', leagueId, teamId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Grades/situational-grades?leagueId=${leagueId}&rosterId=${
+                    +teamId + 1
+                }&gradeRunVersionNumber=1`,
+            };
+            const res = await axios.request(options);
+            return res.data;
+        },
+        retry: false,
+        enabled: +teamId > -1,
+    });
+
+    useEffect(() => {
+        if (!insulationData) return;
+        setQbInsulationScoreGrade(insulationData.qbInsulationScoreGrade);
+        setRbInsulationScoreGrade(insulationData.rbInsulationScoreGrade);
+        setWrInsulationScoreGrade(insulationData.wrInsulationScoreGrade);
+        setTeInsulationScoreGrade(insulationData.teInsulationScoreGrade);
+    }, [insulationData]);
+
+    useEffect(() => {
+        if (!productionData) return;
+        setQbProductionScoreGrade(productionData.qbProductionScoreGrade);
+        setRbProductionScoreGrade(productionData.rbProductionScoreGrade);
+        setWrProductionScoreGrade(productionData.wrProductionScoreGrade);
+        setTeProductionScoreGrade(productionData.teProductionScoreGrade);
+    }, [productionData]);
+
+    useEffect(() => {
+        if (!situationalData) return;
+        setQbSituationalScoreGrade(situationalData.qbSituationalScoreGrade);
+        setRbSituationalScoreGrade(situationalData.rbSituationalScoreGrade);
+        setWrSituationalScoreGrade(situationalData.wrSituationalScoreGrade);
+        setTeSituationalScoreGrade(situationalData.teSituationalScoreGrade);
+    }, [situationalData]);
+
+    return {
+        qbInsulationScoreGrade,
+        rbInsulationScoreGrade,
+        wrInsulationScoreGrade,
+        teInsulationScoreGrade,
+        qbProductionScoreGrade,
+        rbProductionScoreGrade,
+        wrProductionScoreGrade,
+        teProductionScoreGrade,
+        qbSituationalScoreGrade,
+        rbSituationalScoreGrade,
+        wrSituationalScoreGrade,
+        teSituationalScoreGrade,
+    } as ThreeFactorGrades;
+}
+
 export type DomainTrueRank = {
     playerId: number;
     playerSleeperId: number;

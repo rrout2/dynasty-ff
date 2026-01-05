@@ -25,6 +25,7 @@ import {
     useTeamRosterArchetype,
     useTeamValueArchetype,
     useTeamValueShare,
+    useThreeFactorGrades,
     useTitle,
     useTwoYearOutlook,
 } from '../../../hooks/hooks';
@@ -340,6 +341,10 @@ export default function BlueprintModule({
         '' + getRosterIdFromUser(specifiedUser)
     );
     const {domainTrueRanks} = useDomainTrueRanks(
+        leagueId,
+        '' + getRosterIdFromUser(specifiedUser)
+    );
+    const threeFactorGrades = useThreeFactorGrades(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
@@ -836,6 +841,7 @@ export default function BlueprintModule({
                                     tradeStrategy={fullMoves}
                                     draftStrategy={draftStrategy}
                                     domainTrueRanks={domainTrueRanks}
+                                    threeFactorGrades={threeFactorGrades}
                                 />
                             )}
                         </div>

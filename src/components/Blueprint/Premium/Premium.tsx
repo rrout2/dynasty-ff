@@ -28,7 +28,11 @@ import {
 } from '../NewV1/NewV1';
 import {CSSProperties, useEffect, useState} from 'react';
 import {QB, RB, TE, WR} from '../../../consts/fantasy';
-import {DomainTrueRank, useAdpData} from '../../../hooks/hooks';
+import {
+    DomainTrueRank,
+    ThreeFactorGrades,
+    useAdpData,
+} from '../../../hooks/hooks';
 import {logoImage} from '../shared/Utilities';
 
 function getFontSize(teamName: string) {
@@ -65,6 +69,7 @@ type PremiumProps = {
     tradeStrategy: FullMove[];
     draftStrategy: DraftStrategyLabel[];
     domainTrueRanks: DomainTrueRank[];
+    threeFactorGrades: ThreeFactorGrades;
 };
 
 export default function Premium({
@@ -95,6 +100,7 @@ export default function Premium({
     tradeStrategy,
     draftStrategy,
     domainTrueRanks,
+    threeFactorGrades,
 }: PremiumProps) {
     const [startingQbAge, setStartingQbAge] = useState(0);
     const [startingRbAge, setStartingRbAge] = useState(0);
@@ -375,6 +381,133 @@ export default function Premium({
                     top: '649px',
                 }}
             />
+            <ThreeFactorAnalysis
+                threeFactorGrades={threeFactorGrades}
+                style={{
+                    top: '144px',
+                    left: '1227px',
+                }}
+            />
+        </div>
+    );
+}
+
+function ThreeFactorAnalysis({
+    threeFactorGrades,
+    style,
+}: {
+    threeFactorGrades: ThreeFactorGrades;
+    style?: CSSProperties;
+}) {
+    function getFontColor(score: number) {
+        if (score >= 8) {
+            return '#00FF06';
+        }
+        if (score >= 6) {
+            return '#80CD82';
+        }
+        if (score >= 4) {
+            return '#FFAA00';
+        }
+        return '#E31837';
+    }
+    const avgInsulationScore =
+        (threeFactorGrades.qbInsulationScoreGrade +
+            threeFactorGrades.rbInsulationScoreGrade +
+            threeFactorGrades.wrInsulationScoreGrade +
+            threeFactorGrades.teInsulationScoreGrade) /
+        4;
+    const avgProductionScore =
+        (threeFactorGrades.qbProductionScoreGrade +
+            threeFactorGrades.rbProductionScoreGrade +
+            threeFactorGrades.wrProductionScoreGrade +
+            threeFactorGrades.teProductionScoreGrade) /
+        4;
+    const avgSituationalScore =
+        (threeFactorGrades.qbSituationalScoreGrade +
+            threeFactorGrades.rbSituationalScoreGrade +
+            threeFactorGrades.wrSituationalScoreGrade +
+            threeFactorGrades.teSituationalScoreGrade) /
+        4;
+    return (
+        <div className={styles.threeFactorAnalysis} style={style}>
+            <div className={styles.threeFactorRow}>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{
+                        width: '77px',
+                        color: getFontColor(
+                            threeFactorGrades.qbInsulationScoreGrade
+                        ),
+                    }}
+                >
+                    {threeFactorGrades.qbInsulationScoreGrade}
+                </div>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{
+                        color: getFontColor(
+                            threeFactorGrades.qbProductionScoreGrade
+                        ),
+                    }}
+                >
+                    {threeFactorGrades.qbProductionScoreGrade}
+                </div>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{
+                        color: getFontColor(
+                            threeFactorGrades.qbSituationalScoreGrade
+                        ),
+                    }}
+                >
+                    {threeFactorGrades.qbSituationalScoreGrade}
+                </div>
+            </div>
+            <div className={styles.threeFactorRow}>
+                <div className={styles.threeFactorCell} style={{width: '77px', color: getFontColor(threeFactorGrades.rbInsulationScoreGrade)}}>
+                    {threeFactorGrades.rbInsulationScoreGrade}
+                </div>
+                <div className={styles.threeFactorCell} style={{color: getFontColor(threeFactorGrades.rbProductionScoreGrade)}}>
+                    {threeFactorGrades.rbProductionScoreGrade}
+                </div>
+                <div className={styles.threeFactorCell} style={{color: getFontColor(threeFactorGrades.rbSituationalScoreGrade)}}>
+                    {threeFactorGrades.rbSituationalScoreGrade}
+                </div>
+            </div>
+            <div className={styles.threeFactorRow}>
+                <div className={styles.threeFactorCell} style={{width: '77px', color: getFontColor(threeFactorGrades.wrInsulationScoreGrade)}}>
+                    {threeFactorGrades.wrInsulationScoreGrade}
+                </div>
+                <div className={styles.threeFactorCell} style={{color: getFontColor(threeFactorGrades.wrProductionScoreGrade)}}>
+                    {threeFactorGrades.wrProductionScoreGrade}
+                </div>
+                <div className={styles.threeFactorCell} style={{color: getFontColor(threeFactorGrades.wrSituationalScoreGrade)}}>
+                    {threeFactorGrades.wrSituationalScoreGrade}
+                </div>
+            </div>
+            <div className={styles.threeFactorRow}>
+                <div className={styles.threeFactorCell} style={{width: '77px', color: getFontColor(threeFactorGrades.teInsulationScoreGrade)}}>
+                    {threeFactorGrades.teInsulationScoreGrade}
+                </div>
+                <div className={styles.threeFactorCell} style={{color: getFontColor(threeFactorGrades.teProductionScoreGrade)}}>
+                    {threeFactorGrades.teProductionScoreGrade}
+                </div>
+                <div className={styles.threeFactorCell} style={{color: getFontColor(threeFactorGrades.teSituationalScoreGrade)}}>
+                    {threeFactorGrades.teSituationalScoreGrade}
+                </div>
+            </div>
+            <div className={styles.threeFactorRow} style={{paddingTop: '2px'}}>
+                <div className={styles.threeFactorCell} style={{width: '77px', color: getFontColor(avgInsulationScore)}}>
+                    {avgInsulationScore.toFixed(1)}
+                </div>
+                <div className={styles.threeFactorCell} style={{color: getFontColor(avgProductionScore)}}>
+                    {avgProductionScore.toFixed(1)}
+                </div>
+                <div className={styles.threeFactorCell} style={{color: getFontColor(avgSituationalScore)}}>
+                    {avgSituationalScore.toFixed(1)}
+                </div>
+            </div>
         </div>
     );
 }
@@ -387,9 +520,11 @@ function TrueRanks({
     style?: CSSProperties;
 }) {
     const {sortNamesByAdp} = useAdpData();
-    const top20DomainTrueRanks = new Set([...domainTrueRanks]
-        .sort((a, b) => sortNamesByAdp(a.playerName, b.playerName))
-        .slice(0, 20));
+    const top20DomainTrueRanks = new Set(
+        [...domainTrueRanks]
+            .sort((a, b) => sortNamesByAdp(a.playerName, b.playerName))
+            .slice(0, 20)
+    );
     return (
         <div className={styles.trueRanks} style={style}>
             {domainTrueRanks
@@ -490,11 +625,7 @@ function Score({score}: {score: number}) {
 }
 
 function ArchetypeCard({archetype}: {archetype: string}) {
-    return (
-        <div className={styles.archetypeCard}>
-            {archetype}
-        </div>
-    );
+    return <div className={styles.archetypeCard}>{archetype}</div>;
 }
 
 function Age({age, style}: {age: number; style?: CSSProperties}) {

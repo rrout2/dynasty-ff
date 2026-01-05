@@ -172,3 +172,27 @@
     text-align: center;
     width: 110px;
 }
+
+
+.threeFactorAnalysis {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5px;
+}
+
+.threeFactorRow {
+    display: flex;
+    flex-direction: row;
+}
+
+.threeFactorCell {
+    color: #80CD82;
+    font-family: Prohibition;
+    font-size: 14.92px;
+    font-style: normal;
+    font-weight: 400;
+
+    width: 90px;
+    text-align: center;
+}
