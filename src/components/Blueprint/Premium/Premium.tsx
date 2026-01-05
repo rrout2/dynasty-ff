@@ -41,6 +41,34 @@ function getFontSize(teamName: string) {
     return '50px';
 }
 
+function getArchetypeBackground(archetype: string) {
+    switch (archetype.toLowerCase()) {
+        case 'cornerstone':
+            return 'linear-gradient(180deg, #CD00FF 0%, #7B0099 100%)';
+        case 'foundational':
+            return 'linear-gradient(180deg, #00B1FF 0%, #006A99 100%)';
+        case 'productivevet':
+            return 'linear-gradient(180deg, #1A5AFF 0%, #0E008D 99.98%)';
+        case 'mainstay':
+            return 'linear-gradient(180deg, #1AE069 0%, #0E7A39 100%)';
+        case 'upsideshot':
+            return 'linear-gradient(180deg, #007410 0%, #003A09 99.98%)';
+        case 'shorttermleaguewinner':
+            return 'linear-gradient(180deg, #EABA10 0%, #846909 100%)';
+        case 'shorttermproduction':
+            return 'linear-gradient(180deg, #EA9A19 0%, #FF4200 100%)';
+        case 'serviceable':
+            return 'linear-gradient(180deg, #DB2335 0%, #75131C 99.98%)';
+        case 'jaginsurance':
+            return 'linear-gradient(180deg, #736357 0%, #1E1209 100%)';
+        case 'jagdevelopmental':
+            return 'linear-gradient(180deg, #ACACAC 0%, #464646 99.98%)';
+        case 'replaceable':
+            return 'linear-gradient(180deg, #333 0%, #040C11 99.98%)';
+    }
+    return 'none';
+}
+
 type PremiumProps = {
     teamName: string;
     numTeams: number;
@@ -563,7 +591,7 @@ function ThreeFactorAnalysis({
                     {threeFactorGrades.teSituationalScoreGrade}
                 </div>
             </div>
-            <div className={styles.threeFactorRow} style={{paddingTop: '2px'}}>
+            <div className={styles.threeFactorRow} style={{paddingTop: '4px'}}>
                 <div
                     className={styles.threeFactorCell}
                     style={{
@@ -703,7 +731,45 @@ function Score({score}: {score: number}) {
 }
 
 function ArchetypeCard({archetype}: {archetype: string}) {
-    return <div className={styles.archetypeCard}>{archetype}</div>;
+    function getBackground() {
+        return getArchetypeBackground(archetype);
+    }
+
+    function getFontColor() {
+        switch (archetype.toLowerCase()) {
+            case 'cornerstone':
+            case 'foundational':
+            case 'mainstay':
+            case 'shorttermleaguewinner':
+            case 'shorttermproduction':
+                return '#07223F';
+        }
+        return 'white';
+    }
+    function camelCaseToTitleCase(str: string) {
+        const spaced = str
+            .replace(/([a-z])([A-Z])/g, '$1 $2')
+            .replace(/JAG/g, 'JAG ');
+        return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+    }
+
+    function isLong() {
+        return camelCaseToTitleCase(archetype).length > 18;
+    }
+
+    return (
+        <div
+            className={styles.archetypeCard}
+            style={{
+                background: getBackground(),
+                color: getFontColor(),
+                fontSize: isLong() ? '8px' : '10px',
+                paddingTop: isLong() ? '2px' : 'none',
+            }}
+        >
+            {camelCaseToTitleCase(archetype)}
+        </div>
+    );
 }
 
 function Age({age, style}: {age: number; style?: CSSProperties}) {

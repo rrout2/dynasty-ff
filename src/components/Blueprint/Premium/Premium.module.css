@@ -148,10 +148,13 @@
 }
 
 .archetypeCard {
-    color: #FFF;
-    font-family: Erbaum;
-    font-size: 9.18px;
+    color: #07223F;
+    font-family: Prohibition;
+    font-size: 10px;
+    font-style: normal;
     font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
 
     text-align: center;
     width: 90px;
@@ -167,7 +170,7 @@
     color: #FFF;
     font-family: Erbaum;
     font-size: 9.18px;
-    font-weight: 400;
+    font-weight: 700;
 
     text-align: center;
     width: 110px;
