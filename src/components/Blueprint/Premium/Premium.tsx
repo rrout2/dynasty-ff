@@ -465,46 +465,124 @@ function ThreeFactorAnalysis({
                 </div>
             </div>
             <div className={styles.threeFactorRow}>
-                <div className={styles.threeFactorCell} style={{width: '77px', color: getFontColor(threeFactorGrades.rbInsulationScoreGrade)}}>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{
+                        width: '77px',
+                        color: getFontColor(
+                            threeFactorGrades.rbInsulationScoreGrade
+                        ),
+                    }}
+                >
                     {threeFactorGrades.rbInsulationScoreGrade}
                 </div>
-                <div className={styles.threeFactorCell} style={{color: getFontColor(threeFactorGrades.rbProductionScoreGrade)}}>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{
+                        color: getFontColor(
+                            threeFactorGrades.rbProductionScoreGrade
+                        ),
+                    }}
+                >
                     {threeFactorGrades.rbProductionScoreGrade}
                 </div>
-                <div className={styles.threeFactorCell} style={{color: getFontColor(threeFactorGrades.rbSituationalScoreGrade)}}>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{
+                        color: getFontColor(
+                            threeFactorGrades.rbSituationalScoreGrade
+                        ),
+                    }}
+                >
                     {threeFactorGrades.rbSituationalScoreGrade}
                 </div>
             </div>
             <div className={styles.threeFactorRow}>
-                <div className={styles.threeFactorCell} style={{width: '77px', color: getFontColor(threeFactorGrades.wrInsulationScoreGrade)}}>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{
+                        width: '77px',
+                        color: getFontColor(
+                            threeFactorGrades.wrInsulationScoreGrade
+                        ),
+                    }}
+                >
                     {threeFactorGrades.wrInsulationScoreGrade}
                 </div>
-                <div className={styles.threeFactorCell} style={{color: getFontColor(threeFactorGrades.wrProductionScoreGrade)}}>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{
+                        color: getFontColor(
+                            threeFactorGrades.wrProductionScoreGrade
+                        ),
+                    }}
+                >
                     {threeFactorGrades.wrProductionScoreGrade}
                 </div>
-                <div className={styles.threeFactorCell} style={{color: getFontColor(threeFactorGrades.wrSituationalScoreGrade)}}>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{
+                        color: getFontColor(
+                            threeFactorGrades.wrSituationalScoreGrade
+                        ),
+                    }}
+                >
                     {threeFactorGrades.wrSituationalScoreGrade}
                 </div>
             </div>
             <div className={styles.threeFactorRow}>
-                <div className={styles.threeFactorCell} style={{width: '77px', color: getFontColor(threeFactorGrades.teInsulationScoreGrade)}}>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{
+                        width: '77px',
+                        color: getFontColor(
+                            threeFactorGrades.teInsulationScoreGrade
+                        ),
+                    }}
+                >
                     {threeFactorGrades.teInsulationScoreGrade}
                 </div>
-                <div className={styles.threeFactorCell} style={{color: getFontColor(threeFactorGrades.teProductionScoreGrade)}}>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{
+                        color: getFontColor(
+                            threeFactorGrades.teProductionScoreGrade
+                        ),
+                    }}
+                >
                     {threeFactorGrades.teProductionScoreGrade}
                 </div>
-                <div className={styles.threeFactorCell} style={{color: getFontColor(threeFactorGrades.teSituationalScoreGrade)}}>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{
+                        color: getFontColor(
+                            threeFactorGrades.teSituationalScoreGrade
+                        ),
+                    }}
+                >
                     {threeFactorGrades.teSituationalScoreGrade}
                 </div>
             </div>
             <div className={styles.threeFactorRow} style={{paddingTop: '2px'}}>
-                <div className={styles.threeFactorCell} style={{width: '77px', color: getFontColor(avgInsulationScore)}}>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{
+                        width: '77px',
+                        color: getFontColor(avgInsulationScore),
+                    }}
+                >
                     {avgInsulationScore.toFixed(1)}
                 </div>
-                <div className={styles.threeFactorCell} style={{color: getFontColor(avgProductionScore)}}>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{color: getFontColor(avgProductionScore)}}
+                >
                     {avgProductionScore.toFixed(1)}
                 </div>
-                <div className={styles.threeFactorCell} style={{color: getFontColor(avgSituationalScore)}}>
+                <div
+                    className={styles.threeFactorCell}
+                    style={{color: getFontColor(avgSituationalScore)}}
+                >
                     {avgSituationalScore.toFixed(1)}
                 </div>
             </div>
