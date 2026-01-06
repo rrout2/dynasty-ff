@@ -9,6 +9,7 @@ import {
     tepIcon,
 } from '../../../consts/images';
 import {
+    TradePlayer,
     useAdpData,
     useDomainTrueRanks,
     useDraftCapitalGrade,
@@ -29,6 +30,7 @@ import {
     useTeamValueShare,
     useThreeFactorGrades,
     useTitle,
+    useTradeSuggestions,
     useTwoYearOutlook,
 } from '../../../hooks/hooks';
 import {QB, RB, SUPER_FLEX, TE, WR} from '../../../consts/fantasy';
@@ -229,6 +231,10 @@ export default function BlueprintModule({
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
+    const {tradeSuggestions, setTradeSuggestions} = useTradeSuggestions(
+        leagueId,
+        '' + getRosterIdFromUser(specifiedUser)
+    );
     const [fullMoves, setFullMoves] = useState<FullMove[]>([
         {
             move: Move.DOWNTIER,
@@ -285,6 +291,7 @@ export default function BlueprintModule({
             ],
         },
     ]);
+    const [allPossibleMoves, setAllPossibleMoves] = useState<FullMove[]>([]);
     const [draftCapitalNotes2026, setDraftCapitalNotes2026] = useState(
         'placeholder 2026 notes'
     );
@@ -315,7 +322,10 @@ export default function BlueprintModule({
             '' + getRosterIdFromUser(specifiedUser)
         );
     // const [draftCapitalScore, setDraftCapitalScore] = useState(8);
-    const {draftCapitalGrade: draftCapitalScore, setDraftCapitalGrade: setDraftCapitalScore} = useDraftCapitalGrade(leagueId, '' + getRosterIdFromUser(specifiedUser));
+    const {
+        draftCapitalGrade: draftCapitalScore,
+        setDraftCapitalGrade: setDraftCapitalScore,
+    } = useDraftCapitalGrade(leagueId, '' + getRosterIdFromUser(specifiedUser));
     const [isSuperFlex, setIsSuperFlex] = useState(true);
     const [ppr, setPpr] = useState(0.5);
     const [tep, setTep] = useState(0.5);
@@ -364,6 +374,9 @@ export default function BlueprintModule({
     const {leaguePowerRanks} = useLeaguePowerRanks(leagueId);
     const [searchParams, setSearchParams] = useSearchParams();
     const [isDownloading, setIsDownloading] = useState(false);
+    const [collatedTrades, setCollatedTrades] = useState(
+        new Map<string, string[]>()
+    );
 
     useEffect(() => {
         if (!league) return;
@@ -437,6 +450,73 @@ export default function BlueprintModule({
     }, [myPicks]);
 
     useEffect(() => {
+        if (tradeSuggestions.length === 0) return;
+        const newCollatedTrades = new Map<string, string[]>();
+        for (const suggestion of tradeSuggestions) {
+            let key = suggestion.outPlayers
+                .map(p => p.playerSleeperId)
+                .sort()
+                .join(',');
+            key += `,${suggestion.rule.moveType}`; // to differentiate between pivot and downtier
+            const value = suggestion.inPlayers
+                .map(p => p.playerSleeperId)
+                .sort()
+                .join(',');
+            if (!newCollatedTrades.has(key)) {
+                newCollatedTrades.set(key, [value]);
+            } else if (!newCollatedTrades.get(key)!.includes(value)) {
+                // don't add duplicates
+                newCollatedTrades.get(key)!.push(value);
+            }
+        }
+
+        const apiSuggestions = newCollatedTrades
+            .entries()
+            .map(([key, values]) => ({
+                outPlayerIds: key.split(',').slice(0, -1), // remove move type
+                returnPackages: values.map(v => v.split(',')),
+                type: key.split(',').slice(-1)[0],
+            }))
+            .map(({outPlayerIds, returnPackages, type}) => {
+                let move: Move;
+                if (type === 'Pivot') {
+                    move = Move.PIVOT;
+                } else if (type === 'Downtier') {
+                    move = Move.DOWNTIER;
+                } else {
+                    move = Move.UPTIER;
+                }
+                // make sure all arrays have 2 players per return package
+                for (let i = 0; i < returnPackages.length; i++) {
+                    if (returnPackages[i].length === 1) {
+                        returnPackages[i].push('');
+                    }
+                }
+                // make sure at least three return packages
+                while (returnPackages.length < 3) {
+                    returnPackages.push(['', '']);
+                }
+                return {
+                    move,
+                    playerIdsToTrade: outPlayerIds,
+                    playerIdsToTarget: returnPackages,
+                } as FullMove;
+            })
+            .toArray();
+        setFullMoves(
+            apiSuggestions.sort((a, b) => {
+                const toTargetA = a.playerIdsToTarget.filter(
+                    ids => !ids.every(id => id === '')
+                ).length;
+                const toTargetB = b.playerIdsToTarget.filter(
+                    ids => !ids.every(id => id === '')
+                ).length;
+                return toTargetB - toTargetA;
+            })
+        );
+    }, [tradeSuggestions]);
+
+    useEffect(() => {
         if (!newLeagueModalOpen) return;
         setTimeout(() => {
             textfieldRef.current?.focus();
@@ -481,6 +561,13 @@ export default function BlueprintModule({
             return styles.flexStarter;
         }
         return '';
+    }
+
+    function shuffle(array: any[]) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
     }
 
     function hasTeamId() {

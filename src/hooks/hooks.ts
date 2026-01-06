@@ -6,17 +6,13 @@ import {
     useState,
 } from 'react';
 import playersJson from '../data/players.json';
-import rankingsJson from '../data/rankings_11122025.json';
 import buySellsData from '../data/buyssellsholds_with_ids_080525.json';
-import buySellsContendRebuild from '../data/buyssellsholds_with_ids_111225.json';
 import nflScheduleJson from '../data/nfl_schedule.json';
 import sfPickMovesJson from '../data/rookieBP/sf_pick_moves.json';
 import oneQbPickMovesJson from '../data/rookieBP/1qb_pick_moves.json';
 import sfRookieRankingsJson from '../data/rookieBP/sf_rookie_rankings_and_tiers_apr26.json';
 import oneQbRookieRankingsJson from '../data/rookieBP/1qb_rookie_rankings_and_tiers_apr26.json';
 import playerStoplightsJson from '../data/weekly/playerLightsWeek17.json';
-import risersFallersJson from '../data/weekly/risersFallersWeek11.json';
-import weeklyRankingsJson from '../data/weekly/rankingsWeek11.json';
 
 import {
     League,
@@ -75,6 +71,64 @@ import {
 
 const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
+type TradeSuggestion = {
+    targetRosterId: number;
+    rule: {
+        rosterType: string;
+        moveType: string;
+        primaryAssetType: string;
+        optionDescription: string;
+        priorityDescription: string;
+    };
+    outPlayers: TradePlayer[];
+    inPlayers: TradePlayer[];
+    totalOutValue: number;
+    totalInValue: number;
+    percentageDifference: number;
+};
+
+export type TradePlayer = {
+    playerId: number;
+    playerSleeperId: number;
+    name: string;
+    position: string;
+    assetType: string;
+    overallRank: string;
+    domainValue: number;
+};
+
+export function useTradeSuggestions(leagueId: string, teamId: string) {
+    const [tradeSuggestions, setTradeSuggestions] = useState<TradeSuggestion[]>(
+        []
+    );
+    const {data} = useQuery({
+        queryKey: ['tradeSuggestions', leagueId, teamId],
+        queryFn: async () => {
+            const options = {
+                method: 'POST',
+                url: `${AZURE_API_URL}TradeRulesAdmin/generate`,
+                data: {
+                    leagueId: leagueId,
+                    rosterId: +teamId + 1,
+                    gradeRunVersionNumber: 1,
+                    maxFairnessPercentageDifference: 5,
+                    perSlotCandidateLimit: 25,
+                    maxResults: 300,
+                },
+            };
+            const res = await axios.request(options);
+            return res.data as TradeSuggestion[];
+        },
+        retry: false,
+        enabled: +teamId > -1,
+    });
+    useEffect(() => {
+        if (!data) return;
+        setTradeSuggestions(data);
+    }, [data]);
+    return {tradeSuggestions, setTradeSuggestions};
+}
+
 export function useDraftCapitalGrade(leagueId: string, teamId: string) {
     const [draftCapitalGrade, setDraftCapitalGrade] = useState<number>(0);
     const {data} = useQuery({
@@ -82,7 +136,9 @@ export function useDraftCapitalGrade(leagueId: string, teamId: string) {
         queryFn: async () => {
             const options = {
                 method: 'GET',
-                url: `${AZURE_API_URL}Sleeper/leagues/${leagueId}/rosters/${+teamId + 1}/draft-capital`,
+                url: `${AZURE_API_URL}Sleeper/leagues/${leagueId}/rosters/${
+                    +teamId + 1
+                }/draft-capital`,
             };
             const res = await axios.request(options);
             return res.data.grade as number;
@@ -538,7 +594,6 @@ export function usePositionalValueGrades(leagueId: string, teamId: string) {
         enabled: +teamId > -1,
     });
     useEffect(() => {
-        console.log(data);
         setQb(data?.positionalValueGrades[0].grade || 0);
         setRb(data?.positionalValueGrades[1].grade || 0);
         setWr(data?.positionalValueGrades[2].grade || 0);
