@@ -107,6 +107,10 @@ type PremiumProps = {
     domainTrueRanks: DomainTrueRank[];
     threeFactorGrades: ThreeFactorGrades;
     leaguePowerRanks: PowerRank[];
+    qbValueSharePercent: number;
+    rbValueSharePercent: number;
+    wrValueSharePercent: number;
+    teValueSharePercent: number;
 };
 
 export default function Premium({
@@ -139,6 +143,10 @@ export default function Premium({
     domainTrueRanks,
     threeFactorGrades,
     leaguePowerRanks,
+    qbValueSharePercent,
+    rbValueSharePercent,
+    wrValueSharePercent,
+    teValueSharePercent,
 }: PremiumProps) {
     const [startingQbAge, setStartingQbAge] = useState(0);
     const [startingRbAge, setStartingRbAge] = useState(0);
@@ -441,6 +449,30 @@ export default function Premium({
                     left: '1511px',
                 }}
             />
+            <div
+                className={styles.posValueShare}
+                style={{top: '284px', left: '775px'}}
+            >
+                {qbValueSharePercent}%
+            </div>
+            <div
+                className={styles.posValueShare}
+                style={{top: '284px', left: '841px'}}
+            >
+                {rbValueSharePercent}%
+            </div>
+            <div
+                className={styles.posValueShare}
+                style={{top: '284px', left: '906px'}}
+            >
+                {wrValueSharePercent}%
+            </div>
+            <div
+                className={styles.posValueShare}
+                style={{top: '284px', left: '970px'}}
+            >
+                {teValueSharePercent}%
+            </div>
         </div>
     );
 }
@@ -500,12 +532,16 @@ function LeaguePowerRanks({
                     <GoldTrophy />
                 </div>
                 <div className={styles.trophyWrapper}>
-                <SilverTrophy /></div>
+                    <SilverTrophy />
+                </div>
                 <div className={styles.trophyWrapper}>
-                <BronzeTrophy /></div>
-                {col1.filter((_, idx) => idx > 2).map((_, idx) => (
-                    <div key={idx} className={styles.trophyWrapper} />
-                ))}
+                    <BronzeTrophy />
+                </div>
+                {col1
+                    .filter((_, idx) => idx > 2)
+                    .map((_, idx) => (
+                        <div key={idx} className={styles.trophyWrapper} />
+                    ))}
             </div>
             <div className={styles.powerRankColumn}>
                 {col1.map((powerRank, idx) => (

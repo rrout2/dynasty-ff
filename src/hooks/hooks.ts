@@ -263,6 +263,10 @@ export function useDomainTrueRanks(leagueId: string, teamId: string) {
 
 export function useTeamValueShare(leagueId: string, teamId: string) {
     const [valueSharePercent, setValueSharePercent] = useState(1);
+    const [qbValueSharePercent, setQbValueSharePercent] = useState(1);
+    const [rbValueSharePercent, setRbValueSharePercent] = useState(1);
+    const [wrValueSharePercent, setWrValueSharePercent] = useState(1);
+    const [teValueSharePercent, setTeValueSharePercent] = useState(1);
     const [leagueRank, setLeagueRank] = useState(1);
     const {data} = useQuery({
         queryKey: ['teamValueShare', leagueId, teamId],
@@ -281,9 +285,26 @@ export function useTeamValueShare(leagueId: string, teamId: string) {
     });
     useEffect(() => {
         setValueSharePercent(data?.valueSharePercent || 0);
+        setQbValueSharePercent(data?.qbValueSharePercent || 0);
+        setRbValueSharePercent(data?.rbValueSharePercent || 0);
+        setWrValueSharePercent(data?.wrValueSharePercent || 0);
+        setTeValueSharePercent(data?.teValueSharePercent || 0);
         setLeagueRank(data?.leagueRank || 0);
     }, [data]);
-    return {valueSharePercent, setValueSharePercent, leagueRank, setLeagueRank};
+    return {
+        valueSharePercent,
+        setValueSharePercent,
+        leagueRank,
+        setLeagueRank,
+        qbValueSharePercent,
+        setQbValueSharePercent,
+        rbValueSharePercent,
+        setRbValueSharePercent,
+        wrValueSharePercent,
+        setWrValueSharePercent,
+        teValueSharePercent,
+        setTeValueSharePercent,
+    };
 }
 
 export function useTeamProductionShare(leagueId: string, teamId: string) {

@@ -331,6 +331,10 @@ export default function BlueprintModule({
         leagueRank: valueShareRank,
         setValueSharePercent,
         setLeagueRank: setValueShareRank,
+        qbValueSharePercent,
+        rbValueSharePercent,
+        wrValueSharePercent,
+        teValueSharePercent,
     } = useTeamValueShare(leagueId, '' + getRosterIdFromUser(specifiedUser));
     const {
         productionSharePercent,
@@ -845,6 +849,10 @@ export default function BlueprintModule({
                                     domainTrueRanks={domainTrueRanks}
                                     threeFactorGrades={threeFactorGrades}
                                     leaguePowerRanks={leaguePowerRanks}
+                                    qbValueSharePercent={qbValueSharePercent}
+                                    rbValueSharePercent={rbValueSharePercent}
+                                    wrValueSharePercent={wrValueSharePercent}
+                                    teValueSharePercent={teValueSharePercent}
                                 />
                             )}
                         </div>
