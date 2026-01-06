@@ -112,6 +112,9 @@
     font-size: 9.18px;
     font-weight: 400;
     width: 144px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .posTeamCard {

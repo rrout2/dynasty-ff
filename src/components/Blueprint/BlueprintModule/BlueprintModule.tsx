@@ -608,7 +608,6 @@ export default function BlueprintModule({
                 tradePartners.map(p => p?.user_id || '').join('-')
             );
             fullMoves.forEach((move, idx) => {
-                console.log(move);
                 searchParams.set(`${MOVE}_${idx}`, move.move);
                 // these are em dashes! to prevent breaking up rookie pick IDs
                 searchParams.set(
