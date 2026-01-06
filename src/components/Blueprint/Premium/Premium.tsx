@@ -111,6 +111,8 @@ type PremiumProps = {
     rbValueSharePercent: number;
     wrValueSharePercent: number;
     teValueSharePercent: number;
+    percentile: string;
+    buildPercentage: string;
 };
 
 export default function Premium({
@@ -147,6 +149,8 @@ export default function Premium({
     rbValueSharePercent,
     wrValueSharePercent,
     teValueSharePercent,
+    percentile,
+    buildPercentage,
 }: PremiumProps) {
     const [startingQbAge, setStartingQbAge] = useState(0);
     const [startingRbAge, setStartingRbAge] = useState(0);
@@ -472,6 +476,12 @@ export default function Premium({
                 style={{top: '284px', left: '970px'}}
             >
                 {teValueSharePercent}%
+            </div>
+            <div className={styles.percentile} style={{top: '340px', left: '920px'}}>
+                {percentile}
+            </div>
+            <div className={styles.percentile} style={{top: '422px', left: '920px'}}>
+                {buildPercentage}
             </div>
         </div>
     );

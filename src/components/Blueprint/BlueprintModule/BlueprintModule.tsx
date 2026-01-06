@@ -306,6 +306,8 @@ export default function BlueprintModule({
         numTeams,
         /* roundOverall= */ false
     );
+    const [percentile, setPercentile] = useState('69th');
+    const [buildPercentage, setBuildPercentage] = useState('23%');
     const {qb, setQb, rb, setRb, wr, setWr, te, setTe} =
         usePositionalValueGrades(
             leagueId,
@@ -853,6 +855,8 @@ export default function BlueprintModule({
                                     rbValueSharePercent={rbValueSharePercent}
                                     wrValueSharePercent={wrValueSharePercent}
                                     teValueSharePercent={teValueSharePercent}
+                                    percentile={percentile}
+                                    buildPercentage={buildPercentage}
                                 />
                             )}
                         </div>
@@ -1327,6 +1331,36 @@ export default function BlueprintModule({
                                         outlineColor={'#B4D9E4'}
                                         labelMarginRight={'10px'}
                                     />
+                                )}
+                                {premium && (
+                                    <>
+                                        <DomainTextField
+                                            label={
+                                                <div className={styles.labels}>
+                                                    Percentile
+                                                </div>
+                                            }
+                                            value={percentile}
+                                            onChange={e => {
+                                                setPercentile(
+                                                    '' + e.target.value
+                                                );
+                                            }}
+                                        />
+                                        <DomainTextField
+                                            label={
+                                                <div className={styles.labels}>
+                                                    Build Percentage
+                                                </div>
+                                            }
+                                            value={buildPercentage}
+                                            onChange={e => {
+                                                setBuildPercentage(
+                                                    '' + e.target.value
+                                                );
+                                            }}
+                                        />
+                                    </>
                                 )}
                             </div>
                         </div>

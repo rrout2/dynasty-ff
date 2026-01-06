@@ -305,3 +305,14 @@
 
     width: 45px;
 }
+
+.percentile {
+    position: absolute;
+    color: #FFF;
+    text-align: center;
+    font-family: Erbaum;
+    font-size: 40.13px;
+    font-weight: 400;
+    text-align: center;
+    width: 145px;
+}
