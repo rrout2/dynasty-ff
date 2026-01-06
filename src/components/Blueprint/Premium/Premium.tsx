@@ -44,7 +44,7 @@ function getFontSize(teamName: string) {
 function camelCaseToTitleCase(str: string) {
     const spaced = str
         .replace(/([a-z])([A-Z])/g, '$1 $2')
-        .replace(/JAG/g, 'JAG ');
+        .replace(/JAG/g, 'JAG-');
     return spaced.charAt(0).toUpperCase() + spaced.slice(1);
 }
 
