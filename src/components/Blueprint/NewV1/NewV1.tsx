@@ -1,5 +1,10 @@
 import styles from './NewV1.module.css';
-import {new1_0Background, nflSilhouette} from '../../../consts/images';
+import {
+    new1_0Background,
+    newNflBg,
+    newTeamBackgrounds,
+    nflSilhouette,
+} from '../../../consts/images';
 import {
     FullMove,
     Move,
@@ -835,6 +840,112 @@ function TradePlus({size = 11.35}: {size?: number}) {
     );
 }
 
+function getStopGradient(team: string) {
+    switch (team.toUpperCase()) {
+        case 'ARI':
+            return 'none';
+        case 'ATL':
+            return '#75101D';
+        case 'BAL':
+            return '#27007B';
+        case 'BUF':
+            return '#08007B';
+        case 'CAR':
+            return '#0087C8';
+        case 'CHI':
+            return '#00087B';
+        case 'CIN':
+            return '#FF6F00';
+        case 'CLE':
+            return '#CA5801';
+        case 'DAL':
+            return '#999999';
+        case 'DEN':
+            return 'none';
+        case 'DET':
+            return '#818181';
+        case 'GB':
+            return '#FFB700';
+        case 'HOU':
+            return '#202351';
+        case 'IND':
+            return '#B7B7B7';
+        case 'JAX':
+            return '#00FFFB';
+        case 'KC':
+            return '#7B0000';
+        case 'LAC':
+            return '#0099FF';
+        case 'LAR':
+            return '#003E85';
+        case 'MIA':
+            return '#00FFD4';
+        case 'MIN':
+            return '#44007B';
+        case 'NE':
+            return '#FFFFFF';
+        case 'NO':
+            return '#C9B788';
+        case 'NYG':
+            return '#27007B';
+        case 'NYJ':
+            return '#215530';
+        case 'PHI':
+            return '#00A078';
+        case 'PIT':
+            return '#616161';
+        case 'SEA':
+            return '#7EFF64';
+        case 'SF':
+            return '#EBCB9C';
+        case 'TB':
+            return '#4F0400';
+        case 'TEN':
+            return '#0098BE';
+        case 'WAS':
+        case 'WSH':
+            return '#7B2200';
+    }
+
+    return 'white';
+}
+
+function TeamBackgroundGradient({
+    team,
+    size = 64,
+}: {
+    team: string;
+    size?: number;
+}) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 265 265"
+            fill="none"
+        >
+            <path
+                d="M27.8665 0C12.4759 0 0 12.476 0 27.8667V236.323C0 251.712 12.4759 264.188 27.8665 264.188H236.323C251.712 264.188 264.188 251.712 264.188 236.323V27.8667C264.188 12.476 251.712 0 236.323 0H27.8665Z"
+                fill={`url(#${team})`}
+            />
+            <defs>
+                <linearGradient
+                    id={team}
+                    x1="132.094"
+                    y1="2.32707"
+                    x2="132.094"
+                    y2="259.729"
+                    gradientUnits="userSpaceOnUse"
+                >
+                    <stop stop-color={getStopGradient(team)} />
+                    <stop offset="1" />
+                </linearGradient>
+            </defs>
+        </svg>
+    );
+}
+
 function TradePlayerCard({playerId}: {playerId: string}) {
     const playerData = usePlayerData();
     if (!playerData) return null;
@@ -880,19 +991,26 @@ function TradePlayerCard({playerId}: {playerId: string}) {
 
     return (
         <div className={styles.tradePlayerCard}>
-            <img
-                src={
-                    playerId === NONE_PLAYER_ID
-                        ? nflSilhouette
-                        : `https://sleepercdn.com/content/nfl/players/${playerId}.jpg`
-                }
-                onError={({currentTarget}) => {
-                    currentTarget.onerror = null;
-                    currentTarget.src =
-                        'https://sleepercdn.com/images/v2/icons/player_default.webp';
-                }}
-                className={styles.largeHeadshot}
-            />
+            <div style={{position: 'relative'}}>
+                <img
+                    src={newTeamBackgrounds.get(player.team) || newNflBg}
+                    className={styles.largeTeamBackground}
+                />
+                <img
+                    src={
+                        playerId === NONE_PLAYER_ID
+                            ? nflSilhouette
+                            : `https://sleepercdn.com/content/nfl/players/${playerId}.jpg`
+                    }
+                    onError={({currentTarget}) => {
+                        currentTarget.onerror = null;
+                        currentTarget.src =
+                            'https://sleepercdn.com/images/v2/icons/player_default.webp';
+                    }}
+                    className={styles.largeHeadshot}
+                />
+                <TeamBackgroundGradient team={player.team} size={64} />
+            </div>
             <div className={styles.tradeAwayPlayerName}>{getDisplayName()}</div>
             <div className={styles.tradeAwayInfo}>
                 <div
@@ -970,19 +1088,26 @@ function TargetPlayerCard({playerId}: {playerId: string}) {
 
     return (
         <div className={styles.targetPlayerCard}>
-            <img
-                src={
-                    playerId === NONE_PLAYER_ID
-                        ? nflSilhouette
-                        : `https://sleepercdn.com/content/nfl/players/${playerId}.jpg`
-                }
-                onError={({currentTarget}) => {
-                    currentTarget.onerror = null;
-                    currentTarget.src =
-                        'https://sleepercdn.com/images/v2/icons/player_default.webp';
-                }}
-                className={styles.mediumHeadshot}
-            />
+            <div style={{position: 'relative'}}>
+                <img
+                    src={newTeamBackgrounds.get(player.team) || newNflBg}
+                    className={styles.mediumTeamBackground}
+                />
+                <img
+                    src={
+                        playerId === NONE_PLAYER_ID
+                            ? nflSilhouette
+                            : `https://sleepercdn.com/content/nfl/players/${playerId}.jpg`
+                    }
+                    onError={({currentTarget}) => {
+                        currentTarget.onerror = null;
+                        currentTarget.src =
+                            'https://sleepercdn.com/images/v2/icons/player_default.webp';
+                    }}
+                    className={styles.mediumHeadshot}
+                />
+                <TeamBackgroundGradient team={player.team} size={32} />
+            </div>
             <div className={styles.targetInfo}>
                 <div className={styles.targetPlayerName}>
                     {getDisplayName()}

@@ -321,7 +321,6 @@ export default function BlueprintModule({
             leagueId,
             '' + getRosterIdFromUser(specifiedUser)
         );
-    // const [draftCapitalScore, setDraftCapitalScore] = useState(8);
     const {
         draftCapitalGrade: draftCapitalScore,
         setDraftCapitalGrade: setDraftCapitalScore,

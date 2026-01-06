@@ -379,12 +379,32 @@
     height: 32px;
     object-fit: cover;
     aspect-ratio: 1 / 1;
+
+    position: absolute;
+
+    border-radius: 3px;
+}
+
+.mediumTeamBackground {
+    position: absolute;
+    height: 32px;
+    width: auto;
 }
 
 .largeHeadshot {
     height: 64px;
     object-fit: cover;
     aspect-ratio: 1 / 1;
+
+    position: absolute;
+
+    border-radius: 6px;
+}
+
+.largeTeamBackground {
+    position: absolute;
+    height: 64px;
+    width: auto;
 }
 
 .tradeAwayPlayerName {

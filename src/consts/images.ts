@@ -298,10 +298,78 @@ import logoHorizontal from '../assets/module/logoHorizontal.png';
 
 // New 1.0
 import new1_0Background from '../assets/new1.0/new1.0background.png';
+import newAriBg from '../assets/new1.0/playerBackgrounds/ARI.png';
+import newAtlBg from '../assets/new1.0/playerBackgrounds/ATL.png';
+import newBalBg from '../assets/new1.0/playerBackgrounds/BAL.png';
+import newBufBg from '../assets/new1.0/playerBackgrounds/BUF.png';
+import newCarBg from '../assets/new1.0/playerBackgrounds/CAR.png';
+import newChiBg from '../assets/new1.0/playerBackgrounds/CHI.png';
+import newCinBg from '../assets/new1.0/playerBackgrounds/CIN.png';
+import newCleBg from '../assets/new1.0/playerBackgrounds/CLE.png';
+import newDalBg from '../assets/new1.0/playerBackgrounds/DAL.png';
+import newDenBg from '../assets/new1.0/playerBackgrounds/DEN.png';
+import newDetBg from '../assets/new1.0/playerBackgrounds/DET.png';
+import newGbBg from '../assets/new1.0/playerBackgrounds/GB.png';
+import newHouBg from '../assets/new1.0/playerBackgrounds/HOU.png';
+import newIndBg from '../assets/new1.0/playerBackgrounds/IND.png';
+import newJaxBg from '../assets/new1.0/playerBackgrounds/JAX.png';
+import newKcBg from '../assets/new1.0/playerBackgrounds/KC.png';
+import newLacBg from '../assets/new1.0/playerBackgrounds/LAC.png';
+import newLarBg from '../assets/new1.0/playerBackgrounds/LAR.png';
+import newMiaBg from '../assets/new1.0/playerBackgrounds/MIA.png';
+import newMinBg from '../assets/new1.0/playerBackgrounds/MIN.png';
+import newNeBg from '../assets/new1.0/playerBackgrounds/NE.png';
+import newNoBg from '../assets/new1.0/playerBackgrounds/NO.png';
+import newNygBg from '../assets/new1.0/playerBackgrounds/NYG.png';
+import newNyjBg from '../assets/new1.0/playerBackgrounds/NYJ.png';
+import newPhiBg from '../assets/new1.0/playerBackgrounds/PHI.png';
+import newPitBg from '../assets/new1.0/playerBackgrounds/PIT.png';
+import newSeaBg from '../assets/new1.0/playerBackgrounds/SEA.png';
+import newSfBg from '../assets/new1.0/playerBackgrounds/SF.png';
+import newTbBg from '../assets/new1.0/playerBackgrounds/TB.png';
+import newTenBg from '../assets/new1.0/playerBackgrounds/TEN.png';
+import newWshBg from '../assets/new1.0/playerBackgrounds/WAS.png';
+
+import newNflBg from '../assets/new1.0/playerBackgrounds/NFL.png';
 
 // Premium
 import premiumBkg from '../assets/premium/premiumBkg.png';
 import premiumAssets from '../assets/premium/premiumAssets.png';
+
+const newTeamBackgrounds: Map<string, string> = new Map([
+    ['ARI', newAriBg],
+    ['ATL', newAtlBg],
+    ['BAL', newBalBg],
+    ['BUF', newBufBg],
+    ['CAR', newCarBg],
+    ['CHI', newChiBg],
+    ['CIN', newCinBg],
+    ['CLE', newCleBg],
+    ['DAL', newDalBg],
+    ['DEN', newDenBg],
+    ['DET', newDetBg],
+    ['GB', newGbBg],
+    ['HOU', newHouBg],
+    ['IND', newIndBg],
+    ['JAX', newJaxBg],
+    ['KC', newKcBg],
+    ['LAC', newLacBg],
+    ['LAR', newLarBg],
+    ['MIA', newMiaBg],
+    ['MIN', newMinBg],
+    ['NE', newNeBg],
+    ['NO', newNoBg],
+    ['NYG', newNygBg],
+    ['NYJ', newNyjBg],
+    ['PHI', newPhiBg],
+    ['PIT', newPitBg],
+    ['SEA', newSeaBg],
+    ['SF', newSfBg],
+    ['TB', newTbBg],
+    ['TEN', newTenBg],
+    ['WSH', newWshBg],
+    ['WAS', newWshBg],
+]);
 
 const tierLogos: Map<string, string> = new Map([
     ['S', sTier],
@@ -730,4 +798,6 @@ export {
     premiumBkg,
     premiumAssets,
     blankLive2,
+    newTeamBackgrounds,
+    newNflBg,
 };
