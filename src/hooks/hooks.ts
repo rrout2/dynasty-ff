@@ -267,6 +267,10 @@ export function useTeamValueShare(leagueId: string, teamId: string) {
     const [rbValueSharePercent, setRbValueSharePercent] = useState(1);
     const [wrValueSharePercent, setWrValueSharePercent] = useState(1);
     const [teValueSharePercent, setTeValueSharePercent] = useState(1);
+    const [qbValueProportionPercent, setQbValueProportionPercent] = useState(1);
+    const [rbValueProportionPercent, setRbValueProportionPercent] = useState(1);
+    const [wrValueProportionPercent, setWrValueProportionPercent] = useState(1);
+    const [teValueProportionPercent, setTeValueProportionPercent] = useState(1);
     const [leagueRank, setLeagueRank] = useState(1);
     const {data} = useQuery({
         queryKey: ['teamValueShare', leagueId, teamId],
@@ -289,6 +293,10 @@ export function useTeamValueShare(leagueId: string, teamId: string) {
         setRbValueSharePercent(data?.rbValueSharePercent || 0);
         setWrValueSharePercent(data?.wrValueSharePercent || 0);
         setTeValueSharePercent(data?.teValueSharePercent || 0);
+        setQbValueProportionPercent(data?.qbValueProportionPercent || 0);
+        setRbValueProportionPercent(data?.rbValueProportionPercent || 0);
+        setWrValueProportionPercent(data?.wrValueProportionPercent || 0);
+        setTeValueProportionPercent(data?.teValueProportionPercent || 0);
         setLeagueRank(data?.leagueRank || 0);
     }, [data]);
     return {
@@ -304,6 +312,14 @@ export function useTeamValueShare(leagueId: string, teamId: string) {
         setWrValueSharePercent,
         teValueSharePercent,
         setTeValueSharePercent,
+        qbValueProportionPercent,
+        setQbValueProportionPercent,
+        rbValueProportionPercent,
+        setRbValueProportionPercent,
+        wrValueProportionPercent,
+        setWrValueProportionPercent,
+        teValueProportionPercent,
+        setTeValueProportionPercent,
     };
 }
 

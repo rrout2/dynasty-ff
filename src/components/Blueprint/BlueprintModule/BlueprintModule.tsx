@@ -337,6 +337,10 @@ export default function BlueprintModule({
         rbValueSharePercent,
         wrValueSharePercent,
         teValueSharePercent,
+        qbValueProportionPercent,
+        rbValueProportionPercent,
+        wrValueProportionPercent,
+        teValueProportionPercent,
     } = useTeamValueShare(leagueId, '' + getRosterIdFromUser(specifiedUser));
     const {
         productionSharePercent,
@@ -857,6 +861,12 @@ export default function BlueprintModule({
                                     teValueSharePercent={teValueSharePercent}
                                     percentile={percentile}
                                     buildPercentage={buildPercentage}
+                                    valueProportion={{
+                                        qb: qbValueProportionPercent,
+                                        wr: wrValueProportionPercent,
+                                        rb: rbValueProportionPercent,
+                                        te: teValueProportionPercent,
+                                    }}
                                 />
                             )}
                         </div>

@@ -77,6 +77,13 @@ function getArchetypeBackground(archetype: string) {
     return 'none';
 }
 
+type ValueProportion = {
+    qb: number;
+    rb: number;
+    wr: number;
+    te: number;
+};
+
 type PremiumProps = {
     teamName: string;
     numTeams: number;
@@ -113,6 +120,7 @@ type PremiumProps = {
     teValueSharePercent: number;
     percentile: string;
     buildPercentage: string;
+    valueProportion: ValueProportion;
 };
 
 export default function Premium({
@@ -151,6 +159,7 @@ export default function Premium({
     teValueSharePercent,
     percentile,
     buildPercentage,
+    valueProportion,
 }: PremiumProps) {
     const [startingQbAge, setStartingQbAge] = useState(0);
     const [startingRbAge, setStartingRbAge] = useState(0);
@@ -477,12 +486,168 @@ export default function Premium({
             >
                 {teValueSharePercent}%
             </div>
-            <div className={styles.percentile} style={{top: '340px', left: '920px'}}>
+            <div
+                className={styles.percentile}
+                style={{top: '340px', left: '920px'}}
+            >
                 {percentile}
             </div>
-            <div className={styles.percentile} style={{top: '422px', left: '920px'}}>
+            <div
+                className={styles.percentile}
+                style={{top: '422px', left: '920px'}}
+            >
                 {buildPercentage}
             </div>
+            <ValueProportionChart
+                valueProportion={valueProportion}
+                style={{top: '320px', left: '1090px'}}
+            />
+        </div>
+    );
+}
+
+function ValueProportionChart({
+    valueProportion,
+    style,
+}: {
+    valueProportion: ValueProportion;
+    style?: CSSProperties;
+}) {
+    const data = [
+        {label: 'QB', value: valueProportion.qb},
+        {label: 'RB', value: valueProportion.rb},
+        {label: 'WR', value: valueProportion.wr},
+        {label: 'TE', value: valueProportion.te},
+    ];
+
+    // Calculate the angles for each slice
+    let currentAngle = 0;
+    const slices = data.map(item => {
+        const angle = (item.value / 100) * 360;
+        const startAngle = currentAngle;
+        currentAngle += angle;
+        return {...item, startAngle, angle};
+    });
+
+    // Function to create SVG path for pie slice
+    const createSlicePath = (startAngle: number, angle: number) => {
+        const radius = 150;
+        const centerX = 150;
+        const centerY = 150;
+
+        const startRad = (startAngle - 90) * (Math.PI / 180);
+        const endRad = (startAngle + angle - 90) * (Math.PI / 180);
+
+        const x1 = centerX + radius * Math.cos(startRad);
+        const y1 = centerY + radius * Math.sin(startRad);
+        const x2 = centerX + radius * Math.cos(endRad);
+        const y2 = centerY + radius * Math.sin(endRad);
+
+        const largeArc = angle > 180 ? 1 : 0;
+
+        return `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`;
+    };
+
+    // Function to calculate label position
+    const getLabelPosition = (startAngle: number, angle: number) => {
+        const radius = 110;
+        const centerX = 150;
+        const centerY = 150;
+        const midAngle = (startAngle + angle / 2 - 90) * (Math.PI / 180);
+
+        return {
+            x: centerX + radius * Math.cos(midAngle),
+            y: centerY + radius * Math.sin(midAngle),
+        };
+    };
+
+    return (
+        <div className={styles.valueProportionChart} style={style}>
+            <svg width="300" height="300" viewBox="0 0 400 400">
+                <defs>
+                    <linearGradient
+                        id="gradient-rb"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop stop-color="#007DB4" />
+                        <stop offset="1" stop-color="#00B1FF" />
+                    </linearGradient>
+                    <linearGradient
+                        id="gradient-wr"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop stop-color="#00FF06" />
+                        <stop offset="1" stop-color="#015C03" />
+                    </linearGradient>
+                    <linearGradient
+                        id="gradient-qb"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop stop-color="#C4001E" />
+                        <stop offset="1" stop-color="#E31837" />
+                    </linearGradient>
+                    <linearGradient
+                        id="gradient-te"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop stop-color="#D57C00" />
+                        <stop offset="0.533654" stop-color="#EABA10" />
+                    </linearGradient>
+                </defs>
+                {/* Pie slices */}
+                {slices.map((slice, index) => (
+                    <path
+                        key={index}
+                        d={createSlicePath(slice.startAngle, slice.angle)}
+                        fill={`url(#gradient-${slice.label.toLowerCase()})`}
+                        stroke="#1e293b"
+                        strokeWidth="3px"
+                    />
+                ))}
+
+                {/* Labels */}
+                {slices.map((slice, index) => {
+                    const pos = getLabelPosition(slice.startAngle, slice.angle);
+                    return (
+                        <g key={`label-${index}`}>
+                            <text
+                                x={pos.x}
+                                y={pos.y - 8}
+                                textAnchor="middle"
+                                fill="white"
+                                fontSize="24"
+                                style={{
+                                    fontFamily: 'Prohibition',
+                                }}
+                            >
+                                {slice.label}
+                            </text>
+                            <text
+                                x={pos.x}
+                                y={pos.y + 15}
+                                textAnchor="middle"
+                                fill="white"
+                                fontSize="24"
+                                fontFamily="Acumin Pro Condensed"
+                            >
+                                {slice.value}%
+                            </text>
+                        </g>
+                    );
+                })}
+            </svg>
         </div>
     );
 }
