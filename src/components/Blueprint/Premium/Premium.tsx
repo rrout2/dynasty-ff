@@ -1142,7 +1142,7 @@ function TrueRanks({
 }) {
     const {sortNamesByAdp} = useAdpData();
     const top20DomainTrueRanks = new Set(
-        [...domainTrueRanks]
+        domainTrueRanks
             .sort((a, b) => sortNamesByAdp(a.playerName, b.playerName))
             .slice(0, 20)
     );
