@@ -15,6 +15,7 @@ import {
     useGetPicks,
     useLeague,
     useLeagueIdFromUrl,
+    useLeaguePowerRanks,
     usePlayerData,
     usePositionalGrades,
     usePositionalValueGrades,
@@ -348,6 +349,7 @@ export default function BlueprintModule({
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
+    const {leaguePowerRanks} = useLeaguePowerRanks(leagueId);
     const [searchParams, setSearchParams] = useSearchParams();
     const [isDownloading, setIsDownloading] = useState(false);
 
@@ -842,6 +844,7 @@ export default function BlueprintModule({
                                     draftStrategy={draftStrategy}
                                     domainTrueRanks={domainTrueRanks}
                                     threeFactorGrades={threeFactorGrades}
+                                    leaguePowerRanks={leaguePowerRanks}
                                 />
                             )}
                         </div>

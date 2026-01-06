@@ -30,6 +30,7 @@ import {CSSProperties, useEffect, useState} from 'react';
 import {QB, RB, TE, WR} from '../../../consts/fantasy';
 import {
     DomainTrueRank,
+    PowerRank,
     ThreeFactorGrades,
     useAdpData,
 } from '../../../hooks/hooks';
@@ -105,6 +106,7 @@ type PremiumProps = {
     draftStrategy: DraftStrategyLabel[];
     domainTrueRanks: DomainTrueRank[];
     threeFactorGrades: ThreeFactorGrades;
+    leaguePowerRanks: PowerRank[];
 };
 
 export default function Premium({
@@ -136,6 +138,7 @@ export default function Premium({
     draftStrategy,
     domainTrueRanks,
     threeFactorGrades,
+    leaguePowerRanks,
 }: PremiumProps) {
     const [startingQbAge, setStartingQbAge] = useState(0);
     const [startingRbAge, setStartingRbAge] = useState(0);
@@ -430,9 +433,222 @@ export default function Premium({
                     left: '1337px',
                 }}
             />
+            <LeaguePowerRanks
+                leaguePowerRanks={leaguePowerRanks}
+                teamName={teamName}
+                style={{
+                    top: '44px',
+                    left: '1511px',
+                }}
+            />
         </div>
     );
 }
+
+function LeaguePowerRanks({
+    leaguePowerRanks,
+    teamName,
+    style,
+}: {
+    leaguePowerRanks: PowerRank[];
+    teamName: string;
+    style?: CSSProperties;
+}) {
+    const col1 = leaguePowerRanks.slice(0, leaguePowerRanks.length / 2);
+    const col2 = leaguePowerRanks.slice(
+        leaguePowerRanks.length / 2,
+        leaguePowerRanks.length
+    );
+    function getCellStyle(powerRank: PowerRank): CSSProperties {
+        const base = {
+            borderColor: isMatch(powerRank) ? '#00FF06' : '',
+            color: powerRank.teamName === teamName ? '#00FF06' : '',
+        };
+        if (powerRank.overallRank === 1) {
+            return {
+                ...base,
+                borderColor: '#FFAA00',
+                color: '#FFAA00',
+                backgroundColor: 'rgba(255, 170, 0, 0.10)',
+            };
+        }
+        if (powerRank.overallRank === 2) {
+            return {
+                ...base,
+                borderColor: '#D7D7D7',
+                color: '#D7D7D7',
+                backgroundColor: 'rgba(255, 170, 0, 0)',
+            };
+        }
+        if (powerRank.overallRank === 3) {
+            return {
+                ...base,
+                borderColor: '#C07C24',
+                color: '#C07C24',
+                backgroundColor: 'gba(194, 123, 30, 0.10)',
+            };
+        }
+        return base;
+    }
+    function isMatch(powerRank: PowerRank) {
+        return powerRank.teamName === teamName;
+    }
+    return (
+        <div className={styles.leaguePowerRanks} style={style}>
+            <div className={styles.trophyColumn}>
+                <div className={styles.trophyWrapper}>
+                    <GoldTrophy />
+                </div>
+                <div className={styles.trophyWrapper}>
+                <SilverTrophy /></div>
+                <div className={styles.trophyWrapper}>
+                <BronzeTrophy /></div>
+                {col1.filter((_, idx) => idx > 2).map((_, idx) => (
+                    <div key={idx} className={styles.trophyWrapper} />
+                ))}
+            </div>
+            <div className={styles.powerRankColumn}>
+                {col1.map((powerRank, idx) => (
+                    <div className={styles.powerRankRow}>
+                        <div
+                            key={idx}
+                            className={styles.powerRankCard}
+                            style={getCellStyle(powerRank)}
+                        >
+                            {powerRank.overallRank}. {powerRank.teamName}
+                        </div>
+                        {!!isMatch(powerRank) && <GreenArrow />}
+                    </div>
+                ))}
+            </div>
+            <div className={styles.powerRankColumn}>
+                {col2.map((powerRank, idx) => (
+                    <div className={styles.powerRankRow}>
+                        <div
+                            key={idx}
+                            className={styles.powerRankCard}
+                            style={getCellStyle(powerRank)}
+                        >
+                            {powerRank.overallRank}. {powerRank.teamName}
+                        </div>
+                        {!!isMatch(powerRank) && <GreenArrow />}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+const GreenArrow = ({}: {}) => (
+    <svg
+        className={styles.greenArrow}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 55 64"
+        fill="none"
+    >
+        <path
+            d="M-1.59547e-06 31.61L54.75 5.8642e-05L54.75 63.2199L-1.59547e-06 31.61Z"
+            fill="#00FF06"
+        />
+    </svg>
+);
+
+const GoldTrophy = ({}: {}) => (
+    <svg
+        className={styles.trophy}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 46 55"
+        fill="none"
+    >
+        <path
+            d="M10.1729 0.00866699L35.8857 0.0389404C38.0373 0.37549 38.4915 2.35585 38.5859 3.83484C38.8347 3.82568 39.0817 3.81861 39.2959 3.80945C41.2832 3.74079 42.2138 3.72274 42.792 3.83484C43.4163 3.95389 45.4481 4.56949 45.2822 7.54578C44.9735 13.3083 41.931 21.1818 35.9785 24.8427C35.6675 25.0327 35.2411 25.2294 34.7988 25.4218C34.5155 25.5454 34.2209 25.6578 34.0273 25.7928C34.0177 25.8392 33.6468 26.4771 33.4258 26.8593C33.0826 27.4499 32.7369 28.0314 32.4766 28.3749C31.1612 30.1102 29.5903 31.5229 27.8857 32.5028C27.7245 33.3795 27.6717 34.2245 27.7246 35.0692H33.041C34.2158 35.0692 35.7704 36.6148 35.7705 37.7802V42.9686H36.0615C37.6186 42.9688 38.7353 44.5754 38.915 45.6903C39.1039 46.8921 39.0486 49.8862 38.9473 50.9305C38.7077 53.3963 37.13 54.0054 36.4619 54.1542L36.248 54.203L8.86914 54.1639L8.50098 54.0126C7.6878 53.6783 6.68053 52.9341 6.48242 51.288C6.35574 50.1844 6.31897 46.8859 6.50781 45.6952C6.68058 44.5825 7.79584 42.9686 9.3623 42.9686H10.2881V37.7802C10.2882 36.5142 11.7395 35.0693 13.0156 35.0692H18.001C18.0447 34.307 18.0077 33.5402 17.8926 32.7391C15.1305 31.2693 13.3126 29.0067 12.0088 27.1385C11.866 26.9347 11.661 26.5614 11.4561 26.1678C11.3755 26.0145 11.2928 25.852 11.2168 25.7147C11.0717 25.6552 10.8665 25.5752 10.6592 25.4882C10.1547 25.2775 9.64743 25.0555 9.32031 24.8632C2.90972 21.0833 0.914325 13.1806 0.354492 9.95691L0.299805 9.65222C-0.00426521 8.00157 -0.211585 6.54314 0.364258 5.44421C0.412634 5.35721 1.26979 3.79382 2.68652 3.79382H6.74707C6.73325 3.35883 6.74051 2.90234 6.83496 2.46277C7.13461 1.04583 8.71484 -0.112535 10.1729 0.00866699Z"
+            fill="url(#paint0_linear_12_17572)"
+        />
+        <defs>
+            <linearGradient
+                id="paint0_linear_12_17572"
+                x1="0"
+                y1="27.1014"
+                x2="45.2919"
+                y2="27.1014"
+                gradientUnits="userSpaceOnUse"
+            >
+                <stop stop-color="#FFAA00" />
+                <stop offset="0.163462" stop-color="#FFE790" />
+                <stop offset="0.394231" stop-color="#FFAA00" />
+                <stop offset="0.567308" stop-color="#FFEBA4" />
+                <stop offset="0.764423" stop-color="#C27B1E" />
+                <stop offset="1" stop-color="#EABA10" />
+            </linearGradient>
+        </defs>
+    </svg>
+);
+
+const SilverTrophy = ({}: {}) => (
+    <svg
+        className={styles.trophy}
+        xmlns="http://www.w3.org/2000/svg"
+        width="46"
+        height="55"
+        viewBox="0 0 46 55"
+        fill="none"
+    >
+        <path
+            d="M10.1729 0.00866699L35.8857 0.0389404C38.0373 0.37549 38.4915 2.35585 38.5859 3.83484C38.8347 3.82568 39.0817 3.81861 39.2959 3.80945C41.2832 3.74079 42.2138 3.72274 42.792 3.83484C43.4163 3.95389 45.4481 4.56949 45.2822 7.54578C44.9735 13.3083 41.931 21.1818 35.9785 24.8427C35.6675 25.0327 35.2411 25.2294 34.7988 25.4218C34.5155 25.5454 34.2209 25.6578 34.0273 25.7928C34.0177 25.8392 33.6468 26.4771 33.4258 26.8593C33.0826 27.4499 32.7369 28.0314 32.4766 28.3749C31.1612 30.1102 29.5903 31.5229 27.8857 32.5028C27.7245 33.3795 27.6717 34.2245 27.7246 35.0692H33.041C34.2158 35.0692 35.7704 36.6148 35.7705 37.7802V42.9686H36.0615C37.6186 42.9688 38.7353 44.5754 38.915 45.6903C39.1039 46.8921 39.0486 49.8862 38.9473 50.9305C38.7077 53.3963 37.13 54.0054 36.4619 54.1542L36.248 54.203L8.86914 54.1639L8.50098 54.0126C7.6878 53.6783 6.68053 52.9341 6.48242 51.288C6.35574 50.1844 6.31897 46.8859 6.50781 45.6952C6.68058 44.5825 7.79584 42.9686 9.3623 42.9686H10.2881V37.7802C10.2882 36.5142 11.7395 35.0693 13.0156 35.0692H18.001C18.0447 34.307 18.0077 33.5402 17.8926 32.7391C15.1305 31.2693 13.3126 29.0067 12.0088 27.1385C11.866 26.9347 11.661 26.5614 11.4561 26.1678C11.3755 26.0145 11.2928 25.852 11.2168 25.7147C11.0717 25.6552 10.8665 25.5752 10.6592 25.4882C10.1547 25.2775 9.64743 25.0555 9.32031 24.8632C2.90972 21.0833 0.914325 13.1806 0.354492 9.95691L0.299805 9.65222C-0.00426521 8.00157 -0.211585 6.54314 0.364258 5.44421C0.412634 5.35721 1.26979 3.79382 2.68652 3.79382H6.74707C6.73325 3.35883 6.74051 2.90234 6.83496 2.46277C7.13461 1.04583 8.71484 -0.112535 10.1729 0.00866699Z"
+            fill="url(#paint0_linear_60_18626)"
+        />
+        <defs>
+            <linearGradient
+                id="paint0_linear_60_18626"
+                x1="0"
+                y1="27.1014"
+                x2="45.2919"
+                y2="27.1014"
+                gradientUnits="userSpaceOnUse"
+            >
+                <stop stop-color="#8A8A8A" />
+                <stop offset="0.197115" stop-color="#FCFCFC" />
+                <stop offset="0.360577" stop-color="#8A8A8A" />
+                <stop offset="0.5625" stop-color="white" />
+                <stop offset="0.817308" stop-color="#525252" />
+                <stop offset="0.995192" stop-color="white" />
+            </linearGradient>
+        </defs>
+    </svg>
+);
+
+const BronzeTrophy = ({}: {}) => (
+    <svg
+        className={styles.trophy}
+        xmlns="http://www.w3.org/2000/svg"
+        width="46"
+        height="55"
+        viewBox="0 0 46 55"
+        fill="none"
+    >
+        <path
+            d="M10.1729 0.00866699L35.8857 0.0389404C38.0373 0.37549 38.4915 2.35585 38.5859 3.83484C38.8347 3.82568 39.0817 3.81861 39.2959 3.80945C41.2832 3.74079 42.2138 3.72274 42.792 3.83484C43.4163 3.95389 45.4481 4.56949 45.2822 7.54578C44.9735 13.3083 41.931 21.1818 35.9785 24.8427C35.6675 25.0327 35.2411 25.2294 34.7988 25.4218C34.5155 25.5454 34.2209 25.6578 34.0273 25.7928C34.0177 25.8392 33.6468 26.4771 33.4258 26.8593C33.0826 27.4499 32.7369 28.0314 32.4766 28.3749C31.1612 30.1102 29.5903 31.5229 27.8857 32.5028C27.7245 33.3795 27.6717 34.2245 27.7246 35.0692H33.041C34.2158 35.0692 35.7704 36.6148 35.7705 37.7802V42.9686H36.0615C37.6186 42.9688 38.7353 44.5754 38.915 45.6903C39.1039 46.8921 39.0486 49.8862 38.9473 50.9305C38.7077 53.3963 37.13 54.0054 36.4619 54.1542L36.248 54.203L8.86914 54.1639L8.50098 54.0126C7.6878 53.6783 6.68053 52.9341 6.48242 51.288C6.35574 50.1844 6.31897 46.8859 6.50781 45.6952C6.68058 44.5825 7.79584 42.9686 9.3623 42.9686H10.2881V37.7802C10.2882 36.5142 11.7395 35.0693 13.0156 35.0692H18.001C18.0447 34.307 18.0077 33.5402 17.8926 32.7391C15.1305 31.2693 13.3126 29.0067 12.0088 27.1385C11.866 26.9347 11.661 26.5614 11.4561 26.1678C11.3755 26.0145 11.2928 25.852 11.2168 25.7147C11.0717 25.6552 10.8665 25.5752 10.6592 25.4882C10.1547 25.2775 9.64743 25.0555 9.32031 24.8632C2.90972 21.0833 0.914325 13.1806 0.354492 9.95691L0.299805 9.65222C-0.00426521 8.00157 -0.211585 6.54314 0.364258 5.44421C0.412634 5.35721 1.26979 3.79382 2.68652 3.79382H6.74707C6.73325 3.35883 6.74051 2.90234 6.83496 2.46277C7.13461 1.04583 8.71484 -0.112535 10.1729 0.00866699Z"
+            fill="url(#paint0_linear_60_18628)"
+        />
+        <defs>
+            <linearGradient
+                id="paint0_linear_60_18628"
+                x1="45.2919"
+                y1="27.1014"
+                x2="0"
+                y2="27.1014"
+                gradientUnits="userSpaceOnUse"
+            >
+                <stop stop-color="#C27B1E" />
+                <stop offset="0.158654" stop-color="#FFE6C5" />
+                <stop offset="0.375" stop-color="#C27B1E" />
+                <stop offset="0.596154" stop-color="#FDC537" />
+                <stop offset="0.802885" stop-color="#7B4D12" />
+                <stop offset="0.995192" stop-color="#C27B1E" />
+            </linearGradient>
+        </defs>
+    </svg>
+);
 
 function RosterMakeUp({
     domainTrueRanks,
@@ -442,7 +658,6 @@ function RosterMakeUp({
     style?: CSSProperties;
 }) {
     const [makeup, setMakeup] = useState(new Map<string, number>());
-    console.log(domainTrueRanks);
     useEffect(() => {
         const makeup = new Map<string, number>();
         for (const dtr of domainTrueRanks) {
@@ -500,7 +715,8 @@ function RosterMakeUp({
                         <div className={styles.archPercent}>
                             {((100 * count) / domainTrueRanks.length).toFixed(
                                 1
-                            )}%
+                            )}
+                            %
                         </div>
                     </div>
                 ))}

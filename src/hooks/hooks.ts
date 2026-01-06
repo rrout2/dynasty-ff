@@ -75,6 +75,36 @@ import {
 
 const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
+export type PowerRank = {
+    teamId: number;
+    teamName: string;
+    teamTotalDomainValue: number;
+    overallRank: number;
+};
+
+export function useLeaguePowerRanks(leagueId: string) {
+    const [leaguePowerRanks, setLeaguePowerRanks] = useState<PowerRank[]>([]);
+    const {data} = useQuery({
+        queryKey: ['insulationGrades', leagueId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Blueprints/league-power-ranks?leagueId=${leagueId}`,
+            };
+            const res = await axios.request(options);
+            return res.data.leaguePowerRanks as PowerRank[];
+        },
+        retry: false,
+    });
+
+    useEffect(() => {
+        if (!data) return;
+        setLeaguePowerRanks(data);
+    }, [data]);
+
+    return {leaguePowerRanks};
+}
+
 export type ThreeFactorGrades = {
     qbInsulationScoreGrade: number;
     rbInsulationScoreGrade: number;

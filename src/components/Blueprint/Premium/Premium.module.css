@@ -221,4 +221,76 @@
     font-family: Erbaum;
     font-size: 15.18px;
     font-weight: 700;
-    }
+}
+
+.leaguePowerRanks {
+    position: absolute;
+
+    display: flex;
+    flex-direction: row;
+
+    width: 330px;
+    justify-content: space-between;
+}
+
+.powerRankColumn {
+    display: flex;
+    flex-direction: column;
+    
+    height: 213px;
+    justify-content: space-evenly;
+}
+
+.powerRankCard {
+    color: #FFF;
+    font-family: "Acumin Pro ExtraCondensed";
+    font-size: 17.96px;
+    font-weight: 700;
+
+    padding-top: 5px;;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    width: 125px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    background: rgba(255, 255, 255, 0.10);
+    border: #FFF solid 2px;
+    border-radius: 1000px;
+}
+
+.powerRankRow {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+}
+
+.greenArrow {
+    width: 15px;
+    height: auto;
+
+    margin-left: -8px;
+}
+
+.trophyWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    height: 25px;
+}
+
+.trophy {
+    width: 12px;
+    height: auto;
+}
+
+.trophyColumn {
+    display: flex;
+    flex-direction: column;
+    height: 213px;
+    justify-content: space-evenly;
+}
