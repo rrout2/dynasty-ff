@@ -75,6 +75,28 @@ import {
 
 const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
+export function useDraftCapitalGrade(leagueId: string, teamId: string) {
+    const [draftCapitalGrade, setDraftCapitalGrade] = useState<number>(0);
+    const {data} = useQuery({
+        queryKey: ['draftCapital', leagueId, teamId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Sleeper/leagues/${leagueId}/rosters/${+teamId + 1}/draft-capital`,
+            };
+            const res = await axios.request(options);
+            return res.data.grade as number;
+        },
+        retry: false,
+        enabled: +teamId > -1,
+    });
+    useEffect(() => {
+        if (!data) return;
+        setDraftCapitalGrade(data);
+    }, [data]);
+    return {draftCapitalGrade, setDraftCapitalGrade};
+}
+
 export type PowerRank = {
     teamId: number;
     teamName: string;

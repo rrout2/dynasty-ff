@@ -11,6 +11,7 @@ import {
 import {
     useAdpData,
     useDomainTrueRanks,
+    useDraftCapitalGrade,
     useFetchRosters,
     useGetPicks,
     useLeague,
@@ -313,7 +314,8 @@ export default function BlueprintModule({
             leagueId,
             '' + getRosterIdFromUser(specifiedUser)
         );
-    const [draftCapitalScore, setDraftCapitalScore] = useState(8);
+    // const [draftCapitalScore, setDraftCapitalScore] = useState(8);
+    const {draftCapitalGrade: draftCapitalScore, setDraftCapitalGrade: setDraftCapitalScore} = useDraftCapitalGrade(leagueId, '' + getRosterIdFromUser(specifiedUser));
     const [isSuperFlex, setIsSuperFlex] = useState(true);
     const [ppr, setPpr] = useState(0.5);
     const [tep, setTep] = useState(0.5);
