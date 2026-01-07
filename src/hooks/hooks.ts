@@ -87,7 +87,7 @@ type TradeSuggestion = {
     percentageDifference: number;
 };
 
-export type TradePlayer = {
+type TradePlayer = {
     playerId: number;
     playerSleeperId: number;
     name: string;

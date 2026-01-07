@@ -9,7 +9,6 @@ import {
     tepIcon,
 } from '../../../consts/images';
 import {
-    TradePlayer,
     useAdpData,
     useDomainTrueRanks,
     useDraftCapitalGrade,
@@ -449,8 +448,13 @@ export default function BlueprintModule({
     }, [myPicks]);
 
     useEffect(() => {
-        if (apiTradeSuggestions.length === 0 || searchParams.has(`${TO_TRADE}_0`)) return;
+        if (
+            apiTradeSuggestions.length === 0 ||
+            searchParams.has(`${TO_TRADE}_0`)
+        )
+            return;
         const newCollatedTrades = new Map<string, string[]>();
+        const targetRosterCounts = new Map<number, number>();
         for (const suggestion of apiTradeSuggestions) {
             let key = suggestion.outPlayers
                 .map(p => p.playerSleeperId)
@@ -467,7 +471,24 @@ export default function BlueprintModule({
                 // don't add duplicates
                 newCollatedTrades.get(key)!.push(value);
             }
+
+            const target = suggestion.targetRosterId;
+            if (!targetRosterCounts.has(target)) {
+                targetRosterCounts.set(target, 1);
+            } else {
+                targetRosterCounts.set(
+                    target,
+                    targetRosterCounts.get(target)! + 1
+                );
+            }
         }
+        // find the 2 most common targetRosterIds
+        const mostCommonTargetRosterId = [...targetRosterCounts.entries()]
+            .sort((a, b) => b[1] - a[1])
+            .map(i => i[0])
+            .map(i => getUserFromRosterId(i - 1)!)
+            .slice(0, 2);
+        setTradePartners(mostCommonTargetRosterId);
 
         const apiSuggestions = newCollatedTrades
             .entries()
@@ -535,6 +556,11 @@ export default function BlueprintModule({
     function getRosterIdFromUser(user?: User) {
         if (!rosters || !user) return -1;
         return rosters.findIndex(r => r.owner_id === user.user_id) ?? -1;
+    }
+
+    function getUserFromRosterId(rosterId: number) {
+        if (!rosters) return;
+        return allUsers.find(u => u.user_id === rosters[rosterId].owner_id);
     }
 
     function getStartingPosition(playerName: string) {
