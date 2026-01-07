@@ -891,23 +891,9 @@ function RosterMakeUp({
         return 'white';
     }
 
-    function getFontSize(archetype: string) {
-        const len = camelCaseToTitleCase(archetype).length;
-        if (len >= 24) return '7.5px';
-        if (len >= 20) return '9px';
-        if (len >= 17) return '10px';
-        return '14px';
-    }
-
-    function getPaddingTop(archetype: string) {
-        const len = camelCaseToTitleCase(archetype).length;
-        if (len >= 20) return '5px';
-        if (len >= 17) return '4px';
-        return 'none';
-    }
-
     return (
         <div className={styles.rosterMakeup} style={style}>
+            
             {Array.from(makeup)
                 .sort((a, b) => b[1] - a[1])
                 .map(([archetype, count]) => (
@@ -917,8 +903,9 @@ function RosterMakeUp({
                             style={{
                                 background: getArchetypeBackground(archetype),
                                 color: getFontColor(archetype),
-                                fontSize: getFontSize(archetype),
-                                paddingTop: getPaddingTop(archetype),
+                                fontSize: '9.5px',
+                                paddingTop: '4px',
+                                width: '105px',
                             }}
                         >
                             {camelCaseToTitleCase(archetype)}
@@ -1272,8 +1259,8 @@ function ArchetypeCard({archetype}: {archetype: string}) {
             style={{
                 background: getBackground(),
                 color: getFontColor(),
-                fontSize: isLong() ? '8px' : '10px',
-                paddingTop: isLong() ? '2px' : 'none',
+                fontSize: '8px',
+                paddingTop: '1px',
             }}
         >
             {camelCaseToTitleCase(archetype)}

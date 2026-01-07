@@ -154,7 +154,7 @@
 .archetypeCard {
     color: #07223F;
     font-family: Prohibition;
-    font-size: 10px;
+    font-size: 9px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -168,6 +168,8 @@
 
     background-color: grey;
     border-radius: 1000px;
+
+    padding-top: 4px;
 }
 
 .compositePosRank {
