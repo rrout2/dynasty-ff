@@ -231,7 +231,7 @@ export default function BlueprintModule({
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
-    const {tradeSuggestions, setTradeSuggestions} = useTradeSuggestions(
+    const {tradeSuggestions: apiTradeSuggestions} = useTradeSuggestions(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
@@ -449,9 +449,9 @@ export default function BlueprintModule({
     }, [myPicks]);
 
     useEffect(() => {
-        if (tradeSuggestions.length === 0) return;
+        if (apiTradeSuggestions.length === 0 || searchParams.has(`${TO_TRADE}_0`)) return;
         const newCollatedTrades = new Map<string, string[]>();
-        for (const suggestion of tradeSuggestions) {
+        for (const suggestion of apiTradeSuggestions) {
             let key = suggestion.outPlayers
                 .map(p => p.playerSleeperId)
                 .sort()
@@ -513,7 +513,7 @@ export default function BlueprintModule({
                 return toTargetB - toTargetA;
             })
         );
-    }, [tradeSuggestions]);
+    }, [apiTradeSuggestions, searchParams]);
 
     useEffect(() => {
         if (!newLeagueModalOpen) return;
