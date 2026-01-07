@@ -197,12 +197,21 @@
     justify-content: space-between;
 }
 
+.moveTitleContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
 .moveTitle {
     text-transform: uppercase;
     color: white;
     font-family: 'Prohibition';
     font-size: 30px;
     text-align: center;
+
+    padding-bottom: 5px;
 }
 
 .topRightSection {

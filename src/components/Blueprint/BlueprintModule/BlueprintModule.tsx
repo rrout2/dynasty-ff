@@ -60,6 +60,7 @@ import {
     FileDownload,
     Preview,
     Save,
+    Casino,
 } from '@mui/icons-material';
 import NewV1 from '../NewV1/NewV1';
 import {toPng} from 'html-to-image';
@@ -792,6 +793,18 @@ export default function BlueprintModule({
             }
             return searchParams;
         });
+    }
+
+    function rerollMove(idx: number) {
+        const swapLimit = premium ? 6 : 3;
+        const move = fullMoves[idx];
+        // swap move at idx with a random move with an idx >= 6
+        const randomIdx = Math.floor(Math.random() * (fullMoves.length - swapLimit)) + swapLimit;
+        const randomMove = fullMoves[randomIdx];
+        console.log('swapping', idx, 'with', randomIdx);
+        fullMoves[idx] = randomMove;
+        fullMoves[randomIdx] = move;
+        setFullMoves([...fullMoves]);
     }
 
     return (
@@ -1598,6 +1611,7 @@ export default function BlueprintModule({
                                 }}
                                 rosterPlayers={rosterPlayers}
                                 moveNumber={i + 1}
+                                rerollMove={() => rerollMove(i)}
                             />
                         ))}
                     </div>
@@ -1636,6 +1650,7 @@ export default function BlueprintModule({
                                     }}
                                     rosterPlayers={rosterPlayers}
                                     moveNumber={i + 1}
+                                    rerollMove={() => rerollMove(i)}
                                 />
                             ))}
                         </div>
@@ -2067,6 +2082,7 @@ type SuggestedMoveProps = {
     setPlayerIdsToTarget: (playerIds: string[][]) => void;
     rosterPlayers: Player[];
     moveNumber: number;
+    rerollMove: () => void;
 };
 
 function SuggestedMove({
@@ -2078,6 +2094,7 @@ function SuggestedMove({
     playerIdsToTarget,
     setPlayerIdsToTarget,
     moveNumber,
+    rerollMove,
 }: SuggestedMoveProps) {
     const playerData = usePlayerData();
     const [optionsToTrade, setOptionsToTrade] = useState<string[]>([]);
@@ -2116,7 +2133,25 @@ function SuggestedMove({
         playerIdsToTrade[0] &&
         playerData && (
             <div className={styles.toTradeContainer}>
-                <div className={styles.moveTitle}>MOVE #{moveNumber}</div>
+                <div className={styles.moveTitleContainer}>
+                    <div className={styles.moveTitle}>MOVE #{moveNumber}</div>
+                    <IconButton
+                        aria-label="reroll"
+                        sx={{
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                            },
+                        }}
+                        TouchRippleProps={{
+                            style: {
+                                color: 'white',
+                            },
+                        }}
+                        onClick={rerollMove}
+                    >
+                        <Casino sx={{color: 'white'}} />
+                    </IconButton>
+                </div>
                 <DomainDropdown
                     renderValue={value => (
                         <span
