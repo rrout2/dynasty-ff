@@ -1,14 +1,15 @@
 .fullBlueprint {
+    width: 1900px;
     position: relative;
 }
 
 .assets {
     position: absolute;
-    width: 100%;;
+    width: 1900px;
 }
 
 .backgroundImg {
-    width: 100%;
+    width: 1900px;
 }
 
 .teamName {

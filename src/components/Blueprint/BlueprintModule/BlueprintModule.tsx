@@ -2032,7 +2032,16 @@ export default function BlueprintModule({
                             topPriorities={topPriorities}
                             tradeStrategy={fullMoves}
                         />
-                        {/* <Premium
+                    </div>
+                </div>
+            </div>
+            <div className={styles.offScreen}>
+                <div
+                    className={'exportableClassPremium'}
+                    style={{width: `${1900 * 16}px`, height: `${1043 * 16}px`}}
+                >
+                    <div className={styles.offScreenInner}>
+                        <Premium
                             teamName={getDisplayName(specifiedUser)}
                             numTeams={numTeams}
                             isSuperFlex={isSuperFlex}
@@ -2059,7 +2068,22 @@ export default function BlueprintModule({
                             topPriorities={topPriorities}
                             tradeStrategy={fullMoves}
                             draftStrategy={draftStrategy}
-                        /> */}
+                            domainTrueRanks={domainTrueRanks}
+                            threeFactorGrades={threeFactorGrades}
+                            leaguePowerRanks={leaguePowerRanks}
+                            qbValueSharePercent={qbValueSharePercent}
+                            rbValueSharePercent={rbValueSharePercent}
+                            wrValueSharePercent={wrValueSharePercent}
+                            teValueSharePercent={teValueSharePercent}
+                            percentile={percentile}
+                            buildPercentage={buildPercentage}
+                            valueProportion={{
+                                qb: qbValueProportionPercent,
+                                wr: wrValueProportionPercent,
+                                rb: rbValueProportionPercent,
+                                te: teValueProportionPercent,
+                            }}
+                        />
                     </div>
                 </div>
             </div>
