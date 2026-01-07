@@ -316,6 +316,7 @@ import newJaxBg from '../assets/new1.0/playerBackgrounds/JAX.png';
 import newKcBg from '../assets/new1.0/playerBackgrounds/KC.png';
 import newLacBg from '../assets/new1.0/playerBackgrounds/LAC.png';
 import newLarBg from '../assets/new1.0/playerBackgrounds/LAR.png';
+import newLvBg from '../assets/new1.0/playerBackgrounds/LV.png';
 import newMiaBg from '../assets/new1.0/playerBackgrounds/MIA.png';
 import newMinBg from '../assets/new1.0/playerBackgrounds/MIN.png';
 import newNeBg from '../assets/new1.0/playerBackgrounds/NE.png';
@@ -355,6 +356,7 @@ const newTeamBackgrounds: Map<string, string> = new Map([
     ['KC', newKcBg],
     ['LAC', newLacBg],
     ['LAR', newLarBg],
+    ['LV', newLvBg],
     ['MIA', newMiaBg],
     ['MIN', newMinBg],
     ['NE', newNeBg],
