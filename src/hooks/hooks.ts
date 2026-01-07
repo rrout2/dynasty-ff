@@ -80,22 +80,38 @@ type TradeSuggestion = {
         optionDescription: string;
         priorityDescription: string;
     };
-    outPlayers: TradePlayer[];
-    inPlayers: TradePlayer[];
+    outAssets: TradeAsset[];
+    inAssets: TradeAsset[];
     totalOutValue: number;
     totalInValue: number;
     percentageDifference: number;
 };
 
-type TradePlayer = {
-    playerId: number;
-    playerSleeperId: number;
+type TradeAsset = {
+    assetKey: string;
+    kind: string;
     name: string;
-    position: string;
     assetType: string;
-    overallRank: string;
+    position: string | null;
     domainValue: number;
+    playerId: number | null;
+    playerSleeperId: number | null;
+    ktcOverallRankInt: string;
+    pickYear: number | null;
+    pickRound: number | null;
+    overallPickIndex: number | null;
+    isEstimated: boolean;
 };
+
+// type TradePlayer = {
+//     playerId: number;
+//     playerSleeperId: number;
+//     name: string;
+//     position: string;
+//     assetType: string;
+//     overallRank: string;
+//     domainValue: number;
+// };
 
 export function useTradeSuggestions(leagueId: string, teamId: string) {
     const [tradeSuggestions, setTradeSuggestions] = useState<TradeSuggestion[]>(

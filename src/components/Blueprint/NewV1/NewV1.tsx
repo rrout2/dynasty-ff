@@ -1037,6 +1037,12 @@ export function rookiePickIdToString(rookiePickId: string) {
     if (rookiePickId.substring(3, 9) === 'FIRST-') {
         return `${rookiePickId.substring(9)} 1st Round`;
     }
+    if (rookiePickId.substring(3, 7) === 'API-') {
+        const spl = rookiePickId.split('-');
+        const year = spl[2];
+        const round = spl[3];
+        return `${year} Round ${round}`;
+    }
     if (rookiePickId.substring(0, 3) === 'RP-') {
         return `${rookiePickId.substring(3)} Rookie Picks`;
     }

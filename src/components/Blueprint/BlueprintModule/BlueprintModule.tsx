@@ -62,10 +62,11 @@ import {
     Save,
     Casino,
 } from '@mui/icons-material';
-import NewV1 from '../NewV1/NewV1';
+import NewV1, { rookiePickIdToString } from '../NewV1/NewV1';
 import {toPng} from 'html-to-image';
 import Premium from '../Premium/Premium';
 import {useSearchParams} from 'react-router-dom';
+import { isRookiePickId } from '../v1/modules/playerstotarget/PlayersToTargetModule';
 
 export const PCT_OPTIONS = [
     '0%',
@@ -457,13 +458,23 @@ export default function BlueprintModule({
         const newCollatedTrades = new Map<string, string[]>();
         const targetRosterCounts = new Map<number, number>();
         for (const suggestion of apiTradeSuggestions) {
-            let key = suggestion.outPlayers
-                .map(p => p.playerSleeperId)
+            let key = suggestion.outAssets
+                .map(p => {
+                    if (p.playerSleeperId) {
+                        return p.playerSleeperId;
+                    }
+                    return `RP-API-${p.pickYear}-${p.pickRound}`;
+                })
                 .sort()
                 .join(',');
             key += `,${suggestion.rule.moveType}`; // to differentiate between pivot and downtier
-            const value = suggestion.inPlayers
-                .map(p => p.playerSleeperId)
+            const value = suggestion.inAssets
+                .map(p => {
+                    if (p.playerSleeperId) {
+                        return p.playerSleeperId;
+                    }
+                    return `RP-API-${p.pickYear}-${p.pickRound}`;
+                })
                 .sort()
                 .join(',');
             if (!newCollatedTrades.has(key)) {
@@ -2131,6 +2142,10 @@ function SuggestedMove({
         }
         nonIdPlayerOptions.push('2026 1st');
         nonIdPlayerOptions.push('2027 1st');
+        for (let i = 0; i < 4; i++) {
+            nonIdPlayerOptions.push(`2026 Round ${i + 1}`);
+            nonIdPlayerOptions.push(`2027 Round ${i + 1}`);
+        }
         setOptionsToTrade([
             ...rosterPlayers
                 .filter(p => !!p)
@@ -2148,6 +2163,9 @@ function SuggestedMove({
 
     function getDisplayValueFromId(id: string) {
         if (!playerData) return id;
+        if (isRookiePickId(id)) {
+            return rookiePickIdToString(id);
+        }
         return !Number.isNaN(+id)
             ? `${playerData[id].first_name} ${playerData[id].last_name}`
             : id;
@@ -2211,6 +2229,16 @@ function SuggestedMove({
                                 target: {value},
                             } = e;
                             if (value) {
+                                if ((value as string).includes(' Round ')) {
+                                    const spl = (value as string).split(' ');
+                                    const year = spl[0];
+                                    const round = spl[2];
+                                    setPlayerIdsToTrade([
+                                        `RP-API-${year}-${round}`,
+                                        playerIdsToTrade[1],
+                                    ]);
+                                    return;
+                                }
                                 for (const p of rosterPlayers) {
                                     if (
                                         `${p.first_name} ${p.last_name}` ===
@@ -2256,6 +2284,16 @@ function SuggestedMove({
                                         target: {value},
                                     } = e;
                                     if (!value) return;
+                                    if ((value as string).includes(' Round ')) {
+                                        const spl = (value as string).split(' ');
+                                        const year = spl[0];
+                                        const round = spl[2];
+                                        setPlayerIdsToTrade([
+                                            playerIdsToTrade[0],
+                                            `RP-API-${year}-${round}`,
+                                        ]);
+                                        return;
+                                    }
                                     for (const p of rosterPlayers) {
                                         if (
                                             `${p.first_name} ${p.last_name}` ===

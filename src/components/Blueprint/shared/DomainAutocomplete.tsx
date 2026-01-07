@@ -5,9 +5,9 @@ import {Player} from '../../../sleeper-api/sleeper-api';
 import {sortBySearchRank} from '../../Player/Search/PlayerSearch';
 import {
     isRookiePickId,
-    rookiePickIdToString,
 } from '../v1/modules/playerstotarget/PlayersToTargetModule';
 import {DARK_BLUE} from './DomainDropdown';
+import { rookiePickIdToString } from '../NewV1/NewV1';
 
 export type DomainAutocompleteProps = {
     selectedPlayer: string;
@@ -35,6 +35,10 @@ export default function DomainAutocomplete(props: DomainAutocompleteProps) {
     opts.push('RP-2027');
     opts.push('RP-FIRST-2026');
     opts.push('RP-FIRST-2027');
+    for (let i = 0; i < 4; i++) {
+        opts.push(`RP-API-2026-${i + 1}`);
+        opts.push(`RP-API-2027-${i + 1}`);
+    }
     if (!playerData) return <>no player data yet</>;
     return (
         <FormControl
