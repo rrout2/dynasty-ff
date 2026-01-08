@@ -103,16 +103,6 @@ type TradeAsset = {
     isEstimated: boolean;
 };
 
-// type TradePlayer = {
-//     playerId: number;
-//     playerSleeperId: number;
-//     name: string;
-//     position: string;
-//     assetType: string;
-//     overallRank: string;
-//     domainValue: number;
-// };
-
 export function useTradeSuggestions(leagueId: string, teamId: string) {
     const [tradeSuggestions, setTradeSuggestions] = useState<TradeSuggestion[]>(
         []
