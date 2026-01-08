@@ -414,9 +414,6 @@ export default function BlueprintModule({
     const {leaguePowerRanks} = useLeaguePowerRanks(leagueId);
     const [searchParams, setSearchParams] = useSearchParams();
     const [isDownloading, setIsDownloading] = useState(false);
-    const [collatedTrades, setCollatedTrades] = useState(
-        new Map<string, string[]>()
-    );
 
     useEffect(() => {
         if (!league) return;
@@ -625,6 +622,34 @@ export default function BlueprintModule({
         shuffle(ELITE_PRIORITY_OPTIONS);
         setTopPriorities(ELITE_PRIORITY_OPTIONS.slice(0, 3));
     }, [fullMoves, valueArchetype, twoYearOutlook]);
+
+    useEffect(() => {
+        let newTwoYearOutlook: OutlookOption[] = [OutlookOption.Contend, OutlookOption.Contend];
+        switch (valueArchetype) {
+            case ValueArchetype.EliteValue:
+                newTwoYearOutlook = [OutlookOption.Contend, OutlookOption.Contend];
+                break;
+            case ValueArchetype.EnhancedValue:
+                newTwoYearOutlook = [OutlookOption.Contend, OutlookOption.Contend];
+                break;
+            case ValueArchetype.StandardValue:
+                newTwoYearOutlook = [OutlookOption.Contend, OutlookOption.Contend];
+                break;
+            case ValueArchetype.AgingValue:
+                newTwoYearOutlook = [OutlookOption.Contend, OutlookOption.Reload];
+                break;
+            case ValueArchetype.FutureValue:
+                newTwoYearOutlook = [OutlookOption.Rebuild, OutlookOption.Contend];
+                break;
+            case ValueArchetype.HardRebuild:
+                newTwoYearOutlook = [OutlookOption.Rebuild, OutlookOption.Rebuild];
+                break;
+            case ValueArchetype.OneYearReload:
+                newTwoYearOutlook = [OutlookOption.Reload, OutlookOption.Contend];
+                break;
+        }
+        setTwoYearOutlook(newTwoYearOutlook);
+    }, [valueArchetype])
 
     useEffect(() => {
         if (!newLeagueModalOpen) return;
