@@ -62,11 +62,11 @@ import {
     Save,
     Casino,
 } from '@mui/icons-material';
-import NewV1, { rookiePickIdToString } from '../NewV1/NewV1';
+import NewV1, {rookiePickIdToString} from '../NewV1/NewV1';
 import {toPng} from 'html-to-image';
 import Premium from '../Premium/Premium';
 import {useSearchParams} from 'react-router-dom';
-import { isRookiePickId } from '../v1/modules/playerstotarget/PlayersToTargetModule';
+import {isRookiePickId} from '../v1/modules/playerstotarget/PlayersToTargetModule';
 
 export const PCT_OPTIONS = [
     '0%',
@@ -139,6 +139,7 @@ const PRIORITY_OPTIONS = [
     "Production matters closer to the season; don't neglect value wins now",
     'Avoid volatile situational outlooks heading into the NFL draft',
     "Don't superload one position at the expense of others",
+    'Use strategic downtiering to raise your production ceiling',
 ];
 
 const ELITE_PRIORITY_OPTIONS = [
@@ -492,7 +493,10 @@ export default function BlueprintModule({
                 newCollatedTrades.get(key)!.push(value);
             }
             if (!priorityDescriptions.has(key)) {
-                priorityDescriptions.set(key, suggestion.rule.priorityDescription);
+                priorityDescriptions.set(
+                    key,
+                    suggestion.rule.priorityDescription
+                );
             }
 
             const target = suggestion.targetRosterId;
@@ -505,7 +509,7 @@ export default function BlueprintModule({
                 );
             }
         }
-        console.log('priorityDescriptions', priorityDescriptions);
+
         // find the 2 most common targetRosterIds
         const mostCommonTargetRosterId = [...targetRosterCounts.entries()]
             .sort((a, b) => b[1] - a[1])
@@ -513,8 +517,6 @@ export default function BlueprintModule({
             .map(i => getUserFromRosterId(i - 1)!)
             .slice(0, 2);
         setTradePartners(mostCommonTargetRosterId);
-
-        console.log('collated trades', newCollatedTrades);
 
         const apiSuggestions = newCollatedTrades
             .entries()
@@ -524,32 +526,34 @@ export default function BlueprintModule({
                 type: key.split(',').slice(-1)[0],
                 priorityDescription: priorityDescriptions.get(key)!,
             }))
-            .map(({outPlayerIds, returnPackages, type, priorityDescription}) => {
-                let move: Move;
-                if (type === 'Pivot') {
-                    move = Move.PIVOT;
-                } else if (type === 'Downtier') {
-                    move = Move.DOWNTIER;
-                } else {
-                    move = Move.UPTIER;
-                }
-                // make sure all arrays have 2 players per return package
-                for (let i = 0; i < returnPackages.length; i++) {
-                    if (returnPackages[i].length === 1) {
-                        returnPackages[i].push('');
+            .map(
+                ({outPlayerIds, returnPackages, type, priorityDescription}) => {
+                    let move: Move;
+                    if (type === 'Pivot') {
+                        move = Move.PIVOT;
+                    } else if (type === 'Downtier') {
+                        move = Move.DOWNTIER;
+                    } else {
+                        move = Move.UPTIER;
                     }
+                    // make sure all arrays have 2 players per return package
+                    for (let i = 0; i < returnPackages.length; i++) {
+                        if (returnPackages[i].length === 1) {
+                            returnPackages[i].push('');
+                        }
+                    }
+                    // make sure at least three return packages
+                    while (returnPackages.length < 3) {
+                        returnPackages.push(['', '']);
+                    }
+                    return {
+                        move,
+                        playerIdsToTrade: outPlayerIds,
+                        playerIdsToTarget: returnPackages,
+                        priorityDescription,
+                    } as FullMove;
                 }
-                // make sure at least three return packages
-                while (returnPackages.length < 3) {
-                    returnPackages.push(['', '']);
-                }
-                return {
-                    move,
-                    playerIdsToTrade: outPlayerIds,
-                    playerIdsToTarget: returnPackages,
-                    priorityDescription,
-                } as FullMove;
-            })
+            )
             .toArray();
         setFullMoves(
             apiSuggestions.sort((a, b) => {
@@ -565,11 +569,7 @@ export default function BlueprintModule({
     }, [apiTradeSuggestions, searchParams]);
 
     useEffect(() => {
-        setTopPriorities(
-            fullMoves
-                .slice(0, 3)
-                .map(m => m.priorityDescription)
-        )
+        setTopPriorities(fullMoves.slice(0, 3).map(m => m.priorityDescription));
     }, [fullMoves]);
 
     useEffect(() => {
@@ -690,7 +690,8 @@ export default function BlueprintModule({
                     ['', ''],
                     ['', ''],
                     ['', ''],
-                ],priorityDescription: '',
+                ],
+                priorityDescription: '',
             },
             {
                 move: Move.DOWNTIER,
@@ -699,7 +700,8 @@ export default function BlueprintModule({
                     ['', ''],
                     ['', ''],
                     ['', ''],
-                ],priorityDescription: '',
+                ],
+                priorityDescription: '',
             },
             {
                 move: Move.PIVOT,
@@ -708,7 +710,8 @@ export default function BlueprintModule({
                     ['', ''],
                     ['', ''],
                     ['', ''],
-                ],priorityDescription: '',
+                ],
+                priorityDescription: '',
             },
             {
                 move: Move.UPTIER,
@@ -717,7 +720,8 @@ export default function BlueprintModule({
                     ['', ''],
                     ['', ''],
                     ['', ''],
-                ],priorityDescription: '',
+                ],
+                priorityDescription: '',
             },
         ]);
         setDraftStrategy([DraftStrategyLabel.None, DraftStrategyLabel.None]);
@@ -837,7 +841,9 @@ export default function BlueprintModule({
         const swapLimit = premium ? 6 : 3;
         const move = fullMoves[idx];
         // swap move at idx with a random move with an idx >= 6
-        const randomIdx = Math.floor(Math.random() * (fullMoves.length - swapLimit)) + swapLimit;
+        const randomIdx =
+            Math.floor(Math.random() * (fullMoves.length - swapLimit)) +
+            swapLimit;
         const randomMove = fullMoves[randomIdx];
         console.log('swapping', idx, 'with', randomIdx);
         fullMoves[idx] = randomMove;
@@ -2312,7 +2318,9 @@ function SuggestedMove({
                                     } = e;
                                     if (!value) return;
                                     if ((value as string).includes(' Round ')) {
-                                        const spl = (value as string).split(' ');
+                                        const spl = (value as string).split(
+                                            ' '
+                                        );
                                         const year = spl[0];
                                         const round = spl[2];
                                         setPlayerIdsToTrade([

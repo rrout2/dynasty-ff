@@ -225,6 +225,7 @@ function InputComponent({
 }
 
 export function isRookiePickId(id: string) {
+    if (!id) return false;
     return (
         id.substring(0, 3) === 'RP-' ||
         id.includes('Rookie Pick') ||

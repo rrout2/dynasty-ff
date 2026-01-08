@@ -893,7 +893,6 @@ function RosterMakeUp({
 
     return (
         <div className={styles.rosterMakeup} style={style}>
-            
             {Array.from(makeup)
                 .sort((a, b) => b[1] - a[1])
                 .map(([archetype, count]) => (

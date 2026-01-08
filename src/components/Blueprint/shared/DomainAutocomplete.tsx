@@ -3,11 +3,9 @@ import {useState, useEffect} from 'react';
 import {usePlayerData} from '../../../hooks/hooks';
 import {Player} from '../../../sleeper-api/sleeper-api';
 import {sortBySearchRank} from '../../Player/Search/PlayerSearch';
-import {
-    isRookiePickId,
-} from '../v1/modules/playerstotarget/PlayersToTargetModule';
+import {isRookiePickId} from '../v1/modules/playerstotarget/PlayersToTargetModule';
 import {DARK_BLUE} from './DomainDropdown';
-import { rookiePickIdToString } from '../NewV1/NewV1';
+import {rookiePickIdToString} from '../NewV1/NewV1';
 
 export type DomainAutocompleteProps = {
     selectedPlayer: string;
