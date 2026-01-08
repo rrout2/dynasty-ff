@@ -1273,7 +1273,7 @@ export default function BlueprintModule({
                                     const {
                                         target: {value},
                                     } = e;
-                                    if (value) {
+                                    if (value !== undefined) {
                                         setQb(value as number);
                                     }
                                 }}
@@ -1319,7 +1319,7 @@ export default function BlueprintModule({
                                     const {
                                         target: {value},
                                     } = e;
-                                    if (value) {
+                                    if (value !== undefined) {
                                         setRb(value as number);
                                     }
                                 }}
@@ -1365,7 +1365,7 @@ export default function BlueprintModule({
                                     const {
                                         target: {value},
                                     } = e;
-                                    if (value) {
+                                    if (value !== undefined) {
                                         setWr(value as number);
                                     }
                                 }}
@@ -1411,7 +1411,7 @@ export default function BlueprintModule({
                                     const {
                                         target: {value},
                                     } = e;
-                                    if (value) {
+                                    if (value !== undefined) {
                                         setTe(value as number);
                                     }
                                 }}
@@ -1454,7 +1454,7 @@ export default function BlueprintModule({
                                         const {
                                             target: {value},
                                         } = e;
-                                        if (value) {
+                                        if (value !== undefined) {
                                             setDraftCapitalScore(
                                                 value as number
                                             );
@@ -1477,7 +1477,7 @@ export default function BlueprintModule({
                                         const {
                                             target: {value},
                                         } = e;
-                                        if (value) {
+                                        if (value !== undefined) {
                                             setDepth(value as number);
                                         }
                                     }}
