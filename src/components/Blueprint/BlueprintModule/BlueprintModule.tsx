@@ -449,7 +449,7 @@ export default function BlueprintModule({
     }, [roster, playerData, sortByAdp]);
 
     useEffect(() => {
-        if (!myPicks || myPicks.length === 0) return;
+        if (!myPicks) return;
         const nextYearInfo = getPicksInfo(myPicks, '2026');
         setDraftCapitalNotes2026(nextYearInfo);
         const followingYearInfo = getPicksInfo(myPicks, '2027');
