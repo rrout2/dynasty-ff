@@ -569,8 +569,13 @@ export default function BlueprintModule({
     }, [apiTradeSuggestions, searchParams]);
 
     useEffect(() => {
-        setTopPriorities(fullMoves.slice(0, 3).map(m => m.priorityDescription));
-    }, [fullMoves]);
+        if (valueArchetype !== ValueArchetype.EliteValue) {
+            setTopPriorities(fullMoves.slice(0, 3).map(m => m.priorityDescription));
+            return;
+        }
+        shuffle(ELITE_PRIORITY_OPTIONS);
+        setTopPriorities(ELITE_PRIORITY_OPTIONS.slice(0, 3));
+    }, [fullMoves, valueArchetype]);
 
     useEffect(() => {
         if (!newLeagueModalOpen) return;
