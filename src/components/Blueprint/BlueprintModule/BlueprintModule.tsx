@@ -1142,7 +1142,7 @@ export default function BlueprintModule({
                                     TEP
                                 </div>
                             }
-                            options={[0.5, 1.0, 1.5, 2]}
+                            options={[0, 0.5, 1.0, 1.5, 2]}
                             value={tep}
                             onChange={e => {
                                 const {
