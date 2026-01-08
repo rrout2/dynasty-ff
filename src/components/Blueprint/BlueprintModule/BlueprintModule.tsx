@@ -599,6 +599,9 @@ export default function BlueprintModule({
     }, [apiTradeSuggestions, searchParams]);
 
     useEffect(() => {
+        if (searchParams.has(TOP_PRIORITIES)) {
+            return;
+        }
         if (valueArchetype !== ValueArchetype.EliteValue) {
             const priorityDescriptions = fullMoves
                 .slice(0, 3)
@@ -621,7 +624,7 @@ export default function BlueprintModule({
         }
         shuffle(ELITE_PRIORITY_OPTIONS);
         setTopPriorities(ELITE_PRIORITY_OPTIONS.slice(0, 3));
-    }, [fullMoves, valueArchetype, twoYearOutlook]);
+    }, [fullMoves, valueArchetype, twoYearOutlook, searchParams]);
 
     useEffect(() => {
         let newTwoYearOutlook: OutlookOption[] = [OutlookOption.Contend, OutlookOption.Contend];
@@ -837,7 +840,7 @@ export default function BlueprintModule({
         setSearchParams(searchParams => {
             searchParams.set(VALUE_ARCHETYPE, valueArchetype);
             searchParams.set(ROSTER_ARCHETYPE, rosterArchetype);
-            searchParams.set(TOP_PRIORITIES, topPriorities.join('-'));
+            searchParams.set(TOP_PRIORITIES, topPriorities.join('|'));
             searchParams.set(
                 TRADE_PARTNERS,
                 tradePartners.map(p => p?.user_id || '').join('-')
@@ -869,7 +872,7 @@ export default function BlueprintModule({
             (searchParams.get(ROSTER_ARCHETYPE) as RosterArchetype) ||
                 RosterArchetype.None
         );
-        setTopPriorities((searchParams.get(TOP_PRIORITIES) || '').split('-'));
+        setTopPriorities((searchParams.get(TOP_PRIORITIES) || '').split('|'));
         setTradePartners(
             allUsers.filter(u =>
                 (searchParams.get(TRADE_PARTNERS) || '')
