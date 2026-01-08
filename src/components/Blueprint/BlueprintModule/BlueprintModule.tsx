@@ -301,10 +301,10 @@ export default function BlueprintModule({
         },
     ]);
     const [draftCapitalNotes2026, setDraftCapitalNotes2026] = useState(
-        'placeholder 2026 notes'
+        ''
     );
     const [draftCapitalNotes2027, setDraftCapitalNotes2027] = useState(
-        'placeholder 2027 notes'
+        ''
     );
     const [draftCapitalNotes, setDraftCapitalNotes] = useState(
         new Map<number, string>()
