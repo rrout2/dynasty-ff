@@ -140,6 +140,7 @@ const PRIORITY_OPTIONS = [
     'Avoid volatile situational outlooks heading into the NFL draft',
     "Don't superload one position at the expense of others",
     'Use strategic downtiering to raise your production ceiling',
+    "Try targeting rookie picks at a discount from 'contenders' in your league",
 ];
 
 const ELITE_PRIORITY_OPTIONS = [
@@ -176,6 +177,42 @@ export enum OutlookOption {
     Reload = 'RELOAD',
     Contend = 'CONTEND',
 }
+
+const CATCH_ALL_PRIORITY_OPTIONS = new Map<OutlookOption, string[]>([
+    [
+        OutlookOption.Rebuild,
+        [
+            'Everyone on your current roster should be shopped for the right price',
+            "Don't go out of your way to target any rookie picks further than two years out",
+            'Be active - multiple small market wins is easier than one masive trade',
+            'Primarily build through the insulated positions (WR & RB)',
+            'Rebuilding is about gaining value, less about immediate positional needs',
+            'Worry less about age & more about 9 month market plays & value insulation',
+        ],
+    ],
+    [
+        OutlookOption.Reload,
+        [
+            'The more you play the market, the quicker the reload will be',
+            "Don't downtier too far from top assets, no further than one or two tiers",
+            'Make as many trades as possible to build small value wins',
+            'Shop your productive vets at a premium when they produce midseason',
+            'Use rookie picks to gain value wins, not to plug holes',
+            "Try targeting rookie picks at a discount from 'contenders' in your league",
+        ],
+    ],
+    [
+        OutlookOption.Contend,
+        [
+            'If you have a poor start to the season, you can always reload midseason',
+            'Rebuilds & reloads are your most likely trade partners when looking to uptier',
+            "Don't make unecessary moves that fail to improve your upside opportunity",
+            "Production matters closer to the season; don't neglect value wins now",
+            'Avoid volatile situational outlooks heading into the NFL draft',
+            "Don't superload one position at the expense of others",
+        ],
+    ],
+]);
 
 export enum DraftStrategyLabel {
     None = 'None',
@@ -300,12 +337,8 @@ export default function BlueprintModule({
             priorityDescription: '',
         },
     ]);
-    const [draftCapitalNotes2026, setDraftCapitalNotes2026] = useState(
-        ''
-    );
-    const [draftCapitalNotes2027, setDraftCapitalNotes2027] = useState(
-        ''
-    );
+    const [draftCapitalNotes2026, setDraftCapitalNotes2026] = useState('');
+    const [draftCapitalNotes2027, setDraftCapitalNotes2027] = useState('');
     const [draftCapitalNotes, setDraftCapitalNotes] = useState(
         new Map<number, string>()
     );
@@ -570,12 +603,28 @@ export default function BlueprintModule({
 
     useEffect(() => {
         if (valueArchetype !== ValueArchetype.EliteValue) {
-            setTopPriorities(fullMoves.slice(0, 3).map(m => m.priorityDescription));
+            const priorityDescriptions = fullMoves
+                .slice(0, 3)
+                .map(m => m.priorityDescription);
+            const dedupedPriorities = new Set(priorityDescriptions);
+            if (dedupedPriorities.size === 3) {
+                setTopPriorities(priorityDescriptions);
+                return;
+            } else {
+                const catchAll = CATCH_ALL_PRIORITY_OPTIONS.get(
+                    twoYearOutlook[0]
+                )!;
+                shuffle(catchAll);
+                setTopPriorities([
+                    ...dedupedPriorities,
+                    ...catchAll.slice(0, 3 - dedupedPriorities.size),
+                ]);
+            }
             return;
         }
         shuffle(ELITE_PRIORITY_OPTIONS);
         setTopPriorities(ELITE_PRIORITY_OPTIONS.slice(0, 3));
-    }, [fullMoves, valueArchetype]);
+    }, [fullMoves, valueArchetype, twoYearOutlook]);
 
     useEffect(() => {
         if (!newLeagueModalOpen) return;
@@ -1185,8 +1234,8 @@ export default function BlueprintModule({
                                 </div>
                             }
                             options={[
-                                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-                                15, 16, 17, 18, 19, 20,
+                                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                                14, 15, 16, 17, 18, 19, 20,
                             ]}
                             value={productionShareRank}
                             onChange={e => {
@@ -1224,8 +1273,8 @@ export default function BlueprintModule({
                                 </div>
                             }
                             options={[
-                                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-                                15, 16, 17, 18, 19, 20,
+                                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                                14, 15, 16, 17, 18, 19, 20,
                             ]}
                             value={valueShareRank}
                             onChange={e => {
