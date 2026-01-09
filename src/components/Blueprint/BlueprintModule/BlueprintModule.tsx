@@ -395,7 +395,11 @@ export default function BlueprintModule({
         rbValueProportionPercent,
         wrValueProportionPercent,
         teValueProportionPercent,
-    } = useTeamValueShare(leagueId, '' + getRosterIdFromUser(specifiedUser), isSleeperLeague);
+    } = useTeamValueShare(
+        leagueId,
+        '' + getRosterIdFromUser(specifiedUser),
+        isSleeperLeague
+    );
     const {
         productionSharePercent,
         leagueRank: productionShareRank,
@@ -404,7 +408,7 @@ export default function BlueprintModule({
     } = useTeamProductionShare(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser),
-        isSleeperLeague,
+        isSleeperLeague
     );
     const {domainTrueRanks} = useDomainTrueRanks(
         leagueId,
@@ -631,7 +635,9 @@ export default function BlueprintModule({
 
     useEffect(() => {
         setOverall(
-            Math.round((qb + rb + wr + te + depth + draftCapitalScore) * 10 / 6) / 10
+            Math.round(
+                ((qb + rb + wr + te + depth + draftCapitalScore) * 10) / 6
+            ) / 10
         );
     }, [qb, rb, wr, te, depth, draftCapitalScore]);
 

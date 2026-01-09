@@ -345,7 +345,11 @@ export function useDomainTrueRanks(leagueId: string, teamId: string) {
     return {domainTrueRanks, setDomainTrueRanks};
 }
 
-export function useTeamValueShare(leagueId: string, teamId: string, isSleeperLeague = true) {
+export function useTeamValueShare(
+    leagueId: string,
+    teamId: string,
+    isSleeperLeague = true
+) {
     const [valueSharePercent, setValueSharePercent] = useState(1);
     const [qbValueSharePercent, setQbValueSharePercent] = useState(1);
     const [rbValueSharePercent, setRbValueSharePercent] = useState(1);
@@ -407,7 +411,11 @@ export function useTeamValueShare(leagueId: string, teamId: string, isSleeperLea
     };
 }
 
-export function useTeamProductionShare(leagueId: string, teamId: string, isSleeperLeague = true) {
+export function useTeamProductionShare(
+    leagueId: string,
+    teamId: string,
+    isSleeperLeague = true
+) {
     const [productionSharePercent, setProductionSharePercent] = useState(1);
     const [leagueRank, setLeagueRank] = useState(1);
     const {data} = useQuery({
