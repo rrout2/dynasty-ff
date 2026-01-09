@@ -341,7 +341,7 @@ export default function BlueprintModule({
     const [draftCapitalNotes2027, setDraftCapitalNotes2027] = useState('');
     const [draftCapitalNotes, setDraftCapitalNotes] = useState(
         new Map<number, string>()
-    );
+    ); // only updates when draftCapitalNotes2026 or draftCapitalNotes2027 changes
     useEffect(() => {
         setDraftCapitalNotes(
             new Map([
@@ -627,32 +627,56 @@ export default function BlueprintModule({
     }, [fullMoves, valueArchetype, twoYearOutlook, searchParams]);
 
     useEffect(() => {
-        let newTwoYearOutlook: OutlookOption[] = [OutlookOption.Contend, OutlookOption.Contend];
+        let newTwoYearOutlook: OutlookOption[] = [
+            OutlookOption.Contend,
+            OutlookOption.Contend,
+        ];
         switch (valueArchetype) {
             case ValueArchetype.EliteValue:
-                newTwoYearOutlook = [OutlookOption.Contend, OutlookOption.Contend];
+                newTwoYearOutlook = [
+                    OutlookOption.Contend,
+                    OutlookOption.Contend,
+                ];
                 break;
             case ValueArchetype.EnhancedValue:
-                newTwoYearOutlook = [OutlookOption.Contend, OutlookOption.Contend];
+                newTwoYearOutlook = [
+                    OutlookOption.Contend,
+                    OutlookOption.Contend,
+                ];
                 break;
             case ValueArchetype.StandardValue:
-                newTwoYearOutlook = [OutlookOption.Contend, OutlookOption.Contend];
+                newTwoYearOutlook = [
+                    OutlookOption.Contend,
+                    OutlookOption.Contend,
+                ];
                 break;
             case ValueArchetype.AgingValue:
-                newTwoYearOutlook = [OutlookOption.Contend, OutlookOption.Reload];
+                newTwoYearOutlook = [
+                    OutlookOption.Contend,
+                    OutlookOption.Reload,
+                ];
                 break;
             case ValueArchetype.FutureValue:
-                newTwoYearOutlook = [OutlookOption.Rebuild, OutlookOption.Contend];
+                newTwoYearOutlook = [
+                    OutlookOption.Rebuild,
+                    OutlookOption.Contend,
+                ];
                 break;
             case ValueArchetype.HardRebuild:
-                newTwoYearOutlook = [OutlookOption.Rebuild, OutlookOption.Rebuild];
+                newTwoYearOutlook = [
+                    OutlookOption.Rebuild,
+                    OutlookOption.Rebuild,
+                ];
                 break;
             case ValueArchetype.OneYearReload:
-                newTwoYearOutlook = [OutlookOption.Reload, OutlookOption.Contend];
+                newTwoYearOutlook = [
+                    OutlookOption.Reload,
+                    OutlookOption.Contend,
+                ];
                 break;
         }
         setTwoYearOutlook(newTwoYearOutlook);
-    }, [valueArchetype])
+    }, [valueArchetype]);
 
     useEffect(() => {
         if (!newLeagueModalOpen) return;

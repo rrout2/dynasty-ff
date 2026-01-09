@@ -669,7 +669,7 @@ export type Stoplight = {
     vegasLight: string;
 };
 
-export function useStoplights(week: string | number = 17) {
+export function useStoplights(_week: string | number = 17) {
     const [stoplights] = useState<Stoplight[]>(
         playerStoplightsJson as unknown as Stoplight[]
     );

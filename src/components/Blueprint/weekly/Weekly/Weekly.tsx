@@ -169,7 +169,7 @@ export function WeeklyBlueprint({
     const [flexOptions, setFlexOptions] = useState<Player[]>([]);
     const playerData = usePlayerData();
     const {risers, fallers} = useWeeklyRisersFallers(roster);
-    const {findStoplight, isFetched} = useStoplights();
+    const {findStoplight} = useStoplights();
     const [winLossRecord, setWinLossRecord] = useState<number[]>([0, 0]);
     useEffect(() => {
         setStartingLineup(startingLineup.slice(0, 14));

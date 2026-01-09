@@ -129,11 +129,7 @@ import {
 } from '../../../../../consts/images';
 import Add from '@mui/icons-material/Add';
 import Remove from '@mui/icons-material/Remove';
-import {
-    CURRENT_SEASON,
-    FinalPickData,
-    getPicksInfo,
-} from '../../../../../sleeper-api/picks';
+import {CURRENT_SEASON, getPicksInfo} from '../../../../../sleeper-api/picks';
 
 export enum Archetype {
     HardRebuild = 'HARD REBUILD',
@@ -193,7 +189,7 @@ interface BigBoyProps {
 
 export default function BigBoy({roster, teamName, numRosters}: BigBoyProps) {
     const [leagueId] = useLeagueIdFromUrl();
-    const {myPicks, hasDraftOccurred} = useGetPicks(leagueId, roster?.owner_id);
+    const {myPicks} = useGetPicks(leagueId, roster?.owner_id);
     const league = useLeague(leagueId);
     const rosterSettings = useRosterSettingsFromId(leagueId);
     const isSuperFlex = rosterSettings.has(SUPER_FLEX);

@@ -17,7 +17,6 @@ import Rankings from './components/Rankings/Rankings';
 import Infinite from './components/Blueprint/infinite/Infinite/Infinite';
 import FindTeamId from './components/FindTeamId/FindTeamId';
 import NonSleeeperInfinite from './components/NonSleeeperInfinite/NonSleeeperInfinite';
-import Live from './components/Blueprint/Live/Live';
 import RookieDraft from './components/Blueprint/rookieDraft/RookieDraft/RookieDraft';
 import WhiteboardBase from './components/Blueprint/whiteboard/Base/Base';
 import Weekly from './components/Blueprint/weekly/Weekly/Weekly';

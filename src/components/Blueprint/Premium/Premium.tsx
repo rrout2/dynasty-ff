@@ -750,7 +750,7 @@ function LeaguePowerRanks({
     );
 }
 
-const GreenArrow = ({}: {}) => (
+const GreenArrow = () => (
     <svg
         className={styles.greenArrow}
         xmlns="http://www.w3.org/2000/svg"
@@ -764,7 +764,7 @@ const GreenArrow = ({}: {}) => (
     </svg>
 );
 
-const GoldTrophy = ({}: {}) => (
+const GoldTrophy = () => (
     <svg
         className={styles.trophy}
         xmlns="http://www.w3.org/2000/svg"
@@ -795,7 +795,7 @@ const GoldTrophy = ({}: {}) => (
     </svg>
 );
 
-const SilverTrophy = ({}: {}) => (
+const SilverTrophy = () => (
     <svg
         className={styles.trophy}
         xmlns="http://www.w3.org/2000/svg"
@@ -828,7 +828,7 @@ const SilverTrophy = ({}: {}) => (
     </svg>
 );
 
-const BronzeTrophy = ({}: {}) => (
+const BronzeTrophy = () => (
     <svg
         className={styles.trophy}
         xmlns="http://www.w3.org/2000/svg"
