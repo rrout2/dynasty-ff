@@ -345,7 +345,7 @@ export function useDomainTrueRanks(leagueId: string, teamId: string) {
     return {domainTrueRanks, setDomainTrueRanks};
 }
 
-export function useTeamValueShare(leagueId: string, teamId: string) {
+export function useTeamValueShare(leagueId: string, teamId: string, isSleeperLeague = true) {
     const [valueSharePercent, setValueSharePercent] = useState(1);
     const [qbValueSharePercent, setQbValueSharePercent] = useState(1);
     const [rbValueSharePercent, setRbValueSharePercent] = useState(1);
@@ -357,13 +357,13 @@ export function useTeamValueShare(leagueId: string, teamId: string) {
     const [teValueProportionPercent, setTeValueProportionPercent] = useState(1);
     const [leagueRank, setLeagueRank] = useState(1);
     const {data} = useQuery({
-        queryKey: ['teamValueShare', leagueId, teamId],
+        queryKey: ['teamValueShare', leagueId, teamId, isSleeperLeague],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/team-value-share?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
-                }`,
+                }&isSleeperLeague=${isSleeperLeague}`,
             };
             const res = await axios.request(options);
             return res.data;
@@ -407,17 +407,17 @@ export function useTeamValueShare(leagueId: string, teamId: string) {
     };
 }
 
-export function useTeamProductionShare(leagueId: string, teamId: string) {
+export function useTeamProductionShare(leagueId: string, teamId: string, isSleeperLeague = true) {
     const [productionSharePercent, setProductionSharePercent] = useState(1);
     const [leagueRank, setLeagueRank] = useState(1);
     const {data} = useQuery({
-        queryKey: ['teamProductionShare', leagueId, teamId],
+        queryKey: ['teamProductionShare', leagueId, teamId, isSleeperLeague],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/team-production-share?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
-                }&gradeRunVersionNumber=1`,
+                }&isSleeperLeague=${isSleeperLeague}&gradeRunVersionNumber=1`,
             };
             const res = await axios.request(options);
             return res.data;

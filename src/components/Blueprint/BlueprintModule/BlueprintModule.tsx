@@ -246,6 +246,8 @@ export default function BlueprintModule({
     const {data: rosters} = useFetchRosters(leagueId);
     const [allUsers, setAllUsers] = useState<User[]>([]);
     const [specifiedUser, setSpecifiedUser] = useState<User>();
+
+    const [isSleeperLeague, setIsSleeperLeague] = useState(true);
     const [tradePartners, setTradePartners] = useState<(User | undefined)[]>([
         undefined,
         undefined,
@@ -393,7 +395,7 @@ export default function BlueprintModule({
         rbValueProportionPercent,
         wrValueProportionPercent,
         teValueProportionPercent,
-    } = useTeamValueShare(leagueId, '' + getRosterIdFromUser(specifiedUser));
+    } = useTeamValueShare(leagueId, '' + getRosterIdFromUser(specifiedUser), isSleeperLeague);
     const {
         productionSharePercent,
         leagueRank: productionShareRank,
@@ -401,7 +403,8 @@ export default function BlueprintModule({
         setLeagueRank: setProductionShareRank,
     } = useTeamProductionShare(
         leagueId,
-        '' + getRosterIdFromUser(specifiedUser)
+        '' + getRosterIdFromUser(specifiedUser),
+        isSleeperLeague,
     );
     const {domainTrueRanks} = useDomainTrueRanks(
         leagueId,
@@ -1154,6 +1157,18 @@ export default function BlueprintModule({
             <div className={styles.topSection}>
                 <div>
                     <div className={styles.dropdownContainer}>
+                        <div className={styles.teamSelect}>
+                            <div className={styles.teamSelectTitle}>
+                                Sleeper?
+                            </div>
+                            <DomainDropdown
+                                options={['Y', 'N']}
+                                value={isSleeperLeague ? 'Y' : 'N'}
+                                onChange={e => {
+                                    setIsSleeperLeague(e.target.value === 'Y');
+                                }}
+                            />
+                        </div>
                         <div className={styles.teamSelect}>
                             <div className={styles.teamSelectTitle}>TEAM</div>
                             <DomainDropdown
