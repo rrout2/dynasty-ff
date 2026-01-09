@@ -630,6 +630,12 @@ export default function BlueprintModule({
     }, [fullMoves, valueArchetype, twoYearOutlook, searchParams]);
 
     useEffect(() => {
+        setOverall(
+            Math.round((qb + rb + wr + te + depth + draftCapitalScore) * 10 / 6) / 10
+        );
+    }, [qb, rb, wr, te, depth, draftCapitalScore]);
+
+    useEffect(() => {
         let newTwoYearOutlook: OutlookOption[] = [
             OutlookOption.Contend,
             OutlookOption.Contend,
