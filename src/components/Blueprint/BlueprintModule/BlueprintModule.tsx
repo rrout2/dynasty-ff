@@ -592,6 +592,26 @@ export default function BlueprintModule({
                 }
             )
             .toArray();
+        console.log(apiSuggestions);
+        const sorted = apiSuggestions.sort((a, b) => {
+            const toTargetA = a.playerIdsToTarget.filter(
+                ids => !ids.every(id => id === '')
+            ).length;
+            const toTargetB = b.playerIdsToTarget.filter(
+                ids => !ids.every(id => id === '')
+            ).length;
+            return toTargetB - toTargetA;
+        });
+        while (sorted.length < 6) {
+            sorted.push({
+                move: Move.PIVOT,
+                playerIdsToTrade: [],
+                playerIdsToTarget: [['', ''],
+                ['', ''],
+                ['', ''],],
+                priorityDescription: '',
+            })
+        }
         setFullMoves(
             apiSuggestions.sort((a, b) => {
                 const toTargetA = a.playerIdsToTarget.filter(
@@ -2338,7 +2358,7 @@ function SuggestedMove({
     }
 
     return (
-        playerIdsToTrade[0] &&
+        // playerIdsToTrade[0] &&
         playerData && (
             <div className={styles.toTradeContainer}>
                 <div className={styles.moveTitleContainer}>
@@ -2389,7 +2409,7 @@ function SuggestedMove({
                             >{`${value}`}</span>
                         )}
                         options={optionsToTrade}
-                        value={getDisplayValueFromId(playerIdsToTrade[0])}
+                        value={playerIdsToTrade[0] ? getDisplayValueFromId(playerIdsToTrade[0]) : ''}
                         onChange={e => {
                             const {
                                 target: {value},
