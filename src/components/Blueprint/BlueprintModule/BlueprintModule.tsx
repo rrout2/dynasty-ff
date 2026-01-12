@@ -592,7 +592,6 @@ export default function BlueprintModule({
                 }
             )
             .toArray();
-        console.log(apiSuggestions);
         const sorted = apiSuggestions.sort((a, b) => {
             const toTargetA = a.playerIdsToTarget.filter(
                 ids => !ids.every(id => id === '')
