@@ -662,10 +662,10 @@ export default function BlueprintModule({
     useEffect(() => {
         setOverall(
             Math.round(
-                ((qb + rb + wr + te + depth + draftCapitalScore) * 10) / 6
+                ((qb + rb + wr + te + draftCapitalScore) * 10) / 5
             ) / 10
         );
-    }, [qb, rb, wr, te, depth, draftCapitalScore]);
+    }, [qb, rb, wr, te, draftCapitalScore]);
 
     useEffect(() => {
         let newTwoYearOutlook: OutlookOption[] = [
