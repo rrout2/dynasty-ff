@@ -107,8 +107,9 @@ export function useTradeSuggestions(leagueId: string, teamId: string) {
     const [tradeSuggestions, setTradeSuggestions] = useState<TradeSuggestion[]>(
         []
     );
+    const authToken = sessionStorage.getItem('authToken');
     const {data} = useQuery({
-        queryKey: ['tradeSuggestions', leagueId, teamId],
+        queryKey: ['tradeSuggestions', leagueId, teamId, authToken],
         queryFn: async () => {
             const options = {
                 method: 'POST',
@@ -120,6 +121,9 @@ export function useTradeSuggestions(leagueId: string, teamId: string) {
                     maxFairnessPercentageDifference: 5,
                     perSlotCandidateLimit: 25,
                     maxResults: 300,
+                },
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
                 },
             };
             const res = await axios.request(options);
@@ -137,14 +141,18 @@ export function useTradeSuggestions(leagueId: string, teamId: string) {
 
 export function useDraftCapitalGrade(leagueId: string, teamId: string) {
     const [draftCapitalGrade, setDraftCapitalGrade] = useState<number>(0);
+    const authToken = sessionStorage.getItem('authToken');
     const {data} = useQuery({
-        queryKey: ['draftCapital', leagueId, teamId],
+        queryKey: ['draftCapital', leagueId, teamId, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Sleeper/leagues/${leagueId}/rosters/${
                     +teamId + 1
                 }/draft-capital`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data.grade as number;
@@ -168,12 +176,16 @@ export type PowerRank = {
 
 export function useLeaguePowerRanks(leagueId: string) {
     const [leaguePowerRanks, setLeaguePowerRanks] = useState<PowerRank[]>([]);
+    const authToken = sessionStorage.getItem('authToken');
     const {data} = useQuery({
-        queryKey: ['insulationGrades', leagueId],
+        queryKey: ['insulationGrades', leagueId, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Blueprints/league-power-ranks?leagueId=${leagueId}`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data.leaguePowerRanks as PowerRank[];
@@ -218,14 +230,19 @@ export function useThreeFactorGrades(leagueId: string, teamId: string) {
     const [wrSituationalScoreGrade, setWrSituationalScoreGrade] = useState(1);
     const [teSituationalScoreGrade, setTeSituationalScoreGrade] = useState(1);
 
+    const authToken = sessionStorage.getItem('authToken');
+
     const {data: insulationData} = useQuery({
-        queryKey: ['insulationGrades', leagueId, teamId],
+        queryKey: ['insulationGrades', leagueId, teamId, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/insulation-grades?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
                 }&gradeRunVersionNumber=1`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data;
@@ -235,13 +252,16 @@ export function useThreeFactorGrades(leagueId: string, teamId: string) {
     });
 
     const {data: productionData} = useQuery({
-        queryKey: ['productionGrades', leagueId, teamId],
+        queryKey: ['productionGrades', leagueId, teamId, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/production-grades?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
                 }&gradeRunVersionNumber=1`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data;
@@ -251,13 +271,16 @@ export function useThreeFactorGrades(leagueId: string, teamId: string) {
     });
 
     const {data: situationalData} = useQuery({
-        queryKey: ['situationalGrades', leagueId, teamId],
+        queryKey: ['situationalGrades', leagueId, teamId, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/situational-grades?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
                 }&gradeRunVersionNumber=1`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data;
@@ -323,14 +346,18 @@ export function useDomainTrueRanks(leagueId: string, teamId: string) {
     const [domainTrueRanks, setDomainTrueRanks] = useState<DomainTrueRank[]>(
         []
     );
+    const authToken = sessionStorage.getItem('authToken');
     const {data} = useQuery({
-        queryKey: ['domainTrueRanks', leagueId, teamId],
+        queryKey: ['domainTrueRanks', leagueId, teamId, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/domain-true-ranks?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
                 }&gradeRunVersionNumber=1`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data.domainTrueRanks as DomainTrueRank[];
@@ -360,14 +387,18 @@ export function useTeamValueShare(
     const [wrValueProportionPercent, setWrValueProportionPercent] = useState(1);
     const [teValueProportionPercent, setTeValueProportionPercent] = useState(1);
     const [leagueRank, setLeagueRank] = useState(1);
+    const authToken = sessionStorage.getItem('authToken');
     const {data} = useQuery({
-        queryKey: ['teamValueShare', leagueId, teamId, isSleeperLeague],
+        queryKey: ['teamValueShare', leagueId, teamId, isSleeperLeague, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/team-value-share?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
                 }&isSleeperLeague=${isSleeperLeague}`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data;
@@ -418,14 +449,18 @@ export function useTeamProductionShare(
 ) {
     const [productionSharePercent, setProductionSharePercent] = useState(1);
     const [leagueRank, setLeagueRank] = useState(1);
+    const authToken = sessionStorage.getItem('authToken');
     const {data} = useQuery({
-        queryKey: ['teamProductionShare', leagueId, teamId, isSleeperLeague],
+        queryKey: ['teamProductionShare', leagueId, teamId, isSleeperLeague, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/team-production-share?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
                 }&isSleeperLeague=${isSleeperLeague}&gradeRunVersionNumber=1`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data;
@@ -449,6 +484,7 @@ export function useTeamValueArchetype(leagueId: string, teamId: string) {
     const [valueArchetype, setValueArchetype] = useState<ValueArchetype>(
         ValueArchetype.None
     );
+    const authToken = sessionStorage.getItem('authToken');
     function convertStringToValueArchetype(str: string): ValueArchetype {
         switch (str) {
             case 'EliteValue':
@@ -470,13 +506,16 @@ export function useTeamValueArchetype(leagueId: string, teamId: string) {
         }
     }
     const {data} = useQuery({
-        queryKey: ['teamValueArchetype', leagueId, teamId],
+        queryKey: ['teamValueArchetype', leagueId, teamId, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/team-value-archetype?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
                 }&gradeRunVersionNumber=1`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data;
@@ -499,6 +538,7 @@ export function useTeamRosterArchetype(leagueId: string, teamId: string) {
     const [rosterArchetype, setRosterArchetype] = useState<RosterArchetype>(
         RosterArchetype.None
     );
+    const authToken = sessionStorage.getItem('authToken');
     function convertStringToRosterArchetype(str: string): RosterArchetype {
         switch (str) {
             case 'WellRounded':
@@ -518,13 +558,16 @@ export function useTeamRosterArchetype(leagueId: string, teamId: string) {
         }
     }
     const {data} = useQuery({
-        queryKey: ['teamRosterArchetype', leagueId, teamId],
+        queryKey: ['teamRosterArchetype', leagueId, teamId, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/team-roster-archetype?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
                 }&gradeRunVersionNumber=1`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data;
@@ -548,6 +591,7 @@ export function useTwoYearOutlook(leagueId: string, teamId: string) {
         OutlookOption.Rebuild,
         OutlookOption.Reload,
     ]);
+    const authToken = sessionStorage.getItem('authToken');
     function convertStringToOutlookOption(str: string): OutlookOption {
         switch (str) {
             case 'Rebuild':
@@ -561,13 +605,16 @@ export function useTwoYearOutlook(leagueId: string, teamId: string) {
         }
     }
     const {data} = useQuery({
-        queryKey: ['twoYearOutlook', leagueId, teamId],
+        queryKey: ['twoYearOutlook', leagueId, teamId, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/two-year-outlook?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
                 }&gradeRunVersionNumber=1`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data;
@@ -592,14 +639,18 @@ export function usePositionalValueGrades(leagueId: string, teamId: string) {
     const [rb, setRb] = useState(0);
     const [wr, setWr] = useState(0);
     const [te, setTe] = useState(0);
+    const authToken = sessionStorage.getItem('authToken');
     const {data} = useQuery({
-        queryKey: ['positionalValueGrades', leagueId, teamId],
+        queryKey: ['positionalValueGrades', leagueId, teamId, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/positional-value-grades?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
                 }&gradeRunVersionNumber=1`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data;
@@ -628,12 +679,16 @@ export function usePositionalValueGrades(leagueId: string, teamId: string) {
 function useApiRisersFallers() {
     const currListId = 200;
     const prevListId = 194;
+    const authToken = sessionStorage.getItem('authToken');
     const {data: risersFallers} = useQuery({
-        queryKey: ['risersFallers', currListId, prevListId],
+        queryKey: ['risersFallers', currListId, prevListId, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}RiserFaller?currentListId=${currListId}&previousListId=${prevListId}`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data as any[];
@@ -1238,12 +1293,16 @@ export type BuySellHoldSchema = {
 };
 
 function useBuySellHoldApi(week: string | number = 17) {
+    const authToken = sessionStorage.getItem('authToken');
     const {data: buySells, isLoading} = useQuery({
-        queryKey: ['buySells', week],
+        queryKey: ['buySells', week, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}BuySellHold/${week}`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             const data = res.data as BuySellHoldSchema[];
@@ -1648,12 +1707,16 @@ type Rank = {
 };
 
 function useRankingsApi(week: string | number = 17) {
+    const authToken = sessionStorage.getItem('authToken');
     const {data: rankings, isLoading} = useQuery({
-        queryKey: ['rankings', week],
+        queryKey: ['rankings', week, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Rankings?weekId=${week}`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data as any[];
@@ -2278,6 +2341,7 @@ export function useRosterSettingsFromId(leagueId?: string) {
 function useWeeklyLineupsApi() {
     // TODO: better way to get this
     const listId = 202;
+    const authToken = sessionStorage.getItem('authToken');
     const {
         data: weeklyLineups,
         error,
@@ -2285,11 +2349,14 @@ function useWeeklyLineupsApi() {
         isFetched,
         isError,
     } = useQuery({
-        queryKey: ['kyle ranks', listId],
+        queryKey: ['kyle ranks', listId, authToken],
         queryFn: async () => {
             const options = {
                 method: 'GET',
                 url: `${AZURE_API_URL}Rankings/kyle/${listId}`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
             };
             const res = await axios.request(options);
             return res.data as any[];

@@ -400,7 +400,7 @@
     color: white;
 }
 
-.newLeagueModal {
+.newLeagueModal, .loginModal {
     position: absolute;
     top: 50%;
     left: 50%;

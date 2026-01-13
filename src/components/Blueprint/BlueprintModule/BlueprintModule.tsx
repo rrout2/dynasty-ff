@@ -67,6 +67,7 @@ import {toPng} from 'html-to-image';
 import Premium from '../Premium/Premium';
 import {useSearchParams} from 'react-router-dom';
 import {isRookiePickId} from '../v1/modules/playerstotarget/PlayersToTargetModule';
+import axios from 'axios';
 
 export const PCT_OPTIONS = [
     '0%',
@@ -238,6 +239,10 @@ export default function BlueprintModule({
 }: BlueprintModuleProps) {
     // Hooks
     useTitle(premium ? 'Premium Blueprint Module' : 'Blueprint Module');
+    const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('authToken') !== null);
+    const [loginEmail, setLoginEmail] = useState('');
+    const [loginPassword, setLoginPassword] = useState('');
+    const [loginModalOpen, setLoginModalOpen] = useState(false);
     const [newLeagueModalOpen, setNewLeagueModalOpen] = useState(false);
     const [previewModalOpen, setPreviewModalOpen] = useState(false);
     const [newLeagueId, setNewLeagueId] = useState('');
@@ -605,11 +610,13 @@ export default function BlueprintModule({
             sorted.push({
                 move: Move.PIVOT,
                 playerIdsToTrade: [],
-                playerIdsToTarget: [['', ''],
-                ['', ''],
-                ['', ''],],
+                playerIdsToTarget: [
+                    ['', ''],
+                    ['', ''],
+                    ['', ''],
+                ],
                 priorityDescription: '',
-            })
+            });
         }
         setFullMoves(
             apiSuggestions.sort((a, b) => {
@@ -991,9 +998,56 @@ export default function BlueprintModule({
         setFullMoves([...fullMoves]);
     }
 
+    async function submitLogin() {
+        const options = {
+            method: 'POST',
+            url: 'https://domainffapi.azurewebsites.net/api/Auth/login',
+            headers: {'Content-Type': 'application/json'},
+            data: {email: loginEmail, password: loginPassword},
+        };
+        const res = await axios.request(options);
+        const token = res.data.token;
+        sessionStorage.setItem('authToken', token);
+        const options2 = {
+            method: 'GET',
+            url: 'https://domainffapi.azurewebsites.net/api/Auth/me',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        const res2 = await axios.request(options2);
+        setLoggedIn(res2.data.isAuthenticated);
+        setLoginModalOpen(false);
+    }
+
+    function submitLogout () {
+        sessionStorage.removeItem('authToken');
+        setLoggedIn(false);
+    }
+
     return (
         <div style={{backgroundColor: DARK_BLUE}}>
             <div className={styles.headerContainer}>
+                <Button
+                    variant="contained"
+                    onClick={() => {
+                        if (loggedIn) {
+                            submitLogout();
+                        } else {
+                            setLoginModalOpen(true);
+                        }
+                    }}
+                    sx={{
+                        backgroundColor: '#28ABE2',
+                        color: DARK_BLUE,
+                        fontFamily: 'Prohibition',
+                        '&:disabled': {
+                            backgroundColor: 'gray',
+                        },
+                    }}
+                >
+                    {loggedIn ? 'Log Out' : 'Login'}
+                </Button>
                 <Button
                     variant="outlined"
                     startIcon={<AddCircleOutline />}
@@ -1050,6 +1104,41 @@ export default function BlueprintModule({
                                 submitNewLeague();
                             }}
                             disabled={!newLeagueId.trim()}
+                        >
+                            Submit
+                        </Button>
+                    </Box>
+                </Modal>
+                <Modal
+                    open={loginModalOpen}
+                    onClose={() => setLoginModalOpen(false)}
+                >
+                    <Box className={styles.loginModal}>
+                        <DomainTextField
+                            label="Email"
+                            value={loginEmail}
+                            onChange={e => setLoginEmail(e.target.value)}
+                            onKeyUp={(e) => e.key === 'Enter' && submitLogin()}
+                        />
+                        <DomainTextField
+                            type={'password'}
+                            label="Password"
+                            value={loginPassword}
+                            onChange={e => setLoginPassword(e.target.value)}
+                            onKeyUp={(e) => e.key === 'Enter' && submitLogin()}
+                        />
+                        <Button
+                            sx={{
+                                fontFamily: 'Prohibition',
+                                '&:disabled': {
+                                    backgroundColor: 'gray',
+                                },
+                            }}
+                            variant="contained"
+                            onClick={() => {
+                                submitLogin();
+                            }}
+                            disabled={!loginEmail.trim() || !loginPassword.trim()}
                         >
                             Submit
                         </Button>
@@ -2408,7 +2497,11 @@ function SuggestedMove({
                             >{`${value}`}</span>
                         )}
                         options={optionsToTrade}
-                        value={playerIdsToTrade[0] ? getDisplayValueFromId(playerIdsToTrade[0]) : ''}
+                        value={
+                            playerIdsToTrade[0]
+                                ? getDisplayValueFromId(playerIdsToTrade[0])
+                                : ''
+                        }
                         onChange={e => {
                             const {
                                 target: {value},
