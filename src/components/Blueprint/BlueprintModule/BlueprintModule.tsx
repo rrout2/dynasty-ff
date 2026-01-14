@@ -9,7 +9,12 @@ import {
     tepIcon,
 } from '../../../consts/images';
 import {
+    convertStringToOutlookOption,
+    convertStringToRosterArchetype,
+    convertStringToValueArchetype,
+    PowerRank,
     useAdpData,
+    useBlueprint,
     useDomainTrueRanks,
     useDraftCapitalGrade,
     useFetchRosters,
@@ -17,6 +22,7 @@ import {
     useLeague,
     useLeagueIdFromUrl,
     useLeaguePowerRanks,
+    useParamFromUrl,
     usePlayerData,
     usePositionalGrades,
     usePositionalValueGrades,
@@ -239,13 +245,17 @@ export default function BlueprintModule({
 }: BlueprintModuleProps) {
     // Hooks
     useTitle(premium ? 'Premium Blueprint Module' : 'Blueprint Module');
-    const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('authToken') !== null);
+    const [loggedIn, setLoggedIn] = useState(
+        sessionStorage.getItem('authToken') !== null
+    );
     const [loginEmail, setLoginEmail] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
     const [loginModalOpen, setLoginModalOpen] = useState(false);
     const [newLeagueModalOpen, setNewLeagueModalOpen] = useState(false);
     const [previewModalOpen, setPreviewModalOpen] = useState(false);
     const [newLeagueId, setNewLeagueId] = useState('');
+    const [newBlueprintId, setNewBlueprintId] = useState('');
+    const [blueprintId, setBlueprintId] = useParamFromUrl('blueprintId');
     const [leagueId, setLeagueId] = useLeagueIdFromUrl();
     const [teamId, setTeamId] = useTeamIdFromUrl();
     const {data: rosters} = useFetchRosters(leagueId);
@@ -266,6 +276,8 @@ export default function BlueprintModule({
     const rosterSettings = useRosterSettingsFromId(leagueId);
     const rosterSettingsHasSuperFlex = rosterSettings.has(SUPER_FLEX);
     const [numTeams, setNumTeams] = useState(12);
+
+    const {blueprint} = useBlueprint(blueprintId);
     const {valueArchetype, setValueArchetype} = useTeamValueArchetype(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
@@ -405,6 +417,10 @@ export default function BlueprintModule({
         '' + getRosterIdFromUser(specifiedUser),
         isSleeperLeague
     );
+    const [startingQbAge, setStartingQbAge] = useState(0);
+    const [startingRbAge, setStartingRbAge] = useState(0);
+    const [startingWrAge, setStartingWrAge] = useState(0);
+    const [startingTeAge, setStartingTeAge] = useState(0);
     const {
         productionSharePercent,
         leagueRank: productionShareRank,
@@ -415,7 +431,7 @@ export default function BlueprintModule({
         '' + getRosterIdFromUser(specifiedUser),
         isSleeperLeague
     );
-    const {domainTrueRanks} = useDomainTrueRanks(
+    const {domainTrueRanks, setDomainTrueRanks} = useDomainTrueRanks(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
@@ -423,9 +439,97 @@ export default function BlueprintModule({
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
-    const {leaguePowerRanks} = useLeaguePowerRanks(leagueId);
+    const {leaguePowerRanks, setLeaguePowerRanks} = useLeaguePowerRanks(leagueId);
     const [searchParams, setSearchParams] = useSearchParams();
     const [isDownloading, setIsDownloading] = useState(false);
+
+    useEffect(() => {
+        if (!blueprint) return;
+        setNumTeams(blueprint.leagueSettings.numberOfTeams);
+        setIsSuperFlex(blueprint.leagueSettings.isSuperFlex);
+        setPpr(blueprint.leagueSettings.pprValue);
+        setTep(blueprint.leagueSettings.tePremiumValue);
+        setProductionSharePercent(blueprint.productionSharePercentage);
+        setValueSharePercent(blueprint.valueSharePercentage);
+        setProductionShareRank(blueprint.productionShareLeagueRank);
+        setValueShareRank(blueprint.valueShareLeagueRank);
+        setValueArchetype(
+            convertStringToValueArchetype(blueprint.valueArchetype)
+        );
+        setRosterArchetype(
+            convertStringToRosterArchetype(blueprint.rosterArchetype)
+        );
+        setTwoYearOutlook(
+            blueprint.outlooks
+                .map(o => o.outlook)
+                .map(convertStringToOutlookOption)
+        );
+        setQb(blueprint.positionalGrades.find(g => g.position === QB)?.grade ?? 0);
+        setRb(blueprint.positionalGrades.find(g => g.position === RB)?.grade ?? 0);
+        setWr(blueprint.positionalGrades.find(g => g.position === WR)?.grade ?? 0);
+        setTe(blueprint.positionalGrades.find(g => g.position === TE)?.grade ?? 0);
+        setLeaguePowerRanks(blueprint.powerRankings.map(p => {
+            return {
+                teamName: p.teamName,
+                overallRank: p.teamRank,
+            } as PowerRank;
+        }));
+        setSpecifiedUser({
+            display_name: blueprint.teamName,
+            user_id: '',
+            username: '',
+            avatar: '',
+            metadata: {
+                team_name: '',
+            }
+        });
+        setStartingQbAge(blueprint.averageStarterAges.find(g => g.position === QB)?.averageAge ?? 0);
+        setStartingRbAge(blueprint.averageStarterAges.find(g => g.position === RB)?.averageAge ?? 0);
+        setStartingWrAge(blueprint.averageStarterAges.find(g => g.position === WR)?.averageAge ?? 0);
+        setStartingTeAge(blueprint.averageStarterAges.find(g => g.position === TE)?.averageAge ?? 0);
+    }, [blueprint]);
+
+    useEffect(() => {
+        if (blueprint) return;
+        const starters = new Map<string, Player[]>();
+        rosterPlayers
+            .filter(p => !!p)
+            .forEach(player => {
+                const name = `${player.first_name} ${player.last_name}`;
+                const position = getStartingPosition(name);
+                if (position) {
+                    const pos = player.position;
+                    if (starters.has(pos)) {
+                        starters.get(pos)?.push(player);
+                    } else {
+                        starters.set(pos, [player]);
+                    }
+                }
+            });
+        const qb = starters.get(QB);
+        if (qb && qb.length > 0) {
+            const totalAge = qb.reduce((acc, player) => acc + player.age, 0);
+            setStartingQbAge(Math.round(10 * (totalAge / qb.length)) / 10);
+        }
+
+        const rb = starters.get(RB);
+        if (rb && rb.length > 0) {
+            const totalAge = rb.reduce((acc, player) => acc + player.age, 0);
+            setStartingRbAge(Math.round(10 * (totalAge / rb.length)) / 10);
+        }
+
+        const wr = starters.get(WR);
+        if (wr && wr.length > 0) {
+            const totalAge = wr.reduce((acc, player) => acc + player.age, 0);
+            setStartingWrAge(Math.round(10 * (totalAge / wr.length)) / 10);
+        }
+
+        const te = starters.get(TE);
+        if (te && te.length > 0) {
+            const totalAge = te.reduce((acc, player) => acc + player.age, 0);
+            setStartingTeAge(Math.round(10 * (totalAge / te.length)) / 10);
+        }
+    }, [rosterPlayers, getStartingPosition, blueprint]);
 
     useEffect(() => {
         if (!league) return;
@@ -661,9 +765,7 @@ export default function BlueprintModule({
 
     useEffect(() => {
         setOverall(
-            Math.round(
-                ((qb + rb + wr + te + draftCapitalScore) * 10) / 5
-            ) / 10
+            Math.round(((qb + rb + wr + te + draftCapitalScore) * 10) / 5) / 10
         );
     }, [qb, rb, wr, te, draftCapitalScore]);
 
@@ -793,7 +895,7 @@ export default function BlueprintModule({
         fontWeight: 'bold',
         fontSize: '20px',
     };
-    const submitNewLeague = () => {
+    const submitNewLeagueIdOrBlueprintId = () => {
         clearUrlSave();
 
         setRoster(undefined);
@@ -801,9 +903,18 @@ export default function BlueprintModule({
         setTeamId('0');
         setSpecifiedUser(undefined);
 
-        setLeagueId(newLeagueId.trim());
+        if (newLeagueId) {
+            setBlueprintId('');
+            setLeagueId(newLeagueId.trim());
+            setNewLeagueId('');
+        }
 
-        setNewLeagueId('');
+        if (newBlueprintId) {
+            setLeagueId('');
+            setBlueprintId(newBlueprintId.trim());
+            setNewBlueprintId('');
+        }
+
         setNewLeagueModalOpen(false);
         setTradePartners([undefined, undefined]);
         setTopPriorities(['', '', '']);
@@ -992,7 +1103,6 @@ export default function BlueprintModule({
             Math.floor(Math.random() * (fullMoves.length - swapLimit)) +
             swapLimit;
         const randomMove = fullMoves[randomIdx];
-        console.log('swapping', idx, 'with', randomIdx);
         fullMoves[idx] = randomMove;
         fullMoves[randomIdx] = move;
         setFullMoves([...fullMoves]);
@@ -1020,7 +1130,7 @@ export default function BlueprintModule({
         setLoginModalOpen(false);
     }
 
-    function submitLogout () {
+    function submitLogout() {
         sessionStorage.removeItem('authToken');
         setLoggedIn(false);
     }
@@ -1084,11 +1194,28 @@ export default function BlueprintModule({
                             inputRef={textfieldRef}
                             label="New League ID"
                             value={newLeagueId}
-                            onChange={e => setNewLeagueId(e.target.value)}
+                            onChange={e => {
+                                setNewLeagueId(e.target.value);
+                                setNewBlueprintId('');
+                            }}
                             onKeyUp={e => {
                                 if (e.key === 'Enter') {
                                     e.preventDefault();
-                                    submitNewLeague();
+                                    submitNewLeagueIdOrBlueprintId();
+                                }
+                            }}
+                        />
+                        <DomainTextField
+                            label="New BP ID (in progress)"
+                            value={newBlueprintId}
+                            onChange={e => {
+                                setNewBlueprintId(e.target.value);
+                                setNewLeagueId('');
+                            }}
+                            onKeyUp={e => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    submitNewLeagueIdOrBlueprintId();
                                 }
                             }}
                         />
@@ -1101,9 +1228,11 @@ export default function BlueprintModule({
                             }}
                             variant="contained"
                             onClick={() => {
-                                submitNewLeague();
+                                submitNewLeagueIdOrBlueprintId();
                             }}
-                            disabled={!newLeagueId.trim()}
+                            disabled={
+                                !newLeagueId.trim() && !newBlueprintId.trim()
+                            }
                         >
                             Submit
                         </Button>
@@ -1118,14 +1247,14 @@ export default function BlueprintModule({
                             label="Email"
                             value={loginEmail}
                             onChange={e => setLoginEmail(e.target.value)}
-                            onKeyUp={(e) => e.key === 'Enter' && submitLogin()}
+                            onKeyUp={e => e.key === 'Enter' && submitLogin()}
                         />
                         <DomainTextField
                             type={'password'}
                             label="Password"
                             value={loginPassword}
                             onChange={e => setLoginPassword(e.target.value)}
-                            onKeyUp={(e) => e.key === 'Enter' && submitLogin()}
+                            onKeyUp={e => e.key === 'Enter' && submitLogin()}
                         />
                         <Button
                             sx={{
@@ -1138,7 +1267,9 @@ export default function BlueprintModule({
                             onClick={() => {
                                 submitLogin();
                             }}
-                            disabled={!loginEmail.trim() || !loginPassword.trim()}
+                            disabled={
+                                !loginEmail.trim() || !loginPassword.trim()
+                            }
                         >
                             Submit
                         </Button>
@@ -1266,6 +1397,10 @@ export default function BlueprintModule({
                                         rb: rbValueProportionPercent,
                                         te: teValueProportionPercent,
                                     }}
+                                    startingQbAge={startingQbAge}
+                                    startingRbAge={startingRbAge}
+                                    startingWrAge={startingWrAge}
+                                    startingTeAge={startingTeAge}
                                 />
                             )}
                         </div>
@@ -2368,6 +2503,10 @@ export default function BlueprintModule({
                                 rb: rbValueProportionPercent,
                                 te: teValueProportionPercent,
                             }}
+                            startingQbAge={startingQbAge}
+                            startingRbAge={startingRbAge}
+                            startingWrAge={startingWrAge}
+                            startingTeAge={startingTeAge}
                         />
                     </div>
                 </div>

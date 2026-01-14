@@ -71,6 +71,102 @@ import {
 
 const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
+type Blueprint = {
+    id: number;
+    blueprintType: string;
+    platform: string;
+    leagueId: string;
+    rosterId: number;
+    ownerUserId: string;
+    teamName: string;
+    season: number;
+    isRedraft: boolean;
+    leagueSettings: {
+        numberOfTeams: number;
+        isSuperFlex: boolean;
+        pprValue: number;
+        tePremiumValue: number;
+        taxiSpots: number;
+        qbCount: number;
+        rbCount: number;
+        wrCount: number;
+        teCount: number;
+        flexCount: number;
+        benchCount: number;
+    };
+    valueArchetype: string;
+    rosterArchetype: string;
+    productionSharePercentage: number;
+    productionShareLeagueRank: number;
+    valueSharePercentage: number;
+    valueShareLeagueRank: number;
+    rosterPlayers: Array<{
+        id: number;
+        playerId: number;
+        playerName: string;
+        position: string;
+        assetCategory: string;
+        sortOrder: number;
+        insulationScore: number;
+        productionScore: number;
+        situationalScore: number;
+        compositePositionRank: string;
+    }>;
+    outlooks: Array<{
+        id: number;
+        yearNumber: number;
+        outlook: string;
+    }>;
+    positionalGrades: Array<{
+        id: number;
+        position: string;
+        grade: number;
+        ownershipPercentage: number;
+    }>;
+    draftPicks: Array<any>;
+    tradeStrategies: Array<any>;
+    topPriorities: Array<any>;
+    averageStarterAges: Array<{
+        position: string;
+        averageAge: number;
+    }>;
+    powerRankings: Array<{
+        teamName: string;
+        teamRank: number;
+    }>;
+    rosterMakeup: Array<{
+        assetCategory: string;
+        percentage: number;
+    }>;
+};
+
+export function useBlueprint(blueprintId: string) {
+    const [blueprint, setBlueprint] = useState<Blueprint>();
+    const authToken = sessionStorage.getItem('authToken');
+    const {data} = useQuery({
+        queryKey: ['blueprint', blueprintId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Blueprints/${blueprintId}`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            };
+            const res = await axios.request(options);
+            return res.data as Blueprint;
+        },
+        retry: false,
+        enabled: !!blueprintId,
+    });
+    useEffect(() => {
+        if (!data) return;
+        setBlueprint(data);
+    }, [data]);
+
+    return {blueprint};
+}
+
 type TradeSuggestion = {
     targetRosterId: number;
     rule: {
@@ -168,9 +264,9 @@ export function useDraftCapitalGrade(leagueId: string, teamId: string) {
 }
 
 export type PowerRank = {
-    teamId: number;
+    teamId?: number;
     teamName: string;
-    teamTotalDomainValue: number;
+    teamTotalDomainValue?: number;
     overallRank: number;
 };
 
@@ -190,6 +286,7 @@ export function useLeaguePowerRanks(leagueId: string) {
             const res = await axios.request(options);
             return res.data.leaguePowerRanks as PowerRank[];
         },
+        enabled: !!leagueId,
         retry: false,
     });
 
@@ -198,7 +295,7 @@ export function useLeaguePowerRanks(leagueId: string) {
         setLeaguePowerRanks(data);
     }, [data]);
 
-    return {leaguePowerRanks};
+    return {leaguePowerRanks, setLeaguePowerRanks};
 }
 
 export type ThreeFactorGrades = {
@@ -492,31 +589,32 @@ export function useTeamProductionShare(
     };
 }
 
+export function convertStringToValueArchetype(str: string): ValueArchetype {
+    switch (str) {
+        case 'EliteValue':
+            return ValueArchetype.EliteValue;
+        case 'EnhancedValue':
+            return ValueArchetype.EnhancedValue;
+        case 'StandardValue':
+            return ValueArchetype.StandardValue;
+        case 'FutureValue':
+            return ValueArchetype.FutureValue;
+        case 'AgingValue':
+            return ValueArchetype.AgingValue;
+        case 'OneYearReload':
+            return ValueArchetype.OneYearReload;
+        case 'HardRebuild':
+            return ValueArchetype.HardRebuild;
+        default:
+            return ValueArchetype.None;
+    }
+}
+
 export function useTeamValueArchetype(leagueId: string, teamId: string) {
     const [valueArchetype, setValueArchetype] = useState<ValueArchetype>(
         ValueArchetype.None
     );
     const authToken = sessionStorage.getItem('authToken');
-    function convertStringToValueArchetype(str: string): ValueArchetype {
-        switch (str) {
-            case 'EliteValue':
-                return ValueArchetype.EliteValue;
-            case 'EnhancedValue':
-                return ValueArchetype.EnhancedValue;
-            case 'StandardValue':
-                return ValueArchetype.StandardValue;
-            case 'FutureValue':
-                return ValueArchetype.FutureValue;
-            case 'AgingValue':
-                return ValueArchetype.AgingValue;
-            case 'OneYearReload':
-                return ValueArchetype.OneYearReload;
-            case 'HardRebuild':
-                return ValueArchetype.HardRebuild;
-            default:
-                return ValueArchetype.None;
-        }
-    }
     const {data} = useQuery({
         queryKey: ['teamValueArchetype', leagueId, teamId, authToken],
         queryFn: async () => {
@@ -546,29 +644,31 @@ export function useTeamValueArchetype(leagueId: string, teamId: string) {
     };
 }
 
+export function convertStringToRosterArchetype(str: string): RosterArchetype {
+    switch (str) {
+        case 'WellRounded':
+            return RosterArchetype.WellRounded;
+        case 'WRFactory':
+            return RosterArchetype.WRFactory;
+        case 'RBHeavy':
+            return RosterArchetype.RBHeavy;
+        case 'DualEliteQB':
+            return RosterArchetype.DualEliteQB;
+        case 'EliteQBTE':
+            return RosterArchetype.EliteQBTE;
+        case 'PlayerDeficient':
+            return RosterArchetype.PlayerDeficient;
+        default:
+            return RosterArchetype.None;
+    }
+}
+
 export function useTeamRosterArchetype(leagueId: string, teamId: string) {
     const [rosterArchetype, setRosterArchetype] = useState<RosterArchetype>(
         RosterArchetype.None
     );
     const authToken = sessionStorage.getItem('authToken');
-    function convertStringToRosterArchetype(str: string): RosterArchetype {
-        switch (str) {
-            case 'WellRounded':
-                return RosterArchetype.WellRounded;
-            case 'WRFactory':
-                return RosterArchetype.WRFactory;
-            case 'RBHeavy':
-                return RosterArchetype.RBHeavy;
-            case 'DualEliteQB':
-                return RosterArchetype.DualEliteQB;
-            case 'EliteQBTE':
-                return RosterArchetype.EliteQBTE;
-            case 'PlayerDeficient':
-                return RosterArchetype.PlayerDeficient;
-            default:
-                return RosterArchetype.None;
-        }
-    }
+
     const {data} = useQuery({
         queryKey: ['teamRosterArchetype', leagueId, teamId, authToken],
         queryFn: async () => {
@@ -598,24 +698,26 @@ export function useTeamRosterArchetype(leagueId: string, teamId: string) {
     };
 }
 
+export function convertStringToOutlookOption(str: string): OutlookOption {
+    switch (str) {
+        case 'Rebuild':
+            return OutlookOption.Rebuild;
+        case 'Reload':
+            return OutlookOption.Reload;
+        case 'Contend':
+            return OutlookOption.Contend;
+        default:
+            return OutlookOption.Reload;
+    }
+}
+
 export function useTwoYearOutlook(leagueId: string, teamId: string) {
     const [twoYearOutlook, setTwoYearOutlook] = useState<OutlookOption[]>([
         OutlookOption.Rebuild,
         OutlookOption.Reload,
     ]);
     const authToken = sessionStorage.getItem('authToken');
-    function convertStringToOutlookOption(str: string): OutlookOption {
-        switch (str) {
-            case 'Rebuild':
-                return OutlookOption.Rebuild;
-            case 'Reload':
-                return OutlookOption.Reload;
-            case 'Contend':
-                return OutlookOption.Contend;
-            default:
-                return OutlookOption.Reload;
-        }
-    }
+
     const {data} = useQuery({
         queryKey: ['twoYearOutlook', leagueId, teamId, authToken],
         queryFn: async () => {

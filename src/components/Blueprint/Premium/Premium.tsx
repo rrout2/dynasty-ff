@@ -121,6 +121,10 @@ type PremiumProps = {
     percentile: string;
     buildPercentage: string;
     valueProportion: ValueProportion;
+    startingQbAge: number;
+    startingRbAge: number;
+    startingWrAge: number;
+    startingTeAge: number;
 };
 
 export default function Premium({
@@ -160,52 +164,11 @@ export default function Premium({
     percentile,
     buildPercentage,
     valueProportion,
+    startingQbAge,
+    startingRbAge,
+    startingWrAge,
+    startingTeAge,
 }: PremiumProps) {
-    const [startingQbAge, setStartingQbAge] = useState(0);
-    const [startingRbAge, setStartingRbAge] = useState(0);
-    const [startingWrAge, setStartingWrAge] = useState(0);
-    const [startingTeAge, setStartingTeAge] = useState(0);
-    useEffect(() => {
-        const starters = new Map<string, Player[]>();
-        rosterPlayers
-            .filter(p => !!p)
-            .forEach(player => {
-                const name = `${player.first_name} ${player.last_name}`;
-                const position = getStartingPosition(name);
-                if (position) {
-                    const pos = player.position;
-                    if (starters.has(pos)) {
-                        starters.get(pos)?.push(player);
-                    } else {
-                        starters.set(pos, [player]);
-                    }
-                }
-            });
-        const qb = starters.get(QB);
-        if (qb && qb.length > 0) {
-            const totalAge = qb.reduce((acc, player) => acc + player.age, 0);
-            setStartingQbAge(Math.round(10 * (totalAge / qb.length)) / 10);
-        }
-
-        const rb = starters.get(RB);
-        if (rb && rb.length > 0) {
-            const totalAge = rb.reduce((acc, player) => acc + player.age, 0);
-            setStartingRbAge(Math.round(10 * (totalAge / rb.length)) / 10);
-        }
-
-        const wr = starters.get(WR);
-        if (wr && wr.length > 0) {
-            const totalAge = wr.reduce((acc, player) => acc + player.age, 0);
-            setStartingWrAge(Math.round(10 * (totalAge / wr.length)) / 10);
-        }
-
-        const te = starters.get(TE);
-        if (te && te.length > 0) {
-            const totalAge = te.reduce((acc, player) => acc + player.age, 0);
-            setStartingTeAge(Math.round(10 * (totalAge / te.length)) / 10);
-        }
-    }, [rosterPlayers, getStartingPosition]);
-
     return (
         <div className={`exportableClassPremium ${styles.fullBlueprint}`}>
             <img src={premiumAssets} className={styles.assets} />
