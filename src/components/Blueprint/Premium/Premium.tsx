@@ -125,6 +125,7 @@ type PremiumProps = {
     startingRbAge: number;
     startingWrAge: number;
     startingTeAge: number;
+    rosterMakeup: Map<string, number>;
 };
 
 export default function Premium({
@@ -168,6 +169,7 @@ export default function Premium({
     startingRbAge,
     startingWrAge,
     startingTeAge,
+    rosterMakeup,
 }: PremiumProps) {
     return (
         <div className={`exportableClassPremium ${styles.fullBlueprint}`}>
@@ -411,7 +413,7 @@ export default function Premium({
                 }}
             />
             <RosterMakeUp
-                domainTrueRanks={domainTrueRanks}
+                rosterMakeup={rosterMakeup}
                 style={{
                     top: '334px',
                     left: '1337px',
@@ -825,22 +827,12 @@ const BronzeTrophy = () => (
 );
 
 function RosterMakeUp({
-    domainTrueRanks,
+    rosterMakeup,
     style,
 }: {
-    domainTrueRanks: DomainTrueRank[];
+    rosterMakeup: Map<string, number>;
     style?: CSSProperties;
 }) {
-    const [makeup, setMakeup] = useState(new Map<string, number>());
-    useEffect(() => {
-        const makeup = new Map<string, number>();
-        for (const dtr of domainTrueRanks) {
-            const archetype = dtr.dynastyAssetCategory;
-            const count = (makeup.get(archetype) || 0) + 1;
-            makeup.set(archetype, count);
-        }
-        setMakeup(new Map(makeup));
-    }, [domainTrueRanks]);
 
     function getFontColor(archetype: string) {
         switch (archetype.toLowerCase()) {
@@ -856,7 +848,7 @@ function RosterMakeUp({
 
     return (
         <div className={styles.rosterMakeup} style={style}>
-            {Array.from(makeup)
+            {Array.from(rosterMakeup)
                 .sort((a, b) => b[1] - a[1])
                 .map(([archetype, count]) => (
                     <div key={archetype} className={styles.archetypeRow}>
@@ -873,9 +865,7 @@ function RosterMakeUp({
                             {camelCaseToTitleCase(archetype)}
                         </div>
                         <div className={styles.archPercent}>
-                            {((100 * count) / domainTrueRanks.length).toFixed(
-                                1
-                            )}
+                            {count}
                             %
                         </div>
                     </div>

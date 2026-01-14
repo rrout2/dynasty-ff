@@ -46,9 +46,12 @@ import {
     User,
 } from '../../../sleeper-api/sleeper-api';
 import {
+    BLUEPRINT_ID,
+    LEAGUE_ID,
     MOVE,
     NONE_TEAM_ID,
     ROSTER_ARCHETYPE,
+    TEAM_ID,
     TO_TARGET,
     TO_TRADE,
     TOP_PRIORITIES,
@@ -255,7 +258,7 @@ export default function BlueprintModule({
     const [previewModalOpen, setPreviewModalOpen] = useState(false);
     const [newLeagueId, setNewLeagueId] = useState('');
     const [newBlueprintId, setNewBlueprintId] = useState('');
-    const [blueprintId, setBlueprintId] = useParamFromUrl('blueprintId');
+    const [blueprintId, setBlueprintId] = useParamFromUrl(BLUEPRINT_ID);
     const [leagueId, setLeagueId] = useLeagueIdFromUrl();
     const [teamId, setTeamId] = useTeamIdFromUrl();
     const {data: rosters} = useFetchRosters(leagueId);
@@ -277,7 +280,7 @@ export default function BlueprintModule({
     const rosterSettingsHasSuperFlex = rosterSettings.has(SUPER_FLEX);
     const [numTeams, setNumTeams] = useState(12);
 
-    const {blueprint} = useBlueprint(blueprintId);
+    const {blueprint, setBlueprint} = useBlueprint(blueprintId);
     const {valueArchetype, setValueArchetype} = useTeamValueArchetype(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
@@ -421,6 +424,7 @@ export default function BlueprintModule({
     const [startingRbAge, setStartingRbAge] = useState(0);
     const [startingWrAge, setStartingWrAge] = useState(0);
     const [startingTeAge, setStartingTeAge] = useState(0);
+    const [makeup, setMakeup] = useState(new Map<string, number>());
     const {
         productionSharePercent,
         leagueRank: productionShareRank,
@@ -487,7 +491,29 @@ export default function BlueprintModule({
         setStartingRbAge(blueprint.averageStarterAges.find(g => g.position === RB)?.averageAge ?? 0);
         setStartingWrAge(blueprint.averageStarterAges.find(g => g.position === WR)?.averageAge ?? 0);
         setStartingTeAge(blueprint.averageStarterAges.find(g => g.position === TE)?.averageAge ?? 0);
+        const newMakeup = new Map<string, number>();
+        for (const rmu of blueprint.rosterMakeup) {
+            newMakeup.set(rmu.assetCategory, rmu.percentage);
+        }
+        setMakeup(newMakeup);
     }, [blueprint]);
+
+    useEffect(() => {
+        if (!domainTrueRanks || domainTrueRanks.length === 0 || blueprint) {return;}
+        const newMakeup = new Map<string, number>();
+        for (const dtr of domainTrueRanks) {
+            const archetype = dtr.dynastyAssetCategory;
+            const count = (newMakeup.get(archetype) || 0) + 1;
+            newMakeup.set(archetype, count);
+        }
+        for (const [archetype, count] of newMakeup) {
+            newMakeup.set(archetype, +((100 * count) / domainTrueRanks.length).toFixed(
+                                1
+                            ));
+        }
+        setMakeup(newMakeup);
+        
+    }, [domainTrueRanks])
 
     useEffect(() => {
         if (blueprint) return;
@@ -904,15 +930,29 @@ export default function BlueprintModule({
         setSpecifiedUser(undefined);
 
         if (newLeagueId) {
+            setBlueprint(undefined);
             setBlueprintId('');
             setLeagueId(newLeagueId.trim());
             setNewLeagueId('');
+            setSearchParams(prev => {
+                const next = new URLSearchParams(prev);
+                next.delete(BLUEPRINT_ID);
+                next.set(LEAGUE_ID, newLeagueId);
+                return next;
+            });
         }
 
         if (newBlueprintId) {
             setLeagueId('');
             setBlueprintId(newBlueprintId.trim());
             setNewBlueprintId('');
+            setSearchParams(prev => {
+                const next = new URLSearchParams(prev);
+                next.delete(LEAGUE_ID);
+                next.delete(TEAM_ID);
+                next.set(BLUEPRINT_ID, newBlueprintId);
+                return next;
+            });
         }
 
         setNewLeagueModalOpen(false);
@@ -1401,6 +1441,7 @@ export default function BlueprintModule({
                                     startingRbAge={startingRbAge}
                                     startingWrAge={startingWrAge}
                                     startingTeAge={startingTeAge}
+                                    rosterMakeup={makeup}
                                 />
                             )}
                         </div>
@@ -2507,6 +2548,7 @@ export default function BlueprintModule({
                             startingRbAge={startingRbAge}
                             startingWrAge={startingWrAge}
                             startingTeAge={startingTeAge}
+                            rosterMakeup={makeup}
                         />
                     </div>
                 </div>

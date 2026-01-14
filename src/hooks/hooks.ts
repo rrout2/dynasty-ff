@@ -164,7 +164,7 @@ export function useBlueprint(blueprintId: string) {
         setBlueprint(data);
     }, [data]);
 
-    return {blueprint};
+    return {blueprint, setBlueprint};
 }
 
 type TradeSuggestion = {
@@ -2236,8 +2236,7 @@ export function useLeagueIdFromUrl(): [
 
     // Sync state -> URL
     useEffect(() => {
-        if (!leagueId || leagueId === leagueIdParam) return;
-
+        if (leagueId === leagueIdParam || leagueId === '') return;
         setSearchParams(prev => {
             const next = new URLSearchParams(prev);
             next.set(LEAGUE_ID, leagueId);
