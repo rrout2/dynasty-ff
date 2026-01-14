@@ -152,7 +152,7 @@ export function useDraftCapitalGrade(leagueId: string, teamId: string) {
                 }/draft-capital`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data.grade as number;
@@ -185,7 +185,7 @@ export function useLeaguePowerRanks(leagueId: string) {
                 url: `${AZURE_API_URL}Blueprints/league-power-ranks?leagueId=${leagueId}`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data.leaguePowerRanks as PowerRank[];
@@ -242,7 +242,7 @@ export function useThreeFactorGrades(leagueId: string, teamId: string) {
                 }&gradeRunVersionNumber=1`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data;
@@ -261,7 +261,7 @@ export function useThreeFactorGrades(leagueId: string, teamId: string) {
                 }&gradeRunVersionNumber=1`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data;
@@ -280,7 +280,7 @@ export function useThreeFactorGrades(leagueId: string, teamId: string) {
                 }&gradeRunVersionNumber=1`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data;
@@ -357,7 +357,7 @@ export function useDomainTrueRanks(leagueId: string, teamId: string) {
                 }&gradeRunVersionNumber=1`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data.domainTrueRanks as DomainTrueRank[];
@@ -389,7 +389,13 @@ export function useTeamValueShare(
     const [leagueRank, setLeagueRank] = useState(1);
     const authToken = sessionStorage.getItem('authToken');
     const {data} = useQuery({
-        queryKey: ['teamValueShare', leagueId, teamId, isSleeperLeague, authToken],
+        queryKey: [
+            'teamValueShare',
+            leagueId,
+            teamId,
+            isSleeperLeague,
+            authToken,
+        ],
         queryFn: async () => {
             const options = {
                 method: 'GET',
@@ -398,7 +404,7 @@ export function useTeamValueShare(
                 }&isSleeperLeague=${isSleeperLeague}`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data;
@@ -451,7 +457,13 @@ export function useTeamProductionShare(
     const [leagueRank, setLeagueRank] = useState(1);
     const authToken = sessionStorage.getItem('authToken');
     const {data} = useQuery({
-        queryKey: ['teamProductionShare', leagueId, teamId, isSleeperLeague, authToken],
+        queryKey: [
+            'teamProductionShare',
+            leagueId,
+            teamId,
+            isSleeperLeague,
+            authToken,
+        ],
         queryFn: async () => {
             const options = {
                 method: 'GET',
@@ -460,7 +472,7 @@ export function useTeamProductionShare(
                 }&isSleeperLeague=${isSleeperLeague}&gradeRunVersionNumber=1`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data;
@@ -515,7 +527,7 @@ export function useTeamValueArchetype(leagueId: string, teamId: string) {
                 }&gradeRunVersionNumber=1`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data;
@@ -567,7 +579,7 @@ export function useTeamRosterArchetype(leagueId: string, teamId: string) {
                 }&gradeRunVersionNumber=1`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data;
@@ -614,7 +626,7 @@ export function useTwoYearOutlook(leagueId: string, teamId: string) {
                 }&gradeRunVersionNumber=1`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data;
@@ -650,7 +662,7 @@ export function usePositionalValueGrades(leagueId: string, teamId: string) {
                 }&gradeRunVersionNumber=1`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data;
@@ -688,7 +700,7 @@ function useApiRisersFallers() {
                 url: `${AZURE_API_URL}RiserFaller?currentListId=${currListId}&previousListId=${prevListId}`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data as any[];
@@ -1302,7 +1314,7 @@ function useBuySellHoldApi(week: string | number = 17) {
                 url: `${AZURE_API_URL}BuySellHold/${week}`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             const data = res.data as BuySellHoldSchema[];
@@ -1716,7 +1728,7 @@ function useRankingsApi(week: string | number = 17) {
                 url: `${AZURE_API_URL}Rankings?weekId=${week}`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data as any[];
@@ -2356,7 +2368,7 @@ function useWeeklyLineupsApi() {
                 url: `${AZURE_API_URL}Rankings/kyle/${listId}`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
             };
             const res = await axios.request(options);
             return res.data as any[];
