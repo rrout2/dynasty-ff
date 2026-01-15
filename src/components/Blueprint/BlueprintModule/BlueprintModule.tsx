@@ -12,7 +12,9 @@ import {
     convertStringToOutlookOption,
     convertStringToRosterArchetype,
     convertStringToValueArchetype,
+    LeagueSettings,
     PowerRank,
+    RosterPlayer,
     useAdpData,
     useBlueprint,
     useDomainTrueRanks,
@@ -38,7 +40,16 @@ import {
     useTradeSuggestions,
     useTwoYearOutlook,
 } from '../../../hooks/hooks';
-import {QB, RB, SUPER_FLEX, TE, WR} from '../../../consts/fantasy';
+import {
+    FLEX,
+    FLEX_SET,
+    QB,
+    RB,
+    SUPER_FLEX,
+    SUPER_FLEX_SET,
+    TE,
+    WR,
+} from '../../../consts/fantasy';
 import {
     getAllUsers,
     Player,
@@ -273,6 +284,9 @@ export default function BlueprintModule({
     const [topPriorities, setTopPriorities] = useState<string[]>(['', '', '']);
     const [roster, setRoster] = useState<Roster>();
     const [rosterPlayers, setRosterPlayers] = useState<Player[]>([]);
+    const [apiRosterPlayers, setApiRosterPlayers] = useState<RosterPlayer[]>(
+        []
+    );
     const playerData = usePlayerData();
     const {sortByAdp, getPositionalAdp} = useAdpData();
     const league = useLeague(leagueId);
@@ -398,6 +412,9 @@ export default function BlueprintModule({
         rosterSettings,
         roster?.players
     );
+    const [apiStartingLineup, setApiStartingLineup] = useState<
+        {player: RosterPlayer; position: string}[]
+    >([]);
     const [draftStrategy, setDraftStrategy] = useState<DraftStrategyLabel[]>([
         DraftStrategyLabel.None,
         DraftStrategyLabel.None,
@@ -435,20 +452,21 @@ export default function BlueprintModule({
         '' + getRosterIdFromUser(specifiedUser),
         isSleeperLeague
     );
-    const {domainTrueRanks, setDomainTrueRanks} = useDomainTrueRanks(
+    const {domainTrueRanks} = useDomainTrueRanks(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
-    const threeFactorGrades = useThreeFactorGrades(
+    const {threeFactorGrades, setThreeFactorGrades} = useThreeFactorGrades(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
-    const {leaguePowerRanks, setLeaguePowerRanks} = useLeaguePowerRanks(leagueId);
+    const {leaguePowerRanks, setLeaguePowerRanks} =
+        useLeaguePowerRanks(leagueId);
     const [searchParams, setSearchParams] = useSearchParams();
     const [isDownloading, setIsDownloading] = useState(false);
 
     useEffect(() => {
-        if (!blueprint) return;
+        if (!blueprint || !playerData) return;
         setNumTeams(blueprint.leagueSettings.numberOfTeams);
         setIsSuperFlex(blueprint.leagueSettings.isSuperFlex);
         setPpr(blueprint.leagueSettings.pprValue);
@@ -468,16 +486,26 @@ export default function BlueprintModule({
                 .map(o => o.outlook)
                 .map(convertStringToOutlookOption)
         );
-        setQb(blueprint.positionalGrades.find(g => g.position === QB)?.grade ?? 0);
-        setRb(blueprint.positionalGrades.find(g => g.position === RB)?.grade ?? 0);
-        setWr(blueprint.positionalGrades.find(g => g.position === WR)?.grade ?? 0);
-        setTe(blueprint.positionalGrades.find(g => g.position === TE)?.grade ?? 0);
-        setLeaguePowerRanks(blueprint.powerRankings.map(p => {
-            return {
-                teamName: p.teamName,
-                overallRank: p.teamRank,
-            } as PowerRank;
-        }));
+        setQb(
+            blueprint.positionalGrades.find(g => g.position === QB)?.grade ?? 0
+        );
+        setRb(
+            blueprint.positionalGrades.find(g => g.position === RB)?.grade ?? 0
+        );
+        setWr(
+            blueprint.positionalGrades.find(g => g.position === WR)?.grade ?? 0
+        );
+        setTe(
+            blueprint.positionalGrades.find(g => g.position === TE)?.grade ?? 0
+        );
+        setLeaguePowerRanks(
+            blueprint.powerRankings.map(p => {
+                return {
+                    teamName: p.teamName,
+                    overallRank: p.teamRank,
+                } as PowerRank;
+            })
+        );
         setSpecifiedUser({
             display_name: blueprint.teamName,
             user_id: '',
@@ -485,21 +513,118 @@ export default function BlueprintModule({
             avatar: '',
             metadata: {
                 team_name: '',
-            }
+            },
         });
-        setStartingQbAge(blueprint.averageStarterAges.find(g => g.position === QB)?.averageAge ?? 0);
-        setStartingRbAge(blueprint.averageStarterAges.find(g => g.position === RB)?.averageAge ?? 0);
-        setStartingWrAge(blueprint.averageStarterAges.find(g => g.position === WR)?.averageAge ?? 0);
-        setStartingTeAge(blueprint.averageStarterAges.find(g => g.position === TE)?.averageAge ?? 0);
+        setStartingQbAge(
+            blueprint.averageStarterAges.find(g => g.position === QB)
+                ?.averageAge ?? 0
+        );
+        setStartingRbAge(
+            blueprint.averageStarterAges.find(g => g.position === RB)
+                ?.averageAge ?? 0
+        );
+        setStartingWrAge(
+            blueprint.averageStarterAges.find(g => g.position === WR)
+                ?.averageAge ?? 0
+        );
+        setStartingTeAge(
+            blueprint.averageStarterAges.find(g => g.position === TE)
+                ?.averageAge ?? 0
+        );
         const newMakeup = new Map<string, number>();
         for (const rmu of blueprint.rosterMakeup) {
             newMakeup.set(rmu.assetCategory, rmu.percentage);
         }
         setMakeup(newMakeup);
-    }, [blueprint]);
+        const qbs = blueprint.rosterPlayers.filter(p => p.position === QB);
+        const numQbs = qbs.length;
+        const rbs = blueprint.rosterPlayers.filter(p => p.position === RB);
+        const numRbs = rbs.length;
+        const wrs = blueprint.rosterPlayers.filter(p => p.position === WR);
+        const numWrs = wrs.length;
+        const tes = blueprint.rosterPlayers.filter(p => p.position === TE);
+        const numTes = tes.length;
+        setThreeFactorGrades({
+            qbInsulationScoreGrade:
+                Math.round(
+                    qbs.map(p => p.insulationScore).reduce((a, b) => a + b, 0) /
+                        numQbs
+                ) / 10,
+            rbInsulationScoreGrade:
+                Math.round(
+                    rbs.map(p => p.insulationScore).reduce((a, b) => a + b, 0) /
+                        numRbs
+                ) / 10,
+            wrInsulationScoreGrade:
+                Math.round(
+                    wrs.map(p => p.insulationScore).reduce((a, b) => a + b, 0) /
+                        numWrs
+                ) / 10,
+            teInsulationScoreGrade:
+                Math.round(
+                    tes.map(p => p.insulationScore).reduce((a, b) => a + b, 0) /
+                        numTes
+                ) / 10,
+            qbProductionScoreGrade:
+                Math.round(
+                    qbs.map(p => p.productionScore).reduce((a, b) => a + b, 0) /
+                        numQbs
+                ) / 10,
+            rbProductionScoreGrade:
+                Math.round(
+                    rbs.map(p => p.productionScore).reduce((a, b) => a + b, 0) /
+                        numRbs
+                ) / 10,
+            wrProductionScoreGrade:
+                Math.round(
+                    wrs.map(p => p.productionScore).reduce((a, b) => a + b, 0) /
+                        numWrs
+                ) / 10,
+            teProductionScoreGrade:
+                Math.round(
+                    tes.map(p => p.productionScore).reduce((a, b) => a + b, 0) /
+                        numTes
+                ) / 10,
+            qbSituationalScoreGrade:
+                Math.round(
+                    qbs
+                        .map(p => p.situationalScore)
+                        .reduce((a, b) => a + b, 0) / numQbs
+                ) / 10,
+            rbSituationalScoreGrade:
+                Math.round(
+                    rbs
+                        .map(p => p.situationalScore)
+                        .reduce((a, b) => a + b, 0) / numRbs
+                ) / 10,
+            wrSituationalScoreGrade:
+                Math.round(
+                    wrs
+                        .map(p => p.situationalScore)
+                        .reduce((a, b) => a + b, 0) / numWrs
+                ) / 10,
+            teSituationalScoreGrade:
+                Math.round(
+                    tes
+                        .map(p => p.situationalScore)
+                        .reduce((a, b) => a + b, 0) / numTes
+                ) / 10,
+        });
+        setRosterPlayers(
+            blueprint.rosterPlayers.map(p => playerData[p.sleeperId])
+        );
+        setApiRosterPlayers(blueprint.rosterPlayers);
+
+        const leagueSettings = blueprint.leagueSettings;
+        setApiStartingLineup(
+            getApiStartingLineup(leagueSettings, blueprint.rosterPlayers)
+        );
+    }, [blueprint, playerData]);
 
     useEffect(() => {
-        if (!domainTrueRanks || domainTrueRanks.length === 0 || blueprint) {return;}
+        if (!domainTrueRanks || domainTrueRanks.length === 0 || blueprint) {
+            return;
+        }
         const newMakeup = new Map<string, number>();
         for (const dtr of domainTrueRanks) {
             const archetype = dtr.dynastyAssetCategory;
@@ -507,13 +632,13 @@ export default function BlueprintModule({
             newMakeup.set(archetype, count);
         }
         for (const [archetype, count] of newMakeup) {
-            newMakeup.set(archetype, +((100 * count) / domainTrueRanks.length).toFixed(
-                                1
-                            ));
+            newMakeup.set(
+                archetype,
+                +((100 * count) / domainTrueRanks.length).toFixed(1)
+            );
         }
         setMakeup(newMakeup);
-        
-    }, [domainTrueRanks])
+    }, [domainTrueRanks]);
 
     useEffect(() => {
         if (blueprint) return;
@@ -864,6 +989,94 @@ export default function BlueprintModule({
 
     // -------------------------- End of hooks --------------------------
 
+    function getApiStartingLineup(
+        leagueSettings: LeagueSettings,
+        rosterPlayers: RosterPlayer[]
+    ) {
+        let {qbCount, rbCount, wrCount, teCount, isSuperFlex, flexCount} =
+            leagueSettings;
+        const remainingPlayers = new Set(rosterPlayers.map(p => p.playerId)); // maybe map?
+        const startingQbs = rosterPlayers
+            .filter(p => p.position === QB)
+            .sort((a, b) => a.sortOrder - b.sortOrder)
+            .slice(0, qbCount);
+        startingQbs.forEach(p => remainingPlayers.delete(p.playerId));
+        const startingRbs = rosterPlayers
+            .filter(p => p.position === RB)
+            .sort((a, b) => a.sortOrder - b.sortOrder)
+            .slice(0, rbCount);
+        startingRbs.forEach(p => remainingPlayers.delete(p.playerId));
+        const startingWrs = rosterPlayers
+            .filter(p => p.position === WR)
+            .sort((a, b) => a.sortOrder - b.sortOrder)
+            .slice(0, wrCount);
+        startingWrs.forEach(p => remainingPlayers.delete(p.playerId));
+        const startingTes = rosterPlayers
+            .filter(p => p.position === TE)
+            .sort((a, b) => a.sortOrder - b.sortOrder)
+            .slice(0, teCount);
+        startingTes.forEach(p => remainingPlayers.delete(p.playerId));
+        if (isSuperFlex) flexCount -= 1;
+        const startingFlexes = rosterPlayers
+            .filter(
+                p =>
+                    FLEX_SET.has(p.position) && remainingPlayers.has(p.playerId)
+            )
+            .sort((a, b) => a.sortOrder - b.sortOrder)
+            .slice(0, flexCount);
+        startingFlexes.forEach(p => remainingPlayers.delete(p.playerId));
+        let startingSuperFlex: RosterPlayer[] = [];
+        if (isSuperFlex) {
+            startingSuperFlex = rosterPlayers
+                .filter(
+                    p =>
+                        SUPER_FLEX_SET.has(p.position) &&
+                        remainingPlayers.has(p.playerId)
+                )
+                .sort((a, b) => a.sortOrder - b.sortOrder)
+                .slice(0, 1);
+            startingSuperFlex.forEach(p => remainingPlayers.delete(p.playerId));
+        }
+        return [
+            ...startingQbs.map(p => {
+                return {
+                    player: p,
+                    position: QB,
+                };
+            }),
+            ...startingRbs.map(p => {
+                return {
+                    player: p,
+                    position: RB,
+                };
+            }),
+            ...startingWrs.map(p => {
+                return {
+                    player: p,
+                    position: WR,
+                };
+            }),
+            ...startingTes.map(p => {
+                return {
+                    player: p,
+                    position: TE,
+                };
+            }),
+            ...startingFlexes.map(p => {
+                return {
+                    player: p,
+                    position: FLEX,
+                };
+            }),
+            ...startingSuperFlex.map(p => {
+                return {
+                    player: p,
+                    position: SUPER_FLEX,
+                };
+            }),
+        ];
+    }
+
     function getRosterIdFromUser(user?: User) {
         if (!rosters || !user) return -1;
         return rosters.findIndex(r => r.owner_id === user.user_id) ?? -1;
@@ -875,10 +1088,15 @@ export default function BlueprintModule({
     }
 
     function getStartingPosition(playerName: string) {
-        return startingLineup.find(
-            ({player}) =>
-                `${player.first_name} ${player.last_name}` === playerName
-        )?.position;
+        return (
+            startingLineup.find(
+                ({player}) =>
+                    `${player.first_name} ${player.last_name}` === playerName
+            )?.position ||
+            apiStartingLineup.find(
+                ({player}) => player.playerName === playerName
+            )?.position
+        );
     }
 
     function getClassName(playerName: string) {
@@ -1383,6 +1601,7 @@ export default function BlueprintModule({
                                     draftCapitalScore={draftCapitalScore}
                                     twoYearOutlook={twoYearOutlook}
                                     rosterPlayers={rosterPlayers}
+                                    apiRosterPlayers={apiRosterPlayers}
                                     getStartingPosition={getStartingPosition}
                                     productionShare={`${productionSharePercent}%`}
                                     valueShare={`${valueSharePercent}%`}
@@ -1412,6 +1631,7 @@ export default function BlueprintModule({
                                     draftCapitalScore={draftCapitalScore}
                                     twoYearOutlook={twoYearOutlook}
                                     rosterPlayers={rosterPlayers}
+                                    apiRosterPlayers={apiRosterPlayers}
                                     getStartingPosition={getStartingPosition}
                                     productionShare={`${productionSharePercent}%`}
                                     valueShare={`${valueSharePercent}%`}
@@ -1648,7 +1868,9 @@ export default function BlueprintModule({
                             }}
                         />
                     </div>
-                    {roster && (
+                    {(roster ||
+                        !!rosterPlayers.length ||
+                        !!apiRosterPlayers.length) && (
                         <div className={styles.rosterContainer}>
                             <div className={styles.positionContainer}>
                                 <div
@@ -1657,30 +1879,71 @@ export default function BlueprintModule({
                                     QUARTERBACKS
                                 </div>
                                 <div className={styles.playersColumn}>
-                                    {rosterPlayers
-                                        .filter(p => p && p.position === QB)
-                                        .map((p, idx) => {
-                                            const fullName = `${p.first_name} ${p.last_name}`;
-                                            return (
-                                                <div
-                                                    key={idx}
-                                                    className={styles.player}
-                                                >
-                                                    <div
-                                                        className={getClassName(
-                                                            fullName
-                                                        )}
-                                                    >
-                                                        {fullName}
-                                                    </div>
-                                                    <div className={styles.adp}>
-                                                        {getPositionalAdp(
-                                                            fullName
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
+                                    {blueprintId
+                                        ? apiRosterPlayers
+                                              .filter(
+                                                  p => p && p.position === QB
+                                              )
+                                              .map((p, idx) => {
+                                                  const fullName = p.playerName;
+                                                  return (
+                                                      <div
+                                                          key={idx}
+                                                          className={
+                                                              styles.player
+                                                          }
+                                                      >
+                                                          <div
+                                                              className={getClassName(
+                                                                  fullName
+                                                              )}
+                                                          >
+                                                              {fullName}
+                                                          </div>
+                                                          <div
+                                                              className={
+                                                                  styles.adp
+                                                              }
+                                                          >
+                                                              {p.compositePositionRank.slice(
+                                                                  2
+                                                              )}
+                                                          </div>
+                                                      </div>
+                                                  );
+                                              })
+                                        : rosterPlayers
+                                              .filter(
+                                                  p => p && p.position === QB
+                                              )
+                                              .map((p, idx) => {
+                                                  const fullName = `${p.first_name} ${p.last_name}`;
+                                                  return (
+                                                      <div
+                                                          key={idx}
+                                                          className={
+                                                              styles.player
+                                                          }
+                                                      >
+                                                          <div
+                                                              className={getClassName(
+                                                                  fullName
+                                                              )}
+                                                          >
+                                                              {fullName}
+                                                          </div>
+                                                          <div
+                                                              className={
+                                                                  styles.adp
+                                                              }
+                                                          >
+                                                              {getPositionalAdp(
+                                                                  fullName
+                                                              )}
+                                                          </div>
+                                                      </div>
+                                                  );
+                                              })}
                                 </div>
                             </div>
                             <DomainDropdown
@@ -1703,30 +1966,71 @@ export default function BlueprintModule({
                                     Running Backs
                                 </div>
                                 <div className={styles.playersColumn}>
-                                    {rosterPlayers
-                                        .filter(p => p && p.position === RB)
-                                        .map((p, idx) => {
-                                            const fullName = `${p.first_name} ${p.last_name}`;
-                                            return (
-                                                <div
-                                                    key={idx}
-                                                    className={styles.player}
-                                                >
-                                                    <div
-                                                        className={getClassName(
-                                                            fullName
-                                                        )}
-                                                    >
-                                                        {fullName}
-                                                    </div>
-                                                    <div className={styles.adp}>
-                                                        {getPositionalAdp(
-                                                            fullName
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
+                                    {blueprintId
+                                        ? apiRosterPlayers
+                                              .filter(
+                                                  p => p && p.position === RB
+                                              )
+                                              .map((p, idx) => {
+                                                  const fullName = p.playerName;
+                                                  return (
+                                                      <div
+                                                          key={idx}
+                                                          className={
+                                                              styles.player
+                                                          }
+                                                      >
+                                                          <div
+                                                              className={getClassName(
+                                                                  fullName
+                                                              )}
+                                                          >
+                                                              {fullName}
+                                                          </div>
+                                                          <div
+                                                              className={
+                                                                  styles.adp
+                                                              }
+                                                          >
+                                                              {p.compositePositionRank.slice(
+                                                                  2
+                                                              )}
+                                                          </div>
+                                                      </div>
+                                                  );
+                                              })
+                                        : rosterPlayers
+                                              .filter(
+                                                  p => p && p.position === RB
+                                              )
+                                              .map((p, idx) => {
+                                                  const fullName = `${p.first_name} ${p.last_name}`;
+                                                  return (
+                                                      <div
+                                                          key={idx}
+                                                          className={
+                                                              styles.player
+                                                          }
+                                                      >
+                                                          <div
+                                                              className={getClassName(
+                                                                  fullName
+                                                              )}
+                                                          >
+                                                              {fullName}
+                                                          </div>
+                                                          <div
+                                                              className={
+                                                                  styles.adp
+                                                              }
+                                                          >
+                                                              {getPositionalAdp(
+                                                                  fullName
+                                                              )}
+                                                          </div>
+                                                      </div>
+                                                  );
+                                              })}
                                 </div>
                             </div>
                             <DomainDropdown
@@ -1749,30 +2053,71 @@ export default function BlueprintModule({
                                     Wide Receivers
                                 </div>
                                 <div className={styles.playersColumn}>
-                                    {rosterPlayers
-                                        .filter(p => p && p.position === WR)
-                                        .map((p, idx) => {
-                                            const fullName = `${p.first_name} ${p.last_name}`;
-                                            return (
-                                                <div
-                                                    key={idx}
-                                                    className={styles.player}
-                                                >
-                                                    <div
-                                                        className={getClassName(
-                                                            fullName
-                                                        )}
-                                                    >
-                                                        {fullName}
-                                                    </div>
-                                                    <div className={styles.adp}>
-                                                        {getPositionalAdp(
-                                                            fullName
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
+                                    {blueprintId
+                                        ? apiRosterPlayers
+                                              .filter(
+                                                  p => p && p.position === WR
+                                              )
+                                              .map((p, idx) => {
+                                                  const fullName = p.playerName;
+                                                  return (
+                                                      <div
+                                                          key={idx}
+                                                          className={
+                                                              styles.player
+                                                          }
+                                                      >
+                                                          <div
+                                                              className={getClassName(
+                                                                  fullName
+                                                              )}
+                                                          >
+                                                              {fullName}
+                                                          </div>
+                                                          <div
+                                                              className={
+                                                                  styles.adp
+                                                              }
+                                                          >
+                                                              {p.compositePositionRank.slice(
+                                                                  2
+                                                              )}
+                                                          </div>
+                                                      </div>
+                                                  );
+                                              })
+                                        : rosterPlayers
+                                              .filter(
+                                                  p => p && p.position === WR
+                                              )
+                                              .map((p, idx) => {
+                                                  const fullName = `${p.first_name} ${p.last_name}`;
+                                                  return (
+                                                      <div
+                                                          key={idx}
+                                                          className={
+                                                              styles.player
+                                                          }
+                                                      >
+                                                          <div
+                                                              className={getClassName(
+                                                                  fullName
+                                                              )}
+                                                          >
+                                                              {fullName}
+                                                          </div>
+                                                          <div
+                                                              className={
+                                                                  styles.adp
+                                                              }
+                                                          >
+                                                              {getPositionalAdp(
+                                                                  fullName
+                                                              )}
+                                                          </div>
+                                                      </div>
+                                                  );
+                                              })}
                                 </div>
                             </div>
                             <DomainDropdown
@@ -1795,30 +2140,71 @@ export default function BlueprintModule({
                                     Tight Ends
                                 </div>
                                 <div className={styles.playersColumn}>
-                                    {rosterPlayers
-                                        .filter(p => p && p.position === TE)
-                                        .map((p, idx) => {
-                                            const fullName = `${p.first_name} ${p.last_name}`;
-                                            return (
-                                                <div
-                                                    key={idx}
-                                                    className={styles.player}
-                                                >
-                                                    <div
-                                                        className={getClassName(
-                                                            fullName
-                                                        )}
-                                                    >
-                                                        {fullName}
-                                                    </div>
-                                                    <div className={styles.adp}>
-                                                        {getPositionalAdp(
-                                                            fullName
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
+                                    {blueprintId
+                                        ? apiRosterPlayers
+                                              .filter(
+                                                  p => p && p.position === TE
+                                              )
+                                              .map((p, idx) => {
+                                                  const fullName = p.playerName;
+                                                  return (
+                                                      <div
+                                                          key={idx}
+                                                          className={
+                                                              styles.player
+                                                          }
+                                                      >
+                                                          <div
+                                                              className={getClassName(
+                                                                  fullName
+                                                              )}
+                                                          >
+                                                              {fullName}
+                                                          </div>
+                                                          <div
+                                                              className={
+                                                                  styles.adp
+                                                              }
+                                                          >
+                                                              {p.compositePositionRank.slice(
+                                                                  2
+                                                              )}
+                                                          </div>
+                                                      </div>
+                                                  );
+                                              })
+                                        : rosterPlayers
+                                              .filter(
+                                                  p => p && p.position === TE
+                                              )
+                                              .map((p, idx) => {
+                                                  const fullName = `${p.first_name} ${p.last_name}`;
+                                                  return (
+                                                      <div
+                                                          key={idx}
+                                                          className={
+                                                              styles.player
+                                                          }
+                                                      >
+                                                          <div
+                                                              className={getClassName(
+                                                                  fullName
+                                                              )}
+                                                          >
+                                                              {fullName}
+                                                          </div>
+                                                          <div
+                                                              className={
+                                                                  styles.adp
+                                                              }
+                                                          >
+                                                              {getPositionalAdp(
+                                                                  fullName
+                                                              )}
+                                                          </div>
+                                                      </div>
+                                                  );
+                                              })}
                                 </div>
                             </div>
                             <DomainDropdown
@@ -2483,6 +2869,7 @@ export default function BlueprintModule({
                             draftCapitalScore={draftCapitalScore}
                             twoYearOutlook={twoYearOutlook}
                             rosterPlayers={rosterPlayers}
+                            apiRosterPlayers={apiRosterPlayers}
                             getStartingPosition={getStartingPosition}
                             productionShare={`${productionSharePercent}%`}
                             valueShare={`${valueSharePercent}%`}
@@ -2519,6 +2906,7 @@ export default function BlueprintModule({
                             draftCapitalScore={draftCapitalScore}
                             twoYearOutlook={twoYearOutlook}
                             rosterPlayers={rosterPlayers}
+                            apiRosterPlayers={apiRosterPlayers}
                             getStartingPosition={getStartingPosition}
                             productionShare={`${productionSharePercent}%`}
                             valueShare={`${valueSharePercent}%`}

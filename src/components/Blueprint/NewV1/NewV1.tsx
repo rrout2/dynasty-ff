@@ -16,7 +16,7 @@ import {CSSProperties} from 'react';
 import {Player, User} from '../../../sleeper-api/sleeper-api';
 import {NONE_PLAYER_ID} from '../v2/modules/CornerstonesModule/CornerstonesModule';
 import {logoImage} from '../shared/Utilities';
-import {useAdpData, usePlayerData} from '../../../hooks/hooks';
+import {RosterPlayer, useAdpData, usePlayerData} from '../../../hooks/hooks';
 import {
     FLEX,
     QB,
@@ -47,6 +47,7 @@ type NewV1Props = {
     draftCapitalScore: number;
     twoYearOutlook: OutlookOption[];
     rosterPlayers: Player[];
+    apiRosterPlayers: RosterPlayer[];
     getStartingPosition: (playerName: string) => string | undefined;
     productionShare: string;
     valueShare: string;
@@ -176,6 +177,7 @@ export default function NewV1({
             />
             <Roster
                 rosterPlayers={rosterPlayers}
+                apiRosterPlayers={[]}
                 getStartingPosition={getStartingPosition}
                 style={{left: '62px', top: '207px'}}
             />
@@ -218,10 +220,12 @@ export default function NewV1({
 
 export function Roster({
     rosterPlayers,
+    apiRosterPlayers,
     getStartingPosition,
     style,
 }: {
     rosterPlayers: Player[];
+    apiRosterPlayers: RosterPlayer[];
     getStartingPosition: (playerName: string) => string | undefined;
     style?: CSSProperties;
 }) {
@@ -230,16 +234,27 @@ export function Roster({
         <div className={styles.roster} style={style}>
             {[QB, RB, WR, TE].map(pos => (
                 <div className={styles.playersColumn}>
-                    {rosterPlayers
-                        .filter(p => p && p.position === pos)
-                        .slice(0, positionDisplayLimit)
-                        .map((p, idx) => (
-                            <PlayerCard
-                                key={idx}
-                                player={p}
-                                getStartingPosition={getStartingPosition}
-                            />
-                        ))}
+                    {apiRosterPlayers.length
+                        ? apiRosterPlayers
+                              .filter(p => p && p.position === pos)
+                              .slice(0, positionDisplayLimit)
+                              .map((p, idx) => (
+                                  <PlayerCard
+                                      key={idx}
+                                      apiPlayer={p}
+                                      getStartingPosition={getStartingPosition}
+                                  />
+                              ))
+                        : rosterPlayers
+                              .filter(p => p && p.position === pos)
+                              .slice(0, positionDisplayLimit)
+                              .map((p, idx) => (
+                                  <PlayerCard
+                                      key={idx}
+                                      player={p}
+                                      getStartingPosition={getStartingPosition}
+                                  />
+                              ))}
                 </div>
             ))}
         </div>
@@ -248,13 +263,19 @@ export function Roster({
 
 export function PlayerCard({
     player,
+    apiPlayer,
     getStartingPosition,
 }: {
-    player: Player;
+    player?: Player;
+    apiPlayer?: RosterPlayer;
     getStartingPosition: (playerName: string) => string | undefined;
 }) {
     const {getPositionalAdp} = useAdpData();
-    const posAdp = getPositionalAdp(`${player.first_name} ${player.last_name}`);
+
+    if (!player && !apiPlayer) return null;
+    const posAdp = player
+        ? getPositionalAdp(`${player.first_name} ${player.last_name}`)
+        : +apiPlayer!.compositePositionRank.slice(2);
     function getColorFromAdp(adp: number) {
         if (adp <= 20) return '#1AFF00';
         if (adp <= 35) return '#F1BA4C';
@@ -264,6 +285,26 @@ export function PlayerCard({
     function getBorderColor(player: Player) {
         const pos = getStartingPosition(
             `${player.first_name} ${player.last_name}`
+        );
+        if (pos) {
+            switch (player.position) {
+                case 'QB':
+                    return 'rgba(232, 77, 87, 1)';
+                case 'RB':
+                    return 'rgba(40, 171, 226, 1)';
+                case 'WR':
+                    return 'rgba(26, 224, 105, 1)';
+                case 'TE':
+                    return 'rgba(250, 191, 74, 1)';
+            }
+        }
+        return 'none';
+    }
+    
+
+    function getApiBorderColor(player: RosterPlayer) {
+        const pos = getStartingPosition(
+            player.playerName
         );
         if (pos) {
             switch (player.position) {
@@ -324,31 +365,82 @@ export function PlayerCard({
                 return {};
         }
     }
+
+    function getApiCardStyle(player: RosterPlayer): CSSProperties {
+        const pos = getStartingPosition(
+            player.playerName
+        );
+        if (!pos) return {};
+        switch (pos) {
+            case QB:
+                return {
+                    outline: '1px solid rgba(232, 77, 87, 1)',
+                    backgroundColor: 'rgba(232, 77, 87, 0.22)',
+                };
+            case RB:
+                return {
+                    outline: '1px solid rgba(40, 171, 226, 1)',
+                    backgroundColor: 'rgba(40, 171, 226, 0.22)',
+                };
+            case WR:
+                return {
+                    outline: '1px solid rgba(26, 224, 105, 1)',
+                    backgroundColor: 'rgba(26, 224, 105, 0.22)',
+                };
+            case TE:
+                return {
+                    outline: '1px solid rgba(250, 191, 74, 1)',
+                    backgroundColor: 'rgba(250, 191, 74, 0.22)',
+                };
+            case SUPER_FLEX:
+                return {
+                    outline: `1px solid ${getApiBorderColor(player)}`,
+                    background:
+                        'linear-gradient(90deg, rgba(219, 35, 53, 0.20) 1.44%, rgba(40, 171, 226, 0.20) 36.67%, rgba(26, 224, 105, 0.20) 69.86%, rgba(255, 170, 0, 0.20) 100%)',
+                };
+            case FLEX:
+            case WR_RB_FLEX:
+            case WR_TE_FLEX:
+                return {
+                    outline: `1px solid ${getApiBorderColor(player)}`,
+                    background:
+                        'linear-gradient(90deg, rgba(40, 171, 226, 0.20) 0%, rgba(26, 224, 105, 0.20) 48.79%, rgba(255, 170, 0, 0.20) 100%)',
+                };
+            default:
+                return {};
+        }
+    }
+
+    // TODO: return for apiPlayer
     return (
-        <div className={styles.playerCard} style={getCardStyle(player)}>
-            <div className={styles.playerInfo}>
-                {logoImage(player.team, styles.teamLogo)}
-                <img
-                    src={
-                        player.player_id === NONE_PLAYER_ID
-                            ? nflSilhouette
-                            : `https://sleepercdn.com/content/nfl/players/${player.player_id}.jpg`
-                    }
-                    onError={({currentTarget}) => {
-                        currentTarget.onerror = null;
-                        currentTarget.src =
-                            'https://sleepercdn.com/images/v2/icons/player_default.webp';
-                    }}
-                    className={styles.headshot}
-                />
-                <div className={styles.playerName}>
-                    {player.first_name} {player.last_name}
+        player && (
+            <div className={styles.playerCard} style={getCardStyle(player)}>
+                <div className={styles.playerInfo}>
+                    {logoImage(player.team, styles.teamLogo)}
+                    <img
+                        src={
+                            player.player_id === NONE_PLAYER_ID
+                                ? nflSilhouette
+                                : `https://sleepercdn.com/content/nfl/players/${player.player_id}.jpg`
+                        }
+                        onError={({currentTarget}) => {
+                            currentTarget.onerror = null;
+                            currentTarget.src =
+                                'https://sleepercdn.com/images/v2/icons/player_default.webp';
+                        }}
+                        className={styles.headshot}
+                    />
+                    <div className={styles.playerName}>
+                        {player.first_name} {player.last_name}
+                    </div>
+                </div>
+                <div
+                    style={{color: getColorFromAdp(posAdp), paddingTop: '3px'}}
+                >
+                    {posAdp === Infinity ? '-' : posAdp}
                 </div>
             </div>
-            <div style={{color: getColorFromAdp(posAdp), paddingTop: '3px'}}>
-                {posAdp === Infinity ? '-' : posAdp}
-            </div>
-        </div>
+        )
     );
 }
 

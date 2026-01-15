@@ -71,6 +71,34 @@ import {
 
 const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
+export type LeagueSettings = {
+    numberOfTeams: number;
+    isSuperFlex: boolean;
+    pprValue: number;
+    tePremiumValue: number;
+    taxiSpots: number;
+    qbCount: number;
+    rbCount: number;
+    wrCount: number;
+    teCount: number;
+    flexCount: number;
+    benchCount: number;
+};
+
+export type RosterPlayer = {
+    id: number;
+    playerId: number;
+    sleeperId: string;
+    playerName: string;
+    position: string;
+    assetCategory: string;
+    sortOrder: number;
+    insulationScore: number;
+    productionScore: number;
+    situationalScore: number;
+    compositePositionRank: string;
+};
+
 type Blueprint = {
     id: number;
     blueprintType: string;
@@ -81,37 +109,14 @@ type Blueprint = {
     teamName: string;
     season: number;
     isRedraft: boolean;
-    leagueSettings: {
-        numberOfTeams: number;
-        isSuperFlex: boolean;
-        pprValue: number;
-        tePremiumValue: number;
-        taxiSpots: number;
-        qbCount: number;
-        rbCount: number;
-        wrCount: number;
-        teCount: number;
-        flexCount: number;
-        benchCount: number;
-    };
+    leagueSettings: LeagueSettings;
     valueArchetype: string;
     rosterArchetype: string;
     productionSharePercentage: number;
     productionShareLeagueRank: number;
     valueSharePercentage: number;
     valueShareLeagueRank: number;
-    rosterPlayers: Array<{
-        id: number;
-        playerId: number;
-        playerName: string;
-        position: string;
-        assetCategory: string;
-        sortOrder: number;
-        insulationScore: number;
-        productionScore: number;
-        situationalScore: number;
-        compositePositionRank: string;
-    }>;
+    rosterPlayers: Array<RosterPlayer>;
     outlooks: Array<{
         id: number;
         yearNumber: number;
@@ -326,6 +331,50 @@ export function useThreeFactorGrades(leagueId: string, teamId: string) {
     const [rbSituationalScoreGrade, setRbSituationalScoreGrade] = useState(1);
     const [wrSituationalScoreGrade, setWrSituationalScoreGrade] = useState(1);
     const [teSituationalScoreGrade, setTeSituationalScoreGrade] = useState(1);
+    const [threeFactorGrades, setThreeFactorGrades] =
+        useState<ThreeFactorGrades>({
+            qbInsulationScoreGrade,
+            rbInsulationScoreGrade,
+            wrInsulationScoreGrade,
+            teInsulationScoreGrade,
+            qbProductionScoreGrade,
+            rbProductionScoreGrade,
+            wrProductionScoreGrade,
+            teProductionScoreGrade,
+            qbSituationalScoreGrade,
+            rbSituationalScoreGrade,
+            wrSituationalScoreGrade,
+            teSituationalScoreGrade,
+        });
+    useEffect(() => {
+        setThreeFactorGrades({
+            qbInsulationScoreGrade,
+            rbInsulationScoreGrade,
+            wrInsulationScoreGrade,
+            teInsulationScoreGrade,
+            qbProductionScoreGrade,
+            rbProductionScoreGrade,
+            wrProductionScoreGrade,
+            teProductionScoreGrade,
+            qbSituationalScoreGrade,
+            rbSituationalScoreGrade,
+            wrSituationalScoreGrade,
+            teSituationalScoreGrade,
+        });
+    }, [
+        qbInsulationScoreGrade,
+        rbInsulationScoreGrade,
+        wrInsulationScoreGrade,
+        teInsulationScoreGrade,
+        qbProductionScoreGrade,
+        rbProductionScoreGrade,
+        wrProductionScoreGrade,
+        teProductionScoreGrade,
+        qbSituationalScoreGrade,
+        rbSituationalScoreGrade,
+        wrSituationalScoreGrade,
+        teSituationalScoreGrade,
+    ]);
 
     const authToken = sessionStorage.getItem('authToken');
 
@@ -411,19 +460,9 @@ export function useThreeFactorGrades(leagueId: string, teamId: string) {
     }, [situationalData]);
 
     return {
-        qbInsulationScoreGrade,
-        rbInsulationScoreGrade,
-        wrInsulationScoreGrade,
-        teInsulationScoreGrade,
-        qbProductionScoreGrade,
-        rbProductionScoreGrade,
-        wrProductionScoreGrade,
-        teProductionScoreGrade,
-        qbSituationalScoreGrade,
-        rbSituationalScoreGrade,
-        wrSituationalScoreGrade,
-        teSituationalScoreGrade,
-    } as ThreeFactorGrades;
+        threeFactorGrades,
+        setThreeFactorGrades,
+    };
 }
 
 export type DomainTrueRank = {

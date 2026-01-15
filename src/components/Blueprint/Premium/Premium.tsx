@@ -31,6 +31,7 @@ import {QB, RB, TE, WR} from '../../../consts/fantasy';
 import {
     DomainTrueRank,
     PowerRank,
+    RosterPlayer,
     ThreeFactorGrades,
     useAdpData,
 } from '../../../hooks/hooks';
@@ -101,6 +102,7 @@ type PremiumProps = {
     draftCapitalScore: number;
     twoYearOutlook: OutlookOption[];
     rosterPlayers: Player[];
+    apiRosterPlayers: RosterPlayer[];
     getStartingPosition: (playerName: string) => string | undefined;
     productionShare: string;
     valueShare: string;
@@ -145,6 +147,7 @@ export default function Premium({
     draftCapitalScore,
     twoYearOutlook,
     rosterPlayers,
+    apiRosterPlayers,
     getStartingPosition,
     productionShare,
     valueShare,
@@ -319,6 +322,7 @@ export default function Premium({
             />
             <Roster
                 rosterPlayers={rosterPlayers}
+                apiRosterPlayers={apiRosterPlayers}
                 getStartingPosition={getStartingPosition}
                 style={{
                     left: '77px',
@@ -833,7 +837,6 @@ function RosterMakeUp({
     rosterMakeup: Map<string, number>;
     style?: CSSProperties;
 }) {
-
     function getFontColor(archetype: string) {
         switch (archetype.toLowerCase()) {
             case 'cornerstone':
@@ -864,10 +867,7 @@ function RosterMakeUp({
                         >
                             {camelCaseToTitleCase(archetype)}
                         </div>
-                        <div className={styles.archPercent}>
-                            {count}
-                            %
-                        </div>
+                        <div className={styles.archPercent}>{count}%</div>
                     </div>
                 ))}
         </div>
