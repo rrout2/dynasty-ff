@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction, useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import styles from './BlueprintModule.module.css';
 import DomainDropdown, {DARK_BLUE} from '../shared/DomainDropdown';
 import {
@@ -993,8 +993,9 @@ export default function BlueprintModule({
         leagueSettings: LeagueSettings,
         rosterPlayers: RosterPlayer[]
     ) {
-        let {qbCount, rbCount, wrCount, teCount, isSuperFlex, flexCount} =
+        const {qbCount, rbCount, wrCount, teCount, isSuperFlex} =
             leagueSettings;
+        let {flexCount} = leagueSettings;
         const remainingPlayers = new Set(rosterPlayers.map(p => p.playerId)); // maybe map?
         const startingQbs = rosterPlayers
             .filter(p => p.position === QB)
@@ -3199,7 +3200,7 @@ function SuggestedMove({
                             />
                         </>
                     )}
-                    {move == Move.DOWNTIER && (
+                    {move === Move.DOWNTIER && (
                         <>
                             <div className={styles.downtierRow}>
                                 <DomainAutocomplete

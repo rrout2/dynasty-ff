@@ -3,7 +3,6 @@ import styles from './NewLive.module.css';
 import {blankLive2} from '../../../consts/images';
 import {
     OutlookOption,
-    PCT_OPTIONS,
     RosterArchetype,
     ValueArchetype,
 } from '../BlueprintModule/BlueprintModule';

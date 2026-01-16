@@ -26,7 +26,7 @@ import {
     TwoYearOutlook,
     ValueArchetypeComponent,
 } from '../NewV1/NewV1';
-import {CSSProperties, useEffect, useState} from 'react';
+import {CSSProperties} from 'react';
 import {QB, RB, TE, WR} from '../../../consts/fantasy';
 import {
     DomainTrueRank,
@@ -1199,10 +1199,6 @@ function ArchetypeCard({archetype}: {archetype: string}) {
                 return '#07223F';
         }
         return 'white';
-    }
-
-    function isLong() {
-        return camelCaseToTitleCase(archetype).length > 18;
     }
 
     return (

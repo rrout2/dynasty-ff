@@ -154,7 +154,6 @@ const UserIdHydrator = () => {
     const [totalRows, setTotalRows] = useState<number>(0);
     const [downloadCsv, setDownloadCsv] = useState<string | null>(null);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    const [initialHeaders, setInitialHeaders] = useState<string[]>([]);
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const uploadedFile = event.target.files ? event.target.files[0] : null;
@@ -174,7 +173,6 @@ const UserIdHydrator = () => {
 
         try {
             const {headers, data: originalData} = csvStringToArray(csvString);
-            setInitialHeaders(headers);
 
             if (!headers.includes(usernameField)) {
                 throw new Error(

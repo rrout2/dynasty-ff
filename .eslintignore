@@ -2,3 +2,4 @@ build/
 templates/
 scripts/
 vite.config.ts
+dist/

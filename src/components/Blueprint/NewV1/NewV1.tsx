@@ -300,12 +300,9 @@ export function PlayerCard({
         }
         return 'none';
     }
-    
 
     function getApiBorderColor(player: RosterPlayer) {
-        const pos = getStartingPosition(
-            player.playerName
-        );
+        const pos = getStartingPosition(player.playerName);
         if (pos) {
             switch (player.position) {
                 case 'QB':
@@ -367,9 +364,7 @@ export function PlayerCard({
     }
 
     function getApiCardStyle(player: RosterPlayer): CSSProperties {
-        const pos = getStartingPosition(
-            player.playerName
-        );
+        const pos = getStartingPosition(player.playerName);
         if (!pos) return {};
         switch (pos) {
             case QB:
