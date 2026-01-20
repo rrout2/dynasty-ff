@@ -1,4 +1,4 @@
-import React, {CSSProperties, useEffect, useState} from 'react';
+import {CSSProperties, useEffect, useState} from 'react';
 import styles from './NewInfinite.module.css';
 import {
     domainShield,
@@ -15,8 +15,6 @@ import {
     useRoster,
     useRosterSettings,
     useTeamIdFromUrl,
-    useTeamRosterArchetype,
-    useTeamValueArchetype,
     useUserIdFromUrl,
 } from '../../../hooks/hooks';
 import {getAllUsers, User} from '../../../sleeper-api/sleeper-api';
@@ -191,6 +189,7 @@ export default function NewInfinite() {
                         />
                     ))}
                 </div>
+                <div className={styles.benchString}>{benchString}</div>
                 <img src={newInfiniteBg} className={styles.blankBp} />
             </div>
         </>

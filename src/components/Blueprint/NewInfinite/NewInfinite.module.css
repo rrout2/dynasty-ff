@@ -125,3 +125,22 @@
 .marketDiscrepancy {
     padding-top: 5px;
 }
+
+.benchString {
+    position: absolute;
+    top: 1110px;
+    left: 55px;
+
+    width: 530px;
+    height: 200px;
+
+    color: #FFF;
+    text-align: center;
+    font-family: "Acumin Pro Condensed";
+    font-size: 23.25px;
+    font-weight: 700;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
