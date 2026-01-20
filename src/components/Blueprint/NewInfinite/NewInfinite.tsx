@@ -344,8 +344,14 @@ function PlayerRow({
                 style={{color: getDifferenceColor()}}
             >
                 <img src={domainShield} className={styles.domainShield} />
-                <div className={styles.marketDiscrepancy}>{getDifferenceSymbol()}</div>
-                {marketDiscrepancy !== 0 && <div className={styles.marketDiscrepancy}>{Math.abs(marketDiscrepancy)}</div>}
+                <div className={styles.marketDiscrepancy}>
+                    {getDifferenceSymbol()}
+                </div>
+                {marketDiscrepancy !== 0 && (
+                    <div className={styles.marketDiscrepancy}>
+                        {Math.abs(marketDiscrepancy)}
+                    </div>
+                )}
             </div>
         </div>
     );
