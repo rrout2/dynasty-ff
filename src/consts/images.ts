@@ -337,6 +337,9 @@ import newNflBg from '../assets/new1.0/playerBackgrounds/NFL.png';
 import premiumBkg from '../assets/premium/premiumBkg.png';
 import premiumAssets from '../assets/premium/premiumAssets.png';
 
+// New Infinite
+import newInfiniteBg from '../assets/newinfinite/Infinite.png';
+
 const newTeamBackgrounds: Map<string, string> = new Map([
     ['ARI', newAriBg],
     ['ATL', newAtlBg],
@@ -802,4 +805,5 @@ export {
     blankLive2,
     newTeamBackgrounds,
     newNflBg,
+    newInfiniteBg,
 };

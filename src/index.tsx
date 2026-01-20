@@ -26,6 +26,7 @@ import UserIdHydrator from './components/UserIdHydrator/UserIdHydrator';
 import BlueprintModule from './components/Blueprint/BlueprintModule/BlueprintModule';
 import BodyBackgroundController from './BodyBackgroundController';
 import NewLive from './components/Blueprint/NewLive/NewLive';
+import NewInfinite from './components/Blueprint/NewInfinite/NewInfinite';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -80,6 +81,7 @@ root.render(
                         path="/BlueprintPremiumModule"
                         element={<BlueprintModule premium />}
                     />
+                    <Route path="/newinfinite" element={<NewInfinite />} />
                 </Routes>
             </HashRouter>
         </QueryClientProvider>

@@ -1,0 +1,127 @@
+.fullBlueprint {
+    position: relative;
+    width: 1700px;
+}
+
+.blankBp {
+    width: inherit;
+}
+
+.teamName {
+    position: absolute;
+    color: white;
+    left: 350px;
+    top: 65px;
+    font-family: 'Prohibition';
+    font-size: 80px;
+
+    width: 960px;
+    text-align: center;
+}
+
+.monthYear {
+    position: absolute;
+    right: 0px;
+    top: 10px;
+    font-family: 'Prohibition';
+    font-size: 50px;
+    color: white;
+
+    width: 350px;
+    text-align: center;
+}
+
+.startingLineup {
+    position: absolute;
+    top: 300px;
+    left: 75px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    height: 700px;
+}
+
+.playerRow {
+    display: flex;
+    flex-direction: row;
+}
+
+.playerCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 24px;
+    outline-offset: -1px;
+
+    width: 380px;
+
+    .position {
+        color: #003049;
+        font-family: Prohibition;
+        font-size: 22.5px;
+        font-weight: 400;
+        
+        line-height: 80%;
+        
+        width: 45px;
+        height: 45px;
+        border-radius: 50%; /* The key property to create the circle shape */
+        text-align: center; /* Centers the text horizontally */
+        display: flex; /* Helps in vertical alignment */
+        align-items: center; /* Centers the text vertically */
+        justify-content: center; /* Centers the text horizontally */
+    }
+
+    .teamLogo {
+        width: 45px;
+        height: auto;
+        margin-left: -10px;
+    }
+
+    .headshot {
+        width: 60px;
+        height: auto;
+
+        align-self: flex-end;
+    }
+
+    .playerName {
+        color: #FFF;
+        font-family: "Acumin Pro ExtraCondensed";
+        font-size: 30px;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        padding-top: 10px;
+        padding-left: 10px;
+    }
+}
+
+.domainShield {
+    height: 30px;
+}
+
+.differenceChip {
+
+    font-family: 'Acumin Pro Condensed';
+    font-weight: bold;
+    font-size: 25px;
+
+    width: 94px;
+
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.marketDiscrepancy {
+    padding-top: 5px;
+}
