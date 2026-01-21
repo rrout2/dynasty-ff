@@ -144,3 +144,37 @@
     flex-direction: column;
     justify-content: center;
 }
+
+.risers {
+    position: absolute;
+    top: 265px;
+    right: 835px;
+
+    color: #FFF;
+    text-align: right;
+    font-family: "Acumin Pro ExtraCondensed";
+    font-size: 24.15px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    display: flex;
+    flex-direction: column;
+    gap: 27px;
+}
+
+.fallers {
+    position: absolute;
+    top: 265px;
+    left: 1100px;
+
+    color: #FFF;
+    text-align: left;
+    font-family: "Acumin Pro ExtraCondensed";
+    font-size: 24.15px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    display: flex;
+    flex-direction: column;
+    gap: 27px;
+}

@@ -16,6 +16,7 @@ import {
     useRosterSettings,
     useTeamIdFromUrl,
     useUserIdFromUrl,
+    useWeeklyRisersFallers,
 } from '../../../hooks/hooks';
 import {getAllUsers, User} from '../../../sleeper-api/sleeper-api';
 import {NONE_TEAM_ID} from '../../../consts/urlParams';
@@ -61,6 +62,7 @@ export default function NewInfinite() {
         leagueId,
         '' + rosterId
     );
+    const {risers, fallers} = useWeeklyRisersFallers(roster);
 
     useEffect(() => {
         if (!leagueId || !rosters) return;
@@ -106,7 +108,7 @@ export default function NewInfinite() {
 
     return (
         <>
-            notes: bench score is hard coded. Lineup BSH values are hard coded.
+            notes: bench score is hard coded. Lineup BSH values are hard coded. Risers/fallers need to use appropriate list IDs.
             <div className={styles.fullBlueprint}>
                 <div className={styles.teamName}>
                     {getDisplayName(specifiedUser)}
@@ -116,6 +118,16 @@ export default function NewInfinite() {
                         month: 'long',
                         year: 'numeric',
                     })}
+                </div>
+                <div className={styles.risers}>
+                    {risers.map((r, i) => (
+                        <div key={i}>{r}</div>
+                    ))}
+                </div>
+                <div className={styles.fallers}>
+                    {fallers.map((f, i) => (
+                        <div key={i}>{f}</div>
+                    ))}
                 </div>
                 <PositionalGradeDisc
                     grade={qbGrade}
