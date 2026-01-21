@@ -83,6 +83,7 @@ type ValueProportion = {
     rb: number;
     wr: number;
     te: number;
+    pick: number;
 };
 
 type PremiumProps = {
@@ -487,6 +488,7 @@ function ValueProportionChart({
         {label: 'RB', value: valueProportion.rb},
         {label: 'WR', value: valueProportion.wr},
         {label: 'TE', value: valueProportion.te},
+        {label: 'DC', value: valueProportion.pick},
     ];
 
     // Calculate the angles for each slice
@@ -573,6 +575,16 @@ function ValueProportionChart({
                     >
                         <stop stop-color="#D57C00" />
                         <stop offset="0.533654" stop-color="#EABA10" />
+                    </linearGradient>
+                    <linearGradient
+                        id="gradient-dc"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop stop-color="#7b3e00ff" />
+                        <stop offset="1" stop-color="#ff8000ff" />
                     </linearGradient>
                 </defs>
                 {/* Pie slices */}

@@ -432,6 +432,7 @@ export default function BlueprintModule({
         rbValueProportionPercent,
         wrValueProportionPercent,
         teValueProportionPercent,
+        pickValueProportionPercent,
     } = useTeamValueShare(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser),
@@ -1657,6 +1658,7 @@ export default function BlueprintModule({
                                         wr: wrValueProportionPercent,
                                         rb: rbValueProportionPercent,
                                         te: teValueProportionPercent,
+                                        pick: pickValueProportionPercent,
                                     }}
                                     startingQbAge={startingQbAge}
                                     startingRbAge={startingRbAge}
@@ -2932,6 +2934,7 @@ export default function BlueprintModule({
                                 wr: wrValueProportionPercent,
                                 rb: rbValueProportionPercent,
                                 te: teValueProportionPercent,
+                                pick: pickValueProportionPercent,
                             }}
                             startingQbAge={startingQbAge}
                             startingRbAge={startingRbAge}

@@ -518,10 +518,12 @@ export function useTeamValueShare(
     const [rbValueSharePercent, setRbValueSharePercent] = useState(1);
     const [wrValueSharePercent, setWrValueSharePercent] = useState(1);
     const [teValueSharePercent, setTeValueSharePercent] = useState(1);
+    const [pickValueSharePercent, setPickValueSharePercent] = useState(1);
     const [qbValueProportionPercent, setQbValueProportionPercent] = useState(1);
     const [rbValueProportionPercent, setRbValueProportionPercent] = useState(1);
     const [wrValueProportionPercent, setWrValueProportionPercent] = useState(1);
     const [teValueProportionPercent, setTeValueProportionPercent] = useState(1);
+    const [pickValueProportionPercent, setPickValueProportionPercent] = useState(1);
     const [leagueRank, setLeagueRank] = useState(1);
     const authToken = sessionStorage.getItem('authToken');
     const {data} = useQuery({
@@ -554,10 +556,12 @@ export function useTeamValueShare(
         setRbValueSharePercent(data?.rbValueSharePercent || 0);
         setWrValueSharePercent(data?.wrValueSharePercent || 0);
         setTeValueSharePercent(data?.teValueSharePercent || 0);
+        setPickValueSharePercent(data?.pickValueSharePercent || 0);
         setQbValueProportionPercent(data?.qbValueProportionPercent || 0);
         setRbValueProportionPercent(data?.rbValueProportionPercent || 0);
         setWrValueProportionPercent(data?.wrValueProportionPercent || 0);
         setTeValueProportionPercent(data?.teValueProportionPercent || 0);
+        setPickValueProportionPercent(data?.pickValueProportionPercent || 0);
         setLeagueRank(data?.leagueRank || 0);
     }, [data]);
     return {
@@ -581,6 +585,10 @@ export function useTeamValueShare(
         setWrValueProportionPercent,
         teValueProportionPercent,
         setTeValueProportionPercent,
+        pickValueSharePercent,
+        setPickValueSharePercent,
+        pickValueProportionPercent,
+        setPickValueProportionPercent,
     };
 }
 
