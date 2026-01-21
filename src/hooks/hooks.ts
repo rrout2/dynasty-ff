@@ -523,7 +523,8 @@ export function useTeamValueShare(
     const [rbValueProportionPercent, setRbValueProportionPercent] = useState(1);
     const [wrValueProportionPercent, setWrValueProportionPercent] = useState(1);
     const [teValueProportionPercent, setTeValueProportionPercent] = useState(1);
-    const [pickValueProportionPercent, setPickValueProportionPercent] = useState(1);
+    const [pickValueProportionPercent, setPickValueProportionPercent] =
+        useState(1);
     const [leagueRank, setLeagueRank] = useState(1);
     const authToken = sessionStorage.getItem('authToken');
     const {data} = useQuery({
