@@ -228,12 +228,12 @@ function PlayerRow({
             case WR_TE_FLEX:
                 return {
                     background:
-                        'conic-gradient(from 180deg at 50% 50%, #EABA10 94.9197506904602deg, #00B1FF 243.35931301116943deg, #1AE069 360deg)',
+                        'conic-gradient(from 270deg, #EABA10, #00B1FF, #1AE069, #EABA10)',
                 };
             case SUPER_FLEX:
                 return {
                     background:
-                        'conic-gradient(from 180deg at 50% 50%, #EABA10 90deg, #DB2335 180deg, #00B1FF 270deg, #1AE069 360deg)',
+                        'conic-gradient(from 270deg, #EABA10, #DB2335, #00B1FF, #1AE069, #EABA10)',
                 };
         }
         return {
@@ -256,7 +256,7 @@ function PlayerRow({
             case WR:
                 return {
                     background: ' rgba(26, 224, 105, 0.25)',
-                    outline: '2px solid rgba(26, 224, 105, 1)',
+                    outline: '2px solid #00FF06',
                 };
             case TE:
                 return {
