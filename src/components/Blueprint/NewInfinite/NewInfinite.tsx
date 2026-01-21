@@ -1,6 +1,7 @@
 import {CSSProperties, useEffect, useState} from 'react';
 import styles from './NewInfinite.module.css';
 import {
+    bakeryCard,
     domainShield,
     newInfiniteBg,
     nflSilhouette,
@@ -109,6 +110,7 @@ export default function NewInfinite() {
     return (
         <>
             notes: bench score is hard coded. Lineup BSH values are hard coded. Risers/fallers need to use appropriate list IDs.
+            need to use BP id.
             <div className={styles.fullBlueprint}>
                 <div className={styles.teamName}>
                     {getDisplayName(specifiedUser)}
@@ -202,6 +204,7 @@ export default function NewInfinite() {
                     ))}
                 </div>
                 <div className={styles.benchString}>{benchString}</div>
+                <img src={bakeryCard} className={styles.bakeryCard} />
                 <img src={newInfiniteBg} className={styles.blankBp} />
             </div>
         </>

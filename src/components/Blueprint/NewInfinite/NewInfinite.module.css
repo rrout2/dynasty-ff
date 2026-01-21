@@ -178,3 +178,14 @@
     flex-direction: column;
     gap: 27px;
 }
+
+.bakeryCard {
+    position: absolute;
+    top: 1370px;
+    left: 40px;
+
+    width: 558px;
+
+    border-radius: 20px;
+    outline: 2.5px solid white;
+}
