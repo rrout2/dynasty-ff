@@ -3091,6 +3091,7 @@ function SuggestedMove({
                                     return;
                                 }
                                 for (const p of rosterPlayers) {
+                                    if (!p) continue;
                                     if (
                                         `${p.first_name} ${p.last_name}` ===
                                         value
@@ -3148,6 +3149,7 @@ function SuggestedMove({
                                         return;
                                     }
                                     for (const p of rosterPlayers) {
+                                        if (!p) continue;
                                         if (
                                             `${p.first_name} ${p.last_name}` ===
                                             value
