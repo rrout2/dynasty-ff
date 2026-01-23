@@ -97,6 +97,7 @@ export type RosterPlayer = {
     productionScore: number;
     situationalScore: number;
     compositePositionRank: string;
+    teamAbbreviation: string;
 };
 
 type Blueprint = {
@@ -883,6 +884,28 @@ export function useWeeklyRisersFallers(roster?: Roster) {
         setRisers(included.slice(0, 3).map(rf => rf.Name));
         setFallers(included.slice(-3).map(rf => rf.Name));
     }, [roster, risersFallers, playerData, getAdp]);
+    return {risers, fallers};
+}
+
+export function useRisersFallers(rosterPlayers?: RosterPlayer[]) {
+    const {risersFallers} = useApiRisersFallers();
+    const {getAdp} = useAdpData();
+    const [risers, setRisers] = useState<string[]>(['a', 'b', 'c']);
+    const [fallers, setFallers] = useState<string[]>(['a', 'b', 'c']);
+    useEffect(() => {
+        if (!rosterPlayers || !risersFallers) return;
+        const rosterNames = rosterPlayers
+            .map(p => p.playerName)
+            .filter(name => getAdp(name) <= 140);
+        const included = risersFallers.filter(
+            rf =>
+                rosterNames.includes(rf.Name) ||
+                rosterNames.includes(checkForNickname(rf.Name))
+        );
+        included.sort((a, b) => b.Difference - a.Difference);
+        setRisers(included.slice(0, 3).map(rf => rf.Name));
+        setFallers(included.slice(-3).map(rf => rf.Name));
+    }, [rosterPlayers, risersFallers, getAdp]);
     return {risers, fallers};
 }
 

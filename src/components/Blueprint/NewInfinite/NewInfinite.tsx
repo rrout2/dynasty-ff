@@ -7,21 +7,14 @@ import {
     nflSilhouette,
 } from '../../../consts/images';
 import {
-    useDraftCapitalGrade,
-    useFetchRosters,
-    useLeague,
-    useLeagueIdFromUrl,
-    usePositionalValueGrades,
-    useProjectedLineup,
-    useRoster,
-    useRosterSettings,
-    useTeamIdFromUrl,
-    useUserIdFromUrl,
-    useWeeklyRisersFallers,
+    convertStringToValueArchetype,
+    RosterPlayer,
+    useBlueprint,
+    useParamFromUrl,
+    useRisersFallers,
 } from '../../../hooks/hooks';
-import {getAllUsers, User} from '../../../sleeper-api/sleeper-api';
-import {NONE_TEAM_ID} from '../../../consts/urlParams';
-import {getDisplayName} from '../../Team/TeamPage/TeamPage';
+import {Roster} from '../../../sleeper-api/sleeper-api';
+import {BLUEPRINT_ID} from '../../../consts/urlParams';
 import {PositionalGradeDisc} from '../NewV1/NewV1';
 import {logoImage} from '../shared/Utilities';
 import {NONE_PLAYER_ID} from '../v2/modules/CornerstonesModule/CornerstonesModule';
@@ -35,87 +28,75 @@ import {
     WR_RB_FLEX,
     WR_TE_FLEX,
 } from '../../../consts/fantasy';
+import {
+    getApiStartingLineup,
+    ValueArchetype,
+} from '../BlueprintModule/BlueprintModule';
 export default function NewInfinite() {
-    const [leagueId] = useLeagueIdFromUrl();
-    const league = useLeague(leagueId);
-    const rosterSettings = useRosterSettings(league);
-    const [teamId, setTeamId] = useTeamIdFromUrl();
-    const [rosterId, setRosterId] = useState<number>(-1);
-    const [userId] = useUserIdFromUrl();
-    const {data: rosters} = useFetchRosters(leagueId);
-    const {roster} = useRoster(rosters, teamId, leagueId);
-    const [allUsers, setAllUsers] = useState<User[]>([]);
-    const [specifiedUser, setSpecifiedUser] = useState<User>();
+    const [blueprintId] = useParamFromUrl(BLUEPRINT_ID);
+    const {blueprint} = useBlueprint(blueprintId);
+    const [apiStartingLineup, setApiStartingLineup] = useState<
+        {player: RosterPlayer; position: string}[]
+    >([]);
+    const [qbGrade, setQbGrade] = useState(0);
+    const [rbGrade, setRbGrade] = useState(0);
+    const [wrGrade, setWrGrade] = useState(0);
+    const [teGrade, setTeGrade] = useState(0);
+    const [draftCapitalScore, setDraftCapitalScore] = useState(0);
+    const [benchString, setBenchString] = useState('');
+    const [valueArchetype, setValueArchetype] = useState<ValueArchetype>(
+        ValueArchetype.None
+    );
+    useEffect(() => {
+        if (!blueprint) return;
+        setApiStartingLineup(
+            getApiStartingLineup(
+                blueprint.leagueSettings,
+                blueprint.rosterPlayers
+            )
+        );
+        setQbGrade(
+            blueprint.positionalGrades.find(p => p.position === QB)?.grade || 0
+        );
+        setRbGrade(
+            blueprint.positionalGrades.find(p => p.position === RB)?.grade || 0
+        );
+        setWrGrade(
+            blueprint.positionalGrades.find(p => p.position === WR)?.grade || 0
+        );
+        setTeGrade(
+            blueprint.positionalGrades.find(p => p.position === TE)?.grade || 0
+        );
+        setValueArchetype(
+            convertStringToValueArchetype(blueprint.valueArchetype)
+        );
+    }, [blueprint]);
+
+    useEffect(() => {
+        if (!blueprint?.rosterPlayers || !apiStartingLineup.length) return;
+        setBenchString(
+            blueprint.rosterPlayers
+                .filter(
+                    p =>
+                        !apiStartingLineup.find(
+                            s => s.player.playerId === p.playerId
+                        )
+                )
+                .map(p => `${shortenName(p.playerName)} (${p.position})`)
+                .join(', ')
+                .toUpperCase()
+        );
+    }, [apiStartingLineup, blueprint?.rosterPlayers]);
 
     const [currentDate] = useState(new Date());
-
-    const {startingLineup, benchString} = useProjectedLineup(
-        rosterSettings,
-        roster?.players
-    );
-    const {
-        qb: qbGrade,
-        rb: rbGrade,
-        wr: wrGrade,
-        te: teGrade,
-    } = usePositionalValueGrades(leagueId, '' + rosterId);
-    const {draftCapitalGrade: draftCapitalScore} = useDraftCapitalGrade(
-        leagueId,
-        '' + rosterId
-    );
-    const {risers, fallers} = useWeeklyRisersFallers(roster);
-
-    useEffect(() => {
-        if (!leagueId || !rosters) return;
-        const ownerIds = new Set(rosters.map(r => r.owner_id));
-        getAllUsers(leagueId).then(users =>
-            // filter to users included in owners.
-            // some leagues have users with no associated owner I think.
-            setAllUsers(users.filter(u => ownerIds.has(u.user_id)))
-        );
-    }, [leagueId, rosters]);
-    useEffect(() => {
-        if (!allUsers.length || !hasTeamId() || +teamId >= allUsers.length) {
-            return;
-        }
-        setSpecifiedUser(allUsers?.[+teamId]);
-    }, [allUsers, teamId]);
-    useEffect(() => {
-        if (!rosters || !specifiedUser) return;
-        setRosterId(
-            rosters.findIndex(r => r.owner_id === specifiedUser.user_id) ?? -1
-        );
-    }, [rosters, specifiedUser]);
-    useEffect(() => {
-        if (!allUsers.length || !userId || !rosters) {
-            return;
-        }
-        const userIndex = rosters.findIndex(
-            r => r.owner_id === userId || r.co_owners?.includes(userId)
-        );
-        if (userIndex === -1) {
-            console.warn(
-                `could not find user with id '${userId}' in allUsers ${allUsers}`
-            );
-            return;
-        }
-        setTeamId('' + userIndex);
-        setSpecifiedUser(allUsers[userIndex]);
-    }, [allUsers, userId, rosters]);
-
-    function hasTeamId() {
-        return teamId !== '' && teamId !== NONE_TEAM_ID;
-    }
-
+    const {risers, fallers} = useRisersFallers(blueprint?.rosterPlayers);
     return (
         <>
             notes: bench score is hard coded. Lineup BSH values are hard coded.
             Risers/fallers need to use appropriate list IDs. need to use BP id.
             Need to use proper buy sells.
             <div className={styles.fullBlueprint}>
-                <div className={styles.teamName}>
-                    {getDisplayName(specifiedUser)}
-                </div>
+                <div className={styles.teamName}>{blueprint?.teamName}</div>
                 <div className={styles.monthYear}>
                     {currentDate.toLocaleDateString(undefined, {
                         month: 'long',
@@ -131,6 +112,9 @@ export default function NewInfinite() {
                     {fallers.map((f, i) => (
                         <div key={i}>{f}</div>
                     ))}
+                </div>
+                <div className={styles.rosterValueTierSection}>
+                    <RosterValueTier valueArchetype={valueArchetype} />
                 </div>
                 <PositionalGradeDisc
                     grade={qbGrade}
@@ -193,28 +177,34 @@ export default function NewInfinite() {
                     }}
                 />
                 <div className={styles.startingLineup}>
-                    {startingLineup.map((lineupPlayer, idx) => (
+                    {apiStartingLineup.map((lineupPlayer, idx) => (
                         <PlayerRow
-                            key={lineupPlayer.player.player_id}
+                            key={lineupPlayer.player.sleeperId}
                             position={lineupPlayer.position}
-                            playerName={lineupPlayer.player.full_name}
-                            playerTeam={lineupPlayer.player.team}
-                            sleeperId={lineupPlayer.player.player_id}
+                            playerName={lineupPlayer.player.playerName}
+                            playerTeam={lineupPlayer.player.teamAbbreviation}
+                            sleeperId={lineupPlayer.player.sleeperId}
                             marketDiscrepancy={idx - 4}
                         />
                     ))}
                 </div>
                 <div className={styles.buysAndSells}>
-                    {startingLineup[0] && <BuySellPlayer
-                        playerRowProps={{
-                            position: startingLineup[0].position,
-                            playerName: startingLineup[0].player.full_name,
-                            playerTeam: startingLineup[0].player.team,
-                            sleeperId: startingLineup[0].player.player_id,
-                            hideDiscrepancy: true,
-                        }}
-                        buySell={BuySell.SoftSell}
-                    />}
+                    {apiStartingLineup[0] && (
+                        <BuySellPlayer
+                            playerRowProps={{
+                                position: apiStartingLineup[0].position,
+                                playerName:
+                                    apiStartingLineup[0].player.playerName,
+                                playerTeam:
+                                    apiStartingLineup[0].player
+                                        .teamAbbreviation,
+                                sleeperId:
+                                    apiStartingLineup[0].player.sleeperId,
+                                hideDiscrepancy: true,
+                            }}
+                            buySell={BuySell.SoftSell}
+                        />
+                    )}
                 </div>
                 <div className={styles.benchString}>{benchString}</div>
                 <img src={bakeryCard} className={styles.bakeryCard} />
@@ -222,6 +212,64 @@ export default function NewInfinite() {
             </div>
         </>
     );
+}
+
+function RosterValueTier({valueArchetype}: {valueArchetype: ValueArchetype}) {
+    return (
+        <div className={styles.rosterValueTier}>
+            {Object.values(ValueArchetype)
+                .filter(va => va !== ValueArchetype.None)
+                .map((va, i) => (
+                    <div key={i} className={styles.valueArchetypeRow}>
+                        {va === valueArchetype && <GreenArrow />}
+                        <div
+                            key={i}
+                            className={styles.valueArchetype}
+                            style={
+                                va === valueArchetype
+                                    ? {
+                                          color: '#1AE069',
+                                          background:
+                                              'rgba(26, 224, 105, 0.10)',
+                                          outline: '1.9px solid #1AE069',
+                                          borderRadius: '10px',
+                                          lineHeight: 'normal',
+                                          paddingBottom: '5px',
+                                          paddingLeft: '5px',
+                                          paddingRight: '5px',
+                                      }
+                                    : {}
+                            }
+                        >
+                            {va}
+                        </div>
+                    </div>
+                ))}
+        </div>
+    );
+}
+
+const GreenArrow = () => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="27"
+        height="31"
+        viewBox="0 0 27 31"
+        fill="none"
+        className={styles.greenArrow}
+    >
+        <path
+            d="M27 15.1555L-1.42741e-06 30.3109L-1.02484e-07 1.12176e-05L27 15.1555Z"
+            fill="#1AE069"
+        />
+    </svg>
+);
+
+function shortenName(name: string) {
+    return name
+        .split(' ')
+        .map((word, idx) => (idx === 0 ? `${word[0]}.` : word))
+        .join(' ');
 }
 
 enum BuySell {

@@ -990,95 +990,6 @@ export default function BlueprintModule({
 
     // -------------------------- End of hooks --------------------------
 
-    function getApiStartingLineup(
-        leagueSettings: LeagueSettings,
-        rosterPlayers: RosterPlayer[]
-    ) {
-        const {qbCount, rbCount, wrCount, teCount, isSuperFlex} =
-            leagueSettings;
-        let {flexCount} = leagueSettings;
-        const remainingPlayers = new Set(rosterPlayers.map(p => p.playerId)); // maybe map?
-        const startingQbs = rosterPlayers
-            .filter(p => p.position === QB)
-            .sort((a, b) => a.sortOrder - b.sortOrder)
-            .slice(0, qbCount);
-        startingQbs.forEach(p => remainingPlayers.delete(p.playerId));
-        const startingRbs = rosterPlayers
-            .filter(p => p.position === RB)
-            .sort((a, b) => a.sortOrder - b.sortOrder)
-            .slice(0, rbCount);
-        startingRbs.forEach(p => remainingPlayers.delete(p.playerId));
-        const startingWrs = rosterPlayers
-            .filter(p => p.position === WR)
-            .sort((a, b) => a.sortOrder - b.sortOrder)
-            .slice(0, wrCount);
-        startingWrs.forEach(p => remainingPlayers.delete(p.playerId));
-        const startingTes = rosterPlayers
-            .filter(p => p.position === TE)
-            .sort((a, b) => a.sortOrder - b.sortOrder)
-            .slice(0, teCount);
-        startingTes.forEach(p => remainingPlayers.delete(p.playerId));
-        if (isSuperFlex) flexCount -= 1;
-        const startingFlexes = rosterPlayers
-            .filter(
-                p =>
-                    FLEX_SET.has(p.position) && remainingPlayers.has(p.playerId)
-            )
-            .sort((a, b) => a.sortOrder - b.sortOrder)
-            .slice(0, flexCount);
-        startingFlexes.forEach(p => remainingPlayers.delete(p.playerId));
-        let startingSuperFlex: RosterPlayer[] = [];
-        if (isSuperFlex) {
-            startingSuperFlex = rosterPlayers
-                .filter(
-                    p =>
-                        SUPER_FLEX_SET.has(p.position) &&
-                        remainingPlayers.has(p.playerId)
-                )
-                .sort((a, b) => a.sortOrder - b.sortOrder)
-                .slice(0, 1);
-            startingSuperFlex.forEach(p => remainingPlayers.delete(p.playerId));
-        }
-        return [
-            ...startingQbs.map(p => {
-                return {
-                    player: p,
-                    position: QB,
-                };
-            }),
-            ...startingRbs.map(p => {
-                return {
-                    player: p,
-                    position: RB,
-                };
-            }),
-            ...startingWrs.map(p => {
-                return {
-                    player: p,
-                    position: WR,
-                };
-            }),
-            ...startingTes.map(p => {
-                return {
-                    player: p,
-                    position: TE,
-                };
-            }),
-            ...startingFlexes.map(p => {
-                return {
-                    player: p,
-                    position: FLEX,
-                };
-            }),
-            ...startingSuperFlex.map(p => {
-                return {
-                    player: p,
-                    position: SUPER_FLEX,
-                };
-            }),
-        ];
-    }
-
     function getRosterIdFromUser(user?: User) {
         if (!rosters || !user) return -1;
         return rosters.findIndex(r => r.owner_id === user.user_id) ?? -1;
@@ -3294,4 +3205,91 @@ function SuggestedMove({
             </div>
         )
     );
+}
+
+export function getApiStartingLineup(
+    leagueSettings: LeagueSettings,
+    rosterPlayers: RosterPlayer[]
+) {
+    const {qbCount, rbCount, wrCount, teCount, isSuperFlex} = leagueSettings;
+    let {flexCount} = leagueSettings;
+    const remainingPlayers = new Set(rosterPlayers.map(p => p.playerId)); // maybe map?
+    const startingQbs = rosterPlayers
+        .filter(p => p.position === QB)
+        .sort((a, b) => a.sortOrder - b.sortOrder)
+        .slice(0, qbCount);
+    startingQbs.forEach(p => remainingPlayers.delete(p.playerId));
+    const startingRbs = rosterPlayers
+        .filter(p => p.position === RB)
+        .sort((a, b) => a.sortOrder - b.sortOrder)
+        .slice(0, rbCount);
+    startingRbs.forEach(p => remainingPlayers.delete(p.playerId));
+    const startingWrs = rosterPlayers
+        .filter(p => p.position === WR)
+        .sort((a, b) => a.sortOrder - b.sortOrder)
+        .slice(0, wrCount);
+    startingWrs.forEach(p => remainingPlayers.delete(p.playerId));
+    const startingTes = rosterPlayers
+        .filter(p => p.position === TE)
+        .sort((a, b) => a.sortOrder - b.sortOrder)
+        .slice(0, teCount);
+    startingTes.forEach(p => remainingPlayers.delete(p.playerId));
+    if (isSuperFlex) flexCount -= 1;
+    const startingFlexes = rosterPlayers
+        .filter(
+            p => FLEX_SET.has(p.position) && remainingPlayers.has(p.playerId)
+        )
+        .sort((a, b) => a.sortOrder - b.sortOrder)
+        .slice(0, flexCount);
+    startingFlexes.forEach(p => remainingPlayers.delete(p.playerId));
+    let startingSuperFlex: RosterPlayer[] = [];
+    if (isSuperFlex) {
+        startingSuperFlex = rosterPlayers
+            .filter(
+                p =>
+                    SUPER_FLEX_SET.has(p.position) &&
+                    remainingPlayers.has(p.playerId)
+            )
+            .sort((a, b) => a.sortOrder - b.sortOrder)
+            .slice(0, 1);
+        startingSuperFlex.forEach(p => remainingPlayers.delete(p.playerId));
+    }
+    return [
+        ...startingQbs.map(p => {
+            return {
+                player: p,
+                position: QB,
+            };
+        }),
+        ...startingRbs.map(p => {
+            return {
+                player: p,
+                position: RB,
+            };
+        }),
+        ...startingWrs.map(p => {
+            return {
+                player: p,
+                position: WR,
+            };
+        }),
+        ...startingTes.map(p => {
+            return {
+                player: p,
+                position: TE,
+            };
+        }),
+        ...startingFlexes.map(p => {
+            return {
+                player: p,
+                position: FLEX,
+            };
+        }),
+        ...startingSuperFlex.map(p => {
+            return {
+                player: p,
+                position: SUPER_FLEX,
+            };
+        }),
+    ];
 }
