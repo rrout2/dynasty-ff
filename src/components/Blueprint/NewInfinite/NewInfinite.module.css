@@ -252,3 +252,35 @@
     margin-left: -15px;
     margin-right: -5px;
 }
+
+.buySellHoldPercents {
+    position: absolute;
+
+    color: #003049;
+    text-align: center;
+    font-family: "Acumin Pro ExtraCondensed";
+    font-size: 29px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+
+    width: 122px;
+}
+
+.tradeMeterCircle {
+    width: 32px;
+    height: auto;
+    position: absolute;
+    top: 1042px;
+    left: 1415px;
+}
+
+.tradeMeterNeedle {
+    width: 23px;
+    height: auto;
+    position: absolute;
+    top: 925px;
+    left: 1420px;
+
+    transform-origin: bottom;
+}

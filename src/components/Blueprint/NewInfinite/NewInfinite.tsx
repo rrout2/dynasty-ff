@@ -12,8 +12,8 @@ import {
     useBlueprint,
     useParamFromUrl,
     useRisersFallers,
+    useSplitBuySellData,
 } from '../../../hooks/hooks';
-import {Roster} from '../../../sleeper-api/sleeper-api';
 import {BLUEPRINT_ID} from '../../../consts/urlParams';
 import {PositionalGradeDisc} from '../NewV1/NewV1';
 import {logoImage} from '../shared/Utilities';
@@ -42,11 +42,131 @@ export default function NewInfinite() {
     const [rbGrade, setRbGrade] = useState(0);
     const [wrGrade, setWrGrade] = useState(0);
     const [teGrade, setTeGrade] = useState(0);
-    const [draftCapitalScore, setDraftCapitalScore] = useState(0);
+    const [draftCapitalScore, setDraftCapitalScore] = useState(5);
     const [benchString, setBenchString] = useState('');
     const [valueArchetype, setValueArchetype] = useState<ValueArchetype>(
         ValueArchetype.None
     );
+
+    // TODO: make sure this ispulling the right data.
+    const {buySells, getVerdict} = useSplitBuySellData();
+    const [buyPercent, setBuyPercent] = useState(0);
+    const [sellPercent, setSellPercent] = useState(0);
+    const [holdPercent, setHoldPercent] = useState(0);
+    const [tradeNeedleRotationDegrees, setTradeNeedleRotationDegrees] =
+        useState(0);
+
+    useEffect(() => {
+        if (!blueprint) return;
+        const verdicts = blueprint.rosterPlayers
+            .map(p => p.playerName)
+            .map(getVerdict)
+            .filter(v => !!v);
+        setBuyPercent(
+            Math.round(
+                (100 *
+                    verdicts.filter(v => v && v.verdict.includes('BUY'))
+                        .length) /
+                    verdicts.length
+            )
+        );
+        setSellPercent(
+            Math.round(
+                (100 *
+                    verdicts.filter(v => v && v.verdict.includes('SELL'))
+                        .length) /
+                    verdicts.length
+            )
+        );
+        setHoldPercent(
+            Math.round(
+                (100 *
+                    verdicts.filter(v => v && v.verdict.includes('HOLD'))
+                        .length) /
+                    verdicts.length
+            )
+        );
+    }, [blueprint?.rosterPlayers, getVerdict]);
+    useEffect(() => {
+        let activity: 'high' | 'midhigh' | 'mid' | 'lowmid' | 'low' = 'low';
+        let rotationDegrees = 0;
+        switch (valueArchetype) {
+            case ValueArchetype.EliteValue:
+                if (sellPercent > 49) {
+                    activity = 'mid';
+                } else if (sellPercent > 19) {
+                    activity = 'lowmid';
+                } else {
+                    activity = 'low';
+                }
+                break;
+            case ValueArchetype.EnhancedValue:
+                if (sellPercent > 49) {
+                    activity = 'midhigh';
+                } else if (sellPercent > 39) {
+                    activity = 'mid';
+                } else if (sellPercent > 19) {
+                    activity = 'lowmid';
+                } else {
+                    activity = 'low';
+                }
+                break;
+            case ValueArchetype.StandardValue:
+            case ValueArchetype.FutureValue:
+                if (sellPercent > 49) {
+                    activity = 'high';
+                } else if (sellPercent > 39) {
+                    activity = 'midhigh';
+                } else if (sellPercent > 19) {
+                    activity = 'mid';
+                } else if (sellPercent > 9) {
+                    activity = 'lowmid';
+                } else {
+                    activity = 'low';
+                }
+                break;
+            case ValueArchetype.OneYearReload:
+            case ValueArchetype.AgingValue:
+                if (sellPercent > 39) {
+                    activity = 'high';
+                } else if (sellPercent > 19) {
+                    activity = 'midhigh';
+                } else if (sellPercent > 9) {
+                    activity = 'mid';
+                } else {
+                    activity = 'lowmid';
+                }
+                break;
+            case ValueArchetype.HardRebuild:
+                if (sellPercent > 19) {
+                    activity = 'high';
+                } else if (sellPercent > 9) {
+                    activity = 'midhigh';
+                } else {
+                    activity = 'mid';
+                }
+                break;
+        }
+
+        switch (activity) {
+            case 'high':
+                rotationDegrees = 75;
+                break;
+            case 'midhigh':
+                rotationDegrees = 40;
+                break;
+            case 'mid':
+                rotationDegrees = 0;
+                break;
+            case 'lowmid':
+                rotationDegrees = -40;
+                break;
+            case 'low':
+                rotationDegrees = -75;
+                break;
+        }
+        setTradeNeedleRotationDegrees(rotationDegrees);
+    }, [valueArchetype, sellPercent]);
     useEffect(() => {
         if (!blueprint) return;
         setApiStartingLineup(
@@ -90,11 +210,12 @@ export default function NewInfinite() {
 
     const [currentDate] = useState(new Date());
     const {risers, fallers} = useRisersFallers(blueprint?.rosterPlayers);
+
     return (
         <>
-            notes: bench score is hard coded. Lineup BSH values are hard coded.
-            Risers/fallers need to use appropriate list IDs. need to use BP id.
-            Need to use proper buy sells.
+            notes: bench score / DC score is hard coded. Lineup BSH values are
+            outdated and not split buy rebuild/contend. Risers/fallers need to
+            use appropriate list IDs. Need to use proper buy sells.
             <div className={styles.fullBlueprint}>
                 <div className={styles.teamName}>{blueprint?.teamName}</div>
                 <div className={styles.monthYear}>
@@ -177,16 +298,63 @@ export default function NewInfinite() {
                     }}
                 />
                 <div className={styles.startingLineup}>
-                    {apiStartingLineup.map((lineupPlayer, idx) => (
+                    {apiStartingLineup.map(lineupPlayer => (
                         <PlayerRow
                             key={lineupPlayer.player.sleeperId}
                             position={lineupPlayer.position}
                             playerName={lineupPlayer.player.playerName}
                             playerTeam={lineupPlayer.player.teamAbbreviation}
                             sleeperId={lineupPlayer.player.sleeperId}
-                            marketDiscrepancy={idx - 4}
+                            marketDiscrepancy={
+                                buySells?.find(
+                                    b =>
+                                        b.player_id ===
+                                        '' + lineupPlayer.player.sleeperId
+                                )?.difference || 0
+                            }
                         />
                     ))}
+                </div>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="61"
+                    height="61"
+                    viewBox="0 0 61 61"
+                    fill="none"
+                    className={styles.tradeMeterCircle}
+                >
+                    <circle cx="30.5" cy="30.5" r="30.5" fill="black" />
+                </svg>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="43"
+                    height="245"
+                    viewBox="0 0 43 245"
+                    fill="none"
+                    className={styles.tradeMeterNeedle}
+                    style={{
+                        transform: `rotate(${tradeNeedleRotationDegrees}deg)`,
+                    }}
+                >
+                    <path d="M20.7412 0L0 245H43L20.7412 0Z" fill="black" />
+                </svg>
+                <div
+                    className={styles.buySellHoldPercents}
+                    style={{top: '1130px', left: '1230px'}}
+                >
+                    {`BUYS: ${buyPercent}%`}
+                </div>
+                <div
+                    className={styles.buySellHoldPercents}
+                    style={{top: '1130px', left: '1375px'}}
+                >
+                    {`SELLS: ${sellPercent}%`}
+                </div>
+                <div
+                    className={styles.buySellHoldPercents}
+                    style={{top: '1130px', left: '1520px'}}
+                >
+                    {`HOLDS: ${holdPercent}%`}
                 </div>
                 <div className={styles.buysAndSells}>
                     {apiStartingLineup[0] && (
