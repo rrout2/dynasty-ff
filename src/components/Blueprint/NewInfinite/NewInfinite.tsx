@@ -205,7 +205,7 @@ export default function NewInfinite() {
                     ))}
                 </div>
                 <div className={styles.buysAndSells}>
-                    <BuySellPlayer
+                    {startingLineup[0] && <BuySellPlayer
                         playerRowProps={{
                             position: startingLineup[0].position,
                             playerName: startingLineup[0].player.full_name,
@@ -214,7 +214,7 @@ export default function NewInfinite() {
                             hideDiscrepancy: true,
                         }}
                         buySell={BuySell.SoftSell}
-                    />
+                    />}
                 </div>
                 <div className={styles.benchString}>{benchString}</div>
                 <img src={bakeryCard} className={styles.bakeryCard} />
