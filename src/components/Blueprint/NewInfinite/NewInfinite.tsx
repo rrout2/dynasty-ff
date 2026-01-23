@@ -109,8 +109,9 @@ export default function NewInfinite() {
 
     return (
         <>
-            notes: bench score is hard coded. Lineup BSH values are hard coded. Risers/fallers need to use appropriate list IDs.
-            need to use BP id.
+            notes: bench score is hard coded. Lineup BSH values are hard coded.
+            Risers/fallers need to use appropriate list IDs. need to use BP id.
+            Need to use proper buy sells.
             <div className={styles.fullBlueprint}>
                 <div className={styles.teamName}>
                     {getDisplayName(specifiedUser)}
@@ -155,7 +156,7 @@ export default function NewInfinite() {
                     grade={wrGrade}
                     color={'#1AE069'}
                     style={{
-                        left: '906px',
+                        left: '905.5px',
                         top: '553px',
                         transform: 'scale(1.63)',
                         transformOrigin: 'top left',
@@ -165,7 +166,7 @@ export default function NewInfinite() {
                     grade={teGrade}
                     color={'#FFCD00'}
                     style={{
-                        left: '1033px',
+                        left: '1032px',
                         top: '553px',
                         transform: 'scale(1.63)',
                         transformOrigin: 'top left',
@@ -196,12 +197,24 @@ export default function NewInfinite() {
                         <PlayerRow
                             key={lineupPlayer.player.player_id}
                             position={lineupPlayer.position}
-                            playerName={`${lineupPlayer.player.first_name} ${lineupPlayer.player.last_name}`}
+                            playerName={lineupPlayer.player.full_name}
                             playerTeam={lineupPlayer.player.team}
                             sleeperId={lineupPlayer.player.player_id}
                             marketDiscrepancy={idx - 4}
                         />
                     ))}
+                </div>
+                <div className={styles.buysAndSells}>
+                    <BuySellPlayer
+                        playerRowProps={{
+                            position: startingLineup[0].position,
+                            playerName: startingLineup[0].player.full_name,
+                            playerTeam: startingLineup[0].player.team,
+                            sleeperId: startingLineup[0].player.player_id,
+                            hideDiscrepancy: true,
+                        }}
+                        buySell={BuySell.SoftSell}
+                    />
                 </div>
                 <div className={styles.benchString}>{benchString}</div>
                 <img src={bakeryCard} className={styles.bakeryCard} />
@@ -211,12 +224,54 @@ export default function NewInfinite() {
     );
 }
 
+enum BuySell {
+    SoftBuy = 'Soft Buy',
+    HardBuy = 'Hard Buy',
+    SoftSell = 'Soft Sell',
+    HardSell = 'Hard Sell',
+}
+
+function BuySellPlayer({
+    playerRowProps,
+    buySell,
+}: {
+    playerRowProps: PlayerRowProps;
+    buySell: BuySell;
+}) {
+    function getBackground() {
+        switch (buySell) {
+            case BuySell.HardBuy:
+                return 'linear-gradient(90deg, #008D38 0%, #0F1 100%)';
+            case BuySell.SoftBuy:
+                return 'linear-gradient(90deg, #1AE069 0%, #55E349 100%)';
+            case BuySell.HardSell:
+                return 'linear-gradient(90deg, #D9233D 0%, #DB2354 100%)';
+            case BuySell.SoftSell:
+                return 'linear-gradient(90deg, #EABA10 0%, #FF4200 100%)';
+        }
+    }
+    return (
+        <div className={styles.buySellPlayer}>
+            <div
+                className={styles.buySell}
+                style={{
+                    background: getBackground(),
+                }}
+            >
+                {buySell}
+            </div>
+            <PlayerRow {...playerRowProps} />
+        </div>
+    );
+}
+
 type PlayerRowProps = {
     position: string;
     playerName: string;
     playerTeam: string;
     sleeperId: string;
-    marketDiscrepancy: number;
+    marketDiscrepancy?: number;
+    hideDiscrepancy?: boolean;
 };
 
 function PlayerRow({
@@ -224,7 +279,8 @@ function PlayerRow({
     playerName,
     playerTeam,
     sleeperId,
-    marketDiscrepancy,
+    marketDiscrepancy = 0,
+    hideDiscrepancy = false,
 }: PlayerRowProps) {
     function getCircleStyling(pos: string): CSSProperties {
         switch (pos) {
@@ -354,20 +410,22 @@ function PlayerRow({
                 />
                 <div className={styles.playerName}>{playerName}</div>
             </div>
-            <div
-                className={styles.differenceChip}
-                style={{color: getDifferenceColor()}}
-            >
-                <img src={domainShield} className={styles.domainShield} />
-                <div className={styles.marketDiscrepancy}>
-                    {getDifferenceSymbol()}
-                </div>
-                {marketDiscrepancy !== 0 && (
+            {!hideDiscrepancy && (
+                <div
+                    className={styles.differenceChip}
+                    style={{color: getDifferenceColor()}}
+                >
+                    <img src={domainShield} className={styles.domainShield} />
                     <div className={styles.marketDiscrepancy}>
-                        {Math.abs(marketDiscrepancy)}
+                        {getDifferenceSymbol()}
                     </div>
-                )}
-            </div>
+                    {marketDiscrepancy !== 0 && (
+                        <div className={styles.marketDiscrepancy}>
+                            {Math.abs(marketDiscrepancy)}
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 }

@@ -227,6 +227,7 @@ export type Player = {
     rotoworld_id: number;
     search_first_name: string;
     yahoo_id: null | string;
+    full_name: string;
 };
 
 export type TradedPick = {
