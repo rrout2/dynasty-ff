@@ -190,10 +190,30 @@
     outline: 2.5px solid white;
 }
 
-.buysAndSells {
+.buysContainer {
     position: absolute;
     top: 1420px;
     left: 700px;
+
+    display: flex;
+    flex-direction: row;
+    gap: 120px;
+}
+
+.buysColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.sellsContainer {
+    position: absolute;
+    top: 1820px;
+    left: 700px;
+
+    display: flex;
+    flex-direction: row;
+    gap: 120px;
 }
 
 .buySellPlayer {

@@ -10,6 +10,7 @@ import {
     convertStringToValueArchetype,
     RosterPlayer,
     useBlueprint,
+    useNewInfiniteBuysSells,
     useParamFromUrl,
     useRisersFallers,
     useSplitBuySellData,
@@ -32,6 +33,7 @@ import {
     getApiStartingLineup,
     ValueArchetype,
 } from '../BlueprintModule/BlueprintModule';
+
 export default function NewInfinite() {
     const [blueprintId] = useParamFromUrl(BLUEPRINT_ID);
     const {blueprint} = useBlueprint(blueprintId);
@@ -48,13 +50,23 @@ export default function NewInfinite() {
         ValueArchetype.None
     );
 
-    // TODO: make sure this ispulling the right data.
+    // TODO: make sure this is pulling the right data.
     const {buySells, getVerdict} = useSplitBuySellData();
     const [buyPercent, setBuyPercent] = useState(0);
     const [sellPercent, setSellPercent] = useState(0);
     const [holdPercent, setHoldPercent] = useState(0);
     const [tradeNeedleRotationDegrees, setTradeNeedleRotationDegrees] =
         useState(0);
+
+    const {buys, sells} = useNewInfiniteBuysSells(
+        blueprint,
+        qbGrade,
+        rbGrade,
+        wrGrade,
+        teGrade,
+        valueArchetype,
+        buySells,
+    )
 
     useEffect(() => {
         if (!blueprint) return;
@@ -214,8 +226,7 @@ export default function NewInfinite() {
     return (
         <>
             notes: bench score / DC score is hard coded. Lineup BSH values are
-            outdated and not split buy rebuild/contend. Risers/fallers need to
-            use appropriate list IDs. Need to use proper buy sells.
+            outdated. Risers/fallers are outdated. Need to use proper buy sells.
             <div className={styles.fullBlueprint}>
                 <div className={styles.teamName}>{blueprint?.teamName}</div>
                 <div className={styles.monthYear}>
@@ -305,13 +316,13 @@ export default function NewInfinite() {
                             playerName={lineupPlayer.player.playerName}
                             playerTeam={lineupPlayer.player.teamAbbreviation}
                             sleeperId={lineupPlayer.player.sleeperId}
-                            marketDiscrepancy={
+                            buySell={verdictToEnum(
                                 buySells?.find(
                                     b =>
                                         b.player_id ===
                                         '' + lineupPlayer.player.sleeperId
-                                )?.difference || 0
-                            }
+                                )?.verdict || 'HOLD'
+                            )}
                         />
                     ))}
                 </div>
@@ -356,30 +367,47 @@ export default function NewInfinite() {
                 >
                     {`HOLDS: ${holdPercent}%`}
                 </div>
-                <div className={styles.buysAndSells}>
-                    {apiStartingLineup[0] && (
-                        <BuySellPlayer
-                            playerRowProps={{
-                                position: apiStartingLineup[0].position,
-                                playerName:
-                                    apiStartingLineup[0].player.playerName,
-                                playerTeam:
-                                    apiStartingLineup[0].player
-                                        .teamAbbreviation,
-                                sleeperId:
-                                    apiStartingLineup[0].player.sleeperId,
-                                hideDiscrepancy: true,
-                            }}
-                            buySell={BuySell.SoftSell}
-                        />
-                    )}
-                </div>
+                {buys.length > 0 && (
+                    <div className={styles.buysContainer}>
+                        <div className={styles.buysColumn}>
+                            <BuySellPlayer {...buys[0]} />
+                            {buys[1] && <BuySellPlayer {...buys[1]} />}
+                        </div>
+                        <div className={styles.buysColumn}>
+                            {buys[2] && <BuySellPlayer {...buys[2]} />}
+                            {buys[3] && <BuySellPlayer {...buys[3]} />}
+                        </div>
+                    </div>
+                )}
+                {sells.length > 0 && (
+                    <div className={styles.sellsContainer}>
+                        <BuySellPlayer {...sells[0]} />
+                        {sells[1] && <BuySellPlayer {...sells[1]} />}
+                    </div>
+                )}
                 <div className={styles.benchString}>{benchString}</div>
                 <img src={bakeryCard} className={styles.bakeryCard} />
                 <img src={newInfiniteBg} className={styles.blankBp} />
             </div>
         </>
     );
+}
+
+export function verdictToEnum(verdict: string): BuySell {
+    switch (verdict) {
+        case 'SOFT BUY':
+            return BuySell.SoftBuy;
+        case 'HARD BUY':
+            return BuySell.HardBuy;
+        case 'HOLD':
+            return BuySell.Hold;
+        case 'SOFT SELL':
+            return BuySell.SoftSell;
+        case 'HARD SELL':
+            return BuySell.HardSell;
+        default:
+            return BuySell.Hold;
+    }
 }
 
 function RosterValueTier({valueArchetype}: {valueArchetype: ValueArchetype}) {
@@ -445,15 +473,15 @@ enum BuySell {
     HardBuy = 'Hard Buy',
     SoftSell = 'Soft Sell',
     HardSell = 'Hard Sell',
+    Hold = 'Hold',
 }
 
-function BuySellPlayer({
-    playerRowProps,
-    buySell,
-}: {
+export type BuySellPlayerProps = {
     playerRowProps: PlayerRowProps;
     buySell: BuySell;
-}) {
+};
+
+function BuySellPlayer({playerRowProps, buySell}: BuySellPlayerProps) {
     function getBackground() {
         switch (buySell) {
             case BuySell.HardBuy:
@@ -464,6 +492,8 @@ function BuySellPlayer({
                 return 'linear-gradient(90deg, #D9233D 0%, #DB2354 100%)';
             case BuySell.SoftSell:
                 return 'linear-gradient(90deg, #EABA10 0%, #FF4200 100%)';
+            case BuySell.Hold:
+                return 'none';
         }
     }
     return (
@@ -486,8 +516,7 @@ type PlayerRowProps = {
     playerName: string;
     playerTeam: string;
     sleeperId: string;
-    marketDiscrepancy?: number;
-    hideDiscrepancy?: boolean;
+    buySell?: BuySell;
 };
 
 function PlayerRow({
@@ -495,8 +524,7 @@ function PlayerRow({
     playerName,
     playerTeam,
     sleeperId,
-    marketDiscrepancy = 0,
-    hideDiscrepancy = false,
+    buySell,
 }: PlayerRowProps) {
     function getCircleStyling(pos: string): CSSProperties {
         switch (pos) {
@@ -571,9 +599,12 @@ function PlayerRow({
     }
 
     function getDifferenceColor() {
-        if (marketDiscrepancy > 0) {
+        if (buySell === BuySell.HardBuy || buySell === BuySell.SoftBuy) {
             return 'rgba(26, 224, 105, 1)';
-        } else if (marketDiscrepancy < 0) {
+        } else if (
+            buySell === BuySell.HardSell ||
+            buySell === BuySell.SoftSell
+        ) {
             return 'rgba(227, 24, 55, 1)';
         } else {
             return '#EABA10';
@@ -581,9 +612,12 @@ function PlayerRow({
     }
 
     function getDifferenceSymbol() {
-        if (marketDiscrepancy > 0) {
+        if (buySell === BuySell.HardBuy || buySell === BuySell.SoftBuy) {
             return '+';
-        } else if (marketDiscrepancy < 0) {
+        } else if (
+            buySell === BuySell.HardSell ||
+            buySell === BuySell.SoftSell
+        ) {
             return '-';
         } else {
             return '=';
@@ -626,7 +660,7 @@ function PlayerRow({
                 />
                 <div className={styles.playerName}>{playerName}</div>
             </div>
-            {!hideDiscrepancy && (
+            {!!buySell && (
                 <div
                     className={styles.differenceChip}
                     style={{color: getDifferenceColor()}}
@@ -635,11 +669,6 @@ function PlayerRow({
                     <div className={styles.marketDiscrepancy}>
                         {getDifferenceSymbol()}
                     </div>
-                    {marketDiscrepancy !== 0 && (
-                        <div className={styles.marketDiscrepancy}>
-                            {Math.abs(marketDiscrepancy)}
-                        </div>
-                    )}
                 </div>
             )}
         </div>
