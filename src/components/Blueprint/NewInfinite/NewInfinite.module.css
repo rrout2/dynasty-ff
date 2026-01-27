@@ -304,3 +304,9 @@
 
     transform-origin: bottom;
 }
+
+.ageTracker {
+    position: absolute;
+    top: 800px;
+    left: 622px;
+}

@@ -33,6 +33,7 @@ import {
     getApiStartingLineup,
     ValueArchetype,
 } from '../BlueprintModule/BlueprintModule';
+import {LineChart} from '@mui/x-charts/LineChart';
 
 export default function NewInfinite() {
     const [blueprintId] = useParamFromUrl(BLUEPRINT_ID);
@@ -65,8 +66,8 @@ export default function NewInfinite() {
         wrGrade,
         teGrade,
         valueArchetype,
-        buySells,
-    )
+        buySells
+    );
 
     useEffect(() => {
         if (!blueprint) return;
@@ -308,6 +309,77 @@ export default function NewInfinite() {
                         transformOrigin: 'top left',
                     }}
                 />
+                <div className={styles.ageTracker}>
+                    <LineChart
+                        xAxis={[
+                            {
+                                data: [
+                                    'FEB',
+                                ],
+                                scaleType: 'band',
+                            },
+                        ]}
+                        series={[
+                            {
+                                // data: [blueprint?.averageStarterAges.find(g => g.position === QB)
+                                //                 ?.averageAge ?? 0],
+                                data: [28],
+                                color: '#FF0019',
+                                id: QB,
+                            },
+                            {
+                                // data: [blueprint?.averageStarterAges.find(g => g.position === RB)
+                                //                 ?.averageAge ?? 0],
+                                data: [22],
+                                color: '#00B1FF',
+                                id: RB,
+                            },
+                            {
+                                // data: [blueprint?.averageStarterAges.find(g => g.position === WR)
+                                //                 ?.averageAge ?? 0],
+                                data: [24],
+                                color: '#1AE069',
+                                id: WR,
+                            },
+                            {
+                                // data: [blueprint?.averageStarterAges.find(g => g.position === TE)
+                                //                 ?.averageAge ?? 0],
+                                data: [33],
+                                color: '#FFCD00',
+                                id: TE,
+                            },
+                        ]}
+                        width={540}
+                        height={400}
+                        sx={{
+                            // styling the axis line
+                            "& .MuiChartsAxis-line": {
+                                stroke: "#ffffff !important",
+                            },
+                            // styling the tick marks
+                            "& .MuiChartsAxis-tick": {
+                                stroke: "#ffffff !important",
+                            },
+                            // styling the text labels
+                            "& .MuiChartsAxis-tickLabel": {
+                                fill: "#ffffff !important",
+                                fontFamily: 'Acumin Pro ExtraCondensed !important',
+                            },
+                            '& .MuiMarkElement-series-QB': {
+                                fill: '#FF0019',
+                            },
+                            '& .MuiMarkElement-series-RB': {
+                                fill: '#00B1FF',
+                            },
+                            '& .MuiMarkElement-series-WR': {
+                                fill: '#1AE069',
+                            },
+                            '& .MuiMarkElement-series-TE': {
+                                fill: '#FFCD00',
+                            },
+                        }}
+                    />
+                </div>
                 <div className={styles.startingLineup}>
                     {apiStartingLineup.map(lineupPlayer => (
                         <PlayerRow
@@ -390,6 +462,35 @@ export default function NewInfinite() {
                 <img src={newInfiniteBg} className={styles.blankBp} />
             </div>
         </>
+    );
+}
+
+function MonthlyChart() {
+    return (
+        <LineChart
+            xAxis={[
+                {
+                    data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    scaleType: 'band',
+                },
+            ]}
+            series={[
+                {
+                    data: [35, 45, 50, 55, 60, 65],
+                    color: '#FF0019',
+                },
+                {
+                    data: [65, 59, 80, 81, 56, 55],
+                    color: '#1976d2',
+                },
+                {
+                    data: [45, 70, 60, 75, 80, 85],
+                    color: '#dc004e',
+                },
+            ]}
+            width={800}
+            height={400}
+        />
     );
 }
 
