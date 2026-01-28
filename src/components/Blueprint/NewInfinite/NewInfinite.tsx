@@ -313,9 +313,7 @@ export default function NewInfinite() {
                     <LineChart
                         xAxis={[
                             {
-                                data: [
-                                    'FEB',
-                                ],
+                                data: ['FEB'],
                                 scaleType: 'band',
                             },
                         ]}
@@ -353,17 +351,18 @@ export default function NewInfinite() {
                         height={400}
                         sx={{
                             // styling the axis line
-                            "& .MuiChartsAxis-line": {
-                                stroke: "#ffffff !important",
+                            '& .MuiChartsAxis-line': {
+                                stroke: '#ffffff !important',
                             },
                             // styling the tick marks
-                            "& .MuiChartsAxis-tick": {
-                                stroke: "#ffffff !important",
+                            '& .MuiChartsAxis-tick': {
+                                stroke: '#ffffff !important',
                             },
                             // styling the text labels
-                            "& .MuiChartsAxis-tickLabel": {
-                                fill: "#ffffff !important",
-                                fontFamily: 'Acumin Pro ExtraCondensed !important',
+                            '& .MuiChartsAxis-tickLabel': {
+                                fill: '#ffffff !important',
+                                fontFamily:
+                                    'Acumin Pro ExtraCondensed !important',
                             },
                             '& .MuiMarkElement-series-QB': {
                                 fill: '#FF0019',

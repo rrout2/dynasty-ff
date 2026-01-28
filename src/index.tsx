@@ -27,6 +27,7 @@ import BlueprintModule from './components/Blueprint/BlueprintModule/BlueprintMod
 import BodyBackgroundController from './BodyBackgroundController';
 import NewLive from './components/Blueprint/NewLive/NewLive';
 import NewInfinite from './components/Blueprint/NewInfinite/NewInfinite';
+import BlueprintDashboard from './components/Blueprint/BlueprintDashboard/BlueprintDashboard';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -82,6 +83,10 @@ root.render(
                         element={<BlueprintModule premium />}
                     />
                     <Route path="/newinfinite" element={<NewInfinite />} />
+                    <Route
+                        path="/blueprintdashboard"
+                        element={<BlueprintDashboard />}
+                    />
                 </Routes>
             </HashRouter>
         </QueryClientProvider>

@@ -1,0 +1,124 @@
+.headerContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    justify-content: space-around;
+
+    border-bottom: 1.33px solid white;
+}
+
+.domainLogo {
+    width: 688px;
+    height: auto;
+}
+
+.title {
+    color: #FFF;
+    font-family: "Acumin Pro ExtraCondensed";
+    font-size: 82px;
+    font-weight: 700;
+}
+
+.welcome {
+    color: #FFF;
+    font-family: Erbaum;
+    font-size: 67px;
+    font-weight: 400;
+
+    .username {
+        color: #E84D57;
+        text-transform: uppercase;;
+    }
+}
+
+.description {
+    color: #FFF;
+    font-family: "Acumin Pro";
+    font-size: 28px;
+    font-weight: 400;
+}
+
+.myBlueprintsTitle {
+    color: #F47F20;
+    font-family: Prohibition;
+    font-size: 54px;
+    font-weight: 400;
+
+    margin-bottom: 10px;
+}
+
+.myBpIcon {
+    width: 32px;
+    height: auto;
+}
+
+.myBlueprints {
+    margin-left: 20px;
+}
+
+.myBlueprintsList {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    flex-wrap: wrap;
+    width: 1150px;
+
+    border-top: solid #2E4349 1px;
+    padding-top: 30px;
+}
+
+.blueprintName {
+    color: #FFF;
+    font-family: "Acumin Pro ExtraCondensed";
+    font-size: 40.5px;
+    font-weight: 400;
+
+    max-width: 260px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.blueprintDate {
+    color: #FFF;
+    font-family: "Acumin Pro";
+    font-size: 22.3px;
+    font-weight: 700;
+}
+
+
+.domainShieldContainer {
+    background-color: #474E51;
+    padding: 7px 15px 3px 15px;
+    border-radius: 20px;
+
+    margin-right: 10px;
+}
+
+.domainShield {
+    width: 33px;
+    height: auto;
+}
+
+.blueprintItemHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.blueprintItem {
+    background-color: #182328;
+
+    border-radius: 10px;
+
+    width: 320px;
+
+    padding: 25px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
