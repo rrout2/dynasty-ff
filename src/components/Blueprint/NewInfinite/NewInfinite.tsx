@@ -333,13 +333,13 @@ export default function NewInfinite() {
                 </div>
                 <div
                     className={styles.buySellHoldPercents}
-                    style={{top: '1130px', left: '1375px'}}
+                    style={{top: '1130px', left: '1520px'}}
                 >
                     {`SELLS: ${sellPercent}%`}
                 </div>
                 <div
                     className={styles.buySellHoldPercents}
-                    style={{top: '1130px', left: '1520px'}}
+                    style={{top: '1130px', left: '1375px'}}
                 >
                     {`HOLDS: ${holdPercent}%`}
                 </div>
