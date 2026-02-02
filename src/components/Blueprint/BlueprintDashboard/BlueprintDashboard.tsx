@@ -1,8 +1,7 @@
 import styles from './BlueprintDashboard.module.css';
 import {logoHorizontal} from '../../../consts/images';
 import {useTitle} from '../../../hooks/hooks';
-import { Button } from '@mui/material';
-
+import {Button} from '@mui/material';
 
 export default function BlueprintDashboard() {
     useTitle('Blueprint Dashboard');
@@ -27,7 +26,7 @@ export default function BlueprintDashboard() {
             date: 'Oct 21, 2025',
             color: '#E84D57',
         },
-    ]
+    ];
     return (
         <div>
             <div className={styles.headerContainer}>

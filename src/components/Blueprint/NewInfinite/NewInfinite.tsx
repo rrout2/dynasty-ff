@@ -45,7 +45,8 @@ export default function NewInfinite() {
     const [rbGrade, setRbGrade] = useState(0);
     const [wrGrade, setWrGrade] = useState(0);
     const [teGrade, setTeGrade] = useState(0);
-    const [draftCapitalScore, setDraftCapitalScore] = useState(5);
+    const [draftCapitalScore, setDraftCapitalScore] = useState(0);
+    const [benchScore, setBenchScore] = useState(0);
     const [benchString, setBenchString] = useState('');
     const [valueArchetype, setValueArchetype] = useState<ValueArchetype>(
         ValueArchetype.None
@@ -59,15 +60,7 @@ export default function NewInfinite() {
     const [tradeNeedleRotationDegrees, setTradeNeedleRotationDegrees] =
         useState(0);
 
-    const {buys, sells} = useNewInfiniteBuysSells(
-        blueprint,
-        qbGrade,
-        rbGrade,
-        wrGrade,
-        teGrade,
-        valueArchetype,
-        buySells
-    );
+    const {buys, sells} = useNewInfiniteBuysSells(blueprint);
 
     useEffect(() => {
         if (!blueprint) return;
@@ -200,6 +193,8 @@ export default function NewInfinite() {
         setTeGrade(
             blueprint.positionalGrades.find(p => p.position === TE)?.grade || 0
         );
+        setDraftCapitalScore(blueprint.positionalGrades.find(p => p.position === 'DRAFT_CAPITAL')?.grade || 0)
+        setBenchScore(blueprint.positionalGrades.find(p => p.position === 'BENCH')?.grade || 0)
         setValueArchetype(
             convertStringToValueArchetype(blueprint.valueArchetype)
         );
@@ -215,7 +210,7 @@ export default function NewInfinite() {
                             s => s.player.playerId === p.playerId
                         )
                 )
-                .map(p => `${shortenName(p.playerName)} (${p.position})`)
+                .map(p => `${shortenName(p.playerName)} (${p.rosterPosition})`)
                 .join(', ')
                 .toUpperCase()
         );
@@ -290,7 +285,7 @@ export default function NewInfinite() {
                     }}
                 />
                 <PositionalGradeDisc
-                    grade={5} // TODO
+                    grade={benchScore}
                     color={'#CD00FF'}
                     style={{
                         left: '1160px',
@@ -382,16 +377,18 @@ export default function NewInfinite() {
                 <div className={styles.startingLineup}>
                     {apiStartingLineup.map(lineupPlayer => (
                         <PlayerRow
-                            key={lineupPlayer.player.sleeperId}
+                            key={lineupPlayer.player.playerSleeperBotId}
                             position={lineupPlayer.position}
                             playerName={lineupPlayer.player.playerName}
                             playerTeam={lineupPlayer.player.teamAbbreviation}
-                            sleeperId={lineupPlayer.player.sleeperId}
+                            sleeperId={lineupPlayer.player.playerSleeperBotId}
                             buySell={verdictToEnum(
                                 buySells?.find(
                                     b =>
                                         b.player_id ===
-                                        '' + lineupPlayer.player.sleeperId
+                                        '' +
+                                            lineupPlayer.player
+                                                .playerSleeperBotId
                                 )?.verdict || 'HOLD'
                             )}
                         />
@@ -496,14 +493,19 @@ function MonthlyChart() {
 export function verdictToEnum(verdict: string): BuySell {
     switch (verdict) {
         case 'SOFT BUY':
+        case 'SoftBuy':
             return BuySell.SoftBuy;
         case 'HARD BUY':
+        case 'HardBuy':
             return BuySell.HardBuy;
         case 'HOLD':
+        case 'Hold':
             return BuySell.Hold;
         case 'SOFT SELL':
+        case 'SoftSell':
             return BuySell.SoftSell;
         case 'HARD SELL':
+        case 'HardSell':
             return BuySell.HardSell;
         default:
             return BuySell.Hold;

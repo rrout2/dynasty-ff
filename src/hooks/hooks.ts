@@ -79,23 +79,25 @@ const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 export type LeagueSettings = {
     numberOfTeams: number;
     isSuperFlex: boolean;
-    pprValue: number;
-    tePremiumValue: number;
+    pointsPerReception: number;
+    tightEndPremium: number;
     taxiSpots: number;
-    qbCount: number;
-    rbCount: number;
-    wrCount: number;
-    teCount: number;
-    flexCount: number;
-    benchCount: number;
+    quarterbackSlots: number;
+    runningBackSlots: number;
+    wideReceiverSlots: number;
+    tightEndSlots: number;
+    flexSlots: number;
+    benchSlots: number;
 };
 
 export type RosterPlayer = {
     id: number;
     playerId: number;
-    sleeperId: string;
+    playerSleeperBotId: string;
     playerName: string;
     position: string;
+    rosterPosition: string;
+    isStarter: boolean;
     assetCategory: string;
     sortOrder: number;
     insulationScore: number;
@@ -103,6 +105,7 @@ export type RosterPlayer = {
     situationalScore: number;
     compositePositionRank: string;
     teamAbbreviation: string;
+    valueChangeIndicator: number;
 };
 
 type Blueprint = {
@@ -149,6 +152,46 @@ type Blueprint = {
         assetCategory: string;
         percentage: number;
     }>;
+    infiniteFeatures: InfiniteFeatures;
+};
+
+type InfiniteFeatures = {
+    id: number;
+    month: number;
+    year: number;
+    generatedDate: string;
+    rosterValueTier: string;
+    recommendedTradeActivity: string;
+    buysPercentage: number;
+    sellsPercentage: number;
+    holdsPercentage: number;
+    risers: Array<{
+        id: number;
+        playerId: number;
+        playerSleeperBotId: number;
+        playerName: string;
+        position: string;
+        teamAbbreviation: string;
+        riseMagnitude: number;
+    }>;
+    fallers: Array<{
+        id: number;
+        playerId: number;
+        playerSleeperBotId: number;
+        playerName: string;
+        position: string;
+        teamAbbreviation: string;
+        fallMagnitude: number;
+    }>;
+    buySellRecommendations: Array<{
+        id: number;
+        playerId: number;
+        playerSleeperBotId: number;
+        playerName: string;
+        position: string;
+        teamAbbreviation: string;
+        recommendationType: string;
+    }>;
 };
 
 interface PositionalScores {
@@ -159,450 +202,39 @@ interface TradeTargets {
     [position: string]: number;
 }
 
-export function useNewInfiniteBuysSells(
-    blueprint: Blueprint | undefined,
-    qbGrade: number,
-    rbGrade: number,
-    wrGrade: number,
-    teGrade: number,
-    valueArchetype: ValueArchetype,
-    buySells: BuySellVerdict[] | undefined
-) {
-    const {getAdp} = useAdpData();
+export function useNewInfiniteBuysSells(blueprint: Blueprint | undefined) {
     const [buys, setBuys] = useState<BuySellPlayerProps[]>([]);
     const [sells, setSells] = useState<BuySellPlayerProps[]>([]);
+
     useEffect(() => {
         if (!blueprint) return;
-
-        const ONE_QB_ALLOWSET = new Set<string>([
-            'Josh Allen',
-            'Jayden Daniels',
-            'Lamar Jackson',
-            'Drake Maye',
-            'Kyler Murray',
-        ]);
-
-        const TE_DISALLOWSET = new Set<string>([
-            'Brock Bowers',
-            'George Kittle',
-            'Trey McBride',
-            'TJ Hockenson',
-            'Sam LaPorta',
-        ]);
-        const ONE_QB_DISALLOWSET = new Set<string>([
-            'Josh Allen',
-            'Jayden Daniels',
-            'Lamar Jackson',
-        ]);
-        let addedBelow100 = false;
-        const isSuperFlex = blueprint?.leagueSettings.isSuperFlex;
-        function calculateNumTradeTargets(
-            scores: PositionalScores,
-            tier: ValueArchetype
-        ): TradeTargets {
-            const tradeTargets: TradeTargets = {QB: 0, RB: 0, WR: 0, TE: 0};
-            let remainingTargets = 4;
-
-            // Helper function to assign targets to a position
-            const assignTargets = (position: string, max: number) => {
-                const maxAssignable = Math.min(max, remainingTargets);
-                tradeTargets[position] = maxAssignable;
-                remainingTargets -= maxAssignable;
-            };
-
-            // Sort positions by scores in ascending order of need (lower score = higher need)
-            const sortedPositions = Object.entries(scores)
-                .sort((a, b) => a[1] - b[1])
-                .map(([position]) => position);
-
-            // Assign targets based on the criteria
-            for (const position of sortedPositions) {
-                const score = scores[position];
-                if (remainingTargets === 0) break;
-                if (
-                    position === RB &&
-                    (tier === ValueArchetype.HardRebuild ||
-                        tier === ValueArchetype.OneYearReload)
-                ) {
-                    assignTargets(position, 0);
-                    continue;
-                }
-
-                if (position === TE) {
-                    const hasEliteTe = blueprint?.rosterPlayers.find(p =>
-                        TE_DISALLOWSET.has(p.playerName)
-                    );
-                    if (hasEliteTe) {
-                        assignTargets(position, 0);
-                        continue;
-                    }
-                }
-
-                if (position === QB && !isSuperFlex) {
-                    const hasEliteQb = blueprint?.rosterPlayers.find(p =>
-                        ONE_QB_DISALLOWSET.has(p.playerName)
-                    );
-                    if (hasEliteQb) {
-                        assignTargets(position, 0);
-                        continue;
-                    }
-                }
-
-                if (score >= 8) {
-                    assignTargets(position, 1);
-                } else if (score >= 6) {
-                    assignTargets(position, 2);
-                } else {
-                    assignTargets(position, 3);
-                }
-
-                // Ensure no more than 1 QB or TE target
-                if (
-                    (position === QB || position === TE) &&
-                    tradeTargets[position] > 1
-                ) {
-                    remainingTargets += tradeTargets[position] - 1;
-                    tradeTargets[position] = 1;
-                }
-            }
-            if (remainingTargets > 0) {
-                tradeTargets.WR += remainingTargets;
-            }
-
-            return tradeTargets;
-        }
-        function calculateBuys(): BuySellPlayerProps[] {
-            const buys: BuySellPlayerProps[] = [];
-            const {
-                QB: qbTargets,
-                RB: rbTargets,
-                WR: wrTargets,
-                TE: teTargets,
-            } = calculateNumTradeTargets(
-                {QB: qbGrade, RB: rbGrade, WR: wrGrade, TE: teGrade},
-                convertStringToValueArchetype(blueprint?.valueArchetype || '')
-            );
-            const gradeOrder = getPositionalOrder({
-                qbGrade,
-                rbGrade,
-                wrGrade,
-                teGrade,
-            });
-            for (const pos of gradeOrder) {
-                switch (pos) {
-                    case QB:
-                        buys.unshift(...calcQbBuys(qbTargets));
-                        break;
-                    case RB:
-                        buys.unshift(...calcRbBuys(rbTargets));
-                        break;
-                    case WR:
-                        buys.unshift(...calcWrBuys(wrTargets));
-                        break;
-                    case TE:
-                        buys.unshift(...calcTeBuys(teTargets));
-                        break;
-                    default:
-                        throw new Error('Unknown position ' + pos);
-                }
-            }
-            if (buys.length < 4) {
-                buys.push(...calcWrBuys(4 - buys.length, buys));
-            }
-            return buys;
-        }
-        function calcQbBuys(numToBuy: number): BuySellPlayerProps[] {
-            if (
-                // Only buy QBs if competitive in 1QB leagues
-                valueArchetype !== ValueArchetype.EliteValue &&
-                valueArchetype !== ValueArchetype.EnhancedValue &&
-                valueArchetype !== ValueArchetype.StandardValue &&
-                !isSuperFlex
-            ) {
-                return [];
-            }
-            const buyList =
-                buySells?.filter(
-                    b =>
-                        b.position === QB &&
-                        (b.verdict === 'SOFT BUY' || b.verdict === 'HARD BUY')
-                ) || [];
-            const toBuy: BuySellPlayerProps[] = [];
-            for (const qbBuy of buyList) {
-                if (toBuy.length >= numToBuy) {
-                    break;
-                }
-                if (
-                    blueprint?.rosterPlayers
-                        .map(p => '' + p.sleeperId)
-                        .includes(qbBuy.player_id)
-                ) {
-                    continue;
-                }
-                if (!isSuperFlex && !ONE_QB_ALLOWSET.has(qbBuy.name)) {
-                    continue;
-                }
-                // if (disallowedBuys.includes(qbBuy.player_id)) {
-                //     continue;
-                // }
-                const adp = getAdp(qbBuy.name);
-                if (adp > 140) continue;
-                if (
-                    adp > 100 &&
-                    valueArchetype !== ValueArchetype.HardRebuild &&
-                    valueArchetype !== ValueArchetype.OneYearReload
-                ) {
-                    if (addedBelow100) continue;
-                    addedBelow100 = true;
-                }
-                if (valueArchetype === ValueArchetype.HardRebuild && adp < 48) {
-                    continue;
-                }
-                if (
-                    valueArchetype === ValueArchetype.OneYearReload &&
-                    adp < 36
-                ) {
-                    continue;
-                }
-                toBuy.push({
-                    playerRowProps: {
-                        playerName: qbBuy.name,
-                        playerTeam: qbBuy.team,
-                        position: qbBuy.position,
-                        sleeperId: qbBuy.player_id,
-                    },
-                    buySell: verdictToEnum(qbBuy.verdict),
-                });
-            }
-            return toBuy;
-        }
-        function calcRbBuys(numToBuy: number): BuySellPlayerProps[] {
-            if (
-                valueArchetype === ValueArchetype.HardRebuild ||
-                valueArchetype === ValueArchetype.OneYearReload
-            ) {
-                return [];
-            }
-            const buyList =
-                buySells?.filter(
-                    b =>
-                        b.position === RB &&
-                        (b.verdict === 'SOFT BUY' || b.verdict === 'HARD BUY')
-                ) || [];
-            const toBuy: BuySellPlayerProps[] = [];
-            for (const rbBuy of buyList) {
-                if (toBuy.length >= numToBuy) {
-                    break;
-                }
-                if (
-                    blueprint?.rosterPlayers
-                        .map(p => '' + p.sleeperId)
-                        .includes(rbBuy.player_id)
-                ) {
-                    continue;
-                }
-                // if (disallowedBuys.includes(rbBuy.player_id)) {
-                //     continue;
-                // }
-                const adp = getAdp(rbBuy.name);
-                if (adp > 140) continue;
-                if (adp > 100) {
-                    if (addedBelow100) continue;
-                    addedBelow100 = true;
-                }
-                toBuy.push({
-                    playerRowProps: {
-                        playerName: rbBuy.name,
-                        playerTeam: rbBuy.team,
-                        position: rbBuy.position,
-                        sleeperId: rbBuy.player_id,
-                    },
-                    buySell: verdictToEnum(rbBuy.verdict),
-                });
-            }
-            return toBuy;
-        }
-        function calcWrBuys(
-            numToBuy: number,
-            existingWrBuys?: BuySellPlayerProps[]
-        ): BuySellPlayerProps[] {
-            const secondPass = !!existingWrBuys;
-            const buyList =
-                buySells?.filter(
-                    b =>
-                        b.position === WR &&
-                        (b.verdict === 'SOFT BUY' || b.verdict === 'HARD BUY')
-                ) || [];
-            const toBuy: BuySellPlayerProps[] = [];
-            for (const wrBuy of buyList) {
-                if (toBuy.length >= numToBuy) {
-                    break;
-                }
-                if (
-                    blueprint?.rosterPlayers
-                        .map(p => '' + p.sleeperId)
-                        .includes(wrBuy.player_id)
-                ) {
-                    continue;
-                }
-                if (
-                    valueArchetype === ValueArchetype.HardRebuild ||
-                    valueArchetype === ValueArchetype.OneYearReload
-                ) {
-                    if (wrBuy.age >= 26) {
-                        continue;
-                    }
-                }
-                // if (disallowedBuys.includes(wrBuy.player_id)) {
-                //     continue;
-                // }
-                const adp = getAdp(wrBuy.name);
-                if (adp > 140) continue;
-                if (
-                    adp > 100 &&
-                    valueArchetype !== ValueArchetype.HardRebuild &&
-                    valueArchetype !== ValueArchetype.OneYearReload
-                ) {
-                    if (addedBelow100) continue;
-                    addedBelow100 = true;
-                }
-                if (
-                    valueArchetype === ValueArchetype.HardRebuild &&
-                    adp < 48 &&
-                    !secondPass
-                ) {
-                    continue;
-                }
-                if (
-                    valueArchetype === ValueArchetype.OneYearReload &&
-                    adp < 36 &&
-                    !secondPass
-                ) {
-                    continue;
-                }
-                if (
-                    secondPass &&
-                    !!existingWrBuys.find(
-                        b => '' + b.playerRowProps.sleeperId === wrBuy.player_id
-                    )
-                ) {
-                    continue;
-                }
-                toBuy.push({
-                    playerRowProps: {
-                        playerName: wrBuy.name,
-                        playerTeam: wrBuy.team,
-                        position: wrBuy.position,
-                        sleeperId: wrBuy.player_id,
-                    },
-                    buySell: verdictToEnum(wrBuy.verdict),
-                });
-            }
-            return toBuy;
-        }
-        function calcTeBuys(numToBuy: number): BuySellPlayerProps[] {
-            const buyList =
-                buySells?.filter(
-                    b =>
-                        b.position === TE &&
-                        (b.verdict === 'SOFT BUY' || b.verdict === 'HARD BUY')
-                ) || [];
-            const toBuy: BuySellPlayerProps[] = [];
-            for (const teBuy of buyList) {
-                if (toBuy.length >= numToBuy) {
-                    break;
-                }
-                if (
-                    blueprint?.rosterPlayers
-                        .map(p => '' + p.sleeperId)
-                        .includes(teBuy.player_id)
-                ) {
-                    continue;
-                }
-                if (
-                    valueArchetype === ValueArchetype.HardRebuild ||
-                    valueArchetype === ValueArchetype.OneYearReload
-                ) {
-                    if (teBuy.age >= 26) {
-                        continue;
-                    }
-                }
-                // if (disallowedBuys.includes(teBuy.player_id)) {
-                //     continue;
-                // }
-                const adp = getAdp(teBuy.name);
-                if (adp > 140) continue;
-                if (
-                    adp > 100 &&
-                    valueArchetype !== ValueArchetype.HardRebuild &&
-                    valueArchetype !== ValueArchetype.OneYearReload
-                ) {
-                    if (addedBelow100) continue;
-                    addedBelow100 = true;
-                }
-                if (valueArchetype === ValueArchetype.HardRebuild && adp < 48) {
-                    continue;
-                }
-                if (
-                    valueArchetype === ValueArchetype.OneYearReload &&
-                    adp < 36
-                ) {
-                    continue;
-                }
-                toBuy.push({
-                    playerRowProps: {
-                        playerName: teBuy.name,
-                        playerTeam: teBuy.team,
-                        position: teBuy.position,
-                        sleeperId: teBuy.player_id,
-                    },
-                    buySell: verdictToEnum(teBuy.verdict),
-                });
-            }
-            return toBuy;
-        }
-
-        function calculateSells(): BuySellPlayerProps[] {
-            const sellList =
-                buySells?.filter(
-                    b => b.verdict === 'SOFT SELL' || b.verdict === 'HARD SELL'
-                ) || [];
-
-            return sellList
-                .filter(sell =>
-                    blueprint?.rosterPlayers
-                        .map(p => '' + p.sleeperId)
-                        .includes(sell.player_id)
-                )
-                .filter(s => {
-                    if (isSuperFlex || s.position !== QB) return true;
-                    // No QB sells lower than QB12 in 1QB formats
-                    return s.pos_adp <= 12;
-                })
-                .slice(0, 2)
-                .map(sell => ({
-                    playerRowProps: {
-                        playerName: sell.name,
-                        playerTeam: sell.team,
-                        position: sell.position,
-                        sleeperId: sell.player_id,
-                    },
-                    buySell: verdictToEnum(sell.verdict),
-                }));
-        }
-
-        setBuys(calculateBuys());
-        setSells(calculateSells());
-    }, [
-        blueprint,
-        qbGrade,
-        rbGrade,
-        wrGrade,
-        teGrade,
-        valueArchetype,
-        buySells,
-        getAdp,
-    ]);
+        const buySellRecommendations =
+            blueprint.infiniteFeatures.buySellRecommendations;
+        const buys = buySellRecommendations
+            .filter(rec => rec.recommendationType.includes('Buy'))
+            .map(rec => ({
+                playerRowProps: {
+                    position: rec.position,
+                    playerName: rec.playerName,
+                    playerTeam: rec.teamAbbreviation,
+                    sleeperId: '' + rec.playerSleeperBotId,
+                },
+                buySell: verdictToEnum(rec.recommendationType),
+            }));
+        const sells = buySellRecommendations
+            .filter(rec => rec.recommendationType.includes('Sell'))
+            .map(rec => ({
+                playerRowProps: {
+                    position: rec.position,
+                    playerName: rec.playerName,
+                    playerTeam: rec.teamAbbreviation,
+                    sleeperId: '' + rec.playerSleeperBotId,
+                },
+                buySell: verdictToEnum(rec.recommendationType),
+            }));
+        setBuys(buys);
+        setSells(sells);
+    }, [blueprint]);
 
     return {
         buys,

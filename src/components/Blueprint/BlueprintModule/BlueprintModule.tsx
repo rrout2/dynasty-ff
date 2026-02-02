@@ -470,8 +470,8 @@ export default function BlueprintModule({
         if (!blueprint || !playerData) return;
         setNumTeams(blueprint.leagueSettings.numberOfTeams);
         setIsSuperFlex(blueprint.leagueSettings.isSuperFlex);
-        setPpr(blueprint.leagueSettings.pprValue);
-        setTep(blueprint.leagueSettings.tePremiumValue);
+        setPpr(blueprint.leagueSettings.pointsPerReception);
+        setTep(blueprint.leagueSettings.tightEndPremium);
         setProductionSharePercent(blueprint.productionSharePercentage);
         setValueSharePercent(blueprint.valueSharePercentage);
         setProductionShareRank(blueprint.productionShareLeagueRank);
@@ -612,7 +612,7 @@ export default function BlueprintModule({
                 ) / 10,
         });
         setRosterPlayers(
-            blueprint.rosterPlayers.map(p => playerData[p.sleeperId])
+            blueprint.rosterPlayers.map(p => playerData[p.playerSleeperBotId])
         );
         setApiRosterPlayers(blueprint.rosterPlayers);
 
@@ -3211,49 +3211,57 @@ export function getApiStartingLineup(
     leagueSettings: LeagueSettings,
     rosterPlayers: RosterPlayer[]
 ) {
-    const {qbCount, rbCount, wrCount, teCount, isSuperFlex} = leagueSettings;
-    let {flexCount} = leagueSettings;
+    const {
+        quarterbackSlots,
+        runningBackSlots,
+        wideReceiverSlots,
+        tightEndSlots,
+        isSuperFlex,
+    } = leagueSettings;
+    let {flexSlots} = leagueSettings;
     const remainingPlayers = new Set(rosterPlayers.map(p => p.playerId)); // maybe map?
     const startingQbs = rosterPlayers
-        .filter(p => p.position === QB)
-        .sort((a, b) => a.sortOrder - b.sortOrder)
-        .slice(0, qbCount);
+        .filter(p => p.rosterPosition === QB && p.isStarter)
+        .slice(0, quarterbackSlots);
     startingQbs.forEach(p => remainingPlayers.delete(p.playerId));
+
     const startingRbs = rosterPlayers
-        .filter(p => p.position === RB)
-        .sort((a, b) => a.sortOrder - b.sortOrder)
-        .slice(0, rbCount);
+        .filter(p => p.position === RB && p.isStarter)
+        .slice(0, runningBackSlots);
     startingRbs.forEach(p => remainingPlayers.delete(p.playerId));
+
     const startingWrs = rosterPlayers
-        .filter(p => p.position === WR)
-        .sort((a, b) => a.sortOrder - b.sortOrder)
-        .slice(0, wrCount);
+        .filter(p => p.position === WR && p.isStarter)
+        .slice(0, wideReceiverSlots);
     startingWrs.forEach(p => remainingPlayers.delete(p.playerId));
+
     const startingTes = rosterPlayers
-        .filter(p => p.position === TE)
-        .sort((a, b) => a.sortOrder - b.sortOrder)
-        .slice(0, teCount);
+        .filter(p => p.position === TE && p.isStarter)
+        .slice(0, tightEndSlots);
     startingTes.forEach(p => remainingPlayers.delete(p.playerId));
-    if (isSuperFlex) flexCount -= 1;
+
+    if (isSuperFlex) flexSlots -= 1;
     const startingFlexes = rosterPlayers
         .filter(
-            p => FLEX_SET.has(p.position) && remainingPlayers.has(p.playerId)
+            p =>
+                FLEX_SET.has(p.position) &&
+                remainingPlayers.has(p.playerId) &&
+                p.isStarter
         )
-        .sort((a, b) => a.sortOrder - b.sortOrder)
-        .slice(0, flexCount);
+        .slice(0, flexSlots);
     startingFlexes.forEach(p => remainingPlayers.delete(p.playerId));
+
     let startingSuperFlex: RosterPlayer[] = [];
     if (isSuperFlex) {
-        startingSuperFlex = rosterPlayers
-            .filter(
-                p =>
-                    SUPER_FLEX_SET.has(p.position) &&
-                    remainingPlayers.has(p.playerId)
-            )
-            .sort((a, b) => a.sortOrder - b.sortOrder)
-            .slice(0, 1);
+        startingSuperFlex = rosterPlayers.filter(
+            p =>
+                SUPER_FLEX_SET.has(p.position) &&
+                remainingPlayers.has(p.playerId) &&
+                p.isStarter
+        );
         startingSuperFlex.forEach(p => remainingPlayers.delete(p.playerId));
     }
+    
     return [
         ...startingQbs.map(p => {
             return {
