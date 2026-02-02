@@ -64,35 +64,16 @@ export default function NewInfinite() {
 
     useEffect(() => {
         if (!blueprint) return;
-        const verdicts = blueprint.rosterPlayers
-            .map(p => p.playerName)
-            .map(getVerdict)
-            .filter(v => !!v);
         setBuyPercent(
-            Math.round(
-                (100 *
-                    verdicts.filter(v => v && v.verdict.includes('BUY'))
-                        .length) /
-                    verdicts.length
-            )
+            blueprint.infiniteFeatures.buysPercentage,
         );
         setSellPercent(
-            Math.round(
-                (100 *
-                    verdicts.filter(v => v && v.verdict.includes('SELL'))
-                        .length) /
-                    verdicts.length
-            )
+            blueprint.infiniteFeatures.sellsPercentage,
         );
         setHoldPercent(
-            Math.round(
-                (100 *
-                    verdicts.filter(v => v && v.verdict.includes('HOLD'))
-                        .length) /
-                    verdicts.length
-            )
+            blueprint.infiniteFeatures.holdsPercentage,
         );
-    }, [blueprint?.rosterPlayers, getVerdict]);
+    }, [blueprint?.infiniteFeatures]);
     useEffect(() => {
         let activity: 'high' | 'midhigh' | 'mid' | 'lowmid' | 'low' = 'low';
         let rotationDegrees = 0;
