@@ -7,13 +7,10 @@ import {
     nflSilhouette,
 } from '../../../consts/images';
 import {
-    convertStringToValueArchetype,
     RosterPlayer,
     useBlueprint,
     useNewInfiniteBuysSells,
     useParamFromUrl,
-    useRisersFallers,
-    useSplitBuySellData,
 } from '../../../hooks/hooks';
 import {BLUEPRINT_ID} from '../../../consts/urlParams';
 import {PositionalGradeDisc} from '../NewV1/NewV1';
@@ -52,108 +49,15 @@ export default function NewInfinite() {
         ValueArchetype.None
     );
 
-    // TODO: make sure this is pulling the right data.
-    const {buySells, getVerdict} = useSplitBuySellData();
     const [buyPercent, setBuyPercent] = useState(0);
     const [sellPercent, setSellPercent] = useState(0);
     const [holdPercent, setHoldPercent] = useState(0);
     const [tradeNeedleRotationDegrees, setTradeNeedleRotationDegrees] =
         useState(0);
-
     const {buys, sells} = useNewInfiniteBuysSells(blueprint);
+    const [risers, setRisers] = useState<string[]>([]);
+    const [fallers, setFallers] = useState<string[]>([]);
 
-    useEffect(() => {
-        if (!blueprint) return;
-        setBuyPercent(
-            blueprint.infiniteFeatures.buysPercentage,
-        );
-        setSellPercent(
-            blueprint.infiniteFeatures.sellsPercentage,
-        );
-        setHoldPercent(
-            blueprint.infiniteFeatures.holdsPercentage,
-        );
-    }, [blueprint?.infiniteFeatures]);
-    useEffect(() => {
-        let activity: 'high' | 'midhigh' | 'mid' | 'lowmid' | 'low' = 'low';
-        let rotationDegrees = 0;
-        switch (valueArchetype) {
-            case ValueArchetype.EliteValue:
-                if (sellPercent > 49) {
-                    activity = 'mid';
-                } else if (sellPercent > 19) {
-                    activity = 'lowmid';
-                } else {
-                    activity = 'low';
-                }
-                break;
-            case ValueArchetype.EnhancedValue:
-                if (sellPercent > 49) {
-                    activity = 'midhigh';
-                } else if (sellPercent > 39) {
-                    activity = 'mid';
-                } else if (sellPercent > 19) {
-                    activity = 'lowmid';
-                } else {
-                    activity = 'low';
-                }
-                break;
-            case ValueArchetype.StandardValue:
-            case ValueArchetype.FutureValue:
-                if (sellPercent > 49) {
-                    activity = 'high';
-                } else if (sellPercent > 39) {
-                    activity = 'midhigh';
-                } else if (sellPercent > 19) {
-                    activity = 'mid';
-                } else if (sellPercent > 9) {
-                    activity = 'lowmid';
-                } else {
-                    activity = 'low';
-                }
-                break;
-            case ValueArchetype.OneYearReload:
-            case ValueArchetype.AgingValue:
-                if (sellPercent > 39) {
-                    activity = 'high';
-                } else if (sellPercent > 19) {
-                    activity = 'midhigh';
-                } else if (sellPercent > 9) {
-                    activity = 'mid';
-                } else {
-                    activity = 'lowmid';
-                }
-                break;
-            case ValueArchetype.HardRebuild:
-                if (sellPercent > 19) {
-                    activity = 'high';
-                } else if (sellPercent > 9) {
-                    activity = 'midhigh';
-                } else {
-                    activity = 'mid';
-                }
-                break;
-        }
-
-        switch (activity) {
-            case 'high':
-                rotationDegrees = 75;
-                break;
-            case 'midhigh':
-                rotationDegrees = 40;
-                break;
-            case 'mid':
-                rotationDegrees = 0;
-                break;
-            case 'lowmid':
-                rotationDegrees = -40;
-                break;
-            case 'low':
-                rotationDegrees = -75;
-                break;
-        }
-        setTradeNeedleRotationDegrees(rotationDegrees);
-    }, [valueArchetype, sellPercent]);
     useEffect(() => {
         if (!blueprint) return;
         setApiStartingLineup(
@@ -176,9 +80,44 @@ export default function NewInfinite() {
         );
         setDraftCapitalScore(blueprint.positionalGrades.find(p => p.position === 'DRAFT_CAPITAL')?.grade || 0)
         setBenchScore(blueprint.positionalGrades.find(p => p.position === 'BENCH')?.grade || 0)
-        setValueArchetype(
-            convertStringToValueArchetype(blueprint.valueArchetype)
+
+        setBuyPercent(
+            blueprint.infiniteFeatures.buysPercentage,
         );
+        setSellPercent(
+            blueprint.infiniteFeatures.sellsPercentage,
+        );
+        setHoldPercent(
+            blueprint.infiniteFeatures.holdsPercentage,
+        );
+
+        setRisers(
+            blueprint.infiniteFeatures.risers.map(p => p.playerName)
+        );
+        setFallers(
+            blueprint.infiniteFeatures.fallers.map(p => p.playerName)
+        );
+
+        const activity = blueprint.infiniteFeatures.recommendedTradeActivity;
+        let rotationDegrees = 0;
+        switch (activity) {
+            case 'High':
+                rotationDegrees = 75;
+                break;
+            case 'MidHigh':
+                rotationDegrees = 40;
+                break;
+            case 'Medium':
+                rotationDegrees = 0;
+                break;
+            case 'MidLow':
+                rotationDegrees = -40;
+                break;
+            case 'Low':
+                rotationDegrees = -75;
+                break;
+        }
+        setTradeNeedleRotationDegrees(rotationDegrees);
     }, [blueprint]);
 
     useEffect(() => {
@@ -198,12 +137,10 @@ export default function NewInfinite() {
     }, [apiStartingLineup, blueprint?.rosterPlayers]);
 
     const [currentDate] = useState(new Date());
-    const {risers, fallers} = useRisersFallers(blueprint?.rosterPlayers);
 
     return (
         <>
-            notes: bench score / DC score is hard coded. Lineup BSH values are
-            outdated. Risers/fallers are outdated. Need to use proper buy sells.
+            notes: ages are hardcoded. need player sleeper IDs for buy and sell.
             <div className={styles.fullBlueprint}>
                 <div className={styles.teamName}>{blueprint?.teamName}</div>
                 <div className={styles.monthYear}>
@@ -223,7 +160,7 @@ export default function NewInfinite() {
                     ))}
                 </div>
                 <div className={styles.rosterValueTierSection}>
-                    <RosterValueTier valueArchetype={valueArchetype} />
+                    <RosterValueTier valueTier={(blueprint?.infiniteFeatures.rosterValueTier ?? ValueTier.None) as ValueTier} />
                 </div>
                 <PositionalGradeDisc
                     grade={qbGrade}
@@ -363,15 +300,7 @@ export default function NewInfinite() {
                             playerName={lineupPlayer.player.playerName}
                             playerTeam={lineupPlayer.player.teamAbbreviation}
                             sleeperId={lineupPlayer.player.playerSleeperBotId}
-                            buySell={verdictToEnum(
-                                buySells?.find(
-                                    b =>
-                                        b.player_id ===
-                                        '' +
-                                            lineupPlayer.player
-                                                .playerSleeperBotId
-                                )?.verdict || 'HOLD'
-                            )}
+                            valueChangeIndicator={lineupPlayer.player.valueChangeIndicator}
                         />
                     ))}
                 </div>
@@ -493,19 +422,28 @@ export function verdictToEnum(verdict: string): BuySell {
     }
 }
 
-function RosterValueTier({valueArchetype}: {valueArchetype: ValueArchetype}) {
+enum ValueTier {
+    None = 'None',
+    Elite = 'Elite',
+    Championship = 'Championship',
+    Contending = 'Contending',
+    Reload = 'Reload',
+    Rebuild = 'Rebuild',
+};
+
+function RosterValueTier({valueTier}: {valueTier: ValueTier}) {
     return (
         <div className={styles.rosterValueTier}>
-            {Object.values(ValueArchetype)
-                .filter(va => va !== ValueArchetype.None)
+            {Object.values(ValueTier)
+                .filter(va => va !== ValueTier.None)
                 .map((va, i) => (
                     <div key={i} className={styles.valueArchetypeRow}>
-                        {va === valueArchetype && <GreenArrow />}
+                        {va === valueTier && <GreenArrow />}
                         <div
                             key={i}
                             className={styles.valueArchetype}
                             style={
-                                va === valueArchetype
+                                va === valueTier
                                     ? {
                                           color: '#1AE069',
                                           background:
@@ -599,7 +537,7 @@ type PlayerRowProps = {
     playerName: string;
     playerTeam: string;
     sleeperId: string;
-    buySell?: BuySell;
+    valueChangeIndicator?: number; // if undefined, don't show. But 0 is fine (HOLD).
 };
 
 function PlayerRow({
@@ -607,7 +545,7 @@ function PlayerRow({
     playerName,
     playerTeam,
     sleeperId,
-    buySell,
+    valueChangeIndicator,
 }: PlayerRowProps) {
     function getCircleStyling(pos: string): CSSProperties {
         switch (pos) {
@@ -682,11 +620,10 @@ function PlayerRow({
     }
 
     function getDifferenceColor() {
-        if (buySell === BuySell.HardBuy || buySell === BuySell.SoftBuy) {
+        if (valueChangeIndicator && valueChangeIndicator > 0) {
             return 'rgba(26, 224, 105, 1)';
         } else if (
-            buySell === BuySell.HardSell ||
-            buySell === BuySell.SoftSell
+            valueChangeIndicator && valueChangeIndicator < 0
         ) {
             return 'rgba(227, 24, 55, 1)';
         } else {
@@ -695,12 +632,9 @@ function PlayerRow({
     }
 
     function getDifferenceSymbol() {
-        if (buySell === BuySell.HardBuy || buySell === BuySell.SoftBuy) {
+        if (valueChangeIndicator && valueChangeIndicator > 0) {
             return '+';
-        } else if (
-            buySell === BuySell.HardSell ||
-            buySell === BuySell.SoftSell
-        ) {
+        } else if (valueChangeIndicator && valueChangeIndicator < 0) {
             return '-';
         } else {
             return '=';
@@ -743,7 +677,7 @@ function PlayerRow({
                 />
                 <div className={styles.playerName}>{playerName}</div>
             </div>
-            {!!buySell && (
+            {valueChangeIndicator !== undefined && (
                 <div
                     className={styles.differenceChip}
                     style={{color: getDifferenceColor()}}
@@ -752,6 +686,9 @@ function PlayerRow({
                     <div className={styles.marketDiscrepancy}>
                         {getDifferenceSymbol()}
                     </div>
+                    {valueChangeIndicator !== 0 && <div className={styles.marketDiscrepancy}>
+                        {Math.abs(valueChangeIndicator)}
+                    </div>}
                 </div>
             )}
         </div>

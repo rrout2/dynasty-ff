@@ -81,8 +81,8 @@
     }
 
     .headshot {
-        width: 60px;
-        height: auto;
+        width: auto;
+        height: 44px;
 
         align-self: flex-end;
     }
@@ -192,7 +192,7 @@
 
 .buysContainer {
     position: absolute;
-    top: 1420px;
+    top: 1440px;
     left: 700px;
 
     display: flex;
@@ -203,17 +203,21 @@
 .buysColumn {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
+
+    scale: 1.2;
 }
 
 .sellsContainer {
     position: absolute;
     top: 1820px;
-    left: 700px;
+    left: 742px;
 
     display: flex;
     flex-direction: row;
-    gap: 120px;
+    gap: 35px;
+
+    scale: 1.2;
 }
 
 .buySellPlayer {
@@ -241,7 +245,7 @@
 
 .rosterValueTierSection {
     position: absolute;
-    top: 170px;
+    top: 190px;
     left: 1375px;
 }
 
@@ -249,7 +253,7 @@
     display: flex;
     flex-direction: column;
 
-    gap: 8px;
+    gap: 20px;
 }
 
 .valueArchetypeRow {
