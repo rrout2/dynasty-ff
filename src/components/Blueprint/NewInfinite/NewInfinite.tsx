@@ -28,7 +28,6 @@ import {
 } from '../../../consts/fantasy';
 import {
     getApiStartingLineup,
-    ValueArchetype,
 } from '../BlueprintModule/BlueprintModule';
 import {LineChart} from '@mui/x-charts/LineChart';
 
@@ -45,10 +44,6 @@ export default function NewInfinite() {
     const [draftCapitalScore, setDraftCapitalScore] = useState(0);
     const [benchScore, setBenchScore] = useState(0);
     const [benchString, setBenchString] = useState('');
-    const [valueArchetype, setValueArchetype] = useState<ValueArchetype>(
-        ValueArchetype.None
-    );
-
     const [buyPercent, setBuyPercent] = useState(0);
     const [sellPercent, setSellPercent] = useState(0);
     const [holdPercent, setHoldPercent] = useState(0);
@@ -78,25 +73,21 @@ export default function NewInfinite() {
         setTeGrade(
             blueprint.positionalGrades.find(p => p.position === TE)?.grade || 0
         );
-        setDraftCapitalScore(blueprint.positionalGrades.find(p => p.position === 'DRAFT_CAPITAL')?.grade || 0)
-        setBenchScore(blueprint.positionalGrades.find(p => p.position === 'BENCH')?.grade || 0)
-
-        setBuyPercent(
-            blueprint.infiniteFeatures.buysPercentage,
+        setDraftCapitalScore(
+            blueprint.positionalGrades.find(p => p.position === 'DRAFT_CAPITAL')
+                ?.grade || 0
         );
-        setSellPercent(
-            blueprint.infiniteFeatures.sellsPercentage,
-        );
-        setHoldPercent(
-            blueprint.infiniteFeatures.holdsPercentage,
+        setBenchScore(
+            blueprint.positionalGrades.find(p => p.position === 'BENCH')
+                ?.grade || 0
         );
 
-        setRisers(
-            blueprint.infiniteFeatures.risers.map(p => p.playerName)
-        );
-        setFallers(
-            blueprint.infiniteFeatures.fallers.map(p => p.playerName)
-        );
+        setBuyPercent(blueprint.infiniteFeatures.buysPercentage);
+        setSellPercent(blueprint.infiniteFeatures.sellsPercentage);
+        setHoldPercent(blueprint.infiniteFeatures.holdsPercentage);
+
+        setRisers(blueprint.infiniteFeatures.risers.map(p => p.playerName));
+        setFallers(blueprint.infiniteFeatures.fallers.map(p => p.playerName));
 
         const activity = blueprint.infiniteFeatures.recommendedTradeActivity;
         let rotationDegrees = 0;
@@ -160,7 +151,12 @@ export default function NewInfinite() {
                     ))}
                 </div>
                 <div className={styles.rosterValueTierSection}>
-                    <RosterValueTier valueTier={(blueprint?.infiniteFeatures.rosterValueTier ?? ValueTier.None) as ValueTier} />
+                    <RosterValueTier
+                        valueTier={
+                            (blueprint?.infiniteFeatures.rosterValueTier ??
+                                ValueTier.None) as ValueTier
+                        }
+                    />
                 </div>
                 <PositionalGradeDisc
                     grade={qbGrade}
@@ -300,7 +296,9 @@ export default function NewInfinite() {
                             playerName={lineupPlayer.player.playerName}
                             playerTeam={lineupPlayer.player.teamAbbreviation}
                             sleeperId={lineupPlayer.player.playerSleeperBotId}
-                            valueChangeIndicator={lineupPlayer.player.valueChangeIndicator}
+                            valueChangeIndicator={
+                                lineupPlayer.player.valueChangeIndicator
+                            }
                         />
                     ))}
                 </div>
@@ -371,35 +369,6 @@ export default function NewInfinite() {
     );
 }
 
-function MonthlyChart() {
-    return (
-        <LineChart
-            xAxis={[
-                {
-                    data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                    scaleType: 'band',
-                },
-            ]}
-            series={[
-                {
-                    data: [35, 45, 50, 55, 60, 65],
-                    color: '#FF0019',
-                },
-                {
-                    data: [65, 59, 80, 81, 56, 55],
-                    color: '#1976d2',
-                },
-                {
-                    data: [45, 70, 60, 75, 80, 85],
-                    color: '#dc004e',
-                },
-            ]}
-            width={800}
-            height={400}
-        />
-    );
-}
-
 export function verdictToEnum(verdict: string): BuySell {
     switch (verdict) {
         case 'SOFT BUY':
@@ -429,7 +398,7 @@ enum ValueTier {
     Contending = 'Contending',
     Reload = 'Reload',
     Rebuild = 'Rebuild',
-};
+}
 
 function RosterValueTier({valueTier}: {valueTier: ValueTier}) {
     return (
@@ -622,9 +591,7 @@ function PlayerRow({
     function getDifferenceColor() {
         if (valueChangeIndicator && valueChangeIndicator > 0) {
             return 'rgba(26, 224, 105, 1)';
-        } else if (
-            valueChangeIndicator && valueChangeIndicator < 0
-        ) {
+        } else if (valueChangeIndicator && valueChangeIndicator < 0) {
             return 'rgba(227, 24, 55, 1)';
         } else {
             return '#EABA10';
@@ -686,9 +653,11 @@ function PlayerRow({
                     <div className={styles.marketDiscrepancy}>
                         {getDifferenceSymbol()}
                     </div>
-                    {valueChangeIndicator !== 0 && <div className={styles.marketDiscrepancy}>
-                        {Math.abs(valueChangeIndicator)}
-                    </div>}
+                    {valueChangeIndicator !== 0 && (
+                        <div className={styles.marketDiscrepancy}>
+                            {Math.abs(valueChangeIndicator)}
+                        </div>
+                    )}
                 </div>
             )}
         </div>

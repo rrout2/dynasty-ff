@@ -3261,7 +3261,7 @@ export function getApiStartingLineup(
         );
         startingSuperFlex.forEach(p => remainingPlayers.delete(p.playerId));
     }
-    
+
     return [
         ...startingQbs.map(p => {
             return {
