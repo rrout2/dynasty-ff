@@ -1,12 +1,29 @@
 import styles from './BlueprintDashboard.module.css';
-import {logoHorizontal} from '../../../consts/images';
+import {flockDomainLogo, logoHorizontal} from '../../../consts/images';
 import {useTitle} from '../../../hooks/hooks';
-import {Button} from '@mui/material';
+import {Box, Button, Modal} from '@mui/material';
+import {useState} from 'react';
+import DomainTextField from '../shared/DomainTextField';
+
+const COLOR_LIST = [
+    '#F47F20',
+    '#28ABE2',
+    '#FABF4A',
+    '#B139E2',
+    '#1AE069',
+    '#E84D57',
+];
 
 export default function BlueprintDashboard() {
     useTitle('Blueprint Dashboard');
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // should check login info from browser sessionStorage.
+    const [loginModalOpen, setLoginModalOpen] = useState(true);
+    const [loginEmail, setLoginEmail] = useState('');
+    const [loginPassword, setLoginPassword] = useState('');
+
+    // mock data
     const username = 'username';
-    const bps: BlueprintItemProps[] = [
+    const bps = [
         {
             name: 'Blueprint team name',
             date: 'Oct 21, 2025',
@@ -14,52 +31,160 @@ export default function BlueprintDashboard() {
         {
             name: 'Blueprint team name',
             date: 'Oct 21, 2025',
-            color: '#28ABE2',
         },
         {
             name: 'Blueprint team name',
             date: 'Oct 21, 2025',
-            color: '#FABF4A',
         },
         {
             name: 'Blueprint team name',
             date: 'Oct 21, 2025',
-            color: '#E84D57',
         },
     ];
+    const infinites = [
+        {
+            name: 'Blueprint team name',
+            date: 'Oct 21, 2025',
+        },
+    ];
+
+    function submitLogin() {
+        // TODO
+        console.log('submitting login');
+        setIsLoggedIn(true);
+        setLoginModalOpen(false);
+    }
+
     return (
         <div>
-            <div className={styles.headerContainer}>
-                <img src={logoHorizontal} className={styles.domainLogo} />
-                <div className={styles.title}>BLUEPRINT DASHBOARD</div>
-            </div>
-            <div className={styles.bodyContainer}>
-                <div className={styles.bodySection1}>
-                    <div className={styles.welcome}>
-                        Welcome back,{' '}
-                        <span className={styles.username}>{username}</span>
+            <Modal
+                open={loginModalOpen}
+                onClose={() => {}} // prevent close on unless you login.
+            >
+                <Box className={styles.loginModal}>
+                    <img src={flockDomainLogo} className={styles.loginLogo} />
+                    <div className={styles.loginTitle}>
+                        BLUEPRINT DASHBOARD LOGIN
                     </div>
-                    <div className={styles.description}>
-                        Track your blueprints, review all of your blueprints in
-                        one place, open a support ticket, and more!
+                    <div className={styles.loginDescription}>
+                        Login using the same email and password used on the
+                        Flock Fantasy website
                     </div>
-                    <div className={styles.myBlueprints}>
-                        <div className={styles.myBlueprintsTitle}>
-                            My Blueprints <MyBpIcon />
+                    <div>
+                        <div className={styles.inputLabel}>Email Address</div>
+                        <DomainTextField
+                            value={loginEmail}
+                            onChange={e => setLoginEmail(e.target.value)}
+                            onKeyUp={e =>
+                                e.key === 'Enter' &&
+                                loginEmail.trim() &&
+                                loginPassword.trim() &&
+                                submitLogin()
+                            }
+                            backgroundColor={'rgba(217, 217, 217, 0.20)'}
+                            hideOutline={true}
+                            inputWidth="380px"
+                        />
+                    </div>
+                    <div>
+                        <div className={styles.inputLabel}>Password</div>
+
+                        <DomainTextField
+                            type={'password'}
+                            value={loginPassword}
+                            onChange={e => setLoginPassword(e.target.value)}
+                            onKeyUp={e =>
+                                e.key === 'Enter' &&
+                                loginEmail.trim() &&
+                                loginPassword.trim() &&
+                                submitLogin()
+                            }
+                            backgroundColor={'rgba(217, 217, 217, 0.20)'}
+                            hideOutline={true}
+                            inputWidth="380px"
+                        />
+                    </div>
+                    <Button
+                        sx={{
+                            fontFamily: 'Acumin Pro Condensed',
+                            color: '#04121C',
+                            fontWeight: '700',
+                            background:
+                                'linear-gradient(180deg, #EA9A19 0%, #FF4200 100%)',
+                            '&:disabled': {
+                                background: 'gray',
+                            },
+                            width: '120px',
+                            borderRadius: '10px',
+                        }}
+                        variant="contained"
+                        onClick={() => {
+                            submitLogin();
+                        }}
+                        disabled={!loginEmail.trim() || !loginPassword.trim()}
+                    >
+                        SIGN IN
+                    </Button>
+                </Box>
+            </Modal>
+            {isLoggedIn && (
+                <>
+                    <div className={styles.headerContainer}>
+                        <img
+                            src={logoHorizontal}
+                            className={styles.domainLogo}
+                        />
+                        <div className={styles.title}>BLUEPRINT DASHBOARD</div>
+                    </div>
+                    <div className={styles.bodyContainer}>
+                        <div className={styles.bodySection1}>
+                            <div className={styles.welcome}>
+                                Welcome back,{' '}
+                                <span className={styles.username}>
+                                    {username}
+                                </span>
+                            </div>
+                            <div className={styles.description}>
+                                Track your blueprints, review all of your
+                                blueprints in one place, open a support ticket,
+                                and more!
+                            </div>
+                            <div className={styles.myBlueprints}>
+                                <div className={styles.myBlueprintsTitle}>
+                                    My Blueprints <MyBpIcon />
+                                </div>
+                                <div className={styles.myBlueprintsList}>
+                                    {bps.map((bp, idx) => (
+                                        <BlueprintItem
+                                            key={idx}
+                                            name={bp.name}
+                                            date={bp.date}
+                                            index={idx}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                            <div className={styles.myInfiniteBlueprints}>
+                                <div
+                                    className={styles.myInfiniteBlueprintsTitle}
+                                >
+                                    My Infinite Blueprints
+                                </div>
+                                <div className={styles.myBlueprintsList}>
+                                    {infinites.map((bp, idx) => (
+                                        <BlueprintItem
+                                            key={idx}
+                                            name={bp.name}
+                                            date={bp.date}
+                                            index={idx}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
                         </div>
-                        <div className={styles.myBlueprintsList}>
-                            {bps.map((bp, idx) => (
-                                <BlueprintItem
-                                    key={idx}
-                                    name={bp.name}
-                                    date={bp.date}
-                                    color={bp.color}
-                                />
-                            ))}
-                        </div>
                     </div>
-                </div>
-            </div>
+                </>
+            )}
         </div>
     );
 }
@@ -67,16 +192,17 @@ export default function BlueprintDashboard() {
 type BlueprintItemProps = {
     name: string;
     date: string;
-    color?: string;
-    // other props
+    index: number;
 };
 
-function BlueprintItem({name, date, color}: BlueprintItemProps) {
+function BlueprintItem({name, date, index}: BlueprintItemProps) {
     return (
         <div className={styles.blueprintItem}>
             <div className={styles.blueprintItemHeader}>
                 <div className={styles.domainShieldContainer}>
-                    <DomainShield color={color} />
+                    <DomainShield
+                        color={COLOR_LIST[index % COLOR_LIST.length]}
+                    />
                 </div>
                 <div className={styles.blueprintMetadata}>
                     <div className={styles.blueprintName}>{name}</div>

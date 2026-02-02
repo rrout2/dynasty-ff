@@ -2,9 +2,12 @@ import {FormControl, TextField, TextFieldProps} from '@mui/material';
 
 export type DomainTextFieldProps = TextFieldProps & {
     outlineColor?: string;
+    backgroundColor?: string;
     label?: string | JSX.Element;
     flexGrow?: number;
     labelMarginRight?: string;
+    hideOutline?: boolean;
+    inputWidth?: string;
 };
 
 export const DARK_BLUE = '#04121C';
@@ -12,9 +15,12 @@ export const DARK_BLUE = '#04121C';
 export default function DomainTextField(props: DomainTextFieldProps) {
     const {
         outlineColor,
+        backgroundColor,
         label,
         flexGrow = 0,
         labelMarginRight = '20px',
+        hideOutline,
+        inputWidth,
     } = props;
 
     return (
@@ -46,12 +52,15 @@ export default function DomainTextField(props: DomainTextFieldProps) {
                     slotProps={{
                         input: {
                             style: {
-                                backgroundColor: DARK_BLUE,
+                                backgroundColor: backgroundColor || DARK_BLUE,
                                 color: 'white',
                                 fontFamily: 'Acumin Pro Condensed',
                                 fontWeight: 'bold',
                                 borderRadius: '8px',
-                                outline: `solid 2px ${outlineColor || 'white'}`,
+                                outline: hideOutline
+                                    ? 'none'
+                                    : `solid 2px ${outlineColor || 'white'}`,
+                                width: inputWidth,
                             },
                         },
                     }}

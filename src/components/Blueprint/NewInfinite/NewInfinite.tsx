@@ -26,9 +26,7 @@ import {
     WR_RB_FLEX,
     WR_TE_FLEX,
 } from '../../../consts/fantasy';
-import {
-    getApiStartingLineup,
-} from '../BlueprintModule/BlueprintModule';
+import {getApiStartingLineup} from '../BlueprintModule/BlueprintModule';
 import {LineChart} from '@mui/x-charts/LineChart';
 
 export default function NewInfinite() {
