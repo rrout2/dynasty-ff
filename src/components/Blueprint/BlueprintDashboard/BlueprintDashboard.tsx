@@ -2,7 +2,7 @@ import styles from './BlueprintDashboard.module.css';
 import {flockDomainLogo, logoHorizontal} from '../../../consts/images';
 import {useTitle} from '../../../hooks/hooks';
 import {Box, Button, Modal} from '@mui/material';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import DomainTextField from '../shared/DomainTextField';
 
 const COLOR_LIST = [
@@ -14,8 +14,43 @@ const COLOR_LIST = [
     '#E84D57',
 ];
 
+const useScreenSize = () => {
+    const [screenSize, setScreenSize] = useState({
+        width: typeof window !== 'undefined' ? window.innerWidth : 0,
+        height: typeof window !== 'undefined' ? window.innerHeight : 0,
+    });
+
+    useEffect(() => {
+        // Check if window is defined (for server-side rendering compatibility)
+        if (typeof window === 'undefined') return;
+
+        const handleResize = () => {
+            setScreenSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+        };
+
+        // Set initial size
+        handleResize();
+
+        // Add event listener for window resize
+        window.addEventListener('resize', handleResize);
+
+        // Clean up the event listener when the component unmounts
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []); // Empty dependency array ensures this runs once on mount
+
+    return screenSize;
+};
+
 export default function BlueprintDashboard() {
     useTitle('Blueprint Dashboard');
+    const {width} = useScreenSize();
+    console.log('width', width);
+    const isMobile = width < 600;
     const [isLoggedIn, setIsLoggedIn] = useState(false); // should check login info from browser sessionStorage.
     const [loginModalOpen, setLoginModalOpen] = useState(true);
     const [loginEmail, setLoginEmail] = useState('');
@@ -25,7 +60,7 @@ export default function BlueprintDashboard() {
     const username = 'username';
     const bps = [
         {
-            name: 'Blueprint team name',
+            name: 'Blueprint team nameBlueprint team name',
             date: 'Oct 21, 2025',
         },
         {
@@ -61,7 +96,7 @@ export default function BlueprintDashboard() {
                 open={loginModalOpen}
                 onClose={() => {}} // prevent close on unless you login.
             >
-                <Box className={styles.loginModal}>
+                <Box className={styles.loginModal} sx={{maxWidth: '75%'}}>
                     <img src={flockDomainLogo} className={styles.loginLogo} />
                     <div className={styles.loginTitle}>
                         BLUEPRINT DASHBOARD LOGIN
@@ -83,7 +118,9 @@ export default function BlueprintDashboard() {
                             }
                             backgroundColor={'rgba(217, 217, 217, 0.20)'}
                             hideOutline={true}
-                            inputWidth="380px"
+                            inputWidth={
+                                width < 600 ? `${width * 0.8}px` : '380px'
+                            }
                         />
                     </div>
                     <div>
@@ -101,7 +138,9 @@ export default function BlueprintDashboard() {
                             }
                             backgroundColor={'rgba(217, 217, 217, 0.20)'}
                             hideOutline={true}
-                            inputWidth="380px"
+                            inputWidth={
+                                width < 600 ? `${width * 0.8}px` : '380px'
+                            }
                         />
                     </div>
                     <Button
@@ -129,54 +168,110 @@ export default function BlueprintDashboard() {
             </Modal>
             {isLoggedIn && (
                 <>
-                    <div className={styles.headerContainer}>
+                    <div
+                        className={styles.headerContainer}
+                        style={{flexDirection: isMobile ? 'column' : 'row'}}
+                    >
                         <img
                             src={logoHorizontal}
                             className={styles.domainLogo}
+                            style={{width: isMobile ? '90%' : ''}}
                         />
-                        <div className={styles.title}>BLUEPRINT DASHBOARD</div>
+                        <div
+                            className={styles.title}
+                            style={{fontSize: isMobile ? '40px' : ''}}
+                        >
+                            BLUEPRINT DASHBOARD
+                        </div>
                     </div>
                     <div className={styles.bodyContainer}>
                         <div className={styles.bodySection1}>
-                            <div className={styles.welcome}>
-                                Welcome back,{' '}
-                                <span className={styles.username}>
-                                    {username}
-                                </span>
-                            </div>
-                            <div className={styles.description}>
-                                Track your blueprints, review all of your
-                                blueprints in one place, open a support ticket,
-                                and more!
-                            </div>
-                            <div className={styles.myBlueprints}>
-                                <div className={styles.myBlueprintsTitle}>
-                                    My Blueprints <MyBpIcon />
+                            {!isMobile && (
+                                <div>
+                                    <div className={styles.welcome}>
+                                        Welcome back,{' '}
+                                        <span className={styles.username}>
+                                            {username}
+                                        </span>
+                                    </div>
+                                    <div className={styles.description}>
+                                        Track your blueprints, review all of
+                                        your blueprints in one place, open a
+                                        support ticket, and more!
+                                    </div>
                                 </div>
-                                <div className={styles.myBlueprintsList}>
+                            )}
+                            <div
+                                className={styles.myBlueprints}
+                                style={{
+                                    marginLeft: isMobile ? '0' : '',
+                                    alignItems: isMobile ? 'center' : '',
+                                }}
+                            >
+                                <div
+                                    className={styles.myBlueprintsTitle}
+                                    style={{
+                                        textAlign: isMobile
+                                            ? 'center'
+                                            : undefined,
+                                        fontSize: isMobile ? '30px' : undefined,
+                                    }}
+                                >
+                                    My Blueprints{' '}
+                                    <MyBpIcon isMobile={isMobile} />
+                                </div>
+                                <div
+                                    className={styles.myBlueprintsList}
+                                    style={{
+                                        width: isMobile
+                                            ? `${width * 0.8}px`
+                                            : '',
+                                    }}
+                                >
                                     {bps.map((bp, idx) => (
                                         <BlueprintItem
                                             key={idx}
                                             name={bp.name}
                                             date={bp.date}
                                             index={idx}
+                                            screenWidth={width}
                                         />
                                     ))}
                                 </div>
                             </div>
-                            <div className={styles.myInfiniteBlueprints}>
+                            <div
+                                className={styles.myInfiniteBlueprints}
+                                style={{
+                                    marginLeft: isMobile ? '0' : '',
+                                    alignItems: isMobile ? 'center' : '',
+                                }}
+                            >
                                 <div
                                     className={styles.myInfiniteBlueprintsTitle}
+                                    style={{
+                                        textAlign: isMobile
+                                            ? 'center'
+                                            : undefined,
+                                        fontSize: isMobile ? '30px' : undefined,
+                                    }}
                                 >
                                     My Infinite Blueprints
                                 </div>
-                                <div className={styles.myBlueprintsList}>
+                                <div
+                                    className={styles.myBlueprintsList}
+                                    style={{
+                                        width: isMobile
+                                            ? `${width * 0.8}px`
+                                            : '',
+                                    }}
+                                >
                                     {infinites.map((bp, idx) => (
                                         <BlueprintItem
                                             key={idx}
                                             name={bp.name}
                                             date={bp.date}
                                             index={idx}
+                                            screenWidth={width}
                                         />
                                     ))}
                                 </div>
@@ -193,11 +288,16 @@ type BlueprintItemProps = {
     name: string;
     date: string;
     index: number;
+    screenWidth: number;
 };
 
-function BlueprintItem({name, date, index}: BlueprintItemProps) {
+function BlueprintItem({name, date, index, screenWidth}: BlueprintItemProps) {
+    const isMobile = screenWidth < 600;
     return (
-        <div className={styles.blueprintItem}>
+        <div
+            className={styles.blueprintItem}
+            style={{width: isMobile ? `${screenWidth * 0.7}px` : ''}}
+        >
             <div className={styles.blueprintItemHeader}>
                 <div className={styles.domainShieldContainer}>
                     <DomainShield
@@ -205,8 +305,18 @@ function BlueprintItem({name, date, index}: BlueprintItemProps) {
                     />
                 </div>
                 <div className={styles.blueprintMetadata}>
-                    <div className={styles.blueprintName}>{name}</div>
-                    <div className={styles.blueprintDate}>{date}</div>
+                    <div
+                        className={styles.blueprintName}
+                        style={{
+                            fontSize: isMobile ? '30px' : undefined,
+                            maxWidth: isMobile ? `${screenWidth * 0.5}px` : '',
+                        }}
+                    >
+                        {name}
+                    </div>
+                    <div className={styles.blueprintDate} style={{
+                            fontSize: isMobile ? '15px' : undefined,
+                        }}>{date}</div>
                 </div>
             </div>
             <div className={styles.blueprintItemFooter}>
@@ -330,7 +440,7 @@ const DomainShield = ({color = '#F47F20'}: {color?: string}) => (
     </svg>
 );
 
-const MyBpIcon = () => (
+const MyBpIcon = ({isMobile}: {isMobile: boolean}) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         width="65"
@@ -338,6 +448,7 @@ const MyBpIcon = () => (
         viewBox="0 0 65 85"
         fill="none"
         className={styles.myBpIcon}
+        style={{width: isMobile ? '20px' : ''}}
     >
         <path
             d="M61.4755 10.6397V10.673H55.7102C55.4409 10.673 55.4755 10.7064 55.4755 10.4544V4.94237C55.2742 2.70638 60.9715 9.79971 61.4755 10.6397Z"
