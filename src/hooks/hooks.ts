@@ -192,6 +192,13 @@ type InfiniteFeatures = {
         teamAbbreviation: string;
         recommendationType: string;
     }>;
+    positionalAgeData: Array<{
+        id: number;
+        position: string;
+        averageAge: number;
+        month: number;
+        year: number;
+    }>;
 };
 
 interface PositionalScores {

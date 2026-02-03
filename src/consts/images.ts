@@ -339,9 +339,11 @@ import premiumAssets from '../assets/premium/premiumAssets.png';
 
 // New Infinite
 import newInfiniteBg from '../assets/newinfinite/Infinite.png';
+import bakeryCard2 from '../assets/newinfinite/bakery/bakery_feb.png';
 
 // Blueprint Dashboard
 import flockDomainLogo from '../assets/blueprintDashboard/flock-domain-logo.png';
+
 
 const newTeamBackgrounds: Map<string, string> = new Map([
     ['ARI', newAriBg],
@@ -810,4 +812,5 @@ export {
     newNflBg,
     newInfiniteBg,
     flockDomainLogo,
+    bakeryCard2,
 };

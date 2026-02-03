@@ -1,7 +1,7 @@
 import {CSSProperties, useEffect, useState} from 'react';
 import styles from './NewInfinite.module.css';
 import {
-    bakeryCard,
+    bakeryCard2 as bakeryCard,
     domainShield,
     newInfiniteBg,
     nflSilhouette,
@@ -238,30 +238,38 @@ export function WrappedNewInfinite({blueprintId}: {blueprintId: string}) {
                     ]}
                     series={[
                         {
-                            // data: [blueprint?.averageStarterAges.find(g => g.position === QB)
-                            //                 ?.averageAge ?? 0],
-                            data: [28],
+                            data: [
+                                blueprint?.infiniteFeatures.positionalAgeData.find(
+                                    g => g.position === QB
+                                )?.averageAge ?? 0,
+                            ],
                             color: '#FF0019',
                             id: QB,
                         },
                         {
-                            // data: [blueprint?.averageStarterAges.find(g => g.position === RB)
-                            //                 ?.averageAge ?? 0],
-                            data: [22],
+                            data: [
+                                blueprint?.infiniteFeatures.positionalAgeData.find(
+                                    g => g.position === RB
+                                )?.averageAge ?? 0,
+                            ],
                             color: '#00B1FF',
                             id: RB,
                         },
                         {
-                            // data: [blueprint?.averageStarterAges.find(g => g.position === WR)
-                            //                 ?.averageAge ?? 0],
-                            data: [24],
+                            data: [
+                                blueprint?.infiniteFeatures.positionalAgeData.find(
+                                    g => g.position === WR
+                                )?.averageAge ?? 0,
+                            ],
                             color: '#1AE069',
                             id: WR,
                         },
                         {
-                            // data: [blueprint?.averageStarterAges.find(g => g.position === TE)
-                            //                 ?.averageAge ?? 0],
-                            data: [33],
+                            data: [
+                                blueprint?.infiniteFeatures.positionalAgeData.find(
+                                    g => g.position === TE
+                                )?.averageAge ?? 0,
+                            ],
                             color: '#FFCD00',
                             id: TE,
                         },
@@ -300,7 +308,7 @@ export function WrappedNewInfinite({blueprintId}: {blueprintId: string}) {
             <div className={styles.startingLineup}>
                 {apiStartingLineup.map(lineupPlayer => (
                     <PlayerRow
-                        key={lineupPlayer.player.playerSleeperBotId}
+                        key={lineupPlayer.player.id}
                         position={lineupPlayer.position}
                         playerName={lineupPlayer.player.playerName}
                         playerTeam={lineupPlayer.player.teamAbbreviation}
