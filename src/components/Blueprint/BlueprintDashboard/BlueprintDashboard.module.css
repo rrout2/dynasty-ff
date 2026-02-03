@@ -187,6 +187,14 @@
     font-weight: 500;
 }
 
+.loginError {
+    color: #E84D57;
+    text-align: center;
+    font-family: "Acumin Pro Condensed";
+    font-size: 14px;
+    font-weight: 500;
+}
+
 .inputLabel {
     color: #FFF;
     font-family: "Acumin Pro Condensed";

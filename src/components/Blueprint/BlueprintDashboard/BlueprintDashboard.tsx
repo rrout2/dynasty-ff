@@ -1,7 +1,7 @@
 import styles from './BlueprintDashboard.module.css';
 import newInfiniteStyles from '../NewInfinite/NewInfinite.module.css';
 import {flockDomainLogo, logoHorizontal} from '../../../consts/images';
-import {useTitle} from '../../../hooks/hooks';
+import {useBlueprintsForDomainUser, useTitle} from '../../../hooks/hooks';
 import {Box, Button, Modal} from '@mui/material';
 import {useEffect, useState} from 'react';
 import DomainTextField from '../shared/DomainTextField';
@@ -9,6 +9,7 @@ import {WrappedNewInfinite} from '../NewInfinite/NewInfinite';
 import {toPng} from 'html-to-image';
 import {createRoot} from 'react-dom/client';
 import {QueryClientProvider, useQueryClient} from '@tanstack/react-query';
+import axios from 'axios';
 
 const COLOR_LIST = [
     '#F47F20',
@@ -55,10 +56,18 @@ export default function BlueprintDashboard() {
     useTitle('Blueprint Dashboard');
     const {width} = useScreenSize();
     const isMobile = width < 600;
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // should check login info from browser sessionStorage.
-    const [loginModalOpen, setLoginModalOpen] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(
+        sessionStorage.getItem('flockAuthToken') !== null
+    );
+    const [loginModalOpen, setLoginModalOpen] = useState(!isLoggedIn);
     const [loginEmail, setLoginEmail] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
+    const [loginFlockUsername, setLoginFlockUsername] = useState('');
+    const [loginSleeperUsername, setLoginSleeperUsername] = useState('');
+    const [loginDiscordUsername, setLoginDiscordUsername] = useState('');
+    const [loginError, setLoginError] = useState('');
+    const [domainUserNotFound, setDomainUserNotFound] = useState(false);
+    const blueprints = useBlueprintsForDomainUser();
 
     // mock data
     const username = 'username';
@@ -92,11 +101,36 @@ export default function BlueprintDashboard() {
         },
     ];
 
-    function submitLogin() {
-        // TODO
-        console.log('submitting login');
-        setIsLoggedIn(true);
-        setLoginModalOpen(false);
+    async function submitLogin() {
+        const options = {
+            method: 'POST',
+            url: 'https://domainffapi.azurewebsites.net/api/Auth/flock',
+            headers: {'Content-Type': 'application/json'},
+            data: {flockEmailAddress: loginEmail, secretOrOtp: loginPassword},
+        };
+        axios
+            .request(options)
+            .then(res => {
+                if (res.data.success) {
+                    const token = res.data.token;
+                    sessionStorage.setItem('flockAuthToken', token);
+                    setIsLoggedIn(true);
+                    setLoginModalOpen(false);
+                    setLoginError('');
+                } else {
+                    setLoginError(`${res.data.code}: ${res.data.message}`);
+                }
+            })
+            .catch(err => {
+                if (err.response.data.code === 'DomainUserNotFound') {
+                    setDomainUserNotFound(true);
+                    return;
+                }
+                setLoginError(
+                    `${err.response.data.code}: ${err.response.data.message}`
+                );
+                console.log(err);
+            });
     }
 
     return (
@@ -134,7 +168,6 @@ export default function BlueprintDashboard() {
                     </div>
                     <div>
                         <div className={styles.inputLabel}>Password</div>
-
                         <DomainTextField
                             type={'password'}
                             value={loginPassword}
@@ -152,6 +185,91 @@ export default function BlueprintDashboard() {
                             }
                         />
                     </div>
+                    {domainUserNotFound && (
+                        <>
+                            <div>
+                                <div className={styles.inputLabel}>
+                                    Flock Username
+                                </div>
+                                <DomainTextField
+                                    value={loginFlockUsername}
+                                    onChange={e =>
+                                        setLoginFlockUsername(e.target.value)
+                                    }
+                                    onKeyUp={e =>
+                                        e.key === 'Enter' &&
+                                        loginEmail.trim() &&
+                                        loginPassword.trim() &&
+                                        submitLogin()
+                                    }
+                                    backgroundColor={
+                                        'rgba(217, 217, 217, 0.20)'
+                                    }
+                                    hideOutline={true}
+                                    inputWidth={
+                                        width < 600
+                                            ? `${width * 0.8}px`
+                                            : '380px'
+                                    }
+                                />
+                            </div>
+                            <div>
+                                <div className={styles.inputLabel}>
+                                    Sleeper Username
+                                </div>
+                                <DomainTextField
+                                    value={loginSleeperUsername}
+                                    onChange={e =>
+                                        setLoginSleeperUsername(e.target.value)
+                                    }
+                                    onKeyUp={e =>
+                                        e.key === 'Enter' &&
+                                        loginEmail.trim() &&
+                                        loginPassword.trim() &&
+                                        submitLogin()
+                                    }
+                                    backgroundColor={
+                                        'rgba(217, 217, 217, 0.20)'
+                                    }
+                                    hideOutline={true}
+                                    inputWidth={
+                                        width < 600
+                                            ? `${width * 0.8}px`
+                                            : '380px'
+                                    }
+                                />
+                            </div>
+                            <div>
+                                <div className={styles.inputLabel}>
+                                    Discord Username
+                                </div>
+                                <DomainTextField
+                                    value={loginDiscordUsername}
+                                    onChange={e =>
+                                        setLoginDiscordUsername(e.target.value)
+                                    }
+                                    onKeyUp={e =>
+                                        e.key === 'Enter' &&
+                                        loginEmail.trim() &&
+                                        loginPassword.trim() &&
+                                        submitLogin()
+                                    }
+                                    backgroundColor={
+                                        'rgba(217, 217, 217, 0.20)'
+                                    }
+                                    hideOutline={true}
+                                    inputWidth={
+                                        width < 600
+                                            ? `${width * 0.8}px`
+                                            : '380px'
+                                    }
+                                />
+                            </div>
+                        </>
+                    )}
+                    {loginError && (
+                        <div className={styles.loginError}>{loginError}</div>
+                    )}
                     <Button
                         sx={{
                             fontFamily: 'Acumin Pro Condensed',
@@ -335,7 +453,9 @@ function BlueprintItem({
         });
 
         const element = container.firstElementChild as HTMLElement;
-        const teamName = element.querySelector(`.${newInfiniteStyles.teamName}`);
+        const teamName = element.querySelector(
+            `.${newInfiniteStyles.teamName}`
+        );
         await new Promise<string>(resolve => {
             const interval = setInterval(() => {
                 const teamNameText = teamName?.textContent || '';
@@ -345,7 +465,9 @@ function BlueprintItem({
                 }
             }, 50);
         });
-        const benchString = element.querySelector(`.${newInfiniteStyles.benchString}`);
+        const benchString = element.querySelector(
+            `.${newInfiniteStyles.benchString}`
+        );
         await new Promise<string>(resolve => {
             const interval = setInterval(() => {
                 const benchStringText = benchString?.textContent || '';
@@ -357,6 +479,23 @@ function BlueprintItem({
         });
 
         await document.fonts.ready;
+
+        // Wait for specific images only
+        const criticalImages = element.querySelectorAll(
+            `img.${newInfiniteStyles.blankBp}`
+        ) as NodeListOf<HTMLImageElement>;
+        // OR use data attribute: img[data-critical="true"]
+
+        await Promise.all(
+            Array.from(criticalImages).map(img => {
+                if (img.complete) return Promise.resolve();
+                return new Promise(resolve => {
+                    img.onload = resolve;
+                    img.onerror = resolve;
+                    setTimeout(resolve, 10000); // Timeout fallback
+                });
+            })
+        );
 
         const dataUrl = await toPng(
             container.firstElementChild as HTMLElement,

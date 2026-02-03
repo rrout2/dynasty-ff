@@ -249,6 +249,50 @@ export function useNewInfiniteBuysSells(blueprint: Blueprint | undefined) {
     };
 }
 
+type BlueprintMetadata = {
+    id: number;
+    blueprintType: number;
+    platform: string;
+    leagueId: string;
+    rosterId: number;
+    teamName: string;
+    season: number;
+    overallGrade: number;
+    month: number;
+    year: number;
+    valueArchetype: string;
+    rosterArchetype: string;
+    rosterValueTier: string;
+    createdUtc: string;
+    updatedUtc: string;
+};
+
+export function useBlueprintsForDomainUser() {
+    const [blueprints, setBlueprints] = useState<Array<BlueprintMetadata>>([]);
+    const authToken = sessionStorage.getItem('flockAuthToken');
+    const {data} = useQuery({
+        queryKey: ['blueprints'],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Blueprints/mine`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            };
+            const res = await axios.request(options);
+            return res.data as Array<BlueprintMetadata>;
+        },
+        retry: false,
+        enabled: !!authToken,
+    });
+    useEffect(() => {
+        if (!data) return;
+        setBlueprints(data);
+    }, [data]);
+    return blueprints;
+}
+
 export function useBlueprint(blueprintId: string) {
     const [blueprint, setBlueprint] = useState<Blueprint>();
     const authToken = sessionStorage.getItem('authToken');
