@@ -1,4 +1,5 @@
 import styles from './BlueprintDashboard.module.css';
+import newInfiniteStyles from '../NewInfinite/NewInfinite.module.css';
 import {flockDomainLogo, logoHorizontal} from '../../../consts/images';
 import {useTitle} from '../../../hooks/hooks';
 import {Box, Button, Modal} from '@mui/material';
@@ -65,29 +66,29 @@ export default function BlueprintDashboard() {
         {
             name: 'Blueprint team name longer team name',
             date: 'Oct 21, 2025',
-            blueprintId: '420',
+            blueprintId: '1478',
         },
         {
             name: 'Blueprint team name',
             date: 'Oct 21, 2025',
-            blueprintId: '421',
+            blueprintId: '1479',
         },
         {
             name: 'Blueprint team name',
             date: 'Oct 21, 2025',
-            blueprintId: '422',
+            blueprintId: '1490',
         },
         {
             name: 'Blueprint team name',
             date: 'Oct 21, 2025',
-            blueprintId: '423',
+            blueprintId: '1491',
         },
     ];
     const infinites = [
         {
             name: 'Blueprint team name',
             date: 'Oct 21, 2025',
-            blueprintId: '424',
+            blueprintId: '1492',
         },
     ];
 
@@ -325,7 +326,37 @@ function BlueprintItem({
         );
 
         // Maybe wait for it to render?
-        await new Promise(resolve => setTimeout(resolve, 3000));
+
+        await new Promise<void>(resolve => {
+            const interval = setInterval(() => {
+                if (container.firstElementChild) {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, 50);
+        });
+
+        const element = container.firstElementChild as HTMLElement;
+        const teamName = element.querySelector(`.${newInfiniteStyles.teamName}`);
+        await new Promise<string>(resolve => {
+            const interval = setInterval(() => {
+                const teamNameText = teamName?.textContent || '';
+                if (teamNameText !== '') {
+                    clearInterval(interval);
+                    resolve(teamNameText);
+                }
+            }, 50);
+        });
+        const benchString = element.querySelector(`.${newInfiniteStyles.benchString}`);
+        await new Promise<string>(resolve => {
+            const interval = setInterval(() => {
+                const benchStringText = benchString?.textContent || '';
+                if (benchStringText !== '') {
+                    clearInterval(interval);
+                    resolve(benchStringText);
+                }
+            }, 50);
+        });
 
         const dataUrl = await toPng(
             container.firstElementChild as HTMLElement,
