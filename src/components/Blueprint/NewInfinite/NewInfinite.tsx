@@ -29,8 +29,22 @@ import {
 import {getApiStartingLineup} from '../BlueprintModule/BlueprintModule';
 import {LineChart} from '@mui/x-charts/LineChart';
 
-export default function NewInfinite() {
-    const [blueprintId] = useParamFromUrl(BLUEPRINT_ID);
+export default function NewInfinite({blueprintId}: {blueprintId?: string}) {
+    const [blueprintIdFromUrl] = useParamFromUrl(BLUEPRINT_ID);
+
+    return (
+        <>
+            {
+                'notes: ages are hardcoded. need player sleeper IDs for buy and sell.'
+            }
+            <WrappedNewInfinite
+                blueprintId={blueprintId || blueprintIdFromUrl}
+            />
+        </>
+    );
+}
+
+export function WrappedNewInfinite({blueprintId}: {blueprintId: string}) {
     const {blueprint} = useBlueprint(blueprintId);
     const [apiStartingLineup, setApiStartingLineup] = useState<
         {player: RosterPlayer; position: string}[]
@@ -128,242 +142,238 @@ export default function NewInfinite() {
     const [currentDate] = useState(new Date());
 
     return (
-        <>
-            notes: ages are hardcoded. need player sleeper IDs for buy and sell.
-            <div className={styles.fullBlueprint}>
-                <div className={styles.teamName}>{blueprint?.teamName}</div>
-                <div className={styles.monthYear}>
-                    {currentDate.toLocaleDateString(undefined, {
-                        month: 'long',
-                        year: 'numeric',
-                    })}
-                </div>
-                <div className={styles.risers}>
-                    {risers.map((r, i) => (
-                        <div key={i}>{r}</div>
-                    ))}
-                </div>
-                <div className={styles.fallers}>
-                    {fallers.map((f, i) => (
-                        <div key={i}>{f}</div>
-                    ))}
-                </div>
-                <div className={styles.rosterValueTierSection}>
-                    <RosterValueTier
-                        valueTier={
-                            (blueprint?.infiniteFeatures.rosterValueTier ??
-                                ValueTier.None) as ValueTier
+        <div className={styles.fullBlueprint}>
+            <div className={styles.teamName}>{blueprint?.teamName}</div>
+            <div className={styles.monthYear}>
+                {currentDate.toLocaleDateString(undefined, {
+                    month: 'long',
+                    year: 'numeric',
+                })}
+            </div>
+            <div className={styles.risers}>
+                {risers.map((r, i) => (
+                    <div key={i}>{r}</div>
+                ))}
+            </div>
+            <div className={styles.fallers}>
+                {fallers.map((f, i) => (
+                    <div key={i}>{f}</div>
+                ))}
+            </div>
+            <div className={styles.rosterValueTierSection}>
+                <RosterValueTier
+                    valueTier={
+                        (blueprint?.infiniteFeatures.rosterValueTier ??
+                            ValueTier.None) as ValueTier
+                    }
+                />
+            </div>
+            <PositionalGradeDisc
+                grade={qbGrade}
+                color={'#DB2335'}
+                style={{
+                    left: '652px',
+                    top: '553px',
+                    transform: 'scale(1.63)',
+                    transformOrigin: 'top left',
+                }}
+            />
+            <PositionalGradeDisc
+                grade={rbGrade}
+                color={'#00B1FF'}
+                style={{
+                    left: '780px',
+                    top: '553px',
+                    transform: 'scale(1.63)',
+                    transformOrigin: 'top left',
+                }}
+            />
+            <PositionalGradeDisc
+                grade={wrGrade}
+                color={'#1AE069'}
+                style={{
+                    left: '905.5px',
+                    top: '553px',
+                    transform: 'scale(1.63)',
+                    transformOrigin: 'top left',
+                }}
+            />
+            <PositionalGradeDisc
+                grade={teGrade}
+                color={'#FFCD00'}
+                style={{
+                    left: '1032px',
+                    top: '553px',
+                    transform: 'scale(1.63)',
+                    transformOrigin: 'top left',
+                }}
+            />
+            <PositionalGradeDisc
+                grade={benchScore}
+                color={'#CD00FF'}
+                style={{
+                    left: '1160px',
+                    top: '553px',
+                    transform: 'scale(1.63)',
+                    transformOrigin: 'top left',
+                }}
+            />
+            <PositionalGradeDisc
+                grade={draftCapitalScore}
+                color={'#FF4200'}
+                style={{
+                    left: '1286px',
+                    top: '553px',
+                    transform: 'scale(1.63)',
+                    transformOrigin: 'top left',
+                }}
+            />
+            <div className={styles.ageTracker}>
+                <LineChart
+                    xAxis={[
+                        {
+                            data: ['FEB'],
+                            scaleType: 'band',
+                        },
+                    ]}
+                    series={[
+                        {
+                            // data: [blueprint?.averageStarterAges.find(g => g.position === QB)
+                            //                 ?.averageAge ?? 0],
+                            data: [28],
+                            color: '#FF0019',
+                            id: QB,
+                        },
+                        {
+                            // data: [blueprint?.averageStarterAges.find(g => g.position === RB)
+                            //                 ?.averageAge ?? 0],
+                            data: [22],
+                            color: '#00B1FF',
+                            id: RB,
+                        },
+                        {
+                            // data: [blueprint?.averageStarterAges.find(g => g.position === WR)
+                            //                 ?.averageAge ?? 0],
+                            data: [24],
+                            color: '#1AE069',
+                            id: WR,
+                        },
+                        {
+                            // data: [blueprint?.averageStarterAges.find(g => g.position === TE)
+                            //                 ?.averageAge ?? 0],
+                            data: [33],
+                            color: '#FFCD00',
+                            id: TE,
+                        },
+                    ]}
+                    width={540}
+                    height={400}
+                    sx={{
+                        // styling the axis line
+                        '& .MuiChartsAxis-line': {
+                            stroke: '#ffffff !important',
+                        },
+                        // styling the tick marks
+                        '& .MuiChartsAxis-tick': {
+                            stroke: '#ffffff !important',
+                        },
+                        // styling the text labels
+                        '& .MuiChartsAxis-tickLabel': {
+                            fill: '#ffffff !important',
+                            fontFamily: 'Acumin Pro ExtraCondensed !important',
+                        },
+                        '& .MuiMarkElement-series-QB': {
+                            fill: '#FF0019',
+                        },
+                        '& .MuiMarkElement-series-RB': {
+                            fill: '#00B1FF',
+                        },
+                        '& .MuiMarkElement-series-WR': {
+                            fill: '#1AE069',
+                        },
+                        '& .MuiMarkElement-series-TE': {
+                            fill: '#FFCD00',
+                        },
+                    }}
+                />
+            </div>
+            <div className={styles.startingLineup}>
+                {apiStartingLineup.map(lineupPlayer => (
+                    <PlayerRow
+                        key={lineupPlayer.player.playerSleeperBotId}
+                        position={lineupPlayer.position}
+                        playerName={lineupPlayer.player.playerName}
+                        playerTeam={lineupPlayer.player.teamAbbreviation}
+                        sleeperId={lineupPlayer.player.playerSleeperBotId}
+                        valueChangeIndicator={
+                            lineupPlayer.player.valueChangeIndicator
                         }
                     />
-                </div>
-                <PositionalGradeDisc
-                    grade={qbGrade}
-                    color={'#DB2335'}
-                    style={{
-                        left: '652px',
-                        top: '553px',
-                        transform: 'scale(1.63)',
-                        transformOrigin: 'top left',
-                    }}
-                />
-                <PositionalGradeDisc
-                    grade={rbGrade}
-                    color={'#00B1FF'}
-                    style={{
-                        left: '780px',
-                        top: '553px',
-                        transform: 'scale(1.63)',
-                        transformOrigin: 'top left',
-                    }}
-                />
-                <PositionalGradeDisc
-                    grade={wrGrade}
-                    color={'#1AE069'}
-                    style={{
-                        left: '905.5px',
-                        top: '553px',
-                        transform: 'scale(1.63)',
-                        transformOrigin: 'top left',
-                    }}
-                />
-                <PositionalGradeDisc
-                    grade={teGrade}
-                    color={'#FFCD00'}
-                    style={{
-                        left: '1032px',
-                        top: '553px',
-                        transform: 'scale(1.63)',
-                        transformOrigin: 'top left',
-                    }}
-                />
-                <PositionalGradeDisc
-                    grade={benchScore}
-                    color={'#CD00FF'}
-                    style={{
-                        left: '1160px',
-                        top: '553px',
-                        transform: 'scale(1.63)',
-                        transformOrigin: 'top left',
-                    }}
-                />
-                <PositionalGradeDisc
-                    grade={draftCapitalScore}
-                    color={'#FF4200'}
-                    style={{
-                        left: '1286px',
-                        top: '553px',
-                        transform: 'scale(1.63)',
-                        transformOrigin: 'top left',
-                    }}
-                />
-                <div className={styles.ageTracker}>
-                    <LineChart
-                        xAxis={[
-                            {
-                                data: ['FEB'],
-                                scaleType: 'band',
-                            },
-                        ]}
-                        series={[
-                            {
-                                // data: [blueprint?.averageStarterAges.find(g => g.position === QB)
-                                //                 ?.averageAge ?? 0],
-                                data: [28],
-                                color: '#FF0019',
-                                id: QB,
-                            },
-                            {
-                                // data: [blueprint?.averageStarterAges.find(g => g.position === RB)
-                                //                 ?.averageAge ?? 0],
-                                data: [22],
-                                color: '#00B1FF',
-                                id: RB,
-                            },
-                            {
-                                // data: [blueprint?.averageStarterAges.find(g => g.position === WR)
-                                //                 ?.averageAge ?? 0],
-                                data: [24],
-                                color: '#1AE069',
-                                id: WR,
-                            },
-                            {
-                                // data: [blueprint?.averageStarterAges.find(g => g.position === TE)
-                                //                 ?.averageAge ?? 0],
-                                data: [33],
-                                color: '#FFCD00',
-                                id: TE,
-                            },
-                        ]}
-                        width={540}
-                        height={400}
-                        sx={{
-                            // styling the axis line
-                            '& .MuiChartsAxis-line': {
-                                stroke: '#ffffff !important',
-                            },
-                            // styling the tick marks
-                            '& .MuiChartsAxis-tick': {
-                                stroke: '#ffffff !important',
-                            },
-                            // styling the text labels
-                            '& .MuiChartsAxis-tickLabel': {
-                                fill: '#ffffff !important',
-                                fontFamily:
-                                    'Acumin Pro ExtraCondensed !important',
-                            },
-                            '& .MuiMarkElement-series-QB': {
-                                fill: '#FF0019',
-                            },
-                            '& .MuiMarkElement-series-RB': {
-                                fill: '#00B1FF',
-                            },
-                            '& .MuiMarkElement-series-WR': {
-                                fill: '#1AE069',
-                            },
-                            '& .MuiMarkElement-series-TE': {
-                                fill: '#FFCD00',
-                            },
-                        }}
-                    />
-                </div>
-                <div className={styles.startingLineup}>
-                    {apiStartingLineup.map(lineupPlayer => (
-                        <PlayerRow
-                            key={lineupPlayer.player.playerSleeperBotId}
-                            position={lineupPlayer.position}
-                            playerName={lineupPlayer.player.playerName}
-                            playerTeam={lineupPlayer.player.teamAbbreviation}
-                            sleeperId={lineupPlayer.player.playerSleeperBotId}
-                            valueChangeIndicator={
-                                lineupPlayer.player.valueChangeIndicator
-                            }
-                        />
-                    ))}
-                </div>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="61"
-                    height="61"
-                    viewBox="0 0 61 61"
-                    fill="none"
-                    className={styles.tradeMeterCircle}
-                >
-                    <circle cx="30.5" cy="30.5" r="30.5" fill="black" />
-                </svg>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="43"
-                    height="245"
-                    viewBox="0 0 43 245"
-                    fill="none"
-                    className={styles.tradeMeterNeedle}
-                    style={{
-                        transform: `rotate(${tradeNeedleRotationDegrees}deg)`,
-                    }}
-                >
-                    <path d="M20.7412 0L0 245H43L20.7412 0Z" fill="black" />
-                </svg>
-                <div
-                    className={styles.buySellHoldPercents}
-                    style={{top: '1130px', left: '1230px'}}
-                >
-                    {`BUYS: ${buyPercent}%`}
-                </div>
-                <div
-                    className={styles.buySellHoldPercents}
-                    style={{top: '1130px', left: '1520px'}}
-                >
-                    {`SELLS: ${sellPercent}%`}
-                </div>
-                <div
-                    className={styles.buySellHoldPercents}
-                    style={{top: '1130px', left: '1375px'}}
-                >
-                    {`HOLDS: ${holdPercent}%`}
-                </div>
-                {buys.length > 0 && (
-                    <div className={styles.buysContainer}>
-                        <div className={styles.buysColumn}>
-                            <BuySellPlayer {...buys[0]} />
-                            {buys[1] && <BuySellPlayer {...buys[1]} />}
-                        </div>
-                        <div className={styles.buysColumn}>
-                            {buys[2] && <BuySellPlayer {...buys[2]} />}
-                            {buys[3] && <BuySellPlayer {...buys[3]} />}
-                        </div>
-                    </div>
-                )}
-                {sells.length > 0 && (
-                    <div className={styles.sellsContainer}>
-                        <BuySellPlayer {...sells[0]} />
-                        {sells[1] && <BuySellPlayer {...sells[1]} />}
-                    </div>
-                )}
-                <div className={styles.benchString}>{benchString}</div>
-                <img src={bakeryCard} className={styles.bakeryCard} />
-                <img src={newInfiniteBg} className={styles.blankBp} />
+                ))}
             </div>
-        </>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="61"
+                height="61"
+                viewBox="0 0 61 61"
+                fill="none"
+                className={styles.tradeMeterCircle}
+            >
+                <circle cx="30.5" cy="30.5" r="30.5" fill="black" />
+            </svg>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="43"
+                height="245"
+                viewBox="0 0 43 245"
+                fill="none"
+                className={styles.tradeMeterNeedle}
+                style={{
+                    transform: `rotate(${tradeNeedleRotationDegrees}deg)`,
+                }}
+            >
+                <path d="M20.7412 0L0 245H43L20.7412 0Z" fill="black" />
+            </svg>
+            <div
+                className={styles.buySellHoldPercents}
+                style={{top: '1130px', left: '1230px'}}
+            >
+                {`BUYS: ${buyPercent}%`}
+            </div>
+            <div
+                className={styles.buySellHoldPercents}
+                style={{top: '1130px', left: '1520px'}}
+            >
+                {`SELLS: ${sellPercent}%`}
+            </div>
+            <div
+                className={styles.buySellHoldPercents}
+                style={{top: '1130px', left: '1375px'}}
+            >
+                {`HOLDS: ${holdPercent}%`}
+            </div>
+            {buys.length > 0 && (
+                <div className={styles.buysContainer}>
+                    <div className={styles.buysColumn}>
+                        <BuySellPlayer {...buys[0]} />
+                        {buys[1] && <BuySellPlayer {...buys[1]} />}
+                    </div>
+                    <div className={styles.buysColumn}>
+                        {buys[2] && <BuySellPlayer {...buys[2]} />}
+                        {buys[3] && <BuySellPlayer {...buys[3]} />}
+                    </div>
+                </div>
+            )}
+            {sells.length > 0 && (
+                <div className={styles.sellsContainer}>
+                    <BuySellPlayer {...sells[0]} />
+                    {sells[1] && <BuySellPlayer {...sells[1]} />}
+                </div>
+            )}
+            <div className={styles.benchString}>{benchString}</div>
+            <img src={bakeryCard} className={styles.bakeryCard} />
+            <img src={newInfiniteBg} className={styles.blankBp} />
+        </div>
     );
 }
 

@@ -4,6 +4,10 @@ import {useTitle} from '../../../hooks/hooks';
 import {Box, Button, Modal} from '@mui/material';
 import {useEffect, useState} from 'react';
 import DomainTextField from '../shared/DomainTextField';
+import {WrappedNewInfinite} from '../NewInfinite/NewInfinite';
+import {toPng} from 'html-to-image';
+import {createRoot} from 'react-dom/client';
+import {QueryClientProvider, useQueryClient} from '@tanstack/react-query';
 
 const COLOR_LIST = [
     '#F47F20',
@@ -49,7 +53,6 @@ const useScreenSize = () => {
 export default function BlueprintDashboard() {
     useTitle('Blueprint Dashboard');
     const {width} = useScreenSize();
-    console.log('width', width);
     const isMobile = width < 600;
     const [isLoggedIn, setIsLoggedIn] = useState(false); // should check login info from browser sessionStorage.
     const [loginModalOpen, setLoginModalOpen] = useState(true);
@@ -60,26 +63,31 @@ export default function BlueprintDashboard() {
     const username = 'username';
     const bps = [
         {
-            name: 'Blueprint team nameBlueprint team name',
+            name: 'Blueprint team name longer team name',
             date: 'Oct 21, 2025',
+            blueprintId: '68',
         },
         {
             name: 'Blueprint team name',
             date: 'Oct 21, 2025',
+            blueprintId: '68',
         },
         {
             name: 'Blueprint team name',
             date: 'Oct 21, 2025',
+            blueprintId: '68',
         },
         {
             name: 'Blueprint team name',
             date: 'Oct 21, 2025',
+            blueprintId: '68',
         },
     ];
     const infinites = [
         {
             name: 'Blueprint team name',
             date: 'Oct 21, 2025',
+            blueprintId: '68',
         },
     ];
 
@@ -231,10 +239,9 @@ export default function BlueprintDashboard() {
                                     {bps.map((bp, idx) => (
                                         <BlueprintItem
                                             key={idx}
-                                            name={bp.name}
-                                            date={bp.date}
                                             index={idx}
                                             screenWidth={width}
+                                            {...bp}
                                         />
                                     ))}
                                 </div>
@@ -268,10 +275,9 @@ export default function BlueprintDashboard() {
                                     {infinites.map((bp, idx) => (
                                         <BlueprintItem
                                             key={idx}
-                                            name={bp.name}
-                                            date={bp.date}
                                             index={idx}
                                             screenWidth={width}
+                                            {...bp}
                                         />
                                     ))}
                                 </div>
@@ -289,10 +295,57 @@ type BlueprintItemProps = {
     date: string;
     index: number;
     screenWidth: number;
+    blueprintId: string;
 };
 
-function BlueprintItem({name, date, index, screenWidth}: BlueprintItemProps) {
-    const isMobile = screenWidth < 600;
+function BlueprintItem({
+    name,
+    date,
+    index,
+    screenWidth,
+    blueprintId,
+}: BlueprintItemProps) {
+    const queryClient = useQueryClient();
+    const [isMobile] = useState(screenWidth < 600);
+    const [isDownloading, setIsDownloading] = useState(false);
+
+    const downloadBlueprint = async () => {
+        setIsDownloading(true);
+        const container = document.createElement('div');
+        container.style.position = 'fixed';
+        container.style.left = '-9999px';
+        container.style.top = '-9999px';
+        document.body.appendChild(container);
+
+        const root = createRoot(container);
+        root.render(
+            <QueryClientProvider client={queryClient}>
+                <WrappedNewInfinite blueprintId={blueprintId} />
+            </QueryClientProvider>
+        );
+
+        // Maybe wait for it to render?
+        await new Promise(resolve => setTimeout(resolve, 3000));
+
+        const dataUrl = await toPng(
+            container.firstElementChild as HTMLElement,
+            {
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                cacheBust: true,
+            }
+        );
+
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = `${name}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        document.body.removeChild(container);
+
+        setIsDownloading(false);
+    };
+
     return (
         <div
             className={styles.blueprintItem}
@@ -314,9 +367,14 @@ function BlueprintItem({name, date, index, screenWidth}: BlueprintItemProps) {
                     >
                         {name}
                     </div>
-                    <div className={styles.blueprintDate} style={{
+                    <div
+                        className={styles.blueprintDate}
+                        style={{
                             fontSize: isMobile ? '15px' : undefined,
-                        }}>{date}</div>
+                        }}
+                    >
+                        {date}
+                    </div>
                 </div>
             </div>
             <div className={styles.blueprintItemFooter}>
@@ -337,9 +395,8 @@ function BlueprintItem({name, date, index, screenWidth}: BlueprintItemProps) {
                         fontWeight: '1000',
                         fontSize: '30px',
                     }}
-                    onClick={() => {
-                        console.log('TODO: Download blueprint');
-                    }}
+                    onClick={downloadBlueprint}
+                    loading={isDownloading}
                 >
                     DOWNLOAD
                 </Button>
