@@ -325,8 +325,6 @@ function BlueprintItem({
             </QueryClientProvider>
         );
 
-        // Maybe wait for it to render?
-
         await new Promise<void>(resolve => {
             const interval = setInterval(() => {
                 if (container.firstElementChild) {
@@ -357,6 +355,8 @@ function BlueprintItem({
                 }
             }, 50);
         });
+
+        await document.fonts.ready;
 
         const dataUrl = await toPng(
             container.firstElementChild as HTMLElement,
