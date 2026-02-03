@@ -496,12 +496,13 @@ function BlueprintItem({
                 });
             })
         );
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
         const dataUrl = await toPng(
             container.firstElementChild as HTMLElement,
             {
                 backgroundColor: 'rgba(0, 0, 0, 0)',
-                cacheBust: true,
+                cacheBust: false,
             }
         );
 
