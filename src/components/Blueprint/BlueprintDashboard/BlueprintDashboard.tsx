@@ -184,9 +184,9 @@ export default function BlueprintDashboard() {
             newInfiniteStyles.fullBlueprint
         )[0] as HTMLElement;
 
-        await preloadImages(element);
+        // await preloadImages(element);
 
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 10000));
 
         const dataUrl = await toPng(element, {
             backgroundColor: 'rgba(0, 0, 0, 0)',
