@@ -3258,7 +3258,7 @@ export function getApiStartingLineup(
                 SUPER_FLEX_SET.has(p.position) &&
                 remainingPlayers.has(p.playerId) &&
                 p.isStarter
-        );
+        ).slice(0, 1);
         startingSuperFlex.forEach(p => remainingPlayers.delete(p.playerId));
     }
 
