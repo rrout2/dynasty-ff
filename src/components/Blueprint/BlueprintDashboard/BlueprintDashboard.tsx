@@ -172,7 +172,7 @@ export default function BlueprintDashboard() {
 
         // await preloadImages(element);
 
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        await new Promise(resolve => setTimeout(resolve, 10000));
 
         const dataUrl = await toPng(element, {
             backgroundColor: 'rgba(0, 0, 0, 0)',
