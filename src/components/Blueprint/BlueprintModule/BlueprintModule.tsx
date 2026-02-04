@@ -3240,7 +3240,6 @@ export function getApiStartingLineup(
         .slice(0, tightEndSlots);
     startingTes.forEach(p => remainingPlayers.delete(p.playerId));
 
-    if (isSuperFlex) flexSlots -= 1;
     const startingFlexes = rosterPlayers
         .filter(
             p =>
