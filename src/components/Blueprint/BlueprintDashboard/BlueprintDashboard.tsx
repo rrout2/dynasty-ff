@@ -175,7 +175,7 @@ export default function BlueprintDashboard() {
         let dataUrl = '';
         const minDataLength = 5000000;
         let i = 0;
-        const maxAttempts = 15;
+        const maxAttempts = 50;
 
         while (dataUrl.length < minDataLength && i < maxAttempts) {
             dataUrl = await toPng(element, {
