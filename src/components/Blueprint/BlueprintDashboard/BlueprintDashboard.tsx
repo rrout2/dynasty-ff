@@ -160,10 +160,31 @@ export default function BlueprintDashboard() {
         setIsLoggedIn(false);
     }
 
+    const preloadImages = async (element: HTMLElement): Promise<void> => {
+        const images = element.getElementsByTagName('img');        
+        const imagePromises: Promise<void>[] = [];
+        
+        // Preload <img> tags
+        Array.from(images).forEach(img => {
+            if (!img.complete) {
+                imagePromises.push(
+                    new Promise((resolve) => {
+                        img.onload = () => resolve();
+                        img.onerror = () => resolve();
+                    })
+                );
+            }
+        });
+        
+        await Promise.all(imagePromises);
+    };
+
     const downloadBlueprint = async () => {
         const element = document.getElementsByClassName(
             newInfiniteStyles.fullBlueprint
         )[0] as HTMLElement;
+
+        await preloadImages(element);
 
         await new Promise(resolve => setTimeout(resolve, 500));
 
