@@ -87,8 +87,9 @@ export default function BlueprintDashboard() {
     const [zoomLevel, setZoomLevel] = useState(ZOOM_LEVELS[DEFAULT_ZOOM_INDEX]);
     const [isMaximized, setIsMaximized] = useState(false);
     const [isDownloading, setIsDownloading] = useState(false);
-
-    const [username] = useState(sessionStorage.getItem('flockEmail'));
+    const [username, setUsername] = useState(
+        sessionStorage.getItem('flockUsername')
+    );
 
     useEffect(() => {
         if (!blueprintsError) return;
@@ -105,6 +106,9 @@ export default function BlueprintDashboard() {
     useEffect(() => {
         setZoomLevel(ZOOM_LEVELS[zoomIndex]);
     }, [zoomIndex]);
+    useEffect(() => {
+        setUsername(sessionStorage.getItem('flockUsername'));
+    }, [sessionStorage.getItem('flockUsername')]);
 
     // mock data
     const bps: Array<{name: string; date: string; blueprintId: string}> = [];
@@ -113,7 +117,14 @@ export default function BlueprintDashboard() {
             .filter(bp => bp.blueprintType === 'Infinite')
             .map(blueprint => ({
                 name: blueprint.teamName,
-                date: 'Oct 21, 2025',
+                date: new Date(blueprint.createdUtc).toLocaleDateString(
+                    'en-US',
+                    {
+                        year: 'numeric',
+                        month: 'short',
+                        day: '2-digit',
+                    }
+                ),
                 blueprintId: '' + blueprint.blueprintId,
             }));
 
@@ -129,9 +140,12 @@ export default function BlueprintDashboard() {
             .request(options)
             .then(res => {
                 if (res.data.success) {
-                    const token = res.data.token;
-                    sessionStorage.setItem('flockAuthToken', token);
+                    sessionStorage.setItem('flockAuthToken', res.data.token);
                     sessionStorage.setItem('flockEmail', res.data.flockEmail);
+                    sessionStorage.setItem(
+                        'flockUsername',
+                        res.data.flockUsername
+                    );
                     setIsLoggedIn(true);
                     setLoginModalOpen(false);
                     setLoginError('');
@@ -151,6 +165,7 @@ export default function BlueprintDashboard() {
             })
             .finally(() => {
                 setIsLoggingIn(false);
+                setLoginPassword('');
             });
     }
 
@@ -161,6 +176,7 @@ export default function BlueprintDashboard() {
     function logout() {
         sessionStorage.removeItem('flockAuthToken');
         sessionStorage.removeItem('flockEmail');
+        sessionStorage.removeItem('flockUsername');
         setIsLoggedIn(false);
     }
 

@@ -63,6 +63,7 @@ export function WrappedNewInfinite({blueprintId}: {blueprintId: string}) {
     const {buys, sells} = useNewInfiniteBuysSells(blueprint);
     const [risers, setRisers] = useState<string[]>([]);
     const [fallers, setFallers] = useState<string[]>([]);
+    const [createdDate, setCreatedDate] = useState(new Date());
 
     useEffect(() => {
         if (!blueprint) return;
@@ -120,6 +121,7 @@ export function WrappedNewInfinite({blueprintId}: {blueprintId: string}) {
                 break;
         }
         setTradeNeedleRotationDegrees(rotationDegrees);
+        setCreatedDate(new Date(blueprint.createdUtc));
     }, [blueprint]);
 
     useEffect(() => {
@@ -138,13 +140,11 @@ export function WrappedNewInfinite({blueprintId}: {blueprintId: string}) {
         );
     }, [apiStartingLineup, blueprint?.rosterPlayers]);
 
-    const [currentDate] = useState(new Date());
-
     return (
         <div className={styles.fullBlueprint}>
             <div className={styles.teamName}>{blueprint?.teamName}</div>
             <div className={styles.monthYear}>
-                {currentDate.toLocaleDateString(undefined, {
+                {createdDate.toLocaleDateString(undefined, {
                     month: 'long',
                     year: 'numeric',
                 })}

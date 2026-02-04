@@ -153,6 +153,7 @@ type Blueprint = {
         percentage: number;
     }>;
     infiniteFeatures: InfiniteFeatures;
+    createdUtc: string;
 };
 
 type InfiniteFeatures = {
@@ -256,6 +257,7 @@ type BlueprintMetadata = {
     ownerUserId: string;
     rosterId: number;
     teamName: string;
+    createdUtc: string;
 };
 
 export function useBlueprintsForDomainUser() {
