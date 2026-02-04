@@ -170,9 +170,32 @@ export default function BlueprintDashboard() {
             newInfiniteStyles.fullBlueprint
         )[0] as HTMLElement;
 
-        // await preloadImages(element);
+        await new Promise(resolve => setTimeout(resolve, 3000));
 
-        await new Promise(resolve => setTimeout(resolve, 20000));
+        await toPng(element, {
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            cacheBust: true,
+            fetchRequestInit: {
+                mode: 'cors',
+                cache: 'reload'
+            },
+        });
+        await toPng(element, {
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            cacheBust: true,
+            fetchRequestInit: {
+                mode: 'cors',
+                cache: 'reload'
+            },
+        });
+        await toPng(element, {
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            cacheBust: true,
+            fetchRequestInit: {
+                mode: 'cors',
+                cache: 'reload'
+            },
+        });
 
         const dataUrl = await toPng(element, {
             backgroundColor: 'rgba(0, 0, 0, 0)',
