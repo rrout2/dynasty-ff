@@ -78,7 +78,7 @@ export default function BlueprintDashboard() {
     const [loginDiscordUsername, setLoginDiscordUsername] = useState('');
     const [loginError, setLoginError] = useState('');
     const [domainUserNotFound, setDomainUserNotFound] = useState(false);
-    const blueprints = useBlueprintsForDomainUser();
+    const {blueprints, error: blueprintsError} = useBlueprintsForDomainUser();
 
     const [downloadModalOpen, setDownloadModalOpen] = useState(false);
     const [downloadBlueprintId, setDownloadBlueprintId] = useState('');
@@ -91,8 +91,11 @@ export default function BlueprintDashboard() {
     const [username] = useState(sessionStorage.getItem('flockEmail'));
 
     useEffect(() => {
-        console.log('blueprints', blueprints);
-    }, [blueprints]);
+        if (!blueprintsError) return;
+        if (blueprintsError.message === 'Request failed with status code 401') {
+            logout();
+        }
+    }, [blueprintsError]);
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -368,7 +371,6 @@ export default function BlueprintDashboard() {
                             style={{
                                 padding: '10px 15px 6px 15px',
                                 height: '50px',
-                                marginTop: '10px',
                             }}
                             sx={{
                                 backgroundColor: '#474E51',
