@@ -9,21 +9,23 @@
 }
 
 .domainLogo {
-    width: 688px;
+    width: 500px;
     height: auto;
 }
 
 .title {
     color: #FFF;
     font-family: "Acumin Pro ExtraCondensed";
-    font-size: 82px;
+    font-size: 67px;
     font-weight: 700;
+
+    padding-top: 12px;
 }
 
 .welcome {
     color: #FFF;
     font-family: Erbaum;
-    font-size: 67px;
+    font-size: 50px;
     font-weight: 400;
 
     .username {
@@ -170,7 +172,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    max-height: 80%;
+    height: 90%;
     width: 90%;
     overflow: scroll;
 
@@ -218,4 +220,21 @@
     font-family: "Acumin Pro Condensed";
     font-size: 20px;
     font-weight: 500;
+}
+
+.downloadModalHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.zoomWrapper {
+    transform-origin: top left;
 }

@@ -2,13 +2,18 @@ import styles from './BlueprintDashboard.module.css';
 import newInfiniteStyles from '../NewInfinite/NewInfinite.module.css';
 import {flockDomainLogo, logoHorizontal} from '../../../consts/images';
 import {useBlueprintsForDomainUser, useTitle} from '../../../hooks/hooks';
-import {Box, Button, Modal} from '@mui/material';
+import {Box, Button, IconButton, Modal} from '@mui/material';
 import {useEffect, useState} from 'react';
 import DomainTextField from '../shared/DomainTextField';
 import {WrappedNewInfinite} from '../NewInfinite/NewInfinite';
 import {toPng} from 'html-to-image';
 import {createRoot} from 'react-dom/client';
 import {QueryClientProvider, useQueryClient} from '@tanstack/react-query';
+import ZoomOutIcon from '@mui/icons-material/ZoomOut';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import OpenInFullIcon from '@mui/icons-material/OpenInFull';
+import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
+import CropFreeIcon from '@mui/icons-material/CropFree';
 import axios from 'axios';
 
 const COLOR_LIST = [
@@ -19,6 +24,11 @@ const COLOR_LIST = [
     '#1AE069',
     '#E84D57',
 ];
+
+const ZOOM_LEVELS = [
+    0.25, 0.33, 0.5, 0.67, 0.75, 0.8, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3,
+];
+const DEFAULT_ZOOM_INDEX = 7;
 
 const useScreenSize = () => {
     const [screenSize, setScreenSize] = useState({
@@ -54,7 +64,7 @@ const useScreenSize = () => {
 
 export default function BlueprintDashboard() {
     useTitle('Blueprint Dashboard');
-    const {width} = useScreenSize();
+    const {width, height} = useScreenSize();
     const isMobile = width < 600;
     const [isLoggedIn, setIsLoggedIn] = useState(
         sessionStorage.getItem('flockAuthToken') !== null
@@ -62,6 +72,7 @@ export default function BlueprintDashboard() {
     const [loginModalOpen, setLoginModalOpen] = useState(!isLoggedIn);
     const [loginEmail, setLoginEmail] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
     const [loginFlockUsername, setLoginFlockUsername] = useState('');
     const [loginSleeperUsername, setLoginSleeperUsername] = useState('');
     const [loginDiscordUsername, setLoginDiscordUsername] = useState('');
@@ -71,9 +82,27 @@ export default function BlueprintDashboard() {
 
     const [downloadModalOpen, setDownloadModalOpen] = useState(false);
     const [downloadBlueprintId, setDownloadBlueprintId] = useState('');
+    const [downloadBlueprintName, setDownloadBlueprintName] = useState('');
+    const [zoomIndex, setZoomIndex] = useState(DEFAULT_ZOOM_INDEX);
+    const [zoomLevel, setZoomLevel] = useState(ZOOM_LEVELS[DEFAULT_ZOOM_INDEX]);
+    const [isMaximized, setIsMaximized] = useState(false);
+
+    const [username] = useState(sessionStorage.getItem('flockEmail'));
+
+    useEffect(() => {
+        console.log('blueprints', blueprints);
+    }, [blueprints]);
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+            setLoginModalOpen(true);
+        }
+    }, [isLoggedIn]);
+    useEffect(() => {
+        setZoomLevel(ZOOM_LEVELS[zoomIndex]);
+    }, [zoomIndex]);
 
     // mock data
-    const username = 'username';
     const bps = [
         {
             name: 'Blueprint team name longer team name',
@@ -105,6 +134,7 @@ export default function BlueprintDashboard() {
     ];
 
     async function submitLogin() {
+        setIsLoggingIn(true);
         const options = {
             method: 'POST',
             url: 'https://domainffapi.azurewebsites.net/api/Auth/flock',
@@ -117,6 +147,7 @@ export default function BlueprintDashboard() {
                 if (res.data.success) {
                     const token = res.data.token;
                     sessionStorage.setItem('flockAuthToken', token);
+                    sessionStorage.setItem('flockEmail', res.data.flockEmail);
                     setIsLoggedIn(true);
                     setLoginModalOpen(false);
                     setLoginError('');
@@ -133,25 +164,35 @@ export default function BlueprintDashboard() {
                     `${err.response.data.code}: ${err.response.data.message}`
                 );
                 console.log(err);
+            })
+            .finally(() => {
+                setIsLoggingIn(false);
             });
+    }
+
+    const zoomIn = () =>
+        setZoomIndex(prev => Math.min(prev + 1, ZOOM_LEVELS.length - 1));
+    const zoomOut = () => setZoomIndex(prev => Math.max(prev - 1, 0));
+
+    function logout() {
+        sessionStorage.removeItem('flockAuthToken');
+        sessionStorage.removeItem('flockEmail');
+        setIsLoggedIn(false);
     }
 
     const downloadBlueprint = async () => {
         const element = document.getElementsByClassName(
             newInfiniteStyles.fullBlueprint
         )[0] as HTMLElement;
-        
-        const dataUrl = await toPng(
-            element,
-            {
-                backgroundColor: 'rgba(0, 0, 0, 0)',
-                cacheBust: true,
-            }
-        );
+
+        const dataUrl = await toPng(element, {
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            cacheBust: true,
+        });
 
         const link = document.createElement('a');
         link.href = dataUrl;
-        link.download = `default_name.png`;
+        link.download = `${downloadBlueprintName}.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -312,6 +353,7 @@ export default function BlueprintDashboard() {
                             submitLogin();
                         }}
                         disabled={!loginEmail.trim() || !loginPassword.trim()}
+                        loading={isLoggingIn}
                     >
                         SIGN IN
                     </Button>
@@ -321,32 +363,95 @@ export default function BlueprintDashboard() {
                 open={downloadModalOpen}
                 onClose={() => setDownloadModalOpen(false)}
             >
-                <Box className={styles.downloadModal}>
-                    <Button
-                    variant="text"
-                    style={{
-                        padding: '10px 15px 6px 15px',
-                        height: '50px',
-                        marginTop: '10px',
-                    }}
+                <Box
+                    className={styles.downloadModal}
                     sx={{
-                        backgroundColor: '#474E51',
-                        color: 'white',
-                        borderRadius: '5px',
-                        '&:hover': {
-                            backgroundColor: '#676b6dff',
-                        },
-                        fontFamily: 'Acumin Pro',
-                        fontWeight: '1000',
-                        fontSize: '30px',
-                    }}
-                    onClick={() => {
-                        downloadBlueprint();
+                        width: isMaximized ? '100%' : null,
+                        height: isMaximized ? '100%' : null,
                     }}
                 >
-                    DOWNLOAD
-                </Button>
-                    <WrappedNewInfinite blueprintId={downloadBlueprintId} />
+                    <div className={styles.downloadModalHeader}>
+                        <Button
+                            variant="text"
+                            style={{
+                                padding: '10px 15px 6px 15px',
+                                height: '50px',
+                                marginTop: '10px',
+                            }}
+                            sx={{
+                                backgroundColor: '#474E51',
+                                color: 'white',
+                                borderRadius: '5px',
+                                '&:hover': {
+                                    backgroundColor: '#676b6dff',
+                                },
+                                fontFamily: 'Acumin Pro',
+                                fontWeight: '1000',
+                                fontSize: '30px',
+                            }}
+                            onClick={downloadBlueprint}
+                        >
+                            DOWNLOAD
+                        </Button>
+                        <IconButton
+                            sx={{
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                '&:hover': {
+                                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                },
+                            }}
+                            TouchRippleProps={{
+                                style: {
+                                    color: 'white',
+                                },
+                            }}
+                            onClick={() => zoomOut()}
+                        >
+                            <ZoomOutIcon sx={{color: 'white'}} />
+                        </IconButton>
+                        <IconButton
+                            sx={{
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                '&:hover': {
+                                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                },
+                            }}
+                            TouchRippleProps={{
+                                style: {
+                                    color: 'white',
+                                },
+                            }}
+                            onClick={() => zoomIn()}
+                        >
+                            <ZoomInIcon sx={{color: 'white'}} />
+                        </IconButton>
+                        <IconButton
+                            sx={{
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                '&:hover': {
+                                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                },
+                            }}
+                            TouchRippleProps={{
+                                style: {
+                                    color: 'white',
+                                },
+                            }}
+                            onClick={() => setIsMaximized(!isMaximized)}
+                        >
+                            {isMaximized ? (
+                                <CloseFullscreenIcon sx={{color: 'white'}} />
+                            ) : (
+                                <OpenInFullIcon sx={{color: 'white'}} />
+                            )}
+                        </IconButton>
+                    </div>
+                    <div
+                        className={styles.zoomWrapper}
+                        style={{transform: `scale(${zoomLevel})`}}
+                    >
+                        <WrappedNewInfinite blueprintId={downloadBlueprintId} />
+                    </div>
                 </Box>
             </Modal>
             {isLoggedIn && (
@@ -366,6 +471,29 @@ export default function BlueprintDashboard() {
                         >
                             BLUEPRINT DASHBOARD
                         </div>
+                        <Button
+                            variant="text"
+                            style={{
+                                padding: '10px 15px 6px 15px',
+                                height: '50px',
+                            }}
+                            sx={{
+                                backgroundColor: '#474E51',
+                                color: 'white',
+                                borderRadius: '5px',
+                                '&:hover': {
+                                    backgroundColor: '#676b6dff',
+                                },
+                                fontFamily: 'Acumin Pro',
+                                fontWeight: '1000',
+                                fontSize: '30px',
+                            }}
+                            onClick={() => {
+                                logout();
+                            }}
+                        >
+                            Log Out
+                        </Button>
                     </div>
                     <div className={styles.bodyContainer}>
                         <div className={styles.bodySection1}>
@@ -416,14 +544,15 @@ export default function BlueprintDashboard() {
                                             key={idx}
                                             index={idx}
                                             screenWidth={width}
-                                            setDownloadBlueprintId={
-                                                (id: string) =>
-                                                    setDownloadBlueprintId(id)
-                                            }
-                                            setDownloadModalOpen={
-                                                (open: boolean) =>
-                                                    setDownloadModalOpen(open)
-                                            }
+                                            setDownloadBlueprintId={(
+                                                id: string
+                                            ) => setDownloadBlueprintId(id)}
+                                            setDownloadBlueprintName={(
+                                                name: string
+                                            ) => setDownloadBlueprintName(name)}
+                                            setDownloadModalOpen={(
+                                                open: boolean
+                                            ) => setDownloadModalOpen(open)}
                                             {...bp}
                                         />
                                     ))}
@@ -460,14 +589,15 @@ export default function BlueprintDashboard() {
                                             key={idx}
                                             index={idx}
                                             screenWidth={width}
-                                            setDownloadBlueprintId={
-                                                (id: string) =>
-                                                    setDownloadBlueprintId(id)
-                                            }
-                                            setDownloadModalOpen={
-                                                (open: boolean) =>
-                                                    setDownloadModalOpen(open)
-                                            }
+                                            setDownloadBlueprintId={(
+                                                id: string
+                                            ) => setDownloadBlueprintId(id)}
+                                            setDownloadBlueprintName={(
+                                                name: string
+                                            ) => setDownloadBlueprintName(name)}
+                                            setDownloadModalOpen={(
+                                                open: boolean
+                                            ) => setDownloadModalOpen(open)}
                                             {...bp}
                                         />
                                     ))}
@@ -488,6 +618,7 @@ type BlueprintItemProps = {
     screenWidth: number;
     blueprintId: string;
     setDownloadBlueprintId: (id: string) => void;
+    setDownloadBlueprintName: (name: string) => void;
     setDownloadModalOpen: (open: boolean) => void;
 };
 
@@ -498,6 +629,7 @@ function BlueprintItem({
     screenWidth,
     blueprintId,
     setDownloadBlueprintId,
+    setDownloadBlueprintName,
     setDownloadModalOpen,
 }: BlueprintItemProps) {
     const queryClient = useQueryClient();
@@ -644,6 +776,7 @@ function BlueprintItem({
                     onClick={() => {
                         setDownloadModalOpen(true);
                         setDownloadBlueprintId(blueprintId);
+                        setDownloadBlueprintName(name);
                     }}
                     loading={isDownloading}
                 >
