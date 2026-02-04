@@ -165,9 +165,15 @@ export default function BlueprintDashboard() {
             newInfiniteStyles.fullBlueprint
         )[0] as HTMLElement;
 
+        await new Promise(resolve => setTimeout(resolve, 500));
+
         const dataUrl = await toPng(element, {
             backgroundColor: 'rgba(0, 0, 0, 0)',
             cacheBust: true,
+            fetchRequestInit: {
+                mode: 'cors',
+                cache: 'reload'
+            },
         });
 
         const link = document.createElement('a');
