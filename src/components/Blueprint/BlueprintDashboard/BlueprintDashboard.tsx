@@ -172,39 +172,31 @@ export default function BlueprintDashboard() {
 
         await new Promise(resolve => setTimeout(resolve, 3000));
 
-        await toPng(element, {
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            cacheBust: true,
-            fetchRequestInit: {
-                mode: 'cors',
-                cache: 'reload'
-            },
-        });
-        await toPng(element, {
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            cacheBust: true,
-            fetchRequestInit: {
-                mode: 'cors',
-                cache: 'reload'
-            },
-        });
-        await toPng(element, {
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            cacheBust: true,
-            fetchRequestInit: {
-                mode: 'cors',
-                cache: 'reload'
-            },
-        });
+        let dataUrl = '';
+        const minDataLength = 5000000;
+        let i = 0;
+        const maxAttempts = 15;
 
-        const dataUrl = await toPng(element, {
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            cacheBust: true,
-            fetchRequestInit: {
-                mode: 'cors',
-                cache: 'reload'
-            },
-        });
+        while (dataUrl.length < minDataLength && i < maxAttempts) {
+            dataUrl = await toPng(element, {
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                cacheBust: true,
+                fetchRequestInit: {
+                    mode: 'cors',
+                    cache: 'reload',
+                },
+            });
+            i += 1;
+        }
+
+        // const dataUrl = await toPng(element, {
+        //     backgroundColor: 'rgba(0, 0, 0, 0)',
+        //     cacheBust: true,
+        //     fetchRequestInit: {
+        //         mode: 'cors',
+        //         cache: 'reload'
+        //     },
+        // });
 
         const link = document.createElement('a');
         link.href = dataUrl;

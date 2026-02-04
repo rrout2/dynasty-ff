@@ -3218,7 +3218,7 @@ export function getApiStartingLineup(
         tightEndSlots,
         isSuperFlex,
     } = leagueSettings;
-    let {flexSlots} = leagueSettings;
+    const {flexSlots} = leagueSettings;
     const remainingPlayers = new Set(rosterPlayers.map(p => p.playerId)); // maybe map?
     const startingQbs = rosterPlayers
         .filter(p => p.rosterPosition === QB && p.isStarter)
@@ -3252,12 +3252,14 @@ export function getApiStartingLineup(
 
     let startingSuperFlex: RosterPlayer[] = [];
     if (isSuperFlex) {
-        startingSuperFlex = rosterPlayers.filter(
-            p =>
-                SUPER_FLEX_SET.has(p.position) &&
-                remainingPlayers.has(p.playerId) &&
-                p.isStarter
-        ).slice(0, 1);
+        startingSuperFlex = rosterPlayers
+            .filter(
+                p =>
+                    SUPER_FLEX_SET.has(p.position) &&
+                    remainingPlayers.has(p.playerId) &&
+                    p.isStarter
+            )
+            .slice(0, 1);
         startingSuperFlex.forEach(p => remainingPlayers.delete(p.playerId));
     }
 
