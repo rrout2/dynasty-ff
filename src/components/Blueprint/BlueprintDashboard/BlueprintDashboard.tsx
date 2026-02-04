@@ -69,6 +69,9 @@ export default function BlueprintDashboard() {
     const [domainUserNotFound, setDomainUserNotFound] = useState(false);
     const blueprints = useBlueprintsForDomainUser();
 
+    const [downloadModalOpen, setDownloadModalOpen] = useState(false);
+    const [downloadBlueprintId, setDownloadBlueprintId] = useState('');
+
     // mock data
     const username = 'username';
     const bps = [
@@ -132,6 +135,27 @@ export default function BlueprintDashboard() {
                 console.log(err);
             });
     }
+
+    const downloadBlueprint = async () => {
+        const element = document.getElementsByClassName(
+            newInfiniteStyles.fullBlueprint
+        )[0] as HTMLElement;
+        
+        const dataUrl = await toPng(
+            element,
+            {
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                cacheBust: true,
+            }
+        );
+
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = `default_name.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 
     return (
         <div>
@@ -293,6 +317,37 @@ export default function BlueprintDashboard() {
                     </Button>
                 </Box>
             </Modal>
+            <Modal
+                open={downloadModalOpen}
+                onClose={() => setDownloadModalOpen(false)}
+            >
+                <Box className={styles.downloadModal}>
+                    <Button
+                    variant="text"
+                    style={{
+                        padding: '10px 15px 6px 15px',
+                        height: '50px',
+                    }}
+                    sx={{
+                        backgroundColor: '#474E51',
+                        color: 'white',
+                        borderRadius: '5px',
+                        '&:hover': {
+                            backgroundColor: '#676b6dff',
+                        },
+                        fontFamily: 'Acumin Pro',
+                        fontWeight: '1000',
+                        fontSize: '30px',
+                    }}
+                    onClick={() => {
+                        downloadBlueprint();
+                    }}
+                >
+                    DOWNLOAD
+                </Button>
+                    <WrappedNewInfinite blueprintId={downloadBlueprintId} />
+                </Box>
+            </Modal>
             {isLoggedIn && (
                 <>
                     <div
@@ -360,6 +415,14 @@ export default function BlueprintDashboard() {
                                             key={idx}
                                             index={idx}
                                             screenWidth={width}
+                                            setDownloadBlueprintId={
+                                                (id: string) =>
+                                                    setDownloadBlueprintId(id)
+                                            }
+                                            setDownloadModalOpen={
+                                                (open: boolean) =>
+                                                    setDownloadModalOpen(open)
+                                            }
                                             {...bp}
                                         />
                                     ))}
@@ -396,6 +459,14 @@ export default function BlueprintDashboard() {
                                             key={idx}
                                             index={idx}
                                             screenWidth={width}
+                                            setDownloadBlueprintId={
+                                                (id: string) =>
+                                                    setDownloadBlueprintId(id)
+                                            }
+                                            setDownloadModalOpen={
+                                                (open: boolean) =>
+                                                    setDownloadModalOpen(open)
+                                            }
                                             {...bp}
                                         />
                                     ))}
@@ -415,6 +486,8 @@ type BlueprintItemProps = {
     index: number;
     screenWidth: number;
     blueprintId: string;
+    setDownloadBlueprintId: (id: string) => void;
+    setDownloadModalOpen: (open: boolean) => void;
 };
 
 function BlueprintItem({
@@ -423,6 +496,8 @@ function BlueprintItem({
     index,
     screenWidth,
     blueprintId,
+    setDownloadBlueprintId,
+    setDownloadModalOpen,
 }: BlueprintItemProps) {
     const queryClient = useQueryClient();
     const [isMobile] = useState(screenWidth < 600);
@@ -484,7 +559,6 @@ function BlueprintItem({
         const criticalImages = element.querySelectorAll(
             `img.${newInfiniteStyles.blankBp}`
         ) as NodeListOf<HTMLImageElement>;
-        // OR use data attribute: img[data-critical="true"]
 
         await Promise.all(
             Array.from(criticalImages).map(img => {
@@ -566,7 +640,10 @@ function BlueprintItem({
                         fontWeight: '1000',
                         fontSize: '30px',
                     }}
-                    onClick={downloadBlueprint}
+                    onClick={() => {
+                        setDownloadModalOpen(true);
+                        setDownloadBlueprintId(blueprintId);
+                    }}
                     loading={isDownloading}
                 >
                     DOWNLOAD
