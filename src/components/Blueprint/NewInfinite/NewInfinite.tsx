@@ -377,7 +377,10 @@ export function WrappedNewInfinite({blueprintId}: {blueprintId: string}) {
                 </div>
             )}
             {sells.length > 0 && (
-                <div className={styles.sellsContainer} style={{left: sells.length > 1 ? undefined : '700px'}}>
+                <div
+                    className={styles.sellsContainer}
+                    style={{left: sells.length > 1 ? undefined : '700px'}}
+                >
                     <BuySellPlayer {...sells[0]} />
                     {sells[1] && <BuySellPlayer {...sells[1]} />}
                 </div>

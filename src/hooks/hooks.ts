@@ -250,21 +250,12 @@ export function useNewInfiniteBuysSells(blueprint: Blueprint | undefined) {
 }
 
 type BlueprintMetadata = {
-    id: number;
-    blueprintType: number;
+    blueprintId: number;
+    blueprintType: string;
     platform: string;
-    leagueId: string;
+    ownerUserId: string;
     rosterId: number;
     teamName: string;
-    season: number;
-    overallGrade: number;
-    month: number;
-    year: number;
-    valueArchetype: string;
-    rosterArchetype: string;
-    rosterValueTier: string;
-    createdUtc: string;
-    updatedUtc: string;
 };
 
 export function useBlueprintsForDomainUser() {

@@ -13,7 +13,6 @@ import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
-import CropFreeIcon from '@mui/icons-material/CropFree';
 import axios from 'axios';
 
 const COLOR_LIST = [
@@ -26,9 +25,10 @@ const COLOR_LIST = [
 ];
 
 const ZOOM_LEVELS = [
-    0.25, 0.33, 0.5, 0.67, 0.75, 0.8, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3,
+    0.15, 0.2, 0.25, 0.33, 0.5, 0.67, 0.75, 0.8, 0.9, 1, 1.1, 1.25, 1.5, 1.75,
+    2, 2.5, 3,
 ];
-const DEFAULT_ZOOM_INDEX = 7;
+const DEFAULT_ZOOM_INDEX = 9;
 
 const useScreenSize = () => {
     const [screenSize, setScreenSize] = useState({
@@ -103,35 +103,15 @@ export default function BlueprintDashboard() {
     }, [zoomIndex]);
 
     // mock data
-    const bps = [
-        {
-            name: 'Blueprint team name longer team name',
-            date: 'Oct 21, 2025',
-            blueprintId: '2930',
-        },
-        {
-            name: 'Blueprint team name',
-            date: 'Oct 21, 2025',
-            blueprintId: '2931',
-        },
-        {
-            name: 'Blueprint team name',
-            date: 'Oct 21, 2025',
-            blueprintId: '2932',
-        },
-        {
-            name: 'Blueprint team name',
-            date: 'Oct 21, 2025',
-            blueprintId: '2933',
-        },
-    ];
-    const infinites = [
-        {
-            name: 'Blueprint team name',
-            date: 'Oct 21, 2025',
-            blueprintId: '2934',
-        },
-    ];
+    const bps: Array<{name: string; date: string; blueprintId: string}> = [];
+    const infinites: Array<{name: string; date: string; blueprintId: string}> =
+        blueprints
+            .filter(bp => bp.blueprintType === 'Infinite')
+            .map(blueprint => ({
+                name: blueprint.teamName,
+                date: 'Oct 21, 2025',
+                blueprintId: '' + blueprint.blueprintId,
+            }));
 
     async function submitLogin() {
         setIsLoggingIn(true);
