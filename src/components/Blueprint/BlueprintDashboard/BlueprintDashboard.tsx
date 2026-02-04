@@ -327,6 +327,7 @@ export default function BlueprintDashboard() {
                     style={{
                         padding: '10px 15px 6px 15px',
                         height: '50px',
+                        marginTop: '10px',
                     }}
                     sx={{
                         backgroundColor: '#474E51',
@@ -646,7 +647,7 @@ function BlueprintItem({
                     }}
                     loading={isDownloading}
                 >
-                    DOWNLOAD
+                    PREVIEW
                 </Button>
             </div>
         </div>

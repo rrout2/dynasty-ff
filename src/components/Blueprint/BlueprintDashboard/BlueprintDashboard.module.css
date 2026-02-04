@@ -175,6 +175,11 @@
     overflow: scroll;
 
     background-color: #04121C;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
 }
 
 .loginLogo {

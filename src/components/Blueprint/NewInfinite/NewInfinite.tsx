@@ -231,6 +231,11 @@ export function WrappedNewInfinite({blueprintId}: {blueprintId: string}) {
             />
             <div className={styles.ageTracker}>
                 <LineChart
+                    slotProps={{
+                        tooltip: {
+                            hidden: true
+                        }
+                    }}
                     xAxis={[
                         {
                             data: ['FEB'],
