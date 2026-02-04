@@ -86,6 +86,7 @@ export default function BlueprintDashboard() {
     const [zoomIndex, setZoomIndex] = useState(DEFAULT_ZOOM_INDEX);
     const [zoomLevel, setZoomLevel] = useState(ZOOM_LEVELS[DEFAULT_ZOOM_INDEX]);
     const [isMaximized, setIsMaximized] = useState(false);
+    const [isDownloading, setIsDownloading] = useState(false);
 
     const [username] = useState(sessionStorage.getItem('flockEmail'));
 
@@ -160,33 +161,15 @@ export default function BlueprintDashboard() {
         setIsLoggedIn(false);
     }
 
-    const preloadImages = async (element: HTMLElement): Promise<void> => {
-        const images = element.getElementsByTagName('img');        
-        const imagePromises: Promise<void>[] = [];
-        
-        // Preload <img> tags
-        Array.from(images).forEach(img => {
-            if (!img.complete) {
-                imagePromises.push(
-                    new Promise((resolve) => {
-                        img.onload = () => resolve();
-                        img.onerror = () => resolve();
-                    })
-                );
-            }
-        });
-        
-        await Promise.all(imagePromises);
-    };
-
     const downloadBlueprint = async () => {
+        setIsDownloading(true);
         const element = document.getElementsByClassName(
             newInfiniteStyles.fullBlueprint
         )[0] as HTMLElement;
 
         // await preloadImages(element);
 
-        await new Promise(resolve => setTimeout(resolve, 10000));
+        await new Promise(resolve => setTimeout(resolve, 5000));
 
         const dataUrl = await toPng(element, {
             backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -203,6 +186,8 @@ export default function BlueprintDashboard() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+
+        setIsDownloading(false);
     };
 
     return (
@@ -397,6 +382,7 @@ export default function BlueprintDashboard() {
                                 fontSize: '30px',
                             }}
                             onClick={downloadBlueprint}
+                            loading={isDownloading}
                         >
                             DOWNLOAD
                         </Button>
