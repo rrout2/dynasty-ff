@@ -502,7 +502,7 @@ function BlueprintItem({
             container.firstElementChild as HTMLElement,
             {
                 backgroundColor: 'rgba(0, 0, 0, 0)',
-                cacheBust: false,
+                cacheBust: true,
             }
         );
 

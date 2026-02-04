@@ -28,15 +28,16 @@ import {
 } from '../../../consts/fantasy';
 import {getApiStartingLineup} from '../BlueprintModule/BlueprintModule';
 import {LineChart} from '@mui/x-charts/LineChart';
+import ExportButton from '../shared/ExportButton';
 
 export default function NewInfinite({blueprintId}: {blueprintId?: string}) {
     const [blueprintIdFromUrl] = useParamFromUrl(BLUEPRINT_ID);
 
     return (
         <>
-            {
-                'notes: ages are hardcoded. need player sleeper IDs for buy and sell.'
-            }
+            <ExportButton
+                className={styles.fullBlueprint}
+            />
             <WrappedNewInfinite
                 blueprintId={blueprintId || blueprintIdFromUrl}
             />
