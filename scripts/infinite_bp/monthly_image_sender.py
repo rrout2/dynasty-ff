@@ -163,7 +163,7 @@ class ImageEmailSender:
             manual (bool): Whether to use manual URL
         """
         if manual:
-            return f"https://rrout2.github.io/dynasty-ff/#/weekly?{self.manual_url_list[idx]}"
+            return f"https://rrout2.github.io/dynasty-ff/#/infinite?{self.manual_url_list[idx]}"
         disallowed_buys = str(self.disallowed_buys[idx])
         if disallowed_buys == 'None':
             disallowed_buys = ''
