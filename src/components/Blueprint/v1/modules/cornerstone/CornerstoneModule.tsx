@@ -2,13 +2,13 @@ import styles from './CornerstoneModule.module.css';
 import {Player, Roster} from '../../../../../sleeper-api/sleeper-api';
 import ExportButton from '../../../shared/ExportButton';
 import {FANTASY_POSITIONS, QB, RB, TE, WR} from '../../../../../consts/fantasy';
-import {useAdpData, usePlayerData} from '../../../../../hooks/hooks';
+import {useAdpData, useAdpDataJson, usePlayerData} from '../../../../../hooks/hooks';
 import PlayerSelectComponent from '../../../shared/PlayerSelectComponent';
 import {SetStateAction, useEffect, useState} from 'react';
 
 export function useCornerstones(roster?: Roster) {
     const playerData = usePlayerData();
-    const {getAdp, sortByAdp} = useAdpData();
+    const {getAdp, sortByAdp} = useAdpDataJson();
     const [cornerstones, setCornerstones] = useState(
         new Map<string, string[]>(FANTASY_POSITIONS.map(pos => [pos, []]))
     );

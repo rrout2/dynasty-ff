@@ -5,7 +5,7 @@ import {hardBuy, hardSell, softBuy, softSell} from '../../../../consts/images';
 import {RosterTier, useRosterTierAndPosGrades} from '../RosterTier/RosterTier';
 import {QB, RB, TE, WR} from '../../../../consts/fantasy';
 import {
-    useAdpData,
+    useAdpDataJson,
     useBuySellData,
     useDisallowedBuysFromUrl,
     usePlayerData,
@@ -120,7 +120,7 @@ export function useBuySells(
         tier,
         playerData,
     ]);
-    const {getAdp} = useAdpData();
+    const {getAdp} = useAdpDataJson();
     let addedBelow100 = false;
 
     interface PositionalScores {
@@ -518,7 +518,7 @@ export function useBuySells(
             sellList = allSells;
         }
         return sellList
-            .filter(sell => roster.players.includes(sell.player_id))
+            .filter(sell => roster.players.includes('' + sell.player_id))
             .filter(s => {
                 if (isSuperFlex || s.position !== QB) return true;
                 // No QB sells lower than QB12 in 1QB formats
@@ -528,7 +528,7 @@ export function useBuySells(
             .map(sell => ({
                 playerId: sell.player_id,
                 type:
-                    sell.verdict === 'Soft Sell'
+                    sell.verdict.toUpperCase().includes('SOFT')
                         ? BuySellType.SoftSell
                         : BuySellType.HardSell,
                 reason: sell.explanation,

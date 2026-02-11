@@ -23,6 +23,7 @@ import {
     PlayerValue,
     usePlayerData,
     usePlayerValues,
+    usePlayerValuesJson,
 } from '../../../../../hooks/hooks';
 
 interface PositionalGradesProps {
@@ -270,7 +271,7 @@ function GraphicComponent({
     numStarters,
 }: graphicProps) {
     const playerData = usePlayerData();
-    const {getPlayerValue} = usePlayerValues();
+    const {getPlayerValue} = usePlayerValuesJson();
 
     function gradeToSliderHeight(grade: number) {
         return grade * 27.5 - 25;

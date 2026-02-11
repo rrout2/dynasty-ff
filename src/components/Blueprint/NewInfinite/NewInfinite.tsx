@@ -29,16 +29,31 @@ import {
 import {getApiStartingLineup} from '../BlueprintModule/BlueprintModule';
 import {LineChart} from '@mui/x-charts/LineChart';
 import ExportButton from '../shared/ExportButton';
-import { Button } from '@mui/material';
+import {Button} from '@mui/material';
 
 export default function NewInfinite({blueprintId}: {blueprintId?: string}) {
-    const [blueprintIdFromUrl, setBlueprintIdFromUrl] = useParamFromUrl(BLUEPRINT_ID);
+    const [blueprintIdFromUrl, setBlueprintIdFromUrl] =
+        useParamFromUrl(BLUEPRINT_ID);
 
     return (
         <>
             <ExportButton className={styles.fullBlueprint} />
-            <Button variant='outlined' onClick={() => setBlueprintIdFromUrl('' + (+blueprintIdFromUrl - 1))}>Prev</Button>
-            <Button variant='outlined' onClick={() => setBlueprintIdFromUrl('' + (+blueprintIdFromUrl + 1))}>Next</Button>
+            <Button
+                variant="outlined"
+                onClick={() =>
+                    setBlueprintIdFromUrl('' + (+blueprintIdFromUrl - 1))
+                }
+            >
+                Prev
+            </Button>
+            <Button
+                variant="outlined"
+                onClick={() =>
+                    setBlueprintIdFromUrl('' + (+blueprintIdFromUrl + 1))
+                }
+            >
+                Next
+            </Button>
             <WrappedNewInfinite
                 blueprintId={blueprintId || blueprintIdFromUrl}
             />

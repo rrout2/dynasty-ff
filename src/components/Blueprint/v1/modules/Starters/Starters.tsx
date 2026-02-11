@@ -291,10 +291,10 @@ function StopLights({stoplight}: {stoplight?: Stoplight}) {
 function DifferenceChip({verdict}: {verdict?: BuySellVerdict}) {
     let color = 'gray';
     let plusMinus = '';
-    if (verdict?.verdict.includes('Buy')) {
+    if (verdict?.verdict.toUpperCase().includes('BUY')) {
         color = '#8DC63F';
         plusMinus = '+';
-    } else if (verdict?.verdict.includes('Sell')) {
+    } else if (verdict?.verdict.toUpperCase().includes('SELL')) {
         color = '#EF4136';
         plusMinus = '-';
     } else {

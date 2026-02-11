@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {QB, RB, TE, WR} from '../../../../consts/fantasy';
-import {usePlayerData, usePlayerValues} from '../../../../hooks/hooks';
+import {usePlayerData, usePlayerValuesJson} from '../../../../hooks/hooks';
 import {Roster} from '../../../../sleeper-api/sleeper-api';
 import {gradeByPosition} from '../../v1/modules/PositionalGrades/PositionalGrades';
 import styles from './RosterTier.module.css';
@@ -41,7 +41,7 @@ export function useRosterTierAndPosGrades(
     leagueSize: number,
     roster?: Roster
 ) {
-    const {getPlayerValue} = usePlayerValues();
+    const {getPlayerValue} = usePlayerValuesJson();
     const playerData = usePlayerData();
     const [tier, setTier] = useState<RosterTier>(RosterTier.Unknown);
     const [qbGrade, setQbGrade] = useState(-1);

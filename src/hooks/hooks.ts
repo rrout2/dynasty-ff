@@ -6,7 +6,8 @@ import {
     useState,
 } from 'react';
 import playersJson from '../data/players.json';
-import buySellsData from '../data/buyssellsholds_with_ids_080525.json';
+import buySellsData from '../data/buyssellsholds_021126.json';
+import rankingsJson from '../data/rankings_02112026.json';
 import nflScheduleJson from '../data/nfl_schedule.json';
 import sfPickMovesJson from '../data/rookieBP/sf_pick_moves.json';
 import oneQbPickMovesJson from '../data/rookieBP/1qb_pick_moves.json';
@@ -1844,30 +1845,22 @@ export function useBuySellData() {
     const {sortNamesByAdp} = useAdpData();
     useEffect(() => {
         const qbBuys = buySells.filter(
-            b =>
-                b.position === QB &&
-                (b.verdict === 'SOFT BUY' || b.verdict === 'HARD BUY')
+            b => b.position === QB && b.verdict.toUpperCase().includes('BUY')
         );
 
         const rbBuys = buySells.filter(
-            b =>
-                b.position === RB &&
-                (b.verdict === 'SOFT BUY' || b.verdict === 'HARD BUY')
+            b => b.position === RB && b.verdict.toUpperCase().includes('BUY')
         );
 
         const wrBuys = buySells.filter(
-            b =>
-                b.position === WR &&
-                (b.verdict === 'SOFT BUY' || b.verdict === 'HARD BUY')
+            b => b.position === WR && b.verdict.toUpperCase().includes('BUY')
         );
 
         const teBuys = buySells.filter(
-            b =>
-                b.position === TE &&
-                (b.verdict === 'SOFT BUY' || b.verdict === 'HARD BUY')
+            b => b.position === TE && b.verdict.toUpperCase().includes('BUY')
         );
         const sells = buySells
-            .filter(b => b.verdict === 'SOFT SELL' || b.verdict === 'HARD SELL')
+            .filter(b => b.verdict.toUpperCase().includes('SELL'))
             .sort((a, b) => sortNamesByAdp(a.name, b.name));
 
         const holds = buySells
@@ -1977,6 +1970,53 @@ const oneQbBump = new Set(
 // Uses adp data to calculate player values
 export function usePlayerValues() {
     const {adpData, getAdp, getPositionalAdp} = useAdpData();
+
+    const getPlayerValue = (playerName: string) => {
+        const rank = getAdp(playerName);
+        const datum = adpData[rank - 1];
+        if (!datum) {
+            return {
+                Player: playerName,
+                Value: 0,
+                Position: '',
+                oneQbBonus: 0,
+                sfBonus: 0,
+            };
+        }
+        const positionalRank = getPositionalAdp(playerName);
+        return {
+            Player: datum.player_name,
+            Position: datum.Position,
+            Value: 1.0808218554 * Math.pow(0.97230651306, rank) * 100,
+            oneQbBonus: oneQbBump.has(playerName) ? 1 : 0,
+            sfBonus: 0,
+            teValue:
+                datum.Position === TE
+                    ? Math.max(10 - positionalRank + 1, 1)
+                    : undefined,
+        };
+    };
+
+    const getBump = (playerName: string, superFlex: boolean) => {
+        const playerValue = getPlayerValue(playerName);
+        if (playerValue) {
+            if (superFlex) {
+                return playerValue.sfBonus;
+            } else {
+                return playerValue.oneQbBonus;
+            }
+        }
+        console.warn(
+            `cannot find PlayerValue for player with name = '${playerName}'`
+        );
+        return 0;
+    };
+
+    return {getPlayerValue, getBump};
+}
+
+export function usePlayerValuesJson() {
+    const {adpData, getAdp, getPositionalAdp} = useAdpDataJson();
 
     const getPlayerValue = (playerName: string) => {
         const rank = getAdp(playerName);
@@ -2141,6 +2181,96 @@ export function useAdpData() {
         getPositionalAdp,
         sortNamesByAdp,
         isLoading,
+    };
+}
+
+export function useAdpDataJson() {
+    const [rankings] = useState(rankingsJson);
+    const [adpData, setAdpData] = useState<adpDatum[]>([]);
+    useEffect(() => {
+        if (!rankings) return;
+        setAdpData(
+            (rankings as unknown as Rank[]).map((p: Rank) => {
+                return {
+                    player_name: p.Player,
+                    Position: p.Position,
+                };
+            })
+        );
+    }, [rankings]);
+
+    const getAdp = useCallback(
+        (playerName: string): number => {
+            const playerNickname = checkForNickname(playerName);
+            let adp = adpData.findIndex(
+                a =>
+                    a.player_name.replace(/\W/g, '').toLowerCase() ===
+                    playerName.replace(/\W/g, '').toLowerCase()
+            );
+            if (adp >= 0) {
+                return adp + 1;
+            }
+            adp = adpData.findIndex(
+                a =>
+                    a.player_name.replace(/\W/g, '').toLowerCase() ===
+                    playerNickname.replace(/\W/g, '').toLowerCase()
+            );
+            if (adp >= 0) {
+                return adp + 1;
+            }
+            return Infinity;
+        },
+        [adpData]
+    );
+    const getPositionalAdp = useCallback(
+        (playerName: string): number => {
+            const playerNickname = checkForNickname(playerName);
+            const idx = getAdp(playerName) - 1;
+            if (idx >= adpData.length) return Infinity;
+
+            const filteredAdpData = adpData.filter(
+                player => player.Position === adpData[idx].Position
+            );
+            const adp = filteredAdpData.findIndex(
+                a =>
+                    a.player_name.replace(/\W/g, '').toLowerCase() ===
+                    playerName.replace(/\W/g, '').toLowerCase()
+            );
+            if (adp >= 0) {
+                return adp + 1;
+            }
+            const adpWithNickname = filteredAdpData.findIndex(
+                a =>
+                    a.player_name.replace(/\W/g, '').toLowerCase() ===
+                    playerNickname.replace(/\W/g, '').toLowerCase()
+            );
+            if (adpWithNickname >= 0) {
+                return adpWithNickname + 1;
+            }
+            return Infinity;
+        },
+        [adpData, getAdp]
+    );
+    const sortNamesByAdp = useCallback(
+        (a: string, b: string): number => getAdp(a) - getAdp(b),
+        [getAdp]
+    );
+
+    const sortByAdp = useCallback(
+        (a: Player, b: Player): number =>
+            sortNamesByAdp(
+                `${a.first_name} ${a.last_name}`,
+                `${b.first_name} ${b.last_name}`
+            ),
+        [sortNamesByAdp]
+    );
+
+    return {
+        adpData,
+        getAdp,
+        sortByAdp,
+        getPositionalAdp,
+        sortNamesByAdp,
     };
 }
 
@@ -2747,6 +2877,143 @@ export function useWeeklyRanks() {
         get1QbRankByName,
         isLoading,
     };
+}
+
+export function useOldInfiniteProjectedLineup(
+    rosterSettings: Map<string, number>,
+    playerIds?: string[]
+) {
+    const playerData = usePlayerData();
+    const [startingLineup, setStartingLineup] = useState<Lineup>([]);
+    const [bench, setBench] = useState<Player[]>([]);
+    const [benchString, setBenchString] = useState('');
+    const {getAdp, sortByAdp, adpData} = useAdpDataJson();
+    const [isSuperflex] = useState(
+        rosterSettings.has(SUPER_FLEX) || (rosterSettings.get(QB) ?? 0) > 1
+    );
+    const sortFn = useCallback(
+        (a: Player, b: Player) => {
+            return sortByAdp(a, b);
+        },
+        [isSuperflex, adpData]
+    );
+    const getFn = useCallback(
+        (playerName: string) => {
+            return getAdp(playerName);
+        },
+        [isSuperflex, adpData]
+    );
+
+    useEffect(() => {
+        if (!playerData || !playerIds || !getFn || !sortFn) return;
+        const remainingPlayers = new Set(playerIds);
+        const starters: {player: Player; position: string}[] = [];
+        Array.from(rosterSettings)
+            .sort(
+                // sort by number of positions allowed in slot
+                // ie, SUPER_FLEX === 4, FLEX === 3, WR_RB_FLEX === 2, WR_TE_FLEX === 2
+                (a, b) => {
+                    if (a[0] === b[0]) {
+                        return 0;
+                    }
+                    if (!a[0].includes(FLEX) && !b[0].includes(FLEX)) {
+                        return 0;
+                    }
+                    if (a[0].includes(FLEX) && !b[0].includes(FLEX)) {
+                        return 1;
+                    }
+                    if (!a[0].includes(FLEX) && b[0].includes(FLEX)) {
+                        return -1;
+                    }
+                    if (a[0].includes(FLEX) && b[0].includes(FLEX)) {
+                        if (
+                            a[0] === WR_RB_FLEX ||
+                            (a[0] === WR_TE_FLEX && b[0] === FLEX)
+                        ) {
+                            return -1;
+                        }
+                        if (
+                            b[0] === WR_RB_FLEX ||
+                            (b[0] === WR_TE_FLEX && a[0] === FLEX)
+                        ) {
+                            return 1;
+                        }
+                        if (a[0] === SUPER_FLEX) {
+                            return 1;
+                        }
+                        if (b[0] === SUPER_FLEX) {
+                            return -1;
+                        }
+                    }
+                    return 0;
+                }
+            )
+            .filter(([position]) => ALLOWED_POSITIONS.has(position))
+            .forEach(([position, count]) => {
+                const bestAtPosition = getBestNAtPosition(
+                    position,
+                    count,
+                    remainingPlayers,
+                    getFn,
+                    sortFn,
+                    playerData,
+                    playerIds
+                );
+                for (let i = 0; i < count; i++) {
+                    if (i >= bestAtPosition.length) {
+                        starters.push({
+                            player: {
+                                player_id: '',
+                                first_name: '',
+                                last_name: '',
+                            } as Player,
+                            position: position,
+                        });
+                        continue;
+                    }
+                    const p = bestAtPosition[i];
+                    remainingPlayers.delete(p.player_id);
+                    starters.push({
+                        player: p,
+                        position: position,
+                    });
+                }
+            });
+
+        setStartingLineup(starters);
+    }, [!!playerData, playerIds, rosterSettings, getFn, sortFn]);
+
+    useEffect(() => {
+        if (!playerData || !playerIds) return;
+        const remainingPlayers = new Set(playerIds);
+
+        startingLineup.forEach(p => {
+            remainingPlayers.delete(p.player.player_id);
+        });
+
+        const benchPlayerList = Array.from(remainingPlayers)
+            .map(p => playerData[p])
+            .filter(p => !!p);
+
+        setBench(benchPlayerList);
+
+        setBenchString(
+            benchPlayerList
+                .sort(
+                    (a, b) =>
+                        a.position.localeCompare(b.position) ||
+                        a.last_name.localeCompare(b.last_name)
+                )
+                .reduce((acc, player, idx) => {
+                    const isLast = idx === remainingPlayers.size - 1;
+                    const trailingText = isLast ? '' : ', ';
+                    return `${acc}${player.first_name[0]}. ${player.last_name} (${player.position})${trailingText}`;
+                }, '')
+                .toLocaleUpperCase()
+        );
+    }, [startingLineup]);
+
+    return {startingLineup, setStartingLineup, bench, benchString};
 }
 
 export function useProjectedLineup(

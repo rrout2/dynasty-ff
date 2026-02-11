@@ -6,14 +6,14 @@ import {
     tradeMeterNeedle,
 } from '../../../../consts/images';
 import {
-    useAdpData,
+    useAdpDataJson,
     useBuySellData,
     useFetchRosters,
     useLeague,
     useLeagueIdFromUrl,
     useNonSleeper,
+    useOldInfiniteProjectedLineup,
     usePlayerData,
-    useProjectedLineup,
     useRoster,
     useRosterSettings,
     useTeamIdFromUrl,
@@ -58,7 +58,7 @@ export default function Infinite() {
     const [specifiedUser, setSpecifiedUser] = useState<User>();
     const [isNonSleeper, setIsNonSleeper] = useState(false);
     const [buys, setBuys] = useState<BuySellTileProps[]>([]);
-    const {getAdp} = useAdpData();
+    const {getAdp} = useAdpDataJson();
     useEffect(() => {
         if (!allUsers.length || !hasTeamId() || +teamId >= allUsers.length) {
             return;
@@ -109,10 +109,11 @@ export default function Infinite() {
         teamName: nonSleeperTeamName,
     } = useNonSleeper(rosters, specifiedUser, setRoster);
 
-    const {startingLineup, benchString, setStartingLineup} = useProjectedLineup(
-        isNonSleeper ? nonSleeperRosterSettings : rosterSettings,
-        roster?.players
-    );
+    const {startingLineup, benchString, setStartingLineup} =
+        useOldInfiniteProjectedLineup(
+            isNonSleeper ? nonSleeperRosterSettings : rosterSettings,
+            roster?.players
+        );
     useEffect(() => {
         setStartingLineup(startingLineup.slice(0, 14));
     }, [startingLineup.length]);
@@ -136,7 +137,7 @@ export default function Infinite() {
         setBuyPercent(
             Math.round(
                 (100 *
-                    verdicts.filter(v => v && v.verdict.includes('Buy'))
+                    verdicts.filter(v => v && v.verdict.toUpperCase().includes('BUY'))
                         .length) /
                     verdicts.length
             )
@@ -144,7 +145,7 @@ export default function Infinite() {
         setSellPercent(
             Math.round(
                 (100 *
-                    verdicts.filter(v => v && v.verdict.includes('Sell'))
+                    verdicts.filter(v => v && v.verdict.toUpperCase().includes('SELL'))
                         .length) /
                     verdicts.length
             )
@@ -152,7 +153,7 @@ export default function Infinite() {
         setHoldPercent(
             Math.round(
                 (100 *
-                    verdicts.filter(v => v && v.verdict.includes('Hold'))
+                    verdicts.filter(v => v && v.verdict.toUpperCase().includes('HOLD'))
                         .length) /
                     verdicts.length
             )

@@ -1,0 +1,3980 @@
+[
+  {
+    "Player Id": 4807,
+    "Player": "Bijan Robinson",
+    "Team": "ATL",
+    "Position": "RB",
+    "KTC Rank": 1,
+    "Position Rank": 1,
+    "Position Rank_2": "RB1"
+  },
+  {
+    "Player Id": 492,
+    "Player": "Drake Maye",
+    "Team": "NEP",
+    "Position": "QB",
+    "KTC Rank": 2,
+    "Position Rank": 1,
+    "Position Rank_2": "QB1"
+  },
+  {
+    "Player Id": 3904,
+    "Player": "Josh Allen",
+    "Team": "BUF",
+    "Position": "QB",
+    "KTC Rank": 3,
+    "Position Rank": 2,
+    "Position Rank_2": "QB2"
+  },
+  {
+    "Player Id": 6,
+    "Player": "Jaxon Smith-Njigba",
+    "Team": "SEA",
+    "Position": "WR",
+    "KTC Rank": 4,
+    "Position Rank": 1,
+    "Position Rank_2": "WR1"
+  },
+  {
+    "Player Id": 1371,
+    "Player": "Puka Nacua",
+    "Team": "LAR",
+    "Position": "WR",
+    "KTC Rank": 5,
+    "Position Rank": 2,
+    "Position Rank_2": "WR2"
+  },
+  {
+    "Player Id": 1884,
+    "Player": "Ja'Marr Chase",
+    "Team": "CIN",
+    "Position": "WR",
+    "KTC Rank": 6,
+    "Position Rank": 3,
+    "Position Rank_2": "WR3"
+  },
+  {
+    "Player Id": 5067,
+    "Player": "Jahmyr Gibbs",
+    "Team": "DET",
+    "Position": "RB",
+    "KTC Rank": 7,
+    "Position Rank": 2,
+    "Position Rank_2": "RB2"
+  },
+  {
+    "Player Id": 4949,
+    "Player": "Malik Nabers",
+    "Team": "NYG",
+    "Position": "WR",
+    "KTC Rank": 8,
+    "Position Rank": 4,
+    "Position Rank_2": "WR4"
+  },
+  {
+    "Player Id": 2134,
+    "Player": "Trey McBride",
+    "Team": "ARI",
+    "Position": "TE",
+    "KTC Rank": 9,
+    "Position Rank": 1,
+    "Position Rank_2": "TE1"
+  },
+  {
+    "Player Id": 3037,
+    "Player": "Jayden Daniels",
+    "Team": "WAS",
+    "Position": "QB",
+    "KTC Rank": 10,
+    "Position Rank": 3,
+    "Position Rank_2": "QB3"
+  },
+  {
+    "Player Id": 652,
+    "Player": "Amon-Ra St. Brown",
+    "Team": "DET",
+    "Position": "WR",
+    "KTC Rank": 11,
+    "Position Rank": 5,
+    "Position Rank_2": "WR5"
+  },
+  {
+    "Player Id": 3196,
+    "Player": "Brock Bowers",
+    "Team": "LVR",
+    "Position": "TE",
+    "KTC Rank": 12,
+    "Position Rank": 2,
+    "Position Rank_2": "TE2"
+  },
+  {
+    "Player Id": 1426,
+    "Player": "Lamar Jackson",
+    "Team": "BAL",
+    "Position": "QB",
+    "KTC Rank": 13,
+    "Position Rank": 4,
+    "Position Rank_2": "QB4"
+  },
+  {
+    "Player Id": 2772,
+    "Player": "Justin Jefferson",
+    "Team": "MIN",
+    "Position": "WR",
+    "KTC Rank": 14,
+    "Position Rank": 6,
+    "Position Rank_2": "WR6"
+  },
+  {
+    "Player Id": 2669,
+    "Player": "CeeDee Lamb",
+    "Team": "DAL",
+    "Position": "WR",
+    "KTC Rank": 15,
+    "Position Rank": 7,
+    "Position Rank_2": "WR7"
+  },
+  {
+    "Player Id": 1672,
+    "Player": "Caleb Williams",
+    "Team": "CHI",
+    "Position": "QB",
+    "KTC Rank": 16,
+    "Position Rank": 5,
+    "Position Rank_2": "QB5"
+  },
+  {
+    "Player Id": 185,
+    "Player": "DeVon Achane",
+    "Team": "MIA",
+    "Position": "RB",
+    "KTC Rank": 17,
+    "Position Rank": 3,
+    "Position Rank_2": "RB3"
+  },
+  {
+    "Player Id": 552,
+    "Player": "Joe Burrow",
+    "Team": "CIN",
+    "Position": "QB",
+    "KTC Rank": 18,
+    "Position Rank": 6,
+    "Position Rank_2": "QB6"
+  },
+  {
+    "Player Id": 2907,
+    "Player": "Drake London",
+    "Team": "ATL",
+    "Position": "WR",
+    "KTC Rank": 19,
+    "Position Rank": 8,
+    "Position Rank_2": "WR8"
+  },
+  {
+    "Player Id": 430,
+    "Player": "Ashton Jeanty",
+    "Team": "LVR",
+    "Position": "RB",
+    "KTC Rank": 20,
+    "Position Rank": 4,
+    "Position Rank_2": "RB4"
+  },
+  {
+    "Player Id": 315,
+    "Player": "Justin Herbert",
+    "Team": "LAC",
+    "Position": "QB",
+    "KTC Rank": 21,
+    "Position Rank": 7,
+    "Position Rank_2": "QB7"
+  },
+  {
+    "Player Id": 5123,
+    "Player": "Patrick Mahomes",
+    "Team": "KCC",
+    "Position": "QB",
+    "KTC Rank": 22,
+    "Position Rank": 8,
+    "Position Rank_2": "QB8"
+  },
+  {
+    "Player Id": 2637,
+    "Player": "Omarion Hampton",
+    "Team": "LAC",
+    "Position": "RB",
+    "KTC Rank": 23,
+    "Position Rank": 5,
+    "Position Rank_2": "RB5"
+  },
+  {
+    "Player Id": 1489,
+    "Player": "Tetairoa McMillan",
+    "Team": "CAR",
+    "Position": "WR",
+    "KTC Rank": 24,
+    "Position Rank": 9,
+    "Position Rank_2": "WR9"
+  },
+  {
+    "Player Id": 3064,
+    "Player": "Jaxson Dart",
+    "Team": "NYG",
+    "Position": "QB",
+    "KTC Rank": 25,
+    "Position Rank": 9,
+    "Position Rank_2": "QB9"
+  },
+  {
+    "Player Id": 2347,
+    "Player": "Jalen Hurts",
+    "Team": "PHI",
+    "Position": "QB",
+    "KTC Rank": 26,
+    "Position Rank": 10,
+    "Position Rank_2": "QB10"
+  },
+  {
+    "Player Id": 1229,
+    "Player": "Jonathan Taylor",
+    "Team": "IND",
+    "Position": "RB",
+    "KTC Rank": 27,
+    "Position Rank": 6,
+    "Position Rank_2": "RB6"
+  },
+  {
+    "Player Id": 2839,
+    "Player": "Trevor Lawrence",
+    "Team": "JAC",
+    "Position": "QB",
+    "KTC Rank": 28,
+    "Position Rank": 11,
+    "Position Rank_2": "QB11"
+  },
+  {
+    "Player Id": 2547,
+    "Player": "TreVeyon Henderson",
+    "Team": "NEP",
+    "Position": "RB",
+    "KTC Rank": 29,
+    "Position Rank": 7,
+    "Position Rank_2": "RB7"
+  },
+  {
+    "Player Id": 839,
+    "Player": "Bo Nix",
+    "Team": "DEN",
+    "Position": "QB",
+    "KTC Rank": 30,
+    "Position Rank": 12,
+    "Position Rank_2": "QB12"
+  },
+  {
+    "Player Id": 3966,
+    "Player": "James Cook III",
+    "Team": "BUF",
+    "Position": "RB",
+    "KTC Rank": 31,
+    "Position Rank": 8,
+    "Position Rank_2": "RB8"
+  },
+  {
+    "Player Id": 1257,
+    "Player": "George Pickens",
+    "Team": "DAL",
+    "Position": "WR",
+    "KTC Rank": 32,
+    "Position Rank": 10,
+    "Position Rank_2": "WR10"
+  },
+  {
+    "Player Id": 2874,
+    "Player": "Brock Purdy",
+    "Team": "SFO",
+    "Position": "QB",
+    "KTC Rank": 33,
+    "Position Rank": 13,
+    "Position Rank_2": "QB13"
+  },
+  {
+    "Player Id": 3801,
+    "Player": "Nico Collins",
+    "Team": "HOU",
+    "Position": "WR",
+    "KTC Rank": 34,
+    "Position Rank": 11,
+    "Position Rank_2": "WR11"
+  },
+  {
+    "Player Id": 1330,
+    "Player": "Emeka Egbuka",
+    "Team": "TBB",
+    "Position": "WR",
+    "KTC Rank": 35,
+    "Position Rank": 12,
+    "Position Rank_2": "WR12"
+  },
+  {
+    "Player Id": 296,
+    "Player": "Rashee Rice",
+    "Team": "KCC",
+    "Position": "WR",
+    "KTC Rank": 36,
+    "Position Rank": 13,
+    "Position Rank_2": "WR13"
+  },
+  {
+    "Player Id": 2761,
+    "Player": "Tyler Warren",
+    "Team": "IND",
+    "Position": "TE",
+    "KTC Rank": 37,
+    "Position Rank": 3,
+    "Position Rank_2": "TE3"
+  },
+  {
+    "Player Id": 245,
+    "Player": "Garrett Wilson",
+    "Team": "NYJ",
+    "Position": "WR",
+    "KTC Rank": 38,
+    "Position Rank": 14,
+    "Position Rank_2": "WR14"
+  },
+  {
+    "Player Id": 1729,
+    "Player": "Chris Olave",
+    "Team": "NOS",
+    "Position": "WR",
+    "KTC Rank": 39,
+    "Position Rank": 15,
+    "Position Rank_2": "WR15"
+  },
+  {
+    "Player Id": 1743,
+    "Player": "Jordan Love",
+    "Team": "GBP",
+    "Position": "QB",
+    "KTC Rank": 40,
+    "Position Rank": 14,
+    "Position Rank_2": "QB14"
+  },
+  {
+    "Player Id": 59,
+    "Player": "Bucky Irving",
+    "Team": "TBB",
+    "Position": "RB",
+    "KTC Rank": 41,
+    "Position Rank": 9,
+    "Position Rank_2": "RB9"
+  },
+  {
+    "Player Id": 1409,
+    "Player": "Quinshon Judkins",
+    "Team": "CLE",
+    "Position": "RB",
+    "KTC Rank": 42,
+    "Position Rank": 10,
+    "Position Rank_2": "RB10"
+  },
+  {
+    "Player Id": 1271,
+    "Player": "Colston Loveland",
+    "Team": "CHI",
+    "Position": "TE",
+    "KTC Rank": 43,
+    "Position Rank": 4,
+    "Position Rank_2": "TE4"
+  },
+  {
+    "Player Id": 2605,
+    "Player": "Christian McCaffrey",
+    "Team": "SFO",
+    "Position": "RB",
+    "KTC Rank": 44,
+    "Position Rank": 11,
+    "Position Rank_2": "RB11"
+  },
+  {
+    "Player Id": 1188,
+    "Player": "Breece Hall",
+    "Team": "NYJ",
+    "Position": "RB",
+    "KTC Rank": 45,
+    "Position Rank": 12,
+    "Position Rank_2": "RB12"
+  },
+  {
+    "Player Id": 2375,
+    "Player": "Rome Odunze",
+    "Team": "CHI",
+    "Position": "WR",
+    "KTC Rank": 46,
+    "Position Rank": 16,
+    "Position Rank_2": "WR16"
+  },
+  {
+    "Player Id": 4692,
+    "Player": "C.J. Stroud",
+    "Team": "HOU",
+    "Position": "QB",
+    "KTC Rank": 47,
+    "Position Rank": 15,
+    "Position Rank_2": "QB15"
+  },
+  {
+    "Player Id": 321,
+    "Player": "Ladd McConkey",
+    "Team": "LAC",
+    "Position": "WR",
+    "KTC Rank": 48,
+    "Position Rank": 17,
+    "Position Rank_2": "WR17"
+  },
+  {
+    "Player Id": 3735,
+    "Player": "Marvin Harrison Jr",
+    "Team": "ARI",
+    "Position": "WR",
+    "KTC Rank": 49,
+    "Position Rank": 18,
+    "Position Rank_2": "WR18"
+  },
+  {
+    "Player Id": 4992,
+    "Player": "Brian Thomas Jr",
+    "Team": "JAC",
+    "Position": "WR",
+    "KTC Rank": 50,
+    "Position Rank": 19,
+    "Position Rank_2": "WR19"
+  },
+  {
+    "Player Id": 3901,
+    "Player": "Dak Prescott",
+    "Team": "DAL",
+    "Position": "QB",
+    "KTC Rank": 51,
+    "Position Rank": 16,
+    "Position Rank_2": "QB16"
+  },
+  {
+    "Player Id": 5183,
+    "Player": "Cameron Ward",
+    "Team": "TEN",
+    "Position": "QB",
+    "KTC Rank": 52,
+    "Position Rank": 17,
+    "Position Rank_2": "QB17"
+  },
+  {
+    "Player Id": 2751,
+    "Player": "Luther Burden III",
+    "Team": "CHI",
+    "Position": "WR",
+    "KTC Rank": 53,
+    "Position Rank": 20,
+    "Position Rank_2": "WR20"
+  },
+  {
+    "Player Id": 3893,
+    "Player": "Tee Higgins",
+    "Team": "CIN",
+    "Position": "WR",
+    "KTC Rank": 54,
+    "Position Rank": 21,
+    "Position Rank_2": "WR21"
+  },
+  {
+    "Player Id": 4570,
+    "Player": "Tucker Kraft",
+    "Team": "GBP",
+    "Position": "TE",
+    "KTC Rank": 55,
+    "Position Rank": 5,
+    "Position Rank_2": "TE5"
+  },
+  {
+    "Player Id": 2579,
+    "Player": "Harold Fannin Jr",
+    "Team": "CLE",
+    "Position": "TE",
+    "KTC Rank": 56,
+    "Position Rank": 6,
+    "Position Rank_2": "TE6"
+  },
+  {
+    "Player Id": 288,
+    "Player": "Chase Brown",
+    "Team": "CIN",
+    "Position": "RB",
+    "KTC Rank": 57,
+    "Position Rank": 13,
+    "Position Rank_2": "RB13"
+  },
+  {
+    "Player Id": 2188,
+    "Player": "Kyren Williams",
+    "Team": "LAR",
+    "Position": "RB",
+    "KTC Rank": 58,
+    "Position Rank": 14,
+    "Position Rank_2": "RB14"
+  },
+  {
+    "Player Id": 1575,
+    "Player": "Cam Skattebo",
+    "Team": "NYG",
+    "Position": "RB",
+    "KTC Rank": 59,
+    "Position Rank": 15,
+    "Position Rank_2": "RB15"
+  },
+  {
+    "Player Id": 2758,
+    "Player": "Saquon Barkley",
+    "Team": "PHI",
+    "Position": "RB",
+    "KTC Rank": 60,
+    "Position Rank": 16,
+    "Position Rank_2": "RB16"
+  },
+  {
+    "Player Id": 420,
+    "Player": "Jameson Williams",
+    "Team": "DET",
+    "Position": "WR",
+    "KTC Rank": 61,
+    "Position Rank": 22,
+    "Position Rank_2": "WR22"
+  },
+  {
+    "Player Id": 4927,
+    "Player": "Sam Darnold",
+    "Team": "SEA",
+    "Position": "QB",
+    "KTC Rank": 62,
+    "Position Rank": 18,
+    "Position Rank_2": "QB18"
+  },
+  {
+    "Player Id": 893,
+    "Player": "Baker Mayfield",
+    "Team": "TBB",
+    "Position": "QB",
+    "KTC Rank": 63,
+    "Position Rank": 19,
+    "Position Rank_2": "QB19"
+  },
+  {
+    "Player Id": 1609,
+    "Player": "RJ Harvey",
+    "Team": "DEN",
+    "Position": "RB",
+    "KTC Rank": 64,
+    "Position Rank": 17,
+    "Position Rank_2": "RB17"
+  },
+  {
+    "Player Id": 267,
+    "Player": "A.J. Brown",
+    "Team": "PHI",
+    "Position": "WR",
+    "KTC Rank": 65,
+    "Position Rank": 23,
+    "Position Rank_2": "WR23"
+  },
+  {
+    "Player Id": 810,
+    "Player": "DeVonta Smith",
+    "Team": "PHI",
+    "Position": "WR",
+    "KTC Rank": 66,
+    "Position Rank": 24,
+    "Position Rank_2": "WR24"
+  },
+  {
+    "Player Id": 4619,
+    "Player": "Travis Hunter",
+    "Team": "JAC",
+    "Position": "WR",
+    "KTC Rank": 67,
+    "Position Rank": 25,
+    "Position Rank_2": "WR25"
+  },
+  {
+    "Player Id": 3224,
+    "Player": "Zay Flowers",
+    "Team": "BAL",
+    "Position": "WR",
+    "KTC Rank": 68,
+    "Position Rank": 26,
+    "Position Rank_2": "WR26"
+  },
+  {
+    "Player Id": 25,
+    "Player": "Kenneth Walker III",
+    "Team": "SEA",
+    "Position": "RB",
+    "KTC Rank": 69,
+    "Position Rank": 18,
+    "Position Rank_2": "RB18"
+  },
+  {
+    "Player Id": 755,
+    "Player": "Sam LaPorta",
+    "Team": "DET",
+    "Position": "TE",
+    "KTC Rank": 70,
+    "Position Rank": 7,
+    "Position Rank_2": "TE7"
+  },
+  {
+    "Player Id": 4728,
+    "Player": "Jaylen Waddle",
+    "Team": "MIA",
+    "Position": "WR",
+    "KTC Rank": 71,
+    "Position Rank": 27,
+    "Position Rank_2": "WR27"
+  },
+  {
+    "Player Id": 332,
+    "Player": "Jared Goff",
+    "Team": "DET",
+    "Position": "QB",
+    "KTC Rank": 72,
+    "Position Rank": 20,
+    "Position Rank_2": "QB20"
+  },
+  {
+    "Player Id": 434,
+    "Player": "Josh Jacobs",
+    "Team": "GBP",
+    "Position": "RB",
+    "KTC Rank": 73,
+    "Position Rank": 19,
+    "Position Rank_2": "RB19"
+  },
+  {
+    "Player Id": 4219,
+    "Player": "Bryce Young",
+    "Team": "CAR",
+    "Position": "QB",
+    "KTC Rank": 74,
+    "Position Rank": 21,
+    "Position Rank_2": "QB21"
+  },
+  {
+    "Player Id": 1113,
+    "Player": "Travis Etienne Jr",
+    "Team": "JAC",
+    "Position": "RB",
+    "KTC Rank": 75,
+    "Position Rank": 20,
+    "Position Rank_2": "RB20"
+  },
+  {
+    "Player Id": 3760,
+    "Player": "Tyler Shough",
+    "Team": "NOS",
+    "Position": "QB",
+    "KTC Rank": 76,
+    "Position Rank": 22,
+    "Position Rank_2": "QB22"
+  },
+  {
+    "Player Id": 466,
+    "Player": "Kyle Pitts Sr",
+    "Team": "ATL",
+    "Position": "TE",
+    "KTC Rank": 77,
+    "Position Rank": 8,
+    "Position Rank_2": "TE8"
+  },
+  {
+    "Player Id": 3382,
+    "Player": "Javonte Williams",
+    "Team": "DAL",
+    "Position": "RB",
+    "KTC Rank": 78,
+    "Position Rank": 21,
+    "Position Rank_2": "RB21"
+  },
+  {
+    "Player Id": 2656,
+    "Player": "Oronde Gadsden II",
+    "Team": "LAC",
+    "Position": "TE",
+    "KTC Rank": 79,
+    "Position Rank": 9,
+    "Position Rank_2": "TE9"
+  },
+  {
+    "Player Id": 1650,
+    "Player": "Jordan Addison",
+    "Team": "MIN",
+    "Position": "WR",
+    "KTC Rank": 80,
+    "Position Rank": 28,
+    "Position Rank_2": "WR28"
+  },
+  {
+    "Player Id": 1869,
+    "Player": "Kyle Monangai",
+    "Team": "CHI",
+    "Position": "RB",
+    "KTC Rank": 81,
+    "Position Rank": 22,
+    "Position Rank_2": "RB22"
+  },
+  {
+    "Player Id": 3841,
+    "Player": "Daniel Jones",
+    "Team": "IND",
+    "Position": "QB",
+    "KTC Rank": 82,
+    "Position Rank": 23,
+    "Position Rank_2": "QB23"
+  },
+  {
+    "Player Id": 4441,
+    "Player": "Michael Wilson",
+    "Team": "ARI",
+    "Position": "WR",
+    "KTC Rank": 83,
+    "Position Rank": 29,
+    "Position Rank_2": "WR29"
+  },
+  {
+    "Player Id": 3210,
+    "Player": "Jayden Higgins",
+    "Team": "HOU",
+    "Position": "WR",
+    "KTC Rank": 84,
+    "Position Rank": 30,
+    "Position Rank_2": "WR30"
+  },
+  {
+    "Player Id": 1822,
+    "Player": "Derrick Henry",
+    "Team": "BAL",
+    "Position": "RB",
+    "KTC Rank": 85,
+    "Position Rank": 23,
+    "Position Rank_2": "RB23"
+  },
+  {
+    "Player Id": 1140,
+    "Player": "Ricky Pearsall",
+    "Team": "SFO",
+    "Position": "WR",
+    "KTC Rank": 86,
+    "Position Rank": 31,
+    "Position Rank_2": "WR31"
+  },
+  {
+    "Player Id": 4599,
+    "Player": "DK Metcalf",
+    "Team": "PIT",
+    "Position": "WR",
+    "KTC Rank": 87,
+    "Position Rank": 32,
+    "Position Rank_2": "WR32"
+  },
+  {
+    "Player Id": 4168,
+    "Player": "Zach Charbonnet",
+    "Team": "SEA",
+    "Position": "RB",
+    "KTC Rank": 88,
+    "Position Rank": 24,
+    "Position Rank_2": "RB24"
+  },
+  {
+    "Player Id": 1757,
+    "Player": "D'Andre Swift",
+    "Team": "CHI",
+    "Position": "RB",
+    "KTC Rank": 89,
+    "Position Rank": 25,
+    "Position Rank_2": "RB25"
+  },
+  {
+    "Player Id": 594,
+    "Player": "Christian Watson",
+    "Team": "GBP",
+    "Position": "WR",
+    "KTC Rank": 90,
+    "Position Rank": 33,
+    "Position Rank_2": "WR33"
+  },
+  {
+    "Player Id": 4998,
+    "Player": "Alec Pierce",
+    "Team": "IND",
+    "Position": "WR",
+    "KTC Rank": 91,
+    "Position Rank": 34,
+    "Position Rank_2": "WR34"
+  },
+  {
+    "Player Id": 4314,
+    "Player": "J.J. McCarthy",
+    "Team": "MIN",
+    "Position": "QB",
+    "KTC Rank": 92,
+    "Position Rank": 24,
+    "Position Rank_2": "QB24"
+  },
+  {
+    "Player Id": 374,
+    "Player": "George Kittle",
+    "Team": "SFO",
+    "Position": "TE",
+    "KTC Rank": 93,
+    "Position Rank": 10,
+    "Position Rank_2": "TE10"
+  },
+  {
+    "Player Id": 3725,
+    "Player": "Wan'Dale Robinson",
+    "Team": "NYG",
+    "Position": "WR",
+    "KTC Rank": 94,
+    "Position Rank": 35,
+    "Position Rank_2": "WR35"
+  },
+  {
+    "Player Id": 3578,
+    "Player": "Matthew Stafford",
+    "Team": "LAR",
+    "Position": "QB",
+    "KTC Rank": 95,
+    "Position Rank": 25,
+    "Position Rank_2": "QB25"
+  },
+  {
+    "Player Id": 2239,
+    "Player": "Michael Penix Jr",
+    "Team": "ATL",
+    "Position": "QB",
+    "KTC Rank": 96,
+    "Position Rank": 26,
+    "Position Rank_2": "QB26"
+  },
+  {
+    "Player Id": 3005,
+    "Player": "Michael Pittman Jr",
+    "Team": "IND",
+    "Position": "WR",
+    "KTC Rank": 97,
+    "Position Rank": 36,
+    "Position Rank_2": "WR36"
+  },
+  {
+    "Player Id": 4123,
+    "Player": "Davante Adams",
+    "Team": "LAR",
+    "Position": "WR",
+    "KTC Rank": 98,
+    "Position Rank": 37,
+    "Position Rank_2": "WR37"
+  },
+  {
+    "Player Id": 301,
+    "Player": "Xavier Worthy",
+    "Team": "KCC",
+    "Position": "WR",
+    "KTC Rank": 99,
+    "Position Rank": 38,
+    "Position Rank_2": "WR38"
+  },
+  {
+    "Player Id": 1849,
+    "Player": "Matthew Golden",
+    "Team": "GBP",
+    "Position": "WR",
+    "KTC Rank": 100,
+    "Position Rank": 39,
+    "Position Rank_2": "WR39"
+  },
+  {
+    "Player Id": 4391,
+    "Player": "Kyler Murray",
+    "Team": "ARI",
+    "Position": "QB",
+    "KTC Rank": 101,
+    "Position Rank": 27,
+    "Position Rank_2": "QB27"
+  },
+  {
+    "Player Id": 3152,
+    "Player": "Quentin Johnston",
+    "Team": "LAC",
+    "Position": "WR",
+    "KTC Rank": 102,
+    "Position Rank": 40,
+    "Position Rank_2": "WR40"
+  },
+  {
+    "Player Id": 2072,
+    "Player": "Blake Corum",
+    "Team": "LAR",
+    "Position": "RB",
+    "KTC Rank": 103,
+    "Position Rank": 26,
+    "Position Rank_2": "RB26"
+  },
+  {
+    "Player Id": 4935,
+    "Player": "Woody Marks",
+    "Team": "HOU",
+    "Position": "RB",
+    "KTC Rank": 104,
+    "Position Rank": 27,
+    "Position Rank_2": "RB27"
+  },
+  {
+    "Player Id": 1541,
+    "Player": "Jakobi Meyers",
+    "Team": "JAC",
+    "Position": "WR",
+    "KTC Rank": 105,
+    "Position Rank": 41,
+    "Position Rank_2": "WR41"
+  },
+  {
+    "Player Id": 453,
+    "Player": "Dalton Kincaid",
+    "Team": "BUF",
+    "Position": "TE",
+    "KTC Rank": 106,
+    "Position Rank": 11,
+    "Position Rank_2": "TE11"
+  },
+  {
+    "Player Id": 2797,
+    "Player": "Jake Ferguson",
+    "Team": "DAL",
+    "Position": "TE",
+    "KTC Rank": 107,
+    "Position Rank": 12,
+    "Position Rank_2": "TE12"
+  },
+  {
+    "Player Id": 2296,
+    "Player": "Parker Washington",
+    "Team": "JAC",
+    "Position": "WR",
+    "KTC Rank": 108,
+    "Position Rank": 42,
+    "Position Rank_2": "WR42"
+  },
+  {
+    "Player Id": 2661,
+    "Player": "Jaylen Warren",
+    "Team": "PIT",
+    "Position": "RB",
+    "KTC Rank": 109,
+    "Position Rank": 28,
+    "Position Rank_2": "RB28"
+  },
+  {
+    "Player Id": 539,
+    "Player": "Bhayshul Tuten",
+    "Team": "JAC",
+    "Position": "RB",
+    "KTC Rank": 110,
+    "Position Rank": 29,
+    "Position Rank_2": "RB29"
+  },
+  {
+    "Player Id": 2173,
+    "Player": "Courtland Sutton",
+    "Team": "DEN",
+    "Position": "WR",
+    "KTC Rank": 111,
+    "Position Rank": 43,
+    "Position Rank_2": "WR43"
+  },
+  {
+    "Player Id": 4345,
+    "Player": "Brenton Strange",
+    "Team": "JAC",
+    "Position": "TE",
+    "KTC Rank": 112,
+    "Position Rank": 13,
+    "Position Rank_2": "TE13"
+  },
+  {
+    "Player Id": 1069,
+    "Player": "Trey Benson",
+    "Team": "ARI",
+    "Position": "RB",
+    "KTC Rank": 113,
+    "Position Rank": 30,
+    "Position Rank_2": "RB30"
+  },
+  {
+    "Player Id": 4270,
+    "Player": "Jayden Reed",
+    "Team": "GBP",
+    "Position": "WR",
+    "KTC Rank": 114,
+    "Position Rank": 44,
+    "Position Rank_2": "WR44"
+  },
+  {
+    "Player Id": 3795,
+    "Player": "DJ Moore",
+    "Team": "CHI",
+    "Position": "WR",
+    "KTC Rank": 115,
+    "Position Rank": 45,
+    "Position Rank_2": "WR45"
+  },
+  {
+    "Player Id": 3407,
+    "Player": "Rico Dowdle",
+    "Team": "CAR",
+    "Position": "RB",
+    "KTC Rank": 116,
+    "Position Rank": 31,
+    "Position Rank_2": "RB31"
+  },
+  {
+    "Player Id": 1678,
+    "Player": "Terry McLaurin",
+    "Team": "WAS",
+    "Position": "WR",
+    "KTC Rank": 117,
+    "Position Rank": 46,
+    "Position Rank_2": "WR46"
+  },
+  {
+    "Player Id": 774,
+    "Player": "Troy Franklin",
+    "Team": "DEN",
+    "Position": "WR",
+    "KTC Rank": 118,
+    "Position Rank": 47,
+    "Position Rank_2": "WR47"
+  },
+  {
+    "Player Id": 2859,
+    "Player": "Josh Downs",
+    "Team": "IND",
+    "Position": "WR",
+    "KTC Rank": 119,
+    "Position Rank": 48,
+    "Position Rank_2": "WR48"
+  },
+  {
+    "Player Id": 5223,
+    "Player": "Khalil Shakir",
+    "Team": "BUF",
+    "Position": "WR",
+    "KTC Rank": 120,
+    "Position Rank": 49,
+    "Position Rank_2": "WR49"
+  },
+  {
+    "Player Id": 2643,
+    "Player": "Jalen Coker",
+    "Team": "CAR",
+    "Position": "WR",
+    "KTC Rank": 121,
+    "Position Rank": 50,
+    "Position Rank_2": "WR50"
+  },
+  {
+    "Player Id": 4710,
+    "Player": "Tyler Allgeier",
+    "Team": "ATL",
+    "Position": "RB",
+    "KTC Rank": 122,
+    "Position Rank": 32,
+    "Position Rank_2": "RB32"
+  },
+  {
+    "Player Id": 4615,
+    "Player": "Romeo Doubs",
+    "Team": "GBP",
+    "Position": "WR",
+    "KTC Rank": 123,
+    "Position Rank": 51,
+    "Position Rank_2": "WR51"
+  },
+  {
+    "Player Id": 471,
+    "Player": "Chuba Hubbard",
+    "Team": "CAR",
+    "Position": "RB",
+    "KTC Rank": 124,
+    "Position Rank": 33,
+    "Position Rank_2": "RB33"
+  },
+  {
+    "Player Id": 5081,
+    "Player": "Kayshon Boutte",
+    "Team": "NEP",
+    "Position": "WR",
+    "KTC Rank": 125,
+    "Position Rank": 52,
+    "Position Rank_2": "WR52"
+  },
+  {
+    "Player Id": 4027,
+    "Player": "Mason Taylor",
+    "Team": "NYJ",
+    "Position": "TE",
+    "KTC Rank": 126,
+    "Position Rank": 14,
+    "Position Rank_2": "TE14"
+  },
+  {
+    "Player Id": 561,
+    "Player": "Shedeur Sanders",
+    "Team": "CLE",
+    "Position": "QB",
+    "KTC Rank": 127,
+    "Position Rank": 28,
+    "Position Rank_2": "QB28"
+  },
+  {
+    "Player Id": 1638,
+    "Player": "Jacory Croskey-Merritt",
+    "Team": "WAS",
+    "Position": "RB",
+    "KTC Rank": 128,
+    "Position Rank": 34,
+    "Position Rank_2": "RB34"
+  },
+  {
+    "Player Id": 4689,
+    "Player": "Chimere Dike",
+    "Team": "TEN",
+    "Position": "WR",
+    "KTC Rank": 129,
+    "Position Rank": 53,
+    "Position Rank_2": "WR53"
+  },
+  {
+    "Player Id": 3362,
+    "Player": "Elic Ayomanor",
+    "Team": "TEN",
+    "Position": "WR",
+    "KTC Rank": 130,
+    "Position Rank": 54,
+    "Position Rank_2": "WR54"
+  },
+  {
+    "Player Id": 4758,
+    "Player": "Jauan Jennings",
+    "Team": "SFO",
+    "Position": "WR",
+    "KTC Rank": 131,
+    "Position Rank": 55,
+    "Position Rank_2": "WR55"
+  },
+  {
+    "Player Id": 2012,
+    "Player": "Isaac TeSlaa",
+    "Team": "DET",
+    "Position": "WR",
+    "KTC Rank": 132,
+    "Position Rank": 56,
+    "Position Rank_2": "WR56"
+  },
+  {
+    "Player Id": 4264,
+    "Player": "Rhamondre Stevenson",
+    "Team": "NEP",
+    "Position": "RB",
+    "KTC Rank": 133,
+    "Position Rank": 35,
+    "Position Rank_2": "RB35"
+  },
+  {
+    "Player Id": 1493,
+    "Player": "Pat Bryant",
+    "Team": "DEN",
+    "Position": "WR",
+    "KTC Rank": 134,
+    "Position Rank": 57,
+    "Position Rank_2": "WR57"
+  },
+  {
+    "Player Id": 3909,
+    "Player": "Kenneth Gainwell",
+    "Team": "PIT",
+    "Position": "RB",
+    "KTC Rank": 135,
+    "Position Rank": 36,
+    "Position Rank_2": "RB36"
+  },
+  {
+    "Player Id": 5083,
+    "Player": "Braelon Allen",
+    "Team": "NYJ",
+    "Position": "RB",
+    "KTC Rank": 136,
+    "Position Rank": 37,
+    "Position Rank_2": "RB37"
+  },
+  {
+    "Player Id": 4029,
+    "Player": "Malik Willis",
+    "Team": "GBP",
+    "Position": "QB",
+    "KTC Rank": 137,
+    "Position Rank": 29,
+    "Position Rank_2": "QB29"
+  },
+  {
+    "Player Id": 4591,
+    "Player": "Adonai Mitchell",
+    "Team": "NYJ",
+    "Position": "WR",
+    "KTC Rank": 138,
+    "Position Rank": 58,
+    "Position Rank_2": "WR58"
+  },
+  {
+    "Player Id": 1346,
+    "Player": "Isaiah Likely",
+    "Team": "BAL",
+    "Position": "TE",
+    "KTC Rank": 139,
+    "Position Rank": 15,
+    "Position Rank_2": "TE15"
+  },
+  {
+    "Player Id": 3352,
+    "Player": "Tre'Shaun Harrison",
+    "Team": "TEN",
+    "Position": "WR",
+    "KTC Rank": 140,
+    "Position Rank": 59,
+    "Position Rank_2": "WR59"
+  },
+  {
+    "Player Id": 2551,
+    "Player": "Terrance Ferguson",
+    "Team": "LAR",
+    "Position": "TE",
+    "KTC Rank": 141,
+    "Position Rank": 16,
+    "Position Rank_2": "TE16"
+  },
+  {
+    "Player Id": 3269,
+    "Player": "Tyjae Spears",
+    "Team": "TEN",
+    "Position": "RB",
+    "KTC Rank": 142,
+    "Position Rank": 38,
+    "Position Rank_2": "RB38"
+  },
+  {
+    "Player Id": 3745,
+    "Player": "Jaylin Noel",
+    "Team": "HOU",
+    "Position": "WR",
+    "KTC Rank": 143,
+    "Position Rank": 60,
+    "Position Rank_2": "WR60"
+  },
+  {
+    "Player Id": 2954,
+    "Player": "Jalen McMillan",
+    "Team": "TBB",
+    "Position": "WR",
+    "KTC Rank": 144,
+    "Position Rank": 61,
+    "Position Rank_2": "WR61"
+  },
+  {
+    "Player Id": 4191,
+    "Player": "Theo Johnson",
+    "Team": "NYG",
+    "Position": "TE",
+    "KTC Rank": 145,
+    "Position Rank": 17,
+    "Position Rank_2": "TE17"
+  },
+  {
+    "Player Id": 4839,
+    "Player": "AJ Barner",
+    "Team": "SEA",
+    "Position": "TE",
+    "KTC Rank": 146,
+    "Position Rank": 18,
+    "Position Rank_2": "TE18"
+  },
+  {
+    "Player Id": 2154,
+    "Player": "Kyle Williams",
+    "Team": "NEP",
+    "Position": "WR",
+    "KTC Rank": 147,
+    "Position Rank": 62,
+    "Position Rank_2": "WR62"
+  },
+  {
+    "Player Id": 1747,
+    "Player": "Mike Evans",
+    "Team": "TBB",
+    "Position": "WR",
+    "KTC Rank": 148,
+    "Position Rank": 63,
+    "Position Rank_2": "WR63"
+  },
+  {
+    "Player Id": 4714,
+    "Player": "David Montgomery",
+    "Team": "DET",
+    "Position": "RB",
+    "KTC Rank": 149,
+    "Position Rank": 39,
+    "Position Rank_2": "RB39"
+  },
+  {
+    "Player Id": 162,
+    "Player": "Tyrone Tracy Jr",
+    "Team": "NYG",
+    "Position": "RB",
+    "KTC Rank": 150,
+    "Position Rank": 40,
+    "Position Rank_2": "RB40"
+  },
+  {
+    "Player Id": 1887,
+    "Player": "Dylan Sampson",
+    "Team": "CLE",
+    "Position": "RB",
+    "KTC Rank": 151,
+    "Position Rank": 41,
+    "Position Rank_2": "RB41"
+  },
+  {
+    "Player Id": 2292,
+    "Player": "Chris Godwin Jr",
+    "Team": "TBB",
+    "Position": "WR",
+    "KTC Rank": 152,
+    "Position Rank": 64,
+    "Position Rank_2": "WR64"
+  },
+  {
+    "Player Id": 2187,
+    "Player": "Tory Horton",
+    "Team": "SEA",
+    "Position": "WR",
+    "KTC Rank": 153,
+    "Position Rank": 65,
+    "Position Rank_2": "WR65"
+  },
+  {
+    "Player Id": 3728,
+    "Player": "Mac Jones",
+    "Team": "SFO",
+    "Position": "QB",
+    "KTC Rank": 154,
+    "Position Rank": 30,
+    "Position Rank_2": "QB30"
+  },
+  {
+    "Player Id": 3640,
+    "Player": "Rashid Shaheed",
+    "Team": "SEA",
+    "Position": "WR",
+    "KTC Rank": 155,
+    "Position Rank": 66,
+    "Position Rank_2": "WR66"
+  },
+  {
+    "Player Id": 1863,
+    "Player": "Stefon Diggs",
+    "Team": "NEP",
+    "Position": "WR",
+    "KTC Rank": 156,
+    "Position Rank": 67,
+    "Position Rank_2": "WR67"
+  },
+  {
+    "Player Id": 366,
+    "Player": "J.K. Dobbins",
+    "Team": "DEN",
+    "Position": "RB",
+    "KTC Rank": 157,
+    "Position Rank": 42,
+    "Position Rank_2": "RB42"
+  },
+  {
+    "Player Id": 3339,
+    "Player": "Tony Pollard",
+    "Team": "TEN",
+    "Position": "RB",
+    "KTC Rank": 158,
+    "Position Rank": 43,
+    "Position Rank_2": "RB43"
+  },
+  {
+    "Player Id": 1574,
+    "Player": "Devin Neal",
+    "Team": "NOS",
+    "Position": "RB",
+    "KTC Rank": 159,
+    "Position Rank": 44,
+    "Position Rank_2": "RB44"
+  },
+  {
+    "Player Id": 4826,
+    "Player": "Kaleb Johnson",
+    "Team": "PIT",
+    "Position": "RB",
+    "KTC Rank": 160,
+    "Position Rank": 45,
+    "Position Rank_2": "RB45"
+  },
+  {
+    "Player Id": 3290,
+    "Player": "Dallas Goedert",
+    "Team": "PHI",
+    "Position": "TE",
+    "KTC Rank": 161,
+    "Position Rank": 19,
+    "Position Rank_2": "TE19"
+  },
+  {
+    "Player Id": 2884,
+    "Player": "Brandon Aiyuk",
+    "Team": "SFO",
+    "Position": "WR",
+    "KTC Rank": 162,
+    "Position Rank": 68,
+    "Position Rank_2": "WR68"
+  },
+  {
+    "Player Id": 2677,
+    "Player": "Tua Tagovailoa",
+    "Team": "MIA",
+    "Position": "QB",
+    "KTC Rank": 163,
+    "Position Rank": 31,
+    "Position Rank_2": "QB31"
+  },
+  {
+    "Player Id": 3128,
+    "Player": "Kimani Vidal",
+    "Team": "LAC",
+    "Position": "RB",
+    "KTC Rank": 164,
+    "Position Rank": 46,
+    "Position Rank_2": "RB46"
+  },
+  {
+    "Player Id": 1243,
+    "Player": "T.J. Hockenson",
+    "Team": "MIN",
+    "Position": "TE",
+    "KTC Rank": 165,
+    "Position Rank": 20,
+    "Position Rank_2": "TE20"
+  },
+  {
+    "Player Id": 589,
+    "Player": "Jerry Jeudy",
+    "Team": "CLE",
+    "Position": "WR",
+    "KTC Rank": 166,
+    "Position Rank": 69,
+    "Position Rank_2": "WR69"
+  },
+  {
+    "Player Id": 4357,
+    "Player": "Ollie Gordon II",
+    "Team": "MIA",
+    "Position": "RB",
+    "KTC Rank": 167,
+    "Position Rank": 47,
+    "Position Rank_2": "RB47"
+  },
+  {
+    "Player Id": 485,
+    "Player": "Tre Tucker",
+    "Team": "LVR",
+    "Position": "WR",
+    "KTC Rank": 168,
+    "Position Rank": 70,
+    "Position Rank_2": "WR70"
+  },
+  {
+    "Player Id": 2080,
+    "Player": "Elijah Arroyo",
+    "Team": "SEA",
+    "Position": "TE",
+    "KTC Rank": 169,
+    "Position Rank": 21,
+    "Position Rank_2": "TE21"
+  },
+  {
+    "Player Id": 1225,
+    "Player": "Deebo Samuel",
+    "Team": "WAS",
+    "Position": "WR",
+    "KTC Rank": 170,
+    "Position Rank": 71,
+    "Position Rank_2": "WR71"
+  },
+  {
+    "Player Id": 1422,
+    "Player": "Sean Tucker",
+    "Team": "TBB",
+    "Position": "RB",
+    "KTC Rank": 171,
+    "Position Rank": 48,
+    "Position Rank_2": "RB48"
+  },
+  {
+    "Player Id": 3478,
+    "Player": "Mark Andrews",
+    "Team": "BAL",
+    "Position": "TE",
+    "KTC Rank": 172,
+    "Position Rank": 22,
+    "Position Rank_2": "TE22"
+  },
+  {
+    "Player Id": 4903,
+    "Player": "Marvin Mims Jr",
+    "Team": "DEN",
+    "Position": "WR",
+    "KTC Rank": 173,
+    "Position Rank": 72,
+    "Position Rank_2": "WR72"
+  },
+  {
+    "Player Id": 4685,
+    "Player": "Jordan Mason",
+    "Team": "MIN",
+    "Position": "RB",
+    "KTC Rank": 174,
+    "Position Rank": 49,
+    "Position Rank_2": "RB49"
+  },
+  {
+    "Player Id": 2027,
+    "Player": "Jonathon Brooks",
+    "Team": "CAR",
+    "Position": "RB",
+    "KTC Rank": 175,
+    "Position Rank": 50,
+    "Position Rank_2": "RB50"
+  },
+  {
+    "Player Id": 2248,
+    "Player": "Rachaad White",
+    "Team": "TBB",
+    "Position": "RB",
+    "KTC Rank": 176,
+    "Position Rank": 51,
+    "Position Rank_2": "RB51"
+  },
+  {
+    "Player Id": 2455,
+    "Player": "Tank Bigsby",
+    "Team": "PHI",
+    "Position": "RB",
+    "KTC Rank": 177,
+    "Position Rank": 52,
+    "Position Rank_2": "RB52"
+  },
+  {
+    "Player Id": 1538,
+    "Player": "Jacoby Brissett",
+    "Team": "ARI",
+    "Position": "QB",
+    "KTC Rank": 178,
+    "Position Rank": 32,
+    "Position Rank_2": "QB32"
+  },
+  {
+    "Player Id": 472,
+    "Player": "Hunter Henry",
+    "Team": "NEP",
+    "Position": "TE",
+    "KTC Rank": 179,
+    "Position Rank": 23,
+    "Position Rank_2": "TE23"
+  },
+  {
+    "Player Id": 3123,
+    "Player": "Keaton Mitchell",
+    "Team": "BAL",
+    "Position": "RB",
+    "KTC Rank": 180,
+    "Position Rank": 53,
+    "Position Rank_2": "RB53"
+  },
+  {
+    "Player Id": 4743,
+    "Player": "Keon Coleman",
+    "Team": "BUF",
+    "Position": "WR",
+    "KTC Rank": 181,
+    "Position Rank": 73,
+    "Position Rank_2": "WR73"
+  },
+  {
+    "Player Id": 4596,
+    "Player": "Jack Bech",
+    "Team": "LVR",
+    "Position": "WR",
+    "KTC Rank": 182,
+    "Position Rank": 74,
+    "Position Rank_2": "WR74"
+  },
+  {
+    "Player Id": 1269,
+    "Player": "Brian Robinson Jr",
+    "Team": "SFO",
+    "Position": "RB",
+    "KTC Rank": 183,
+    "Position Rank": 54,
+    "Position Rank_2": "RB54"
+  },
+  {
+    "Player Id": 2407,
+    "Player": "David Njoku",
+    "Team": "CLE",
+    "Position": "TE",
+    "KTC Rank": 184,
+    "Position Rank": 24,
+    "Position Rank_2": "TE24"
+  },
+  {
+    "Player Id": 801,
+    "Player": "Jalen Milroe",
+    "Team": "SEA",
+    "Position": "QB",
+    "KTC Rank": 185,
+    "Position Rank": 33,
+    "Position Rank_2": "QB33"
+  },
+  {
+    "Player Id": 2923,
+    "Player": "Tez Johnson",
+    "Team": "TBB",
+    "Position": "WR",
+    "KTC Rank": 186,
+    "Position Rank": 75,
+    "Position Rank_2": "WR75"
+  },
+  {
+    "Player Id": 4177,
+    "Player": "Tank Dell",
+    "Team": "HOU",
+    "Position": "WR",
+    "KTC Rank": 187,
+    "Position Rank": 76,
+    "Position Rank_2": "WR76"
+  },
+  {
+    "Player Id": 5147,
+    "Player": "Anthony Richardson Sr",
+    "Team": "IND",
+    "Position": "QB",
+    "KTC Rank": 188,
+    "Position Rank": 34,
+    "Position Rank_2": "QB34"
+  },
+  {
+    "Player Id": 5203,
+    "Player": "Gunnar Helm",
+    "Team": "TEN",
+    "Position": "TE",
+    "KTC Rank": 189,
+    "Position Rank": 25,
+    "Position Rank_2": "TE25"
+  },
+  {
+    "Player Id": 555,
+    "Player": "Jaylen Wright",
+    "Team": "MIA",
+    "Position": "RB",
+    "KTC Rank": 190,
+    "Position Rank": 55,
+    "Position Rank_2": "RB55"
+  },
+  {
+    "Player Id": 2858,
+    "Player": "Dalton Schultz",
+    "Team": "HOU",
+    "Position": "TE",
+    "KTC Rank": 191,
+    "Position Rank": 26,
+    "Position Rank_2": "TE26"
+  },
+  {
+    "Player Id": 1998,
+    "Player": "Brashard Smith",
+    "Team": "KCC",
+    "Position": "RB",
+    "KTC Rank": 192,
+    "Position Rank": 56,
+    "Position Rank_2": "RB56"
+  },
+  {
+    "Player Id": 2726,
+    "Player": "Cade Otton",
+    "Team": "TBB",
+    "Position": "TE",
+    "KTC Rank": 193,
+    "Position Rank": 27,
+    "Position Rank_2": "TE27"
+  },
+  {
+    "Player Id": 275,
+    "Player": "Kendre Miller",
+    "Team": "NOS",
+    "Position": "RB",
+    "KTC Rank": 194,
+    "Position Rank": 57,
+    "Position Rank_2": "RB57"
+  },
+  {
+    "Player Id": 789,
+    "Player": "Alvin Kamara",
+    "Team": "NOS",
+    "Position": "RB",
+    "KTC Rank": 195,
+    "Position Rank": 58,
+    "Position Rank_2": "RB58"
+  },
+  {
+    "Player Id": 941,
+    "Player": "Juwan Johnson",
+    "Team": "NOS",
+    "Position": "TE",
+    "KTC Rank": 196,
+    "Position Rank": 28,
+    "Position Rank_2": "TE28"
+  },
+  {
+    "Player Id": 5030,
+    "Player": "Isaiah Bond",
+    "Team": "CLE",
+    "Position": "WR",
+    "KTC Rank": 197,
+    "Position Rank": 77,
+    "Position Rank_2": "WR77"
+  },
+  {
+    "Player Id": 3216,
+    "Player": "Michael Mayer",
+    "Team": "LVR",
+    "Position": "TE",
+    "KTC Rank": 198,
+    "Position Rank": 29,
+    "Position Rank_2": "TE29"
+  },
+  {
+    "Player Id": 4400,
+    "Player": "Xavier Legette",
+    "Team": "CAR",
+    "Position": "WR",
+    "KTC Rank": 199,
+    "Position Rank": 78,
+    "Position Rank_2": "WR78"
+  },
+  {
+    "Player Id": 3655,
+    "Player": "Tyreek Hill",
+    "Team": "MIA",
+    "Position": "WR",
+    "KTC Rank": 200,
+    "Position Rank": 79,
+    "Position Rank_2": "WR79"
+  },
+  {
+    "Player Id": 3172,
+    "Player": "Dontayvion Wicks",
+    "Team": "GBP",
+    "Position": "WR",
+    "KTC Rank": 201,
+    "Position Rank": 80,
+    "Position Rank_2": "WR80"
+  },
+  {
+    "Player Id": 910,
+    "Player": "DeMario Douglas",
+    "Team": "NEP",
+    "Position": "WR",
+    "KTC Rank": 202,
+    "Position Rank": 81,
+    "Position Rank_2": "WR81"
+  },
+  {
+    "Player Id": 4950,
+    "Player": "Aaron Jones Sr",
+    "Team": "MIN",
+    "Position": "RB",
+    "KTC Rank": 203,
+    "Position Rank": 59,
+    "Position Rank_2": "RB59"
+  },
+  {
+    "Player Id": 2714,
+    "Player": "Isiah Pacheco",
+    "Team": "KCC",
+    "Position": "RB",
+    "KTC Rank": 204,
+    "Position Rank": 60,
+    "Position Rank_2": "RB60"
+  },
+  {
+    "Player Id": 4987,
+    "Player": "Quinn Ewers",
+    "Team": "MIA",
+    "Position": "QB",
+    "KTC Rank": 205,
+    "Position Rank": 35,
+    "Position Rank_2": "QB35"
+  },
+  {
+    "Player Id": 4587,
+    "Player": "Isaiah Davis",
+    "Team": "NYJ",
+    "Position": "RB",
+    "KTC Rank": 206,
+    "Position Rank": 61,
+    "Position Rank_2": "RB61"
+  },
+  {
+    "Player Id": 1861,
+    "Player": "Malik Washington",
+    "Team": "MIA",
+    "Position": "WR",
+    "KTC Rank": 207,
+    "Position Rank": 82,
+    "Position Rank_2": "WR82"
+  },
+  {
+    "Player Id": 3020,
+    "Player": "Jaydon Blue",
+    "Team": "DAL",
+    "Position": "RB",
+    "KTC Rank": 208,
+    "Position Rank": 62,
+    "Position Rank_2": "RB62"
+  },
+  {
+    "Player Id": 1122,
+    "Player": "Emanuel Wilson",
+    "Team": "GBP",
+    "Position": "RB",
+    "KTC Rank": 209,
+    "Position Rank": 63,
+    "Position Rank_2": "RB63"
+  },
+  {
+    "Player Id": 988,
+    "Player": "Chris Rodriguez Jr",
+    "Team": "WAS",
+    "Position": "RB",
+    "KTC Rank": 210,
+    "Position Rank": 64,
+    "Position Rank_2": "RB64"
+  },
+  {
+    "Player Id": 4352,
+    "Player": "Chigoziem Okonkwo",
+    "Team": "TEN",
+    "Position": "TE",
+    "KTC Rank": 211,
+    "Position Rank": 30,
+    "Position Rank_2": "TE30"
+  },
+  {
+    "Player Id": 39,
+    "Player": "Justin Fields",
+    "Team": "NYJ",
+    "Position": "QB",
+    "KTC Rank": 212,
+    "Position Rank": 36,
+    "Position Rank_2": "QB36"
+  },
+  {
+    "Player Id": 3322,
+    "Player": "Cedric Tillman",
+    "Team": "CLE",
+    "Position": "WR",
+    "KTC Rank": 213,
+    "Position Rank": 83,
+    "Position Rank_2": "WR83"
+  },
+  {
+    "Player Id": 2752,
+    "Player": "Ben Sinnott",
+    "Team": "WAS",
+    "Position": "TE",
+    "KTC Rank": 214,
+    "Position Rank": 31,
+    "Position Rank_2": "TE31"
+  },
+  {
+    "Player Id": 716,
+    "Player": "Dont'e Thornton Jr.",
+    "Team": "LVR",
+    "Position": "WR",
+    "KTC Rank": 215,
+    "Position Rank": 84,
+    "Position Rank_2": "WR84"
+  },
+  {
+    "Player Id": 2948,
+    "Player": "Cole Kmet",
+    "Team": "CHI",
+    "Position": "TE",
+    "KTC Rank": 216,
+    "Position Rank": 32,
+    "Position Rank_2": "TE32"
+  },
+  {
+    "Player Id": 468,
+    "Player": "Jake Tonges",
+    "Team": "SFO",
+    "Position": "TE",
+    "KTC Rank": 217,
+    "Position Rank": 33,
+    "Position Rank_2": "TE33"
+  },
+  {
+    "Player Id": 386,
+    "Player": "Ja'Tavion Sanders",
+    "Team": "CAR",
+    "Position": "TE",
+    "KTC Rank": 218,
+    "Position Rank": 34,
+    "Position Rank_2": "TE34"
+  },
+  {
+    "Player Id": 1015,
+    "Player": "Colby Parkinson",
+    "Team": "LAR",
+    "Position": "TE",
+    "KTC Rank": 219,
+    "Position Rank": 35,
+    "Position Rank_2": "TE35"
+  },
+  {
+    "Player Id": 2281,
+    "Player": "Pat Freiermuth",
+    "Team": "PIT",
+    "Position": "TE",
+    "KTC Rank": 220,
+    "Position Rank": 36,
+    "Position Rank_2": "TE36"
+  },
+  {
+    "Player Id": 818,
+    "Player": "Darnell Mooney",
+    "Team": "ATL",
+    "Position": "WR",
+    "KTC Rank": 221,
+    "Position Rank": 85,
+    "Position Rank_2": "WR85"
+  },
+  {
+    "Player Id": 2780,
+    "Player": "Ray Davis",
+    "Team": "BUF",
+    "Position": "RB",
+    "KTC Rank": 222,
+    "Position Rank": 65,
+    "Position Rank_2": "RB65"
+  },
+  {
+    "Player Id": 2872,
+    "Player": "Trevor Etienne",
+    "Team": "CAR",
+    "Position": "RB",
+    "KTC Rank": 223,
+    "Position Rank": 66,
+    "Position Rank_2": "RB66"
+  },
+  {
+    "Player Id": 410,
+    "Player": "Rashod Bateman",
+    "Team": "BAL",
+    "Position": "WR",
+    "KTC Rank": 224,
+    "Position Rank": 86,
+    "Position Rank_2": "WR86"
+  },
+  {
+    "Player Id": 3587,
+    "Player": "James Conner",
+    "Team": "ARI",
+    "Position": "RB",
+    "KTC Rank": 225,
+    "Position Rank": 67,
+    "Position Rank_2": "RB67"
+  },
+  {
+    "Player Id": 1794,
+    "Player": "Jaylin Lane",
+    "Team": "WAS",
+    "Position": "WR",
+    "KTC Rank": 226,
+    "Position Rank": 87,
+    "Position Rank_2": "WR87"
+  },
+  {
+    "Player Id": 5073,
+    "Player": "DJ Giddens",
+    "Team": "IND",
+    "Position": "RB",
+    "KTC Rank": 227,
+    "Position Rank": 68,
+    "Position Rank_2": "RB68"
+  },
+  {
+    "Player Id": 840,
+    "Player": "Darnell Washington",
+    "Team": "PIT",
+    "Position": "TE",
+    "KTC Rank": 228,
+    "Position Rank": 37,
+    "Position Rank_2": "TE37"
+  },
+  {
+    "Player Id": 5194,
+    "Player": "Ryan Flournoy",
+    "Team": "DAL",
+    "Position": "WR",
+    "KTC Rank": 229,
+    "Position Rank": 88,
+    "Position Rank_2": "WR88"
+  },
+  {
+    "Player Id": 2136,
+    "Player": "John Metchie III",
+    "Team": "NYJ",
+    "Position": "WR",
+    "KTC Rank": 230,
+    "Position Rank": 89,
+    "Position Rank_2": "WR89"
+  },
+  {
+    "Player Id": 449,
+    "Player": "Evan Engram",
+    "Team": "DEN",
+    "Position": "TE",
+    "KTC Rank": 231,
+    "Position Rank": 38,
+    "Position Rank_2": "TE38"
+  },
+  {
+    "Player Id": 888,
+    "Player": "Xavier Hutchinson",
+    "Team": "HOU",
+    "Position": "WR",
+    "KTC Rank": 232,
+    "Position Rank": 90,
+    "Position Rank_2": "WR90"
+  },
+  {
+    "Player Id": 2739,
+    "Player": "Christian Kirk",
+    "Team": "HOU",
+    "Position": "WR",
+    "KTC Rank": 233,
+    "Position Rank": 91,
+    "Position Rank_2": "WR91"
+  },
+  {
+    "Player Id": 2673,
+    "Player": "Luke Musgrave",
+    "Team": "GBP",
+    "Position": "TE",
+    "KTC Rank": 234,
+    "Position Rank": 39,
+    "Position Rank_2": "TE39"
+  },
+  {
+    "Player Id": 3662,
+    "Player": "Travis Kelce",
+    "Team": "KCC",
+    "Position": "TE",
+    "KTC Rank": 235,
+    "Position Rank": 40,
+    "Position Rank_2": "TE40"
+  },
+  {
+    "Player Id": 1270,
+    "Player": "LeQuint Allen Jr",
+    "Team": "JAC",
+    "Position": "RB",
+    "KTC Rank": 236,
+    "Position Rank": 69,
+    "Position Rank_2": "RB69"
+  },
+  {
+    "Player Id": 373,
+    "Player": "Luke McCaffrey",
+    "Team": "WAS",
+    "Position": "WR",
+    "KTC Rank": 237,
+    "Position Rank": 92,
+    "Position Rank_2": "WR92"
+  },
+  {
+    "Player Id": 4638,
+    "Player": "Audric Estime",
+    "Team": "NOS",
+    "Position": "RB",
+    "KTC Rank": 238,
+    "Position Rank": 70,
+    "Position Rank_2": "RB70"
+  },
+  {
+    "Player Id": 4252,
+    "Player": "Jalen Nailor",
+    "Team": "MIN",
+    "Position": "WR",
+    "KTC Rank": 239,
+    "Position Rank": 93,
+    "Position Rank_2": "WR93"
+  },
+  {
+    "Player Id": 2424,
+    "Player": "Najee Harris",
+    "Team": "LAC",
+    "Position": "RB",
+    "KTC Rank": 240,
+    "Position Rank": 71,
+    "Position Rank_2": "RB71"
+  },
+  {
+    "Player Id": 1806,
+    "Player": "Keenan Allen",
+    "Team": "LAC",
+    "Position": "WR",
+    "KTC Rank": 241,
+    "Position Rank": 94,
+    "Position Rank_2": "WR94"
+  },
+  {
+    "Player Id": 4268,
+    "Player": "Will Howard",
+    "Team": "PIT",
+    "Position": "QB",
+    "KTC Rank": 242,
+    "Position Rank": 37,
+    "Position Rank_2": "QB37"
+  },
+  {
+    "Player Id": 1335,
+    "Player": "Jalen Royals",
+    "Team": "KCC",
+    "Position": "WR",
+    "KTC Rank": 243,
+    "Position Rank": 95,
+    "Position Rank_2": "WR95"
+  },
+  {
+    "Player Id": 3796,
+    "Player": "Devaughn Vele",
+    "Team": "NOS",
+    "Position": "WR",
+    "KTC Rank": 244,
+    "Position Rank": 96,
+    "Position Rank_2": "WR96"
+  },
+  {
+    "Player Id": 2212,
+    "Player": "Noah Gray",
+    "Team": "KCC",
+    "Position": "TE",
+    "KTC Rank": 245,
+    "Position Rank": 41,
+    "Position Rank_2": "TE41"
+  },
+  {
+    "Player Id": 2273,
+    "Player": "Calvin Austin III",
+    "Team": "PIT",
+    "Position": "WR",
+    "KTC Rank": 246,
+    "Position Rank": 97,
+    "Position Rank_2": "WR97"
+  },
+  {
+    "Player Id": 2822,
+    "Player": "Roman Wilson",
+    "Team": "PIT",
+    "Position": "WR",
+    "KTC Rank": 247,
+    "Position Rank": 98,
+    "Position Rank_2": "WR98"
+  },
+  {
+    "Player Id": 1717,
+    "Player": "Riley Leonard",
+    "Team": "IND",
+    "Position": "QB",
+    "KTC Rank": 248,
+    "Position Rank": 38,
+    "Position Rank_2": "QB38"
+  },
+  {
+    "Player Id": 5149,
+    "Player": "Andrei Iosivas",
+    "Team": "CIN",
+    "Position": "WR",
+    "KTC Rank": 249,
+    "Position Rank": 99,
+    "Position Rank_2": "WR99"
+  },
+  {
+    "Player Id": 3632,
+    "Player": "Marquise Brown",
+    "Team": "KCC",
+    "Position": "WR",
+    "KTC Rank": 250,
+    "Position Rank": 100,
+    "Position Rank_2": "WR100"
+  },
+  {
+    "Player Id": 2827,
+    "Player": "Will Shipley",
+    "Team": "PHI",
+    "Position": "RB",
+    "KTC Rank": 251,
+    "Position Rank": 72,
+    "Position Rank_2": "RB72"
+  },
+  {
+    "Player Id": 1897,
+    "Player": "Tyquan Thornton",
+    "Team": "KCC",
+    "Position": "WR",
+    "KTC Rank": 252,
+    "Position Rank": 101,
+    "Position Rank_2": "WR101"
+  },
+  {
+    "Player Id": 4501,
+    "Player": "Tahj Brooks",
+    "Team": "CIN",
+    "Position": "RB",
+    "KTC Rank": 253,
+    "Position Rank": 73,
+    "Position Rank_2": "RB73"
+  },
+  {
+    "Player Id": 3421,
+    "Player": "Jordan James",
+    "Team": "SFO",
+    "Position": "RB",
+    "KTC Rank": 254,
+    "Position Rank": 74,
+    "Position Rank_2": "RB74"
+  },
+  {
+    "Player Id": 1347,
+    "Player": "Darius Slayton",
+    "Team": "NYG",
+    "Position": "WR",
+    "KTC Rank": 255,
+    "Position Rank": 102,
+    "Position Rank_2": "WR102"
+  },
+  {
+    "Player Id": 3356,
+    "Player": "Joe Milton III",
+    "Team": "DAL",
+    "Position": "QB",
+    "KTC Rank": 256,
+    "Position Rank": 39,
+    "Position Rank_2": "QB39"
+  },
+  {
+    "Player Id": 526,
+    "Player": "Jarquez Hunter",
+    "Team": "LAR",
+    "Position": "RB",
+    "KTC Rank": 257,
+    "Position Rank": 75,
+    "Position Rank_2": "RB75"
+  },
+  {
+    "Player Id": 4453,
+    "Player": "Calvin Ridley",
+    "Team": "TEN",
+    "Position": "WR",
+    "KTC Rank": 258,
+    "Position Rank": 103,
+    "Position Rank_2": "WR103"
+  },
+  {
+    "Player Id": 4124,
+    "Player": "Jimmy Horn Jr",
+    "Team": "CAR",
+    "Position": "WR",
+    "KTC Rank": 259,
+    "Position Rank": 104,
+    "Position Rank_2": "WR104"
+  },
+  {
+    "Player Id": 4039,
+    "Player": "Spencer Rattler",
+    "Team": "NOS",
+    "Position": "QB",
+    "KTC Rank": 260,
+    "Position Rank": 40,
+    "Position Rank_2": "QB40"
+  },
+  {
+    "Player Id": 3803,
+    "Player": "Aaron Rodgers",
+    "Team": "PIT",
+    "Position": "QB",
+    "KTC Rank": 261,
+    "Position Rank": 41,
+    "Position Rank_2": "QB41"
+  },
+  {
+    "Player Id": 707,
+    "Player": "MarShawn Lloyd",
+    "Team": "GBP",
+    "Position": "RB",
+    "KTC Rank": 262,
+    "Position Rank": 76,
+    "Position Rank_2": "RB76"
+  },
+  {
+    "Player Id": 329,
+    "Player": "Dillon Gabriel",
+    "Team": "CLE",
+    "Position": "QB",
+    "KTC Rank": 263,
+    "Position Rank": 42,
+    "Position Rank_2": "QB42"
+  },
+  {
+    "Player Id": 2612,
+    "Player": "Joe Mixon",
+    "Team": "HOU",
+    "Position": "RB",
+    "KTC Rank": 264,
+    "Position Rank": 77,
+    "Position Rank_2": "RB77"
+  },
+  {
+    "Player Id": 1815,
+    "Player": "Marcus Mariota",
+    "Team": "WAS",
+    "Position": "QB",
+    "KTC Rank": 265,
+    "Position Rank": 43,
+    "Position Rank_2": "QB43"
+  },
+  {
+    "Player Id": 1101,
+    "Player": "KeAndre Lambert-Smith",
+    "Team": "LAC",
+    "Position": "WR",
+    "KTC Rank": 266,
+    "Position Rank": 105,
+    "Position Rank_2": "WR105"
+  },
+  {
+    "Player Id": 4605,
+    "Player": "Dawson Knox",
+    "Team": "BUF",
+    "Position": "TE",
+    "KTC Rank": 267,
+    "Position Rank": 42,
+    "Position Rank_2": "TE42"
+  },
+  {
+    "Player Id": 2077,
+    "Player": "Michael Carter",
+    "Team": "ARI",
+    "Position": "RB",
+    "KTC Rank": 268,
+    "Position Rank": 78,
+    "Position Rank_2": "RB78"
+  },
+  {
+    "Player Id": 2396,
+    "Player": "Kirk Cousins",
+    "Team": "ATL",
+    "Position": "QB",
+    "KTC Rank": 269,
+    "Position Rank": 44,
+    "Position Rank_2": "QB44"
+  },
+  {
+    "Player Id": 639,
+    "Player": "Devin Singletary",
+    "Team": "NYG",
+    "Position": "RB",
+    "KTC Rank": 270,
+    "Position Rank": 79,
+    "Position Rank_2": "RB79"
+  },
+  {
+    "Player Id": 4334,
+    "Player": "Savion Williams",
+    "Team": "GBP",
+    "Position": "WR",
+    "KTC Rank": 271,
+    "Position Rank": 106,
+    "Position Rank_2": "WR106"
+  },
+  {
+    "Player Id": 3445,
+    "Player": "Cooper Kupp",
+    "Team": "SEA",
+    "Position": "WR",
+    "KTC Rank": 272,
+    "Position Rank": 107,
+    "Position Rank_2": "WR107"
+  },
+  {
+    "Player Id": 2060,
+    "Player": "Jonnu Smith",
+    "Team": "PIT",
+    "Position": "TE",
+    "KTC Rank": 273,
+    "Position Rank": 43,
+    "Position Rank_2": "TE43"
+  },
+  {
+    "Player Id": 1761,
+    "Player": "Jameis Winston",
+    "Team": "NYG",
+    "Position": "QB",
+    "KTC Rank": 274,
+    "Position Rank": 45,
+    "Position Rank_2": "QB45"
+  },
+  {
+    "Player Id": 911,
+    "Player": "Jordan Whittington",
+    "Team": "LAR",
+    "Position": "WR",
+    "KTC Rank": 275,
+    "Position Rank": 108,
+    "Position Rank_2": "WR108"
+  },
+  {
+    "Player Id": 2651,
+    "Player": "Jaleel McLaughlin",
+    "Team": "DEN",
+    "Position": "RB",
+    "KTC Rank": 276,
+    "Position Rank": 80,
+    "Position Rank_2": "RB80"
+  },
+  {
+    "Player Id": 1019,
+    "Player": "Isaac Guerendo",
+    "Team": "SFO",
+    "Position": "RB",
+    "KTC Rank": 277,
+    "Position Rank": 81,
+    "Position Rank_2": "RB81"
+  },
+  {
+    "Player Id": 4978,
+    "Player": "Davis Mills",
+    "Team": "HOU",
+    "Position": "QB",
+    "KTC Rank": 278,
+    "Position Rank": 46,
+    "Position Rank_2": "QB46"
+  },
+  {
+    "Player Id": 1011,
+    "Player": "Geno Smith",
+    "Team": "LVR",
+    "Position": "QB",
+    "KTC Rank": 279,
+    "Position Rank": 47,
+    "Position Rank_2": "QB47"
+  },
+  {
+    "Player Id": 3548,
+    "Player": "Kareem Hunt",
+    "Team": "KCC",
+    "Position": "RB",
+    "KTC Rank": 280,
+    "Position Rank": 82,
+    "Position Rank_2": "RB82"
+  },
+  {
+    "Player Id": 1048,
+    "Player": "Xavier Restrepo",
+    "Team": "TEN",
+    "Position": "WR",
+    "KTC Rank": 281,
+    "Position Rank": 109,
+    "Position Rank_2": "WR109"
+  },
+  {
+    "Player Id": 535,
+    "Player": "Treylon Burks",
+    "Team": "WAS",
+    "Position": "WR",
+    "KTC Rank": 282,
+    "Position Rank": 110,
+    "Position Rank_2": "WR110"
+  },
+  {
+    "Player Id": 2975,
+    "Player": "Jalen Tolbert",
+    "Team": "DAL",
+    "Position": "WR",
+    "KTC Rank": 283,
+    "Position Rank": 111,
+    "Position Rank_2": "WR111"
+  },
+  {
+    "Player Id": 4607,
+    "Player": "Jahan Dotson",
+    "Team": "PHI",
+    "Position": "WR",
+    "KTC Rank": 284,
+    "Position Rank": 112,
+    "Position Rank_2": "WR112"
+  },
+  {
+    "Player Id": 1901,
+    "Player": "Joshua Palmer",
+    "Team": "BUF",
+    "Position": "WR",
+    "KTC Rank": 285,
+    "Position Rank": 113,
+    "Position Rank_2": "WR113"
+  },
+  {
+    "Player Id": 2997,
+    "Player": "Kendrick Bourne",
+    "Team": "SFO",
+    "Position": "WR",
+    "KTC Rank": 286,
+    "Position Rank": 114,
+    "Position Rank_2": "WR114"
+  },
+  {
+    "Player Id": 4184,
+    "Player": "Tommy Tremble",
+    "Team": "CAR",
+    "Position": "TE",
+    "KTC Rank": 287,
+    "Position Rank": 44,
+    "Position Rank_2": "TE44"
+  },
+  {
+    "Player Id": 4653,
+    "Player": "Mike Gesicki",
+    "Team": "CIN",
+    "Position": "TE",
+    "KTC Rank": 288,
+    "Position Rank": 45,
+    "Position Rank_2": "TE45"
+  },
+  {
+    "Player Id": 1280,
+    "Player": "Konata Mumpfield",
+    "Team": "LAR",
+    "Position": "WR",
+    "KTC Rank": 289,
+    "Position Rank": 115,
+    "Position Rank_2": "WR115"
+  },
+  {
+    "Player Id": 5138,
+    "Player": "Ty Johnson",
+    "Team": "BUF",
+    "Position": "RB",
+    "KTC Rank": 290,
+    "Position Rank": 83,
+    "Position Rank_2": "RB83"
+  },
+  {
+    "Player Id": 1885,
+    "Player": "Greg Dulcich",
+    "Team": "MIA",
+    "Position": "TE",
+    "KTC Rank": 291,
+    "Position Rank": 46,
+    "Position Rank_2": "TE46"
+  },
+  {
+    "Player Id": 3411,
+    "Player": "Greg Dortch",
+    "Team": "ARI",
+    "Position": "WR",
+    "KTC Rank": 292,
+    "Position Rank": 116,
+    "Position Rank_2": "WR116"
+  },
+  {
+    "Player Id": 4854,
+    "Player": "Noah Fant",
+    "Team": "CIN",
+    "Position": "TE",
+    "KTC Rank": 293,
+    "Position Rank": 47,
+    "Position Rank_2": "TE47"
+  },
+  {
+    "Player Id": 2081,
+    "Player": "Efton Chism III",
+    "Team": "NEP",
+    "Position": "WR",
+    "KTC Rank": 294,
+    "Position Rank": 117,
+    "Position Rank_2": "WR117"
+  },
+  {
+    "Player Id": 2812,
+    "Player": "Jerome Ford",
+    "Team": "CLE",
+    "Position": "RB",
+    "KTC Rank": 295,
+    "Position Rank": 84,
+    "Position Rank_2": "RB84"
+  },
+  {
+    "Player Id": 3270,
+    "Player": "Tutu Atwell",
+    "Team": "LAR",
+    "Position": "WR",
+    "KTC Rank": 296,
+    "Position Rank": 118,
+    "Position Rank_2": "WR118"
+  },
+  {
+    "Player Id": 5048,
+    "Player": "Emari Demercado",
+    "Team": "ARI",
+    "Position": "RB",
+    "KTC Rank": 297,
+    "Position Rank": 85,
+    "Position Rank_2": "RB85"
+  },
+  {
+    "Player Id": 2804,
+    "Player": "Raheim Sanders",
+    "Team": "CLE",
+    "Position": "RB",
+    "KTC Rank": 298,
+    "Position Rank": 86,
+    "Position Rank_2": "RB86"
+  },
+  {
+    "Player Id": 2574,
+    "Player": "Daniel Bellinger",
+    "Team": "NYG",
+    "Position": "TE",
+    "KTC Rank": 299,
+    "Position Rank": 48,
+    "Position Rank_2": "TE48"
+  },
+  {
+    "Player Id": 1625,
+    "Player": "Cade Stover",
+    "Team": "HOU",
+    "Position": "TE",
+    "KTC Rank": 300,
+    "Position Rank": 49,
+    "Position Rank_2": "TE49"
+  },
+  {
+    "Player Id": 49,
+    "Player": "Roschon Johnson",
+    "Team": "CHI",
+    "Position": "RB",
+    "KTC Rank": 301,
+    "Position Rank": 87,
+    "Position Rank_2": "RB87"
+  },
+  {
+    "Player Id": 3008,
+    "Player": "Ja'Lynn Polk",
+    "Team": "NOS",
+    "Position": "WR",
+    "KTC Rank": 302,
+    "Position Rank": 119,
+    "Position Rank_2": "WR119"
+  },
+  {
+    "Player Id": 1167,
+    "Player": "Olamide Zaccheaus",
+    "Team": "CHI",
+    "Position": "WR",
+    "KTC Rank": 303,
+    "Position Rank": 120,
+    "Position Rank_2": "WR120"
+  },
+  {
+    "Player Id": 1710,
+    "Player": "Devontez Walker",
+    "Team": "BAL",
+    "Position": "WR",
+    "KTC Rank": 304,
+    "Position Rank": 121,
+    "Position Rank_2": "WR121"
+  },
+  {
+    "Player Id": 4482,
+    "Player": "Darren Waller",
+    "Team": "MIA",
+    "Position": "TE",
+    "KTC Rank": 305,
+    "Position Rank": 50,
+    "Position Rank_2": "TE50"
+  },
+  {
+    "Player Id": 985,
+    "Player": "Dyami Brown",
+    "Team": "JAC",
+    "Position": "WR",
+    "KTC Rank": 306,
+    "Position Rank": 122,
+    "Position Rank_2": "WR122"
+  },
+  {
+    "Player Id": 1052,
+    "Player": "KaVontae Turpin",
+    "Team": "DAL",
+    "Position": "WR",
+    "KTC Rank": 307,
+    "Position Rank": 123,
+    "Position Rank_2": "WR123"
+  },
+  {
+    "Player Id": 64,
+    "Player": "Jalin Hyatt",
+    "Team": "NYG",
+    "Position": "WR",
+    "KTC Rank": 308,
+    "Position Rank": 124,
+    "Position Rank_2": "WR124"
+  },
+  {
+    "Player Id": 587,
+    "Player": "Rasheen Ali",
+    "Team": "BAL",
+    "Position": "RB",
+    "KTC Rank": 309,
+    "Position Rank": 88,
+    "Position Rank_2": "RB88"
+  },
+  {
+    "Player Id": 2142,
+    "Player": "Tahj Washington",
+    "Team": "MIA",
+    "Position": "WR",
+    "KTC Rank": 310,
+    "Position Rank": 125,
+    "Position Rank_2": "WR125"
+  },
+  {
+    "Player Id": 5208,
+    "Player": "Justice Hill",
+    "Team": "BAL",
+    "Position": "RB",
+    "KTC Rank": 311,
+    "Position Rank": 89,
+    "Position Rank_2": "RB89"
+  },
+  {
+    "Player Id": 4592,
+    "Player": "Malachi Corley",
+    "Team": "CLE",
+    "Position": "WR",
+    "KTC Rank": 312,
+    "Position Rank": 126,
+    "Position Rank_2": "WR126"
+  },
+  {
+    "Player Id": 2408,
+    "Player": "Tyler Huntley",
+    "Team": "BAL",
+    "Position": "QB",
+    "KTC Rank": 313,
+    "Position Rank": 48,
+    "Position Rank_2": "QB48"
+  },
+  {
+    "Player Id": 323,
+    "Player": "Kameron Johnson",
+    "Team": "TBB",
+    "Position": "WR",
+    "KTC Rank": 314,
+    "Position Rank": 127,
+    "Position Rank_2": "WR127"
+  },
+  {
+    "Player Id": 3067,
+    "Player": "Trey Palmer",
+    "Team": "NOS",
+    "Position": "WR",
+    "KTC Rank": 315,
+    "Position Rank": 128,
+    "Position Rank_2": "WR128"
+  },
+  {
+    "Player Id": 1296,
+    "Player": "Trey Lance",
+    "Team": "LAC",
+    "Position": "QB",
+    "KTC Rank": 316,
+    "Position Rank": 49,
+    "Position Rank_2": "QB49"
+  },
+  {
+    "Player Id": 1500,
+    "Player": "Kalel Mullings",
+    "Team": "TEN",
+    "Position": "RB",
+    "KTC Rank": 317,
+    "Position Rank": 90,
+    "Position Rank_2": "RB90"
+  },
+  {
+    "Player Id": 1514,
+    "Player": "Tanner McKee",
+    "Team": "PHI",
+    "Position": "QB",
+    "KTC Rank": 318,
+    "Position Rank": 50,
+    "Position Rank_2": "QB50"
+  },
+  {
+    "Player Id": 4608,
+    "Player": "Kenny Pickett",
+    "Team": "LVR",
+    "Position": "QB",
+    "KTC Rank": 319,
+    "Position Rank": 51,
+    "Position Rank_2": "QB51"
+  },
+  {
+    "Player Id": 63,
+    "Player": "Tai Felton",
+    "Team": "MIN",
+    "Position": "WR",
+    "KTC Rank": 320,
+    "Position Rank": 129,
+    "Position Rank_2": "WR129"
+  },
+  {
+    "Player Id": 1363,
+    "Player": "Phil Mafah",
+    "Team": "DAL",
+    "Position": "RB",
+    "KTC Rank": 321,
+    "Position Rank": 91,
+    "Position Rank_2": "RB91"
+  },
+  {
+    "Player Id": 697,
+    "Player": "Luke Schoonmaker",
+    "Team": "DAL",
+    "Position": "TE",
+    "KTC Rank": 322,
+    "Position Rank": 51,
+    "Position Rank_2": "TE51"
+  },
+  {
+    "Player Id": 1951,
+    "Player": "Will Levis",
+    "Team": "TEN",
+    "Position": "QB",
+    "KTC Rank": 323,
+    "Position Rank": 52,
+    "Position Rank_2": "QB52"
+  },
+  {
+    "Player Id": 1754,
+    "Player": "Gabe Davis",
+    "Team": "BUF",
+    "Position": "WR",
+    "KTC Rank": 324,
+    "Position Rank": 130,
+    "Position Rank_2": "WR130"
+  },
+  {
+    "Player Id": 2558,
+    "Player": "Tyler Higbee",
+    "Team": "LAR",
+    "Position": "TE",
+    "KTC Rank": 325,
+    "Position Rank": 52,
+    "Position Rank_2": "TE52"
+  },
+  {
+    "Player Id": 4480,
+    "Player": "Damien Martinez",
+    "Team": "GBP",
+    "Position": "RB",
+    "KTC Rank": 326,
+    "Position Rank": 92,
+    "Position Rank_2": "RB92"
+  },
+  {
+    "Player Id": 265,
+    "Player": "Mack Hollins",
+    "Team": "NEP",
+    "Position": "WR",
+    "KTC Rank": 327,
+    "Position Rank": 131,
+    "Position Rank_2": "WR131"
+  },
+  {
+    "Player Id": 3251,
+    "Player": "Elijah Higgins",
+    "Team": "ARI",
+    "Position": "TE",
+    "KTC Rank": 328,
+    "Position Rank": 53,
+    "Position Rank_2": "TE53"
+  },
+  {
+    "Player Id": 726,
+    "Player": "Erick All Jr",
+    "Team": "CIN",
+    "Position": "TE",
+    "KTC Rank": 329,
+    "Position Rank": 54,
+    "Position Rank_2": "TE54"
+  },
+  {
+    "Player Id": 4010,
+    "Player": "Nick Chubb",
+    "Team": "HOU",
+    "Position": "RB",
+    "KTC Rank": 330,
+    "Position Rank": 93,
+    "Position Rank_2": "RB93"
+  },
+  {
+    "Player Id": 1281,
+    "Player": "Jordan Watkins",
+    "Team": "SFO",
+    "Position": "WR",
+    "KTC Rank": 331,
+    "Position Rank": 132,
+    "Position Rank_2": "WR132"
+  },
+  {
+    "Player Id": 4948,
+    "Player": "Isaiah Hodgins",
+    "Team": "NYG",
+    "Position": "WR",
+    "KTC Rank": 332,
+    "Position Rank": 133,
+    "Position Rank_2": "WR133"
+  },
+  {
+    "Player Id": 3426,
+    "Player": "Arian Smith",
+    "Team": "NYJ",
+    "Position": "WR",
+    "KTC Rank": 333,
+    "Position Rank": 134,
+    "Position Rank_2": "WR134"
+  },
+  {
+    "Player Id": 4444,
+    "Player": "Davis Allen",
+    "Team": "LAR",
+    "Position": "TE",
+    "KTC Rank": 334,
+    "Position Rank": 55,
+    "Position Rank_2": "TE55"
+  },
+  {
+    "Player Id": 2123,
+    "Player": "Elijah Moore",
+    "Team": "DEN",
+    "Position": "WR",
+    "KTC Rank": 335,
+    "Position Rank": 135,
+    "Position Rank_2": "WR135"
+  },
+  {
+    "Player Id": 4048,
+    "Player": "Tyler Badie",
+    "Team": "DEN",
+    "Position": "RB",
+    "KTC Rank": 336,
+    "Position Rank": 94,
+    "Position Rank_2": "RB94"
+  },
+  {
+    "Player Id": 1184,
+    "Player": "Jonathan Mingo",
+    "Team": "DAL",
+    "Position": "WR",
+    "KTC Rank": 337,
+    "Position Rank": 136,
+    "Position Rank_2": "WR136"
+  },
+  {
+    "Player Id": 543,
+    "Player": "Tyler Goodson",
+    "Team": "IND",
+    "Position": "RB",
+    "KTC Rank": 338,
+    "Position Rank": 95,
+    "Position Rank_2": "RB95"
+  },
+  {
+    "Player Id": 4957,
+    "Player": "Zach Wilson",
+    "Team": "MIA",
+    "Position": "QB",
+    "KTC Rank": 339,
+    "Position Rank": 53,
+    "Position Rank_2": "QB53"
+  },
+  {
+    "Player Id": 4126,
+    "Player": "Tyson Bagent",
+    "Team": "CHI",
+    "Position": "QB",
+    "KTC Rank": 340,
+    "Position Rank": 54,
+    "Position Rank_2": "QB54"
+  },
+  {
+    "Player Id": 5139,
+    "Player": "Jeremy McNichols",
+    "Team": "WAS",
+    "Position": "RB",
+    "KTC Rank": 341,
+    "Position Rank": 96,
+    "Position Rank_2": "RB96"
+  },
+  {
+    "Player Id": 4306,
+    "Player": "Dameon Pierce",
+    "Team": "KCC",
+    "Position": "RB",
+    "KTC Rank": 342,
+    "Position Rank": 97,
+    "Position Rank_2": "RB97"
+  },
+  {
+    "Player Id": 3902,
+    "Player": "Chris Brooks",
+    "Team": "GBP",
+    "Position": "RB",
+    "KTC Rank": 343,
+    "Position Rank": 98,
+    "Position Rank_2": "RB98"
+  },
+  {
+    "Player Id": 3580,
+    "Player": "Brock Wright",
+    "Team": "DET",
+    "Position": "TE",
+    "KTC Rank": 344,
+    "Position Rank": 56,
+    "Position Rank_2": "TE56"
+  },
+  {
+    "Player Id": 159,
+    "Player": "Jacob Cowing",
+    "Team": "SFO",
+    "Position": "WR",
+    "KTC Rank": 345,
+    "Position Rank": 137,
+    "Position Rank_2": "WR137"
+  },
+  {
+    "Player Id": 772,
+    "Player": "Hassan Haskins",
+    "Team": "LAC",
+    "Position": "RB",
+    "KTC Rank": 346,
+    "Position Rank": 99,
+    "Position Rank_2": "RB99"
+  },
+  {
+    "Player Id": 4938,
+    "Player": "Javon Baker",
+    "Team": "SFO",
+    "Position": "WR",
+    "KTC Rank": 347,
+    "Position Rank": 138,
+    "Position Rank_2": "WR138"
+  },
+  {
+    "Player Id": 4804,
+    "Player": "Sam Howell",
+    "Team": "PHI",
+    "Position": "QB",
+    "KTC Rank": 348,
+    "Position Rank": 55,
+    "Position Rank_2": "QB55"
+  },
+  {
+    "Player Id": 2322,
+    "Player": "Lil'Jordan Humphrey",
+    "Team": "DEN",
+    "Position": "WR",
+    "KTC Rank": 349,
+    "Position Rank": 139,
+    "Position Rank_2": "WR139"
+  },
+  {
+    "Player Id": 237,
+    "Player": "Brevin Jordan",
+    "Team": "HOU",
+    "Position": "TE",
+    "KTC Rank": 350,
+    "Position Rank": 57,
+    "Position Rank_2": "TE57"
+  },
+  {
+    "Player Id": 2083,
+    "Player": "Donovan Edwards",
+    "Team": "MIA",
+    "Position": "RB",
+    "KTC Rank": 351,
+    "Position Rank": 100,
+    "Position Rank_2": "RB100"
+  },
+  {
+    "Player Id": 1472,
+    "Player": "Rondale Moore",
+    "Team": "MIN",
+    "Position": "WR",
+    "KTC Rank": 352,
+    "Position Rank": 140,
+    "Position Rank_2": "WR140"
+  },
+  {
+    "Player Id": 1158,
+    "Player": "Skyy Moore",
+    "Team": "SFO",
+    "Position": "WR",
+    "KTC Rank": 353,
+    "Position Rank": 141,
+    "Position Rank_2": "WR141"
+  },
+  {
+    "Player Id": 5052,
+    "Player": "Aidan O'Connell",
+    "Team": "LVR",
+    "Position": "QB",
+    "KTC Rank": 354,
+    "Position Rank": 56,
+    "Position Rank_2": "QB56"
+  },
+  {
+    "Player Id": 752,
+    "Player": "Mason Tipton",
+    "Team": "NOS",
+    "Position": "WR",
+    "KTC Rank": 355,
+    "Position Rank": 142,
+    "Position Rank_2": "WR142"
+  },
+  {
+    "Player Id": 4448,
+    "Player": "Samaje Perine",
+    "Team": "CIN",
+    "Position": "RB",
+    "KTC Rank": 356,
+    "Position Rank": 101,
+    "Position Rank_2": "RB101"
+  },
+  {
+    "Player Id": 4636,
+    "Player": "Antonio Gibson",
+    "Team": "NEP",
+    "Position": "RB",
+    "KTC Rank": 357,
+    "Position Rank": 102,
+    "Position Rank_2": "RB102"
+  },
+  {
+    "Player Id": 1563,
+    "Player": "Jake Bobo",
+    "Team": "SEA",
+    "Position": "WR",
+    "KTC Rank": 358,
+    "Position Rank": 143,
+    "Position Rank_2": "WR143"
+  },
+  {
+    "Player Id": 3286,
+    "Player": "Jared Wiley",
+    "Team": "KCC",
+    "Position": "TE",
+    "KTC Rank": 359,
+    "Position Rank": 58,
+    "Position Rank_2": "TE58"
+  },
+  {
+    "Player Id": 2350,
+    "Player": "Zavier Scott",
+    "Team": "MIN",
+    "Position": "RB",
+    "KTC Rank": 360,
+    "Position Rank": 103,
+    "Position Rank_2": "RB103"
+  },
+  {
+    "Player Id": 5012,
+    "Player": "Mason Rudolph",
+    "Team": "PIT",
+    "Position": "QB",
+    "KTC Rank": 361,
+    "Position Rank": 57,
+    "Position Rank_2": "QB57"
+  },
+  {
+    "Player Id": 846,
+    "Player": "Tyler Johnson",
+    "Team": "NYJ",
+    "Position": "WR",
+    "KTC Rank": 362,
+    "Position Rank": 144,
+    "Position Rank_2": "WR144"
+  },
+  {
+    "Player Id": 348,
+    "Player": "Gardner Minshew",
+    "Team": "KCC",
+    "Position": "QB",
+    "KTC Rank": 363,
+    "Position Rank": 58,
+    "Position Rank_2": "QB58"
+  },
+  {
+    "Player Id": 4014,
+    "Player": "JuJu Smith-Schuster",
+    "Team": "KCC",
+    "Position": "WR",
+    "KTC Rank": 364,
+    "Position Rank": 145,
+    "Position Rank_2": "WR145"
+  },
+  {
+    "Player Id": 2630,
+    "Player": "Nick Westbrook-Ikhine",
+    "Team": "MIA",
+    "Position": "WR",
+    "KTC Rank": 365,
+    "Position Rank": 146,
+    "Position Rank_2": "WR146"
+  },
+  {
+    "Player Id": 1953,
+    "Player": "Zach Ertz",
+    "Team": "WAS",
+    "Position": "TE",
+    "KTC Rank": 366,
+    "Position Rank": 59,
+    "Position Rank_2": "TE59"
+  },
+  {
+    "Player Id": 1782,
+    "Player": "Israel Abanikanda",
+    "Team": "DAL",
+    "Position": "RB",
+    "KTC Rank": 367,
+    "Position Rank": 104,
+    "Position Rank_2": "RB104"
+  },
+  {
+    "Player Id": 4376,
+    "Player": "Ty Chandler",
+    "Team": "MIN",
+    "Position": "RB",
+    "KTC Rank": 368,
+    "Position Rank": 105,
+    "Position Rank_2": "RB105"
+  },
+  {
+    "Player Id": 328,
+    "Player": "Jamari Thrash",
+    "Team": "CLE",
+    "Position": "WR",
+    "KTC Rank": 369,
+    "Position Rank": 147,
+    "Position Rank_2": "WR147"
+  },
+  {
+    "Player Id": 4763,
+    "Player": "Curtis Samuel",
+    "Team": "BUF",
+    "Position": "WR",
+    "KTC Rank": 370,
+    "Position Rank": 148,
+    "Position Rank_2": "WR148"
+  },
+  {
+    "Player Id": 1425,
+    "Player": "Demarcus Robinson",
+    "Team": "SFO",
+    "Position": "WR",
+    "KTC Rank": 371,
+    "Position Rank": 149,
+    "Position Rank_2": "WR149"
+  },
+  {
+    "Player Id": 4577,
+    "Player": "Joe Flacco",
+    "Team": "CIN",
+    "Position": "QB",
+    "KTC Rank": 372,
+    "Position Rank": 59,
+    "Position Rank_2": "QB59"
+  },
+  {
+    "Player Id": 677,
+    "Player": "Xavier Gipson",
+    "Team": "NYG",
+    "Position": "WR",
+    "KTC Rank": 373,
+    "Position Rank": 150,
+    "Position Rank_2": "WR150"
+  },
+  {
+    "Player Id": 1382,
+    "Player": "Will Dissly",
+    "Team": "LAC",
+    "Position": "TE",
+    "KTC Rank": 374,
+    "Position Rank": 60,
+    "Position Rank_2": "TE60"
+  },
+  {
+    "Player Id": 4928,
+    "Player": "Miles Sanders",
+    "Team": "DAL",
+    "Position": "RB",
+    "KTC Rank": 375,
+    "Position Rank": 106,
+    "Position Rank_2": "RB106"
+  },
+  {
+    "Player Id": 3279,
+    "Player": "Deuce Vaughn",
+    "Team": "DEN",
+    "Position": "RB",
+    "KTC Rank": 376,
+    "Position Rank": 107,
+    "Position Rank_2": "RB107"
+  },
+  {
+    "Player Id": 3345,
+    "Player": "Drew Lock",
+    "Team": "SEA",
+    "Position": "QB",
+    "KTC Rank": 377,
+    "Position Rank": 60,
+    "Position Rank_2": "QB60"
+  },
+  {
+    "Player Id": 4344,
+    "Player": "Jeremy Ruckert",
+    "Team": "NYJ",
+    "Position": "TE",
+    "KTC Rank": 378,
+    "Position Rank": 61,
+    "Position Rank_2": "TE61"
+  },
+  {
+    "Player Id": 3278,
+    "Player": "Ainias Smith",
+    "Team": "CAR",
+    "Position": "WR",
+    "KTC Rank": 379,
+    "Position Rank": 151,
+    "Position Rank_2": "WR151"
+  },
+  {
+    "Player Id": 4181,
+    "Player": "Elijah Mitchell",
+    "Team": "NEP",
+    "Position": "RB",
+    "KTC Rank": 380,
+    "Position Rank": 108,
+    "Position Rank_2": "RB108"
+  },
+  {
+    "Player Id": 1144,
+    "Player": "DeAndre Hopkins",
+    "Team": "BAL",
+    "Position": "WR",
+    "KTC Rank": 381,
+    "Position Rank": 152,
+    "Position Rank_2": "WR152"
+  },
+  {
+    "Player Id": 4297,
+    "Player": "Noah Brown",
+    "Team": "WAS",
+    "Position": "WR",
+    "KTC Rank": 382,
+    "Position Rank": 153,
+    "Position Rank_2": "WR153"
+  },
+  {
+    "Player Id": 2496,
+    "Player": "Bub Means",
+    "Team": "NOS",
+    "Position": "WR",
+    "KTC Rank": 383,
+    "Position Rank": 154,
+    "Position Rank_2": "WR154"
+  },
+  {
+    "Player Id": 2172,
+    "Player": "Frank Gore Jr",
+    "Team": "BUF",
+    "Position": "RB",
+    "KTC Rank": 384,
+    "Position Rank": 109,
+    "Position Rank_2": "RB109"
+  },
+  {
+    "Player Id": 1053,
+    "Player": "Johnny Wilson",
+    "Team": "PHI",
+    "Position": "WR",
+    "KTC Rank": 385,
+    "Position Rank": 155,
+    "Position Rank_2": "WR155"
+  },
+  {
+    "Player Id": 4277,
+    "Player": "Cam Akers",
+    "Team": "SEA",
+    "Position": "RB",
+    "KTC Rank": 386,
+    "Position Rank": 110,
+    "Position Rank_2": "RB110"
+  },
+  {
+    "Player Id": 4247,
+    "Player": "Tyrod Taylor",
+    "Team": "NYJ",
+    "Position": "QB",
+    "KTC Rank": 387,
+    "Position Rank": 61,
+    "Position Rank_2": "QB61"
+  },
+  {
+    "Player Id": 2597,
+    "Player": "Zamir White",
+    "Team": "LVR",
+    "Position": "RB",
+    "KTC Rank": 388,
+    "Position Rank": 111,
+    "Position Rank_2": "RB111"
+  },
+  {
+    "Player Id": 2542,
+    "Player": "Grant Calcaterra",
+    "Team": "PHI",
+    "Position": "TE",
+    "KTC Rank": 389,
+    "Position Rank": 62,
+    "Position Rank_2": "TE62"
+  },
+  {
+    "Player Id": 1077,
+    "Player": "Josh Oliver",
+    "Team": "MIN",
+    "Position": "TE",
+    "KTC Rank": 390,
+    "Position Rank": 63,
+    "Position Rank_2": "TE63"
+  },
+  {
+    "Player Id": 391,
+    "Player": "Sterling Shepard",
+    "Team": "TBB",
+    "Position": "WR",
+    "KTC Rank": 391,
+    "Position Rank": 156,
+    "Position Rank_2": "WR156"
+  },
+  {
+    "Player Id": 4425,
+    "Player": "Zay Jones",
+    "Team": "ARI",
+    "Position": "WR",
+    "KTC Rank": 392,
+    "Position Rank": 157,
+    "Position Rank_2": "WR157"
+  },
+  {
+    "Player Id": 4259,
+    "Player": "Kendall Milton",
+    "Team": "CIN",
+    "Position": "RB",
+    "KTC Rank": 393,
+    "Position Rank": 112,
+    "Position Rank_2": "RB112"
+  },
+  {
+    "Player Id": 2093,
+    "Player": "Tylan Wallace",
+    "Team": "BAL",
+    "Position": "WR",
+    "KTC Rank": 394,
+    "Position Rank": 158,
+    "Position Rank_2": "WR158"
+  },
+  {
+    "Player Id": 999,
+    "Player": "Charlie Kolar",
+    "Team": "BAL",
+    "Position": "TE",
+    "KTC Rank": 395,
+    "Position Rank": 64,
+    "Position Rank_2": "TE64"
+  },
+  {
+    "Player Id": 3167,
+    "Player": "Khalil Herbert",
+    "Team": "NYJ",
+    "Position": "RB",
+    "KTC Rank": 396,
+    "Position Rank": 113,
+    "Position Rank_2": "RB113"
+  },
+  {
+    "Player Id": 2432,
+    "Player": "Taysom Hill",
+    "Team": "NOS",
+    "Position": "QB",
+    "KTC Rank": 397,
+    "Position Rank": 62,
+    "Position Rank_2": "QB62"
+  },
+  {
+    "Player Id": 1702,
+    "Player": "Jake Browning",
+    "Team": "CIN",
+    "Position": "QB",
+    "KTC Rank": 398,
+    "Position Rank": 63,
+    "Position Rank_2": "QB63"
+  },
+  {
+    "Player Id": 1174,
+    "Player": "Julius Chestnut",
+    "Team": "TEN",
+    "Position": "RB",
+    "KTC Rank": 399,
+    "Position Rank": 114,
+    "Position Rank_2": "RB114"
+  },
+  {
+    "Player Id": 1705,
+    "Player": "AJ Dillon",
+    "Team": "PHI",
+    "Position": "RB",
+    "KTC Rank": 400,
+    "Position Rank": 115,
+    "Position Rank_2": "RB115"
+  },
+  {
+    "Player Id": 1034,
+    "Player": "Malik Heath",
+    "Team": "ATL",
+    "Position": "WR",
+    "KTC Rank": 401,
+    "Position Rank": 159,
+    "Position Rank_2": "WR159"
+  },
+  {
+    "Player Id": 2034,
+    "Player": "George Holani",
+    "Team": "SEA",
+    "Position": "RB",
+    "KTC Rank": 402,
+    "Position Rank": 116,
+    "Position Rank_2": "RB116"
+  },
+  {
+    "Player Id": 2155,
+    "Player": "Tim Patrick",
+    "Team": "JAC",
+    "Position": "WR",
+    "KTC Rank": 403,
+    "Position Rank": 160,
+    "Position Rank_2": "WR160"
+  },
+  {
+    "Player Id": 3982,
+    "Player": "Tyler Conklin",
+    "Team": "LAC",
+    "Position": "TE",
+    "KTC Rank": 404,
+    "Position Rank": 65,
+    "Position Rank_2": "TE65"
+  },
+  {
+    "Player Id": 1823,
+    "Player": "Jermaine Burton",
+    "Team": "CIN",
+    "Position": "WR",
+    "KTC Rank": 405,
+    "Position Rank": 161,
+    "Position Rank_2": "WR161"
+  },
+  {
+    "Player Id": 2318,
+    "Player": "Sione Vaki",
+    "Team": "DET",
+    "Position": "RB",
+    "KTC Rank": 406,
+    "Position Rank": 117,
+    "Position Rank_2": "RB117"
+  },
+  {
+    "Player Id": 1054,
+    "Player": "Adam Trautman",
+    "Team": "DEN",
+    "Position": "TE",
+    "KTC Rank": 407,
+    "Position Rank": 66,
+    "Position Rank_2": "TE66"
+  },
+  {
+    "Player Id": 4630,
+    "Player": "Van Jefferson",
+    "Team": "TEN",
+    "Position": "WR",
+    "KTC Rank": 408,
+    "Position Rank": 162,
+    "Position Rank_2": "WR162"
+  },
+  {
+    "Player Id": 2710,
+    "Player": "Alexander Mattison",
+    "Team": "MIA",
+    "Position": "RB",
+    "KTC Rank": 409,
+    "Position Rank": 118,
+    "Position Rank_2": "RB118"
+  },
+  {
+    "Player Id": 897,
+    "Player": "LaJohntay Wester",
+    "Team": "BAL",
+    "Position": "WR",
+    "KTC Rank": 410,
+    "Position Rank": 163,
+    "Position Rank_2": "WR163"
+  },
+  {
+    "Player Id": 5126,
+    "Player": "Kenny McIntosh",
+    "Team": "SEA",
+    "Position": "RB",
+    "KTC Rank": 411,
+    "Position Rank": 119,
+    "Position Rank_2": "RB119"
+  },
+  {
+    "Player Id": 1255,
+    "Player": "Hunter Long",
+    "Team": "JAC",
+    "Position": "TE",
+    "KTC Rank": 412,
+    "Position Rank": 67,
+    "Position Rank_2": "TE67"
+  },
+  {
+    "Player Id": 777,
+    "Player": "Derius Davis",
+    "Team": "LAC",
+    "Position": "WR",
+    "KTC Rank": 413,
+    "Position Rank": 164,
+    "Position Rank_2": "WR164"
+  },
+  {
+    "Player Id": 1891,
+    "Player": "Mecole Hardman",
+    "Team": "BUF",
+    "Position": "WR",
+    "KTC Rank": 414,
+    "Position Rank": 165,
+    "Position Rank_2": "WR165"
+  },
+  {
+    "Player Id": 2756,
+    "Player": "Tyler Lockett",
+    "Team": "LVR",
+    "Position": "WR",
+    "KTC Rank": 415,
+    "Position Rank": 166,
+    "Position Rank_2": "WR166"
+  },
+  {
+    "Player Id": 770,
+    "Player": "Carson Wentz",
+    "Team": "MIN",
+    "Position": "QB",
+    "KTC Rank": 416,
+    "Position Rank": 64,
+    "Position Rank_2": "QB64"
+  },
+  {
+    "Player Id": 4629,
+    "Player": "Kyle McCord",
+    "Team": "PHI",
+    "Position": "QB",
+    "KTC Rank": 417,
+    "Position Rank": 65,
+    "Position Rank_2": "QB65"
+  },
+  {
+    "Player Id": 1874,
+    "Player": "Dylan Laube",
+    "Team": "LVR",
+    "Position": "RB",
+    "KTC Rank": 418,
+    "Position Rank": 120,
+    "Position Rank_2": "RB120"
+  },
+  {
+    "Player Id": 2110,
+    "Player": "David Bell",
+    "Team": "CLE",
+    "Position": "WR",
+    "KTC Rank": 419,
+    "Position Rank": 167,
+    "Position Rank_2": "WR167"
+  },
+  {
+    "Player Id": 3449,
+    "Player": "Harrison Bryant",
+    "Team": "HOU",
+    "Position": "TE",
+    "KTC Rank": 420,
+    "Position Rank": 68,
+    "Position Rank_2": "TE68"
+  },
+  {
+    "Player Id": 3593,
+    "Player": "Foster Moreau",
+    "Team": "NOS",
+    "Position": "TE",
+    "KTC Rank": 421,
+    "Position Rank": 69,
+    "Position Rank_2": "TE69"
+  },
+  {
+    "Player Id": 3612,
+    "Player": "Josh Reynolds",
+    "Team": "NYJ",
+    "Position": "WR",
+    "KTC Rank": 422,
+    "Position Rank": 168,
+    "Position Rank_2": "WR168"
+  },
+  {
+    "Player Id": 2967,
+    "Player": "Ray-Ray McCloud III",
+    "Team": "NYG",
+    "Position": "WR",
+    "KTC Rank": 423,
+    "Position Rank": 169,
+    "Position Rank_2": "WR169"
+  },
+  {
+    "Player Id": 881,
+    "Player": "Thomas Fidone II",
+    "Team": "NYG",
+    "Position": "TE",
+    "KTC Rank": 424,
+    "Position Rank": 70,
+    "Position Rank_2": "TE70"
+  },
+  {
+    "Player Id": 2439,
+    "Player": "Brandin Cooks",
+    "Team": "BUF",
+    "Position": "WR",
+    "KTC Rank": 425,
+    "Position Rank": 170,
+    "Position Rank_2": "WR170"
+  },
+  {
+    "Player Id": 3284,
+    "Player": "Kalif Raymond",
+    "Team": "DET",
+    "Position": "WR",
+    "KTC Rank": 426,
+    "Position Rank": 171,
+    "Position Rank_2": "WR171"
+  },
+  {
+    "Player Id": 1326,
+    "Player": "Trayveon Williams",
+    "Team": "CLE",
+    "Position": "RB",
+    "KTC Rank": 427,
+    "Position Rank": 121,
+    "Position Rank_2": "RB121"
+  },
+  {
+    "Player Id": 1111,
+    "Player": "Devin Duvernay",
+    "Team": "CHI",
+    "Position": "WR",
+    "KTC Rank": 428,
+    "Position Rank": 172,
+    "Position Rank_2": "WR172"
+  },
+  {
+    "Player Id": 4993,
+    "Player": "Austin Hooper",
+    "Team": "NEP",
+    "Position": "TE",
+    "KTC Rank": 429,
+    "Position Rank": 71,
+    "Position Rank_2": "TE71"
+  },
+  {
+    "Player Id": 1742,
+    "Player": "Jimmy Garoppolo",
+    "Team": "LAR",
+    "Position": "QB",
+    "KTC Rank": 430,
+    "Position Rank": 66,
+    "Position Rank_2": "QB66"
+  },
+  {
+    "Player Id": 2552,
+    "Player": "Stetson Bennett IV",
+    "Team": "LAR",
+    "Position": "QB",
+    "KTC Rank": 431,
+    "Position Rank": 67,
+    "Position Rank_2": "QB67"
+  },
+  {
+    "Player Id": 1594,
+    "Player": "Trey Sermon",
+    "Team": "PIT",
+    "Position": "RB",
+    "KTC Rank": 432,
+    "Position Rank": 122,
+    "Position Rank_2": "RB122"
+  },
+  {
+    "Player Id": 557,
+    "Player": "Ben Skowronek",
+    "Team": "PIT",
+    "Position": "WR",
+    "KTC Rank": 433,
+    "Position Rank": 173,
+    "Position Rank_2": "WR173"
+  },
+  {
+    "Player Id": 1713,
+    "Player": "Travis Homer",
+    "Team": "CHI",
+    "Position": "RB",
+    "KTC Rank": 434,
+    "Position Rank": 123,
+    "Position Rank_2": "RB123"
+  },
+  {
+    "Player Id": 5087,
+    "Player": "Jalen Reagor",
+    "Team": "LAC",
+    "Position": "WR",
+    "KTC Rank": 435,
+    "Position Rank": 174,
+    "Position Rank_2": "WR174"
+  },
+  {
+    "Player Id": 1565,
+    "Player": "Ashton Dulin",
+    "Team": "IND",
+    "Position": "WR",
+    "KTC Rank": 436,
+    "Position Rank": 175,
+    "Position Rank_2": "WR175"
+  },
+  {
+    "Player Id": 1448,
+    "Player": "Pierre Strong Jr",
+    "Team": "GBP",
+    "Position": "RB",
+    "KTC Rank": 437,
+    "Position Rank": 124,
+    "Position Rank_2": "RB124"
+  },
+  {
+    "Player Id": 4429,
+    "Player": "Marquez Valdes-Scantling",
+    "Team": "PIT",
+    "Position": "WR",
+    "KTC Rank": 438,
+    "Position Rank": 176,
+    "Position Rank_2": "WR176"
+  },
+  {
+    "Player Id": 5252,
+    "Player": "Justin Shorter",
+    "Team": "LVR",
+    "Position": "WR",
+    "KTC Rank": 439,
+    "Position Rank": 177,
+    "Position Rank_2": "WR177"
+  },
+  {
+    "Player Id": 3581,
+    "Player": "Austin Ekeler",
+    "Team": "WAS",
+    "Position": "RB",
+    "KTC Rank": 440,
+    "Position Rank": 125,
+    "Position Rank_2": "RB125"
+  },
+  {
+    "Player Id": 505,
+    "Player": "Jelani Woods",
+    "Team": "NYJ",
+    "Position": "TE",
+    "KTC Rank": 441,
+    "Position Rank": 72,
+    "Position Rank_2": "TE72"
+  },
+  {
+    "Player Id": 1440,
+    "Player": "Adam Thielen",
+    "Team": "PIT",
+    "Position": "WR",
+    "KTC Rank": 442,
+    "Position Rank": 178,
+    "Position Rank_2": "WR178"
+  }
+]
