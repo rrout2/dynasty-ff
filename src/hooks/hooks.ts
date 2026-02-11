@@ -363,6 +363,7 @@ export function useTradeSuggestions(leagueId: string, teamId: string) {
                     maxFairnessPercentageDifference: 5,
                     perSlotCandidateLimit: 25,
                     maxResults: 300,
+                    weekId: 19,
                 },
                 headers: {
                     Authorization: `Bearer ${authToken}`,
