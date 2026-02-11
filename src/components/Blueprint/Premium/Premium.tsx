@@ -55,15 +55,17 @@ function getArchetypeBackground(archetype: string) {
         case 'cornerstone':
             return 'linear-gradient(180deg, #CD00FF 0%, #7B0099 100%)';
         case 'foundational':
-            return 'linear-gradient(180deg, #00B1FF 0%, #006A99 100%)';
-        case 'productivevet':
+            return 'linear-gradient(180deg, #3105C1 0%, #08022B 99.98%)';
+        case 'upsidepremier':
             return 'linear-gradient(180deg, #1A5AFF 0%, #0E008D 99.98%)';
-        case 'mainstay':
-            return 'linear-gradient(180deg, #1AE069 0%, #0E7A39 100%)';
-        case 'upsideshot':
+        case 'productivevet':
             return 'linear-gradient(180deg, #007410 0%, #003A09 99.98%)';
-        case 'shorttermleaguewinner':
+        case 'mainstay':
+            return 'linear-gradient(180deg, #00B1FF 0%, #006A99 100%)';
+        case 'upsideshot':
             return 'linear-gradient(180deg, #EABA10 0%, #846909 100%)';
+        case 'shorttermleaguewinner':
+            return 'linear-gradient(180deg, #1AE069 0%, #0E7A39 100%)';
         case 'shorttermproduction':
             return 'linear-gradient(180deg, #EA9A19 0%, #FF4200 100%)';
         case 'serviceable':
@@ -851,11 +853,8 @@ function RosterMakeUp({
 }) {
     function getFontColor(archetype: string) {
         switch (archetype.toLowerCase()) {
-            case 'cornerstone':
-            case 'foundational':
-            case 'mainstay':
-            case 'shorttermleaguewinner':
             case 'shorttermproduction':
+            case 'jagdevelopmental':
                 return '#07223F';
         }
         return 'white';
@@ -1203,11 +1202,8 @@ function ArchetypeCard({archetype}: {archetype: string}) {
 
     function getFontColor() {
         switch (archetype.toLowerCase()) {
-            case 'cornerstone':
-            case 'foundational':
-            case 'mainstay':
-            case 'shorttermleaguewinner':
             case 'shorttermproduction':
+            case 'jagdevelopmental':
                 return '#07223F';
         }
         return 'white';
