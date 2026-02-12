@@ -261,7 +261,7 @@ export async function getPicks(
         // Identify the CURRENT_SEASON draft to get draftOrder + type
         let currentDraft: Draft | null = null;
         for (const d of drafts) {
-            if (d.season === CURRENT_SEASON) {
+            if (d.season === '' + currentSeason) {
                 currentDraft = {
                     draftOrder: d.draft_order,
                     type: d.type,
@@ -284,7 +284,7 @@ export async function getPicks(
 
         // For each relevant season
         for (const season of seasons) {
-            if (season !== CURRENT_SEASON) {
+            if (season !== currentSeason.toString()) {
                 //
                 // For 2026 (and beyond) => simpler logic, just generate up to leagueDraftRounds
                 //
@@ -344,11 +344,11 @@ export async function getPicks(
             if (!seasons.includes(season)) return;
             if (round < 1 || round > leagueDraftRounds) return;
 
-            if (season === CURRENT_SEASON) {
+            if (season === currentSeason.toString()) {
                 // find the CURRENT_SEASON pick with .round===round & original_roster_id===roster_id
                 const pickToUpdate = allPicks.find(
                     p =>
-                        p.season === CURRENT_SEASON &&
+                        p.season === currentSeason.toString() &&
                         p.round === round &&
                         p.original_roster_id === Number(roster_id)
                 );
@@ -385,7 +385,7 @@ export async function getPicks(
         for (const teamObj of Object.values(teams)) {
             for (const season of seasons) {
                 if ((teamObj as Team).picks[season]) {
-                    if (season === CURRENT_SEASON) {
+                    if (season === currentSeason.toString()) {
                         // Sort by overallPickIndex (lowest first)
                         (teamObj as Team).picks[season].sort(
                             (a, b) =>
@@ -421,6 +421,9 @@ export async function getPicks(
                 const pickList = team.picks[season] || [];
                 pickList.forEach(p => {
                     let pickName = `${season} Round ${p.round}`; // fallback label
+                    if (p.slot && p.slot > 0) {
+                        pickName += `, Pick ${p.slot}`;
+                    }
 
                     // Append original owner
                     if (
