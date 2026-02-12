@@ -2955,13 +2955,13 @@ function SuggestedMove({
         if (isRookiePickId(id)) {
             return rookiePickIdToString(id);
         }
+        if (!playerData[id]) return id;
         return !Number.isNaN(+id)
             ? `${playerData[id].first_name} ${playerData[id].last_name}`
             : id;
     }
 
     return (
-        // playerIdsToTrade[0] &&
         playerData && (
             <div className={styles.toTradeContainer}>
                 <div className={styles.moveTitleContainer}>
@@ -3072,6 +3072,8 @@ function SuggestedMove({
                                 options={optionsToTrade}
                                 value={getDisplayValueFromId(
                                     playerIdsToTrade[1]
+                                        ? getDisplayValueFromId(playerIdsToTrade[1])
+                                        : ''
                                 )}
                                 onChange={e => {
                                     const {
