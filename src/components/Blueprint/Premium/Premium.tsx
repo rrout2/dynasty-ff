@@ -339,12 +339,14 @@ export default function Premium({
                 year={2026}
                 notes={draftCapitalNotes.get(2026) || ''}
                 style={{left: '85px', top: '630px'}}
+                premium
             />
             <DraftCapitalNotes
                 labelColor="#F05A28"
                 year={2027}
                 notes={draftCapitalNotes.get(2027) || ''}
                 style={{left: '85px', top: '670px'}}
+                premium
             />
             <TopPriorities
                 topPriorities={topPriorities}

@@ -81,21 +81,22 @@ export const CURRENT_SEASON = '2025';
  * @returns {string} - a string describing the number of picks in each round for the given year
  */
 export const getPicksInfo = (picks: FinalPickData[], year: string) => {
-    if (picks.filter(p => p.season === year).length === 0) {
+    const thisYearPicks = picks.filter(p => p.season === year);
+    if (thisYearPicks.length === 0) {
         return '';
     }
-    const numFirsts = picks.filter(
-        p => p.round === 1 && p.season === year
-    ).length;
-    const numSeconds = picks.filter(
-        p => p.round === 2 && p.season === year
-    ).length;
-    const numThirds = picks.filter(
-        p => p.round === 3 && p.season === year
-    ).length;
-    const numFourths = picks.filter(
-        p => p.round === 4 && p.season === year
-    ).length;
+
+    const hasSlots = thisYearPicks.some(p => !!p.slot && p.slot > 0);
+    if (hasSlots) {
+        return thisYearPicks
+            .map(p => `${p.round}.${p.slot < 10 ? '0' : ''}${p.slot}`)
+            .join(', ');
+    }
+
+    const numFirsts = thisYearPicks.filter(p => p.round === 1).length;
+    const numSeconds = thisYearPicks.filter(p => p.round === 2).length;
+    const numThirds = thisYearPicks.filter(p => p.round === 3).length;
+    const numFourths = thisYearPicks.filter(p => p.round === 4).length;
     const firstInfo =
         numFirsts > 0
             ? `${numFirsts === 1 ? '' : numFirsts} 1st${

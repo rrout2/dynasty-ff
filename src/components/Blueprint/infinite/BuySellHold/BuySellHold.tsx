@@ -527,10 +527,9 @@ export function useBuySells(
             .slice(0, maxSells)
             .map(sell => ({
                 playerId: sell.player_id,
-                type:
-                    sell.verdict.toUpperCase().includes('SOFT')
-                        ? BuySellType.SoftSell
-                        : BuySellType.HardSell,
+                type: sell.verdict.toUpperCase().includes('SOFT')
+                    ? BuySellType.SoftSell
+                    : BuySellType.HardSell,
                 reason: sell.explanation,
             }));
     }

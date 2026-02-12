@@ -137,24 +137,27 @@ export default function Infinite() {
         setBuyPercent(
             Math.round(
                 (100 *
-                    verdicts.filter(v => v && v.verdict.toUpperCase().includes('BUY'))
-                        .length) /
+                    verdicts.filter(
+                        v => v && v.verdict.toUpperCase().includes('BUY')
+                    ).length) /
                     verdicts.length
             )
         );
         setSellPercent(
             Math.round(
                 (100 *
-                    verdicts.filter(v => v && v.verdict.toUpperCase().includes('SELL'))
-                        .length) /
+                    verdicts.filter(
+                        v => v && v.verdict.toUpperCase().includes('SELL')
+                    ).length) /
                     verdicts.length
             )
         );
         setHoldPercent(
             Math.round(
                 (100 *
-                    verdicts.filter(v => v && v.verdict.toUpperCase().includes('HOLD'))
-                        .length) /
+                    verdicts.filter(
+                        v => v && v.verdict.toUpperCase().includes('HOLD')
+                    ).length) /
                     verdicts.length
             )
         );

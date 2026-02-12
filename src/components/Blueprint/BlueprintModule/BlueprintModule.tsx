@@ -758,7 +758,6 @@ export default function BlueprintModule({
         const numYearOneFirsts = myPicks.filter(
             p => p.season === year1 && p.round === 1
         );
-
         let draftStrategy1 = DraftStrategyLabel.None;
         if (numYearOneFirsts.length >= 5) {
             draftStrategy1 = DraftStrategyLabel.Overload;
@@ -770,10 +769,10 @@ export default function BlueprintModule({
             draftStrategy1 = DraftStrategyLabel.Deficient;
         }
 
-        let draftStrategy2 = DraftStrategyLabel.None;
         const numYearTwoFirsts = myPicks.filter(
             p => p.season === year2 && p.round === 1
         );
+        let draftStrategy2 = DraftStrategyLabel.None;
         if (numYearTwoFirsts.length >= 5) {
             draftStrategy2 = DraftStrategyLabel.Overload;
         } else if (numYearTwoFirsts.length >= 3) {

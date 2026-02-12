@@ -723,11 +723,13 @@ export function DraftCapitalNotes({
     notes,
     style,
     labelColor,
+    premium,
 }: {
     year: number;
     notes: string;
     labelColor: string;
     style?: CSSProperties;
+    premium?: boolean;
 }) {
     return (
         <div className={styles.draftCapital} style={style}>
@@ -737,7 +739,21 @@ export function DraftCapitalNotes({
             >
                 {year}
             </div>
-            <div className={styles.draftCapitalNotes}>{notes}</div>
+            <div
+                className={styles.draftCapitalNotes}
+                style={
+                    premium
+                        ? {
+                              maxWidth: '115px',
+                              overflow: 'hidden',
+                              whiteSpace: 'nowrap',
+                              textOverflow: 'ellipsis',
+                          }
+                        : {}
+                }
+            >
+                {notes}
+            </div>
         </div>
     );
 }
