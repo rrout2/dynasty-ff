@@ -748,10 +748,42 @@ export default function BlueprintModule({
 
     useEffect(() => {
         if (!myPicks) return;
-        const nextYearInfo = getPicksInfo(myPicks, '2026');
+        const year1 = '2026';
+        const year2 = '2027';
+        const nextYearInfo = getPicksInfo(myPicks, year1);
         setDraftCapitalNotes2026(nextYearInfo);
-        const followingYearInfo = getPicksInfo(myPicks, '2027');
+        const followingYearInfo = getPicksInfo(myPicks, year2);
         setDraftCapitalNotes2027(followingYearInfo);
+
+        const numYearOneFirsts = myPicks.filter(
+            p => p.season === year1 && p.round === 1
+        );
+
+        let draftStrategy1 = DraftStrategyLabel.None;
+        if (numYearOneFirsts.length >= 5) {
+            draftStrategy1 = DraftStrategyLabel.Overload;
+        } else if (numYearOneFirsts.length >= 3) {
+            draftStrategy1 = DraftStrategyLabel.Surplus;
+        } else if (numYearOneFirsts.length >= 1) {
+            draftStrategy1 = DraftStrategyLabel.Adequate;
+        } else {
+            draftStrategy1 = DraftStrategyLabel.Deficient;
+        }
+
+        let draftStrategy2 = DraftStrategyLabel.None;
+        const numYearTwoFirsts = myPicks.filter(
+            p => p.season === year2 && p.round === 1
+        );
+        if (numYearTwoFirsts.length >= 5) {
+            draftStrategy2 = DraftStrategyLabel.Overload;
+        } else if (numYearTwoFirsts.length >= 3) {
+            draftStrategy2 = DraftStrategyLabel.Surplus;
+        } else if (numYearTwoFirsts.length >= 1) {
+            draftStrategy2 = DraftStrategyLabel.Adequate;
+        } else {
+            draftStrategy2 = DraftStrategyLabel.Deficient;
+        }
+        setDraftStrategy([draftStrategy1, draftStrategy2]);
     }, [myPicks]);
 
     useEffect(() => {
