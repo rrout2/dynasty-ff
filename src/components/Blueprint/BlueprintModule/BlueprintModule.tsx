@@ -2957,7 +2957,10 @@ function SuggestedMove({
 }: SuggestedMoveProps) {
     const playerData = usePlayerData();
     const [optionsToTrade, setOptionsToTrade] = useState<string[]>([]);
-    const [pinnedReturnAsset, setPinnedReturnAsset] = useState('');
+    const [downtierPinnedReturnAssets, setDowntierPinnedReturnAssets] = useState<string[]>([]);
+    const [loadingAllThree, setLoadingAllThree] = useState(false);
+    const [loadingRow, setLoadingRow] = useState(-1);
+
     useEffect(() => {
         const nonIdPlayerOptions: string[] = [];
         for (let i = 1; i < 15; i++) {
@@ -3011,7 +3014,7 @@ function SuggestedMove({
                 weekId: 19,
                 moveType: 2,
                 outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])],
-                inAssetKeys: [playerIdToAssetKey.get(pinnedReturnAsset)],
+                inAssetKeys: downtierPinnedReturnAssets.map(id => playerIdToAssetKey.get(id)),
                 maxResults: 30,
             },
             headers: {
@@ -3038,6 +3041,17 @@ function SuggestedMove({
     }
 
     async function newCustomDowntierAllThree() {
+        const protectedRows: number[] = [];
+        for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
+            const rowTargets = playerIdsToTarget[rowIdx];
+            if (downtierPinnedReturnAssets.includes(rowTargets[0]) !== downtierPinnedReturnAssets.includes(rowTargets[1])) {
+                protectedRows.push(rowIdx);
+                newCustomDowntier(rowIdx);
+            }
+        }
+
+        if (protectedRows.length === 3) return;
+
         const authToken = sessionStorage.getItem('authToken');
         const options = {
             method: 'POST',
@@ -3056,12 +3070,12 @@ function SuggestedMove({
             },
         };
         const res = await axios.request(options);
-        console.log(res.data);
         const ideas = (res.data as TradeIdea[])
             .filter(idea => !!idea);
         shuffle(ideas);
         const newPlayerIdsToTarget = [...playerIdsToTarget];
         for (let i = 0; i < 3 && i < ideas.length; i++) {
+            if (protectedRows.includes(i)) continue;
             newPlayerIdsToTarget[i] = ideas[i].inAssets.map(assetToString);
         }
         setPlayerIdsToTarget(newPlayerIdsToTarget);
@@ -3161,6 +3175,7 @@ function SuggestedMove({
                     {move === Move.DOWNTIER && (
                         <Tooltip title={`Find Downtiers for ${getDisplayValueFromId(playerIdsToTrade[0])}`}>
                             <IconButton
+                                loading={loadingAllThree || loadingRow > -1}
                                 sx={{
                                     '&:hover': {
                                         backgroundColor:
@@ -3176,7 +3191,10 @@ function SuggestedMove({
                                     },
                                 }}
                                 onClick={() => {
-                                    newCustomDowntierAllThree();
+                                    setLoadingAllThree(true);
+                                    newCustomDowntierAllThree().finally(() => {
+                                        setLoadingAllThree(false);
+                                    });
                                 }}
                             >
                                 <Casino sx={{color: 'white'}} />
@@ -3288,9 +3306,11 @@ function SuggestedMove({
                                 <div className={styles.downtierRow}>
                                     <PinButton
                                         playerId={playerIdsToTarget[rowIdx][0]}
-                                        pinnedReturnAsset={pinnedReturnAsset}
-                                        setPinnedReturnAsset={
-                                            setPinnedReturnAsset
+                                        downtierPinnedReturnAssets={
+                                            downtierPinnedReturnAssets
+                                        }
+                                        setDowntierPinnedReturnAssets={
+                                            setDowntierPinnedReturnAssets
                                         }
                                     />
                                     <DomainAutocomplete
@@ -3315,9 +3335,11 @@ function SuggestedMove({
                                     />
                                     <PinButton
                                         playerId={playerIdsToTarget[rowIdx][1]}
-                                        pinnedReturnAsset={pinnedReturnAsset}
-                                        setPinnedReturnAsset={
-                                            setPinnedReturnAsset
+                                        downtierPinnedReturnAssets={
+                                            downtierPinnedReturnAssets
+                                        }
+                                        setDowntierPinnedReturnAssets={
+                                            setDowntierPinnedReturnAssets
                                         }
                                     />
                                     <DomainAutocomplete
@@ -3336,6 +3358,7 @@ function SuggestedMove({
                                         }}
                                     />
                                     <IconButton
+                                        loading={loadingRow === rowIdx || loadingAllThree}
                                         sx={{
                                             '&:hover': {
                                                 backgroundColor:
@@ -3352,13 +3375,16 @@ function SuggestedMove({
                                             },
                                         }}
                                         onClick={() => {
-                                            newCustomDowntier(rowIdx);
+                                            setLoadingRow(rowIdx);
+                                            newCustomDowntier(rowIdx).finally(() => setLoadingRow(-1));
                                         }}
                                         disabled={
-                                            pinnedReturnAsset !==
-                                                playerIdsToTarget[rowIdx][0] &&
-                                            pinnedReturnAsset !==
+                                            downtierPinnedReturnAssets.includes(
+                                                playerIdsToTarget[rowIdx][0]
+                                            ) ===
+                                            downtierPinnedReturnAssets.includes(
                                                 playerIdsToTarget[rowIdx][1]
+                                            )
                                         }
                                     >
                                         <Casino sx={{color: 'white'}} />
@@ -3374,14 +3400,18 @@ function SuggestedMove({
 }
 
 type PinButtonProps = {
-    pinnedReturnAsset: string;
-    setPinnedReturnAsset: (asset: string) => void;
+    // pinnedReturnAsset: string;
+    // setPinnedReturnAsset: (asset: string) => void;
+    downtierPinnedReturnAssets: string[];
+    setDowntierPinnedReturnAssets: (assets: string[]) => void;
     playerId: string;
 };
 
 function PinButton({
-    pinnedReturnAsset,
-    setPinnedReturnAsset,
+    // pinnedReturnAsset,
+    // setPinnedReturnAsset,
+    downtierPinnedReturnAssets,
+    setDowntierPinnedReturnAssets,
     playerId,
 }: PinButtonProps) {
     return (
@@ -3398,14 +3428,27 @@ function PinButton({
                 },
             }}
             onClick={() => {
-                if (pinnedReturnAsset === playerId) {
-                    setPinnedReturnAsset('');
-                    return;
+                if (!downtierPinnedReturnAssets.includes(playerId)) {
+                    setDowntierPinnedReturnAssets([
+                        ...downtierPinnedReturnAssets,
+                        playerId,
+                    ]);
+                } else {
+                    setDowntierPinnedReturnAssets(
+                        downtierPinnedReturnAssets.filter(
+                            asset => asset !== playerId
+                        )
+                    );
                 }
-                setPinnedReturnAsset(playerId);
+
+                // if (pinnedReturnAsset === playerId) {
+                //     setPinnedReturnAsset('');
+                //     return;
+                // }
+                // setPinnedReturnAsset(playerId);
             }}
         >
-            {pinnedReturnAsset === playerId ? (
+            {downtierPinnedReturnAssets.includes(playerId) ? (
                 <PushPin sx={{color: 'white'}} />
             ) : (
                 <PushPinOutlined sx={{color: 'white'}} />
