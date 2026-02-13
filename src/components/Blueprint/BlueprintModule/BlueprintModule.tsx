@@ -76,7 +76,7 @@ import {getDisplayName} from '../../Team/TeamPage/TeamPage';
 import DomainAutocomplete from '../shared/DomainAutocomplete';
 import {getPicksInfo} from '../../../sleeper-api/picks';
 import DomainTextField from '../shared/DomainTextField';
-import {Box, Button, IconButton, Modal} from '@mui/material';
+import {Box, Button, IconButton, Modal, Tooltip} from '@mui/material';
 import {
     AddCircleOutline,
     FileDownload,
@@ -3037,6 +3037,36 @@ function SuggestedMove({
         setPlayerIdsToTarget(newPlayerIdsToTarget);
     }
 
+    async function newCustomDowntierAllThree() {
+        const authToken = sessionStorage.getItem('authToken');
+        const options = {
+            method: 'POST',
+            url: `${AZURE_API_URL}/TradeRulesAdmin/customize`,
+            data: {
+                leagueId: leagueId,
+                rosterId: rosterId,
+                gradeRunVersionNumber: 1,
+                weekId: 19,
+                moveType: 2,
+                outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])],
+                maxResults: 30,
+            },
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+            },
+        };
+        const res = await axios.request(options);
+        console.log(res.data);
+        const ideas = (res.data as TradeIdea[])
+            .filter(idea => !!idea);
+        shuffle(ideas);
+        const newPlayerIdsToTarget = [...playerIdsToTarget];
+        for (let i = 0; i < 3 && i < ideas.length; i++) {
+            newPlayerIdsToTarget[i] = ideas[i].inAssets.map(assetToString);
+        }
+        setPlayerIdsToTarget(newPlayerIdsToTarget);
+    }
+
     return (
         playerData && (
             <div className={styles.toTradeContainer}>
@@ -3128,6 +3158,31 @@ function SuggestedMove({
                             }
                         }}
                     />
+                    {move === Move.DOWNTIER && (
+                        <Tooltip title={`Find Downtiers for ${getDisplayValueFromId(playerIdsToTrade[0])}`}>
+                            <IconButton
+                                sx={{
+                                    '&:hover': {
+                                        backgroundColor:
+                                            'rgba(255, 255, 255, 0.2)',
+                                    },
+                                    '&.Mui-disabled': {
+                                        opacity: 0.4,
+                                    },
+                                }}
+                                TouchRippleProps={{
+                                    style: {
+                                        color: 'white',
+                                    },
+                                }}
+                                onClick={() => {
+                                    newCustomDowntierAllThree();
+                                }}
+                            >
+                                <Casino sx={{color: 'white'}} />
+                            </IconButton>
+                        </Tooltip>
+                    )}
                     {move === Move.UPTIER && (
                         <>
                             <img
