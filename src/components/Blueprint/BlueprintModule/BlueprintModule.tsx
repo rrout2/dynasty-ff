@@ -2957,7 +2957,8 @@ function SuggestedMove({
 }: SuggestedMoveProps) {
     const playerData = usePlayerData();
     const [optionsToTrade, setOptionsToTrade] = useState<string[]>([]);
-    const [downtierPinnedReturnAssets, setDowntierPinnedReturnAssets] = useState<string[]>([]);
+    const [downtierPinnedReturnAssets, setDowntierPinnedReturnAssets] =
+        useState(playerIdsToTarget.map(row => row.map(() => false)));
     const [loadingAllThree, setLoadingAllThree] = useState(false);
     const [loadingRow, setLoadingRow] = useState(-1);
 
@@ -3014,7 +3015,9 @@ function SuggestedMove({
                 weekId: 19,
                 moveType: 2,
                 outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])],
-                inAssetKeys: downtierPinnedReturnAssets.map(id => playerIdToAssetKey.get(id)),
+                inAssetKeys: playerIdsToTarget[rowIdx]
+                    .filter((_, idx) => downtierPinnedReturnAssets[rowIdx][idx])
+                    .map(id => playerIdToAssetKey.get(id)),
                 maxResults: 30,
             },
             headers: {
@@ -3043,8 +3046,10 @@ function SuggestedMove({
     async function newCustomDowntierAllThree() {
         const protectedRows: number[] = [];
         for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
-            const rowTargets = playerIdsToTarget[rowIdx];
-            if (downtierPinnedReturnAssets.includes(rowTargets[0]) !== downtierPinnedReturnAssets.includes(rowTargets[1])) {
+            if (
+                downtierPinnedReturnAssets[rowIdx][0] !==
+                downtierPinnedReturnAssets[rowIdx][1]
+            ) {
                 protectedRows.push(rowIdx);
                 newCustomDowntier(rowIdx);
             }
@@ -3070,8 +3075,7 @@ function SuggestedMove({
             },
         };
         const res = await axios.request(options);
-        const ideas = (res.data as TradeIdea[])
-            .filter(idea => !!idea);
+        const ideas = (res.data as TradeIdea[]).filter(idea => !!idea);
         shuffle(ideas);
         const newPlayerIdsToTarget = [...playerIdsToTarget];
         for (let i = 0; i < 3 && i < ideas.length; i++) {
@@ -3173,7 +3177,11 @@ function SuggestedMove({
                         }}
                     />
                     {move === Move.DOWNTIER && (
-                        <Tooltip title={`Find Downtiers for ${getDisplayValueFromId(playerIdsToTrade[0])}`}>
+                        <Tooltip
+                            title={`Find Downtiers for ${getDisplayValueFromId(
+                                playerIdsToTrade[0]
+                            )}`}
+                        >
                             <IconButton
                                 loading={loadingAllThree || loadingRow > -1}
                                 sx={{
@@ -3305,7 +3313,7 @@ function SuggestedMove({
                             {[0, 1, 2].map(rowIdx => (
                                 <div className={styles.downtierRow}>
                                     <PinButton
-                                        playerId={playerIdsToTarget[rowIdx][0]}
+                                        pinCoords={[rowIdx, 0]}
                                         downtierPinnedReturnAssets={
                                             downtierPinnedReturnAssets
                                         }
@@ -3334,7 +3342,7 @@ function SuggestedMove({
                                         style={{margin: '0', padding: '0'}}
                                     />
                                     <PinButton
-                                        playerId={playerIdsToTarget[rowIdx][1]}
+                                        pinCoords={[rowIdx, 1]}
                                         downtierPinnedReturnAssets={
                                             downtierPinnedReturnAssets
                                         }
@@ -3358,7 +3366,10 @@ function SuggestedMove({
                                         }}
                                     />
                                     <IconButton
-                                        loading={loadingRow === rowIdx || loadingAllThree}
+                                        loading={
+                                            loadingRow === rowIdx ||
+                                            loadingAllThree
+                                        }
                                         sx={{
                                             '&:hover': {
                                                 backgroundColor:
@@ -3367,7 +3378,6 @@ function SuggestedMove({
                                             '&.Mui-disabled': {
                                                 opacity: 0.4,
                                             },
-
                                         }}
                                         TouchRippleProps={{
                                             style: {
@@ -3376,15 +3386,17 @@ function SuggestedMove({
                                         }}
                                         onClick={() => {
                                             setLoadingRow(rowIdx);
-                                            newCustomDowntier(rowIdx).finally(() => setLoadingRow(-1));
+                                            newCustomDowntier(rowIdx).finally(
+                                                () => setLoadingRow(-1)
+                                            );
                                         }}
                                         disabled={
-                                            downtierPinnedReturnAssets.includes(
-                                                playerIdsToTarget[rowIdx][0]
-                                            ) ===
-                                            downtierPinnedReturnAssets.includes(
-                                                playerIdsToTarget[rowIdx][1]
-                                            )
+                                            downtierPinnedReturnAssets[
+                                                rowIdx
+                                            ][0] ===
+                                            downtierPinnedReturnAssets[
+                                                rowIdx
+                                            ][1]
                                         }
                                     >
                                         <Casino sx={{color: 'white'}} />
@@ -3400,19 +3412,15 @@ function SuggestedMove({
 }
 
 type PinButtonProps = {
-    // pinnedReturnAsset: string;
-    // setPinnedReturnAsset: (asset: string) => void;
-    downtierPinnedReturnAssets: string[];
-    setDowntierPinnedReturnAssets: (assets: string[]) => void;
-    playerId: string;
+    downtierPinnedReturnAssets: boolean[][];
+    setDowntierPinnedReturnAssets: (assets: boolean[][]) => void;
+    pinCoords: number[];
 };
 
 function PinButton({
-    // pinnedReturnAsset,
-    // setPinnedReturnAsset,
     downtierPinnedReturnAssets,
     setDowntierPinnedReturnAssets,
-    playerId,
+    pinCoords,
 }: PinButtonProps) {
     return (
         <IconButton
@@ -3428,18 +3436,24 @@ function PinButton({
                 },
             }}
             onClick={() => {
-                if (!downtierPinnedReturnAssets.includes(playerId)) {
-                    setDowntierPinnedReturnAssets([
-                        ...downtierPinnedReturnAssets,
-                        playerId,
-                    ]);
-                } else {
-                    setDowntierPinnedReturnAssets(
-                        downtierPinnedReturnAssets.filter(
-                            asset => asset !== playerId
-                        )
-                    );
-                }
+                const newDowntierPinnedReturnAssets = [
+                    ...downtierPinnedReturnAssets,
+                ];
+                newDowntierPinnedReturnAssets[pinCoords[0]][pinCoords[1]] =
+                    !downtierPinnedReturnAssets[pinCoords[0]][pinCoords[1]];
+                setDowntierPinnedReturnAssets(newDowntierPinnedReturnAssets);
+                // if (!downtierPinnedReturnAssets.includes(playerId)) {
+                //     setDowntierPinnedReturnAssets([
+                //         ...downtierPinnedReturnAssets,
+                //         playerId,
+                //     ]);
+                // } else {
+                //     setDowntierPinnedReturnAssets(
+                //         downtierPinnedReturnAssets.filter(
+                //             asset => asset !== playerId
+                //         )
+                //     );
+                // }
 
                 // if (pinnedReturnAsset === playerId) {
                 //     setPinnedReturnAsset('');
@@ -3448,7 +3462,7 @@ function PinButton({
                 // setPinnedReturnAsset(playerId);
             }}
         >
-            {downtierPinnedReturnAssets.includes(playerId) ? (
+            {downtierPinnedReturnAssets[pinCoords[0]][pinCoords[1]] ? (
                 <PushPin sx={{color: 'white'}} />
             ) : (
                 <PushPinOutlined sx={{color: 'white'}} />
