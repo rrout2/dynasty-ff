@@ -73,9 +73,8 @@ import {
     BuySellPlayerProps,
     verdictToEnum,
 } from '../components/Blueprint/NewInfinite/NewInfinite';
-import {getPositionalOrder} from '../components/Blueprint/infinite/BuySellHold/BuySellHold';
 
-const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
+export const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
 export type LeagueSettings = {
     numberOfTeams: number;
@@ -330,7 +329,7 @@ type TradeSuggestion = {
     percentageDifference: number;
 };
 
-type TradeAsset = {
+export type TradeAsset = {
     assetKey: string;
     kind: string;
     name: string;
@@ -364,7 +363,7 @@ export function useTradeSuggestions(leagueId: string, teamId: string) {
                     maxFairnessPercentageDifference: 5,
                     perSlotCandidateLimit: 25,
                     maxResults: 300,
-                    weekId: 19,
+                    weekId: 19, // hardcoded
                 },
                 headers: {
                     Authorization: `Bearer ${authToken}`,

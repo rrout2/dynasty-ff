@@ -9,12 +9,14 @@ import {
     tepIcon,
 } from '../../../consts/images';
 import {
+    AZURE_API_URL,
     convertStringToOutlookOption,
     convertStringToRosterArchetype,
     convertStringToValueArchetype,
     LeagueSettings,
     PowerRank,
     RosterPlayer,
+    TradeAsset,
     useAdpData,
     useBlueprint,
     useDomainTrueRanks,
@@ -81,6 +83,8 @@ import {
     Preview,
     Save,
     Casino,
+    PushPin,
+    PushPinOutlined,
 } from '@mui/icons-material';
 import NewV1, {rookiePickIdToString} from '../NewV1/NewV1';
 import {toPng} from 'html-to-image';
@@ -253,6 +257,13 @@ export type FullMove = {
     playerIdsToTarget: string[][];
     priorityDescription: string;
 };
+
+function assetToString(p: TradeAsset) {
+    if (p.playerSleeperId) {
+        return '' + p.playerSleeperId;
+    }
+    return `RP-API-${p.pickYear}-${p.pickRound}-${p.overallPickIndex}`;
+}
 
 export default function BlueprintModule({
     premium = false,
@@ -465,6 +476,9 @@ export default function BlueprintModule({
         useLeaguePowerRanks(leagueId);
     const [searchParams, setSearchParams] = useSearchParams();
     const [isDownloading, setIsDownloading] = useState(false);
+    const [playerIdToAssetKey, setPlayerIdToAssetKey] = useState<
+        Map<string, string>
+    >(new Map());
 
     useEffect(() => {
         if (!blueprint || !playerData) return;
@@ -614,6 +628,12 @@ export default function BlueprintModule({
         setRosterPlayers(
             blueprint.rosterPlayers.map(p => playerData[p.playerSleeperBotId])
         );
+        const newPlayerIdToAssetKey = new Map<string, string>(
+            playerIdToAssetKey
+        );
+        for (const p of blueprint.rosterPlayers) {
+            newPlayerIdToAssetKey.set(p.playerSleeperBotId, `player:${p.id}`);
+        }
         setApiRosterPlayers(blueprint.rosterPlayers);
 
         const leagueSettings = blueprint.leagueSettings;
@@ -792,34 +812,34 @@ export default function BlueprintModule({
         ) {
             return;
         }
-        const newCollatedTrades = new Map<string, string[]>();
+        const collatedTrades = new Map<string, string[]>();
         const priorityDescriptions = new Map<string, string>();
         const targetRosterCounts = new Map<number, number>();
+        const newPlayerIdToAssetKey = new Map<string, string>(
+            playerIdToAssetKey
+        );
+
+        function assetToStringAndStore(p: TradeAsset) {
+            const str = assetToString(p);
+            newPlayerIdToAssetKey.set(str, p.assetKey);
+            return str;
+        }
+
         for (const suggestion of apiTradeSuggestions) {
             let key = suggestion.outAssets
-                .map(p => {
-                    if (p.playerSleeperId) {
-                        return p.playerSleeperId;
-                    }
-                    return `RP-API-${p.pickYear}-${p.pickRound}`;
-                })
+                .map(assetToStringAndStore)
                 .sort()
                 .join(',');
             key += `,${suggestion.rule.moveType}`; // to differentiate between pivot and downtier
             const value = suggestion.inAssets
-                .map(p => {
-                    if (p.playerSleeperId) {
-                        return p.playerSleeperId;
-                    }
-                    return `RP-API-${p.pickYear}-${p.pickRound}`;
-                })
+                .map(assetToStringAndStore)
                 .sort()
                 .join(',');
-            if (!newCollatedTrades.has(key)) {
-                newCollatedTrades.set(key, [value]);
-            } else if (!newCollatedTrades.get(key)!.includes(value)) {
+            if (!collatedTrades.has(key)) {
+                collatedTrades.set(key, [value]);
+            } else if (!collatedTrades.get(key)!.includes(value)) {
                 // don't add duplicates
-                newCollatedTrades.get(key)!.push(value);
+                collatedTrades.get(key)!.push(value);
             }
             if (!priorityDescriptions.has(key)) {
                 priorityDescriptions.set(
@@ -847,7 +867,7 @@ export default function BlueprintModule({
             .slice(0, 2);
         setTradePartners(mostCommonTargetRosterId);
 
-        const apiSuggestions = newCollatedTrades
+        const apiSuggestions = collatedTrades
             .entries()
             .map(([key, values]) => ({
                 outPlayerIds: key.split(',').slice(0, -1), // remove move type
@@ -916,6 +936,7 @@ export default function BlueprintModule({
                 return toTargetB - toTargetA;
             })
         );
+        setPlayerIdToAssetKey(newPlayerIdToAssetKey);
     }, [apiTradeSuggestions, searchParams]);
 
     useEffect(() => {
@@ -1059,13 +1080,6 @@ export default function BlueprintModule({
             return styles.flexStarter;
         }
         return '';
-    }
-
-    function shuffle(array: any[]) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
     }
 
     function hasTeamId() {
@@ -2404,6 +2418,11 @@ export default function BlueprintModule({
                                 rosterPlayers={rosterPlayers}
                                 moveNumber={i + 1}
                                 rerollMove={() => rerollMove(i)}
+                                playerIdToAssetKey={playerIdToAssetKey}
+                                leagueId={leagueId}
+                                rosterId={
+                                    getRosterIdFromUser(specifiedUser) + 1
+                                }
                             />
                         ))}
                     </div>
@@ -2443,6 +2462,11 @@ export default function BlueprintModule({
                                     rosterPlayers={rosterPlayers}
                                     moveNumber={i + 1}
                                     rerollMove={() => rerollMove(i)}
+                                    playerIdToAssetKey={playerIdToAssetKey}
+                                    leagueId={leagueId}
+                                    rosterId={
+                                        getRosterIdFromUser(specifiedUser) + 1
+                                    }
                                 />
                             ))}
                         </div>
@@ -2907,6 +2931,14 @@ type SuggestedMoveProps = {
     rosterPlayers: Player[];
     moveNumber: number;
     rerollMove: () => void;
+    playerIdToAssetKey: Map<string, string>;
+    leagueId: string;
+    rosterId: number;
+};
+
+type TradeIdea = {
+    inAssets: TradeAsset[];
+    outAssets: TradeAsset[];
 };
 
 function SuggestedMove({
@@ -2919,15 +2951,21 @@ function SuggestedMove({
     setPlayerIdsToTarget,
     moveNumber,
     rerollMove,
+    playerIdToAssetKey,
+    leagueId,
+    rosterId,
 }: SuggestedMoveProps) {
     const playerData = usePlayerData();
     const [optionsToTrade, setOptionsToTrade] = useState<string[]>([]);
+    const [pinnedReturnAsset, setPinnedReturnAsset] = useState('');
     useEffect(() => {
         const nonIdPlayerOptions: string[] = [];
         for (let i = 1; i < 15; i++) {
-            nonIdPlayerOptions.push(
-                `Rookie Pick 1.${i < 10 ? `0${i}` : `${i}`}`
-            );
+            for (let j = 1; j < 5; j++) {
+                nonIdPlayerOptions.push(
+                    `Rookie Pick ${j}.${i < 10 ? `0${i}` : `${i}`}`
+                );
+            }
         }
         nonIdPlayerOptions.push('2026 1st');
         nonIdPlayerOptions.push('2027 1st');
@@ -2959,6 +2997,44 @@ function SuggestedMove({
         return !Number.isNaN(+id)
             ? `${playerData[id].first_name} ${playerData[id].last_name}`
             : id;
+    }
+
+    async function newCustomDowntier(rowIdx: number) {
+        const authToken = sessionStorage.getItem('authToken');
+        const options = {
+            method: 'POST',
+            url: `${AZURE_API_URL}/TradeRulesAdmin/customize`,
+            data: {
+                leagueId: leagueId,
+                rosterId: rosterId,
+                gradeRunVersionNumber: 1,
+                weekId: 19,
+                moveType: 2,
+                outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])],
+                inAssetKeys: [playerIdToAssetKey.get(pinnedReturnAsset)],
+                maxResults: 30,
+            },
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+            },
+        };
+        const res = await axios.request(options);
+        const ideas = (res.data as TradeIdea[])
+            .filter(idea => !!idea)
+            .filter(idea => {
+                const inStrings = idea.inAssets.map(assetToString);
+                const hasFirst = inStrings.includes(
+                    playerIdsToTarget[rowIdx][0]
+                );
+                const hasSecond = inStrings.includes(
+                    playerIdsToTarget[rowIdx][1]
+                );
+                return !hasFirst || !hasSecond;
+            });
+        shuffle(ideas);
+        const newPlayerIdsToTarget = [...playerIdsToTarget];
+        newPlayerIdsToTarget[rowIdx] = ideas[0].inAssets.map(assetToString);
+        setPlayerIdsToTarget(newPlayerIdsToTarget);
     }
 
     return (
@@ -3072,7 +3148,9 @@ function SuggestedMove({
                                 options={optionsToTrade}
                                 value={getDisplayValueFromId(
                                     playerIdsToTrade[1]
-                                        ? getDisplayValueFromId(playerIdsToTrade[1])
+                                        ? getDisplayValueFromId(
+                                              playerIdsToTrade[1]
+                                          )
                                         : ''
                                 )}
                                 onChange={e => {
@@ -3151,92 +3229,133 @@ function SuggestedMove({
                     )}
                     {move === Move.DOWNTIER && (
                         <>
-                            <div className={styles.downtierRow}>
-                                <DomainAutocomplete
-                                    selectedPlayer={playerIdsToTarget[0][0]}
-                                    setSelectedPlayer={(player: string) => {
-                                        setPlayerIdsToTarget([
-                                            [player, playerIdsToTarget[0][1]],
-                                            playerIdsToTarget[1],
-                                            playerIdsToTarget[2],
-                                        ]);
-                                    }}
-                                />
-                                <img
-                                    src={sfIcon}
-                                    className={styles.icons}
-                                    style={{margin: '0', padding: '0'}}
-                                />
-                                <DomainAutocomplete
-                                    selectedPlayer={playerIdsToTarget[0][1]}
-                                    setSelectedPlayer={(player: string) => {
-                                        setPlayerIdsToTarget([
-                                            [playerIdsToTarget[0][0], player],
-                                            playerIdsToTarget[1],
-                                            playerIdsToTarget[2],
-                                        ]);
-                                    }}
-                                />
-                            </div>
-                            <div className={styles.downtierRow}>
-                                <DomainAutocomplete
-                                    selectedPlayer={playerIdsToTarget[1][0]}
-                                    setSelectedPlayer={(player: string) => {
-                                        setPlayerIdsToTarget([
-                                            playerIdsToTarget[0],
-                                            [player, playerIdsToTarget[1][1]],
-                                            playerIdsToTarget[2],
-                                        ]);
-                                    }}
-                                />
-                                <img
-                                    src={sfIcon}
-                                    className={styles.icons}
-                                    style={{margin: '0', padding: '0'}}
-                                />
-                                <DomainAutocomplete
-                                    selectedPlayer={playerIdsToTarget[1][1]}
-                                    setSelectedPlayer={(player: string) => {
-                                        setPlayerIdsToTarget([
-                                            playerIdsToTarget[0],
-                                            [playerIdsToTarget[1][0], player],
-                                            playerIdsToTarget[2],
-                                        ]);
-                                    }}
-                                />
-                            </div>
-                            <div className={styles.downtierRow}>
-                                <DomainAutocomplete
-                                    selectedPlayer={playerIdsToTarget[2][0]}
-                                    setSelectedPlayer={(player: string) => {
-                                        setPlayerIdsToTarget([
-                                            playerIdsToTarget[0],
-                                            playerIdsToTarget[1],
-                                            [player, playerIdsToTarget[2][1]],
-                                        ]);
-                                    }}
-                                />
-                                <img
-                                    src={sfIcon}
-                                    className={styles.icons}
-                                    style={{margin: '0', padding: '0'}}
-                                />
-                                <DomainAutocomplete
-                                    selectedPlayer={playerIdsToTarget[2][1]}
-                                    setSelectedPlayer={(player: string) => {
-                                        setPlayerIdsToTarget([
-                                            playerIdsToTarget[0],
-                                            playerIdsToTarget[1],
-                                            [playerIdsToTarget[2][0], player],
-                                        ]);
-                                    }}
-                                />
-                            </div>
+                            {[0, 1, 2].map(rowIdx => (
+                                <div className={styles.downtierRow}>
+                                    <PinButton
+                                        playerId={playerIdsToTarget[rowIdx][0]}
+                                        pinnedReturnAsset={pinnedReturnAsset}
+                                        setPinnedReturnAsset={
+                                            setPinnedReturnAsset
+                                        }
+                                    />
+                                    <DomainAutocomplete
+                                        selectedPlayer={
+                                            playerIdsToTarget[rowIdx][0]
+                                        }
+                                        setSelectedPlayer={(player: string) => {
+                                            const newPlayerIdsToTarget = [
+                                                ...playerIdsToTarget,
+                                            ];
+                                            newPlayerIdsToTarget[rowIdx][0] =
+                                                player;
+                                            setPlayerIdsToTarget(
+                                                newPlayerIdsToTarget
+                                            );
+                                        }}
+                                    />
+                                    <img
+                                        src={sfIcon}
+                                        className={styles.icons}
+                                        style={{margin: '0', padding: '0'}}
+                                    />
+                                    <PinButton
+                                        playerId={playerIdsToTarget[rowIdx][1]}
+                                        pinnedReturnAsset={pinnedReturnAsset}
+                                        setPinnedReturnAsset={
+                                            setPinnedReturnAsset
+                                        }
+                                    />
+                                    <DomainAutocomplete
+                                        selectedPlayer={
+                                            playerIdsToTarget[rowIdx][1]
+                                        }
+                                        setSelectedPlayer={(player: string) => {
+                                            const newPlayerIdsToTarget = [
+                                                ...playerIdsToTarget,
+                                            ];
+                                            newPlayerIdsToTarget[rowIdx][1] =
+                                                player;
+                                            setPlayerIdsToTarget(
+                                                newPlayerIdsToTarget
+                                            );
+                                        }}
+                                    />
+                                    <IconButton
+                                        sx={{
+                                            '&:hover': {
+                                                backgroundColor:
+                                                    'rgba(255, 255, 255, 0.2)',
+                                            },
+                                            '&.Mui-disabled': {
+                                                opacity: 0.4,
+                                            },
+
+                                        }}
+                                        TouchRippleProps={{
+                                            style: {
+                                                color: 'white',
+                                            },
+                                        }}
+                                        onClick={() => {
+                                            newCustomDowntier(rowIdx);
+                                        }}
+                                        disabled={
+                                            pinnedReturnAsset !==
+                                                playerIdsToTarget[rowIdx][0] &&
+                                            pinnedReturnAsset !==
+                                                playerIdsToTarget[rowIdx][1]
+                                        }
+                                    >
+                                        <Casino sx={{color: 'white'}} />
+                                    </IconButton>
+                                </div>
+                            ))}
                         </>
                     )}
                 </div>
             </div>
         )
+    );
+}
+
+type PinButtonProps = {
+    pinnedReturnAsset: string;
+    setPinnedReturnAsset: (asset: string) => void;
+    playerId: string;
+};
+
+function PinButton({
+    pinnedReturnAsset,
+    setPinnedReturnAsset,
+    playerId,
+}: PinButtonProps) {
+    return (
+        <IconButton
+            aria-label="pin"
+            sx={{
+                '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                },
+            }}
+            TouchRippleProps={{
+                style: {
+                    color: 'white',
+                },
+            }}
+            onClick={() => {
+                if (pinnedReturnAsset === playerId) {
+                    setPinnedReturnAsset('');
+                    return;
+                }
+                setPinnedReturnAsset(playerId);
+            }}
+        >
+            {pinnedReturnAsset === playerId ? (
+                <PushPin sx={{color: 'white'}} />
+            ) : (
+                <PushPinOutlined sx={{color: 'white'}} />
+            )}
+        </IconButton>
     );
 }
 
@@ -3334,4 +3453,11 @@ export function getApiStartingLineup(
             };
         }),
     ];
+}
+
+function shuffle(array: any[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
 }
