@@ -3067,14 +3067,10 @@ function SuggestedMove({
         const ideas = tradeIdeas
             .filter(idea => !!idea)
             .filter(idea => {
-                const inStrings = idea.inAssets.map(assetToString);
-                const hasFirst = inStrings.includes(
-                    playerIdsToTarget[rowIdx][0]
-                );
-                const hasSecond = inStrings.includes(
-                    playerIdsToTarget[rowIdx][1]
-                );
-                return !hasFirst || !hasSecond;
+                // Only keep ideas that are not already in the target.
+                const inAssetStrings = idea.inAssets.map(assetToString);
+                const targetRow = playerIdsToTarget[rowIdx];
+                return !targetRow.every(target => inAssetStrings.includes(target));
             });
         shuffle(ideas);
         const newPlayerIdsToTarget = [...playerIdsToTarget];
