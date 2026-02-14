@@ -2980,7 +2980,7 @@ const fetchCustomDowntier = async ({
             moveType: 2,
             outAssetKeys,
             inAssetKeys,
-            maxResults: 30,
+            maxResults: 300,
         },
         headers: {
             Authorization: `Bearer ${authToken}`,
