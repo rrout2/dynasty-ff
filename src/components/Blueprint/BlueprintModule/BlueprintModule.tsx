@@ -774,7 +774,10 @@ export default function BlueprintModule({
             playerIdToAssetKey
         );
         roster.players.forEach(playerId => {
-            newPlayerIdToAssetKey.set(playerId, `player:${getApiIdFromSleeperId(playerId)}`);
+            newPlayerIdToAssetKey.set(
+                playerId,
+                `player:${getApiIdFromSleeperId(playerId)}`
+            );
         });
         setPlayerIdToAssetKey(newPlayerIdToAssetKey);
     }, [roster?.players, getApiIdFromSleeperId]);
@@ -2954,6 +2957,39 @@ type TradeIdea = {
     outAssets: TradeAsset[];
 };
 
+const fetchCustomDowntier = async ({
+    leagueId,
+    rosterId,
+    outAssetKeys,
+    inAssetKeys = [],
+}: {
+    leagueId: string;
+    rosterId: number;
+    outAssetKeys: string[];
+    inAssetKeys?: string[];
+}) => {
+    const authToken = sessionStorage.getItem('authToken');
+    const options = {
+        method: 'POST',
+        url: `${AZURE_API_URL}/TradeRulesAdmin/customize`,
+        data: {
+            leagueId,
+            rosterId,
+            gradeRunVersionNumber: 1,
+            weekId: 19,
+            moveType: 2,
+            outAssetKeys,
+            inAssetKeys,
+            maxResults: 30,
+        },
+        headers: {
+            Authorization: `Bearer ${authToken}`,
+        },
+    };
+    const res = await axios.request(options);
+    return res.data as TradeIdea[];
+};
+
 function SuggestedMove({
     move,
     setMove,
@@ -2974,6 +3010,9 @@ function SuggestedMove({
         useState(playerIdsToTarget.map(row => row.map(() => false)));
     const [loadingAllThree, setLoadingAllThree] = useState(false);
     const [loadingRow, setLoadingRow] = useState(-1);
+    useEffect(() => {
+        console.log(downtierPinnedReturnAssets);
+    }, [downtierPinnedReturnAssets]);
 
     useEffect(() => {
         const nonIdPlayerOptions: string[] = [];
@@ -3017,28 +3056,15 @@ function SuggestedMove({
     }
 
     async function newCustomDowntier(rowIdx: number) {
-        const authToken = sessionStorage.getItem('authToken');
-        const options = {
-            method: 'POST',
-            url: `${AZURE_API_URL}/TradeRulesAdmin/customize`,
-            data: {
-                leagueId: leagueId,
-                rosterId: rosterId,
-                gradeRunVersionNumber: 1,
-                weekId: 19,
-                moveType: 2,
-                outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])],
-                inAssetKeys: playerIdsToTarget[rowIdx]
-                    .filter((_, idx) => downtierPinnedReturnAssets[rowIdx][idx])
-                    .map(id => playerIdToAssetKey.get(id)),
-                maxResults: 30,
-            },
-            headers: {
-                Authorization: `Bearer ${authToken}`,
-            },
-        };
-        const res = await axios.request(options);
-        const ideas = (res.data as TradeIdea[])
+        const tradeIdeas = await fetchCustomDowntier({
+            leagueId,
+            rosterId,
+            outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])!],
+            inAssetKeys: playerIdsToTarget[rowIdx]
+                .filter((_, idx) => downtierPinnedReturnAssets[rowIdx][idx])
+                .map(id => playerIdToAssetKey.get(id)!),
+        });
+        const ideas = tradeIdeas
             .filter(idea => !!idea)
             .filter(idea => {
                 const inStrings = idea.inAssets.map(assetToString);
@@ -3070,25 +3096,11 @@ function SuggestedMove({
 
         if (protectedRows.length === 3) return;
 
-        const authToken = sessionStorage.getItem('authToken');
-        const options = {
-            method: 'POST',
-            url: `${AZURE_API_URL}/TradeRulesAdmin/customize`,
-            data: {
-                leagueId: leagueId,
-                rosterId: rosterId,
-                gradeRunVersionNumber: 1,
-                weekId: 19,
-                moveType: 2,
-                outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])],
-                maxResults: 30,
-            },
-            headers: {
-                Authorization: `Bearer ${authToken}`,
-            },
-        };
-        const res = await axios.request(options);
-        const ideas = (res.data as TradeIdea[]).filter(idea => !!idea);
+        const ideas = await fetchCustomDowntier({
+            leagueId,
+            rosterId,
+            outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])!],
+        });
         shuffle(ideas);
         const newPlayerIdsToTarget = [...playerIdsToTarget];
         for (let i = 0; i < 3 && i < ideas.length; i++) {

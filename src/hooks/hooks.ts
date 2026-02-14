@@ -1934,8 +1934,9 @@ export function useSleeperIdMap() {
     const getApiIdFromSleeperId = useCallback(
         (sleeperId: string) => {
             return sleeperIdMap[sleeperId];
-        }, [sleeperIdMap]
-    )
+        },
+        [sleeperIdMap]
+    );
 
     return {sleeperIdMap, getApiIdFromSleeperId};
 }
