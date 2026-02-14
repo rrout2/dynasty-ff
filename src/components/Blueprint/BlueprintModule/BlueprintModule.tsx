@@ -3087,6 +3087,8 @@ function SuggestedMove({
             ) {
                 protectedRows.push(rowIdx);
                 newCustomDowntier(rowIdx);
+            } else if (downtierPinnedReturnAssets[rowIdx][0]) {
+                protectedRows.push(rowIdx);
             }
         }
 
