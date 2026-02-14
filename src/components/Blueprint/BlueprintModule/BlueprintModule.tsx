@@ -32,6 +32,7 @@ import {
     usePositionalValueGrades,
     useProjectedLineup,
     useRosterSettingsFromId,
+    useSleeperIdMap,
     useTeamIdFromUrl,
     useTeamProductionShare,
     useTeamRosterArchetype,
@@ -299,6 +300,7 @@ export default function BlueprintModule({
         []
     );
     const playerData = usePlayerData();
+    const {getApiIdFromSleeperId} = useSleeperIdMap();
     const {sortByAdp, getPositionalAdp} = useAdpData();
     const league = useLeague(leagueId);
     const rosterSettings = useRosterSettingsFromId(leagueId);
@@ -765,6 +767,17 @@ export default function BlueprintModule({
                 .sort(sortByAdp)
         );
     }, [roster, playerData, sortByAdp]);
+
+    useEffect(() => {
+        if (!roster?.players) return;
+        const newPlayerIdToAssetKey = new Map<string, string>(
+            playerIdToAssetKey
+        );
+        roster.players.forEach(playerId => {
+            newPlayerIdToAssetKey.set(playerId, `player:${getApiIdFromSleeperId(playerId)}`);
+        });
+        setPlayerIdToAssetKey(newPlayerIdToAssetKey);
+    }, [roster?.players, getApiIdFromSleeperId]);
 
     useEffect(() => {
         if (!myPicks) return;

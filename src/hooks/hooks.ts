@@ -6,6 +6,7 @@ import {
     useState,
 } from 'react';
 import playersJson from '../data/players.json';
+import sleeperIdMapJson from '../data/sleeper_id_to_api.json';
 import buySellsData from '../data/buyssellsholds_021126.json';
 import rankingsJson from '../data/rankings_02112026.json';
 import nflScheduleJson from '../data/nfl_schedule.json';
@@ -1921,6 +1922,22 @@ export function useBuySellData() {
         holds,
         getVerdict,
     };
+}
+
+// Maps from sleeper ID to API ID
+export interface SleeperIdMap {
+    [key: string]: number;
+}
+export function useSleeperIdMap() {
+    const [sleeperIdMap] = useState<SleeperIdMap>(sleeperIdMapJson);
+
+    const getApiIdFromSleeperId = useCallback(
+        (sleeperId: string) => {
+            return sleeperIdMap[sleeperId];
+        }, [sleeperIdMap]
+    )
+
+    return {sleeperIdMap, getApiIdFromSleeperId};
 }
 
 export interface PlayerData {
