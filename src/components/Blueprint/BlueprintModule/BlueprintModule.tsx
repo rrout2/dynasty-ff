@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {Dispatch, SetStateAction, useEffect, useRef, useState} from 'react';
 import styles from './BlueprintModule.module.css';
 import DomainDropdown, {DARK_BLUE} from '../shared/DomainDropdown';
 import {
@@ -2435,6 +2435,7 @@ export default function BlueprintModule({
                                 moveNumber={i + 1}
                                 rerollMove={() => rerollMove(i)}
                                 playerIdToAssetKey={playerIdToAssetKey}
+                                setPlayerIdToAssetKey={setPlayerIdToAssetKey}
                                 leagueId={leagueId}
                                 rosterId={
                                     getRosterIdFromUser(specifiedUser) + 1
@@ -2479,6 +2480,9 @@ export default function BlueprintModule({
                                     moveNumber={i + 1}
                                     rerollMove={() => rerollMove(i)}
                                     playerIdToAssetKey={playerIdToAssetKey}
+                                    setPlayerIdToAssetKey={
+                                        setPlayerIdToAssetKey
+                                    }
                                     leagueId={leagueId}
                                     rosterId={
                                         getRosterIdFromUser(specifiedUser) + 1
@@ -2948,6 +2952,7 @@ type SuggestedMoveProps = {
     moveNumber: number;
     rerollMove: () => void;
     playerIdToAssetKey: Map<string, string>;
+    setPlayerIdToAssetKey: Dispatch<SetStateAction<Map<string, string>>>;
     leagueId: string;
     rosterId: number;
 };
@@ -3001,6 +3006,7 @@ function SuggestedMove({
     moveNumber,
     rerollMove,
     playerIdToAssetKey,
+    setPlayerIdToAssetKey,
     leagueId,
     rosterId,
 }: SuggestedMoveProps) {
@@ -3010,9 +3016,18 @@ function SuggestedMove({
         useState(playerIdsToTarget.map(row => row.map(() => false)));
     const [loadingAllThree, setLoadingAllThree] = useState(false);
     const [loadingRow, setLoadingRow] = useState(-1);
-    useEffect(() => {
-        console.log(downtierPinnedReturnAssets);
-    }, [downtierPinnedReturnAssets]);
+
+    function populatePlayerIdToAssetKey(idea: TradeIdea) {
+        setPlayerIdToAssetKey(old => {
+            const newPlayerIdToAssetKey = new Map<string, string>(old);
+            idea.inAssets.forEach(asset => {
+                const str = assetToString(asset);
+                if (newPlayerIdToAssetKey.has(str)) return;
+                newPlayerIdToAssetKey.set(str, asset.assetKey);
+            });
+            return newPlayerIdToAssetKey;
+        });
+    }
 
     useEffect(() => {
         const nonIdPlayerOptions: string[] = [];
@@ -3067,14 +3082,22 @@ function SuggestedMove({
         const ideas = tradeIdeas
             .filter(idea => !!idea)
             .filter(idea => {
-                // Only keep ideas that are not already in the target.
+                populatePlayerIdToAssetKey(idea);
                 const inAssetStrings = idea.inAssets.map(assetToString);
                 const targetRow = playerIdsToTarget[rowIdx];
-                return !targetRow.every(target => inAssetStrings.includes(target));
+                return !targetRow.every(target =>
+                    inAssetStrings.includes(target)
+                );
             });
         shuffle(ideas);
         const newPlayerIdsToTarget = [...playerIdsToTarget];
-        newPlayerIdsToTarget[rowIdx] = ideas[0].inAssets.map(assetToString);
+        const assetStrings = ideas[0].inAssets.map(assetToString);
+        if (newPlayerIdsToTarget[rowIdx][0] === assetStrings[0]) {
+            newPlayerIdsToTarget[rowIdx] = assetStrings;
+        } else {
+            newPlayerIdsToTarget[rowIdx] = [assetStrings[1], assetStrings[0]];
+        }
+
         setPlayerIdsToTarget(newPlayerIdsToTarget);
     }
 
@@ -3099,6 +3122,7 @@ function SuggestedMove({
             rosterId,
             outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])!],
         });
+        ideas.forEach(populatePlayerIdToAssetKey);
         shuffle(ideas);
         const newPlayerIdsToTarget = [...playerIdsToTarget];
         for (let i = 0; i < 3 && i < ideas.length; i++) {
