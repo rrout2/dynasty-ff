@@ -646,7 +646,15 @@ export function useDomainTrueRanks(leagueId: string, teamId: string) {
     });
     useEffect(() => {
         if (!data) return;
-        setDomainTrueRanks(data);
+        setDomainTrueRanks(data.map((dtr) => {
+            if (dtr.playerId === 2605) { // CMC is manually set to ShortTermLeagueWinner.
+                return {
+                    ...dtr,
+                    dynastyAssetCategory: 'ShortTermLeagueWinner'
+                };
+            }
+            return dtr;
+        }));
     }, [data]);
     return {domainTrueRanks, setDomainTrueRanks};
 }
