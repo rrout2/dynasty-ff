@@ -3043,6 +3043,8 @@ function SuggestedMove({
     rosterId,
 }: SuggestedMoveProps) {
     const playerData = usePlayerData();
+    const {getApiIdFromSleeperId} = useSleeperIdMap();
+    
     const [optionsToTrade, setOptionsToTrade] = useState<string[]>([]);
     const [downtierPinnedReturnAssets, setDowntierPinnedReturnAssets] =
         useState(playerIdsToTarget.map(row => row.map(() => false)));
@@ -3469,6 +3471,14 @@ function SuggestedMove({
                                             const newPlayerIdsToTarget = [
                                                 ...playerIdsToTarget,
                                             ];
+                                            const apiId = getApiIdFromSleeperId(player);
+                                            if (apiId) {
+                                                setPlayerIdToAssetKey(old => {
+                                                    const newPlayerIdToAssetKey = new Map<string, string>(old);
+                                                    newPlayerIdToAssetKey.set(player, `player:${apiId}`);
+                                                    return newPlayerIdToAssetKey;
+                                                });
+                                            }
                                             newPlayerIdsToTarget[rowIdx][0] =
                                                 player;
                                             setPlayerIdsToTarget(
@@ -3498,6 +3508,14 @@ function SuggestedMove({
                                             const newPlayerIdsToTarget = [
                                                 ...playerIdsToTarget,
                                             ];
+                                            const apiId = getApiIdFromSleeperId(player);
+                                            if (apiId) {
+                                                setPlayerIdToAssetKey(old => {
+                                                    const newPlayerIdToAssetKey = new Map<string, string>(old);
+                                                    newPlayerIdToAssetKey.set(player, `player:${apiId}`);
+                                                    return newPlayerIdToAssetKey;
+                                                });
+                                            }
                                             newPlayerIdsToTarget[rowIdx][1] =
                                                 player;
                                             setPlayerIdsToTarget(
