@@ -481,6 +481,9 @@ export default function BlueprintModule({
     const [playerIdToAssetKey, setPlayerIdToAssetKey] = useState<
         Map<string, string>
     >(new Map());
+    const [playerIdToDomainValue, setPlayerIdToDomainValue] = useState<
+        Map<string, number>
+    >(new Map());
 
     useEffect(() => {
         if (!blueprint || !playerData) return;
@@ -834,10 +837,14 @@ export default function BlueprintModule({
         const newPlayerIdToAssetKey = new Map<string, string>(
             playerIdToAssetKey
         );
+        const newPlayerIdToDomainValue = new Map<string, number>(
+            playerIdToDomainValue
+        );
 
         function assetToStringAndStore(p: TradeAsset) {
             const str = assetToString(p);
             newPlayerIdToAssetKey.set(str, p.assetKey);
+            newPlayerIdToDomainValue.set(str, p.domainValue);
             return str;
         }
 
@@ -941,6 +948,16 @@ export default function BlueprintModule({
                 priorityDescription: '',
             });
         }
+        // sort by number of complete return packages
+        apiSuggestions.sort((a, b) => {
+            const toTargetA = a.playerIdsToTarget.filter(
+                ids => !ids.every(id => id === '')
+            ).length;
+            const toTargetB = b.playerIdsToTarget.filter(
+                ids => !ids.every(id => id === '')
+            ).length;
+            return toTargetB - toTargetA;
+        });
         setFullMoves(
             apiSuggestions.sort((a, b) => {
                 const toTargetA = a.playerIdsToTarget.filter(
@@ -953,6 +970,7 @@ export default function BlueprintModule({
             })
         );
         setPlayerIdToAssetKey(newPlayerIdToAssetKey);
+        setPlayerIdToDomainValue(newPlayerIdToDomainValue);
     }, [apiTradeSuggestions, searchParams]);
 
     useEffect(() => {
@@ -2436,6 +2454,10 @@ export default function BlueprintModule({
                                 rerollMove={() => rerollMove(i)}
                                 playerIdToAssetKey={playerIdToAssetKey}
                                 setPlayerIdToAssetKey={setPlayerIdToAssetKey}
+                                playerIdToDomainValue={playerIdToDomainValue}
+                                setPlayerIdToDomainValue={
+                                    setPlayerIdToDomainValue
+                                }
                                 leagueId={leagueId}
                                 rosterId={
                                     getRosterIdFromUser(specifiedUser) + 1
@@ -2482,6 +2504,12 @@ export default function BlueprintModule({
                                     playerIdToAssetKey={playerIdToAssetKey}
                                     setPlayerIdToAssetKey={
                                         setPlayerIdToAssetKey
+                                    }
+                                    playerIdToDomainValue={
+                                        playerIdToDomainValue
+                                    }
+                                    setPlayerIdToDomainValue={
+                                        setPlayerIdToDomainValue
                                     }
                                     leagueId={leagueId}
                                     rosterId={
@@ -2953,6 +2981,8 @@ type SuggestedMoveProps = {
     rerollMove: () => void;
     playerIdToAssetKey: Map<string, string>;
     setPlayerIdToAssetKey: Dispatch<SetStateAction<Map<string, string>>>;
+    playerIdToDomainValue: Map<string, number>;
+    setPlayerIdToDomainValue: Dispatch<SetStateAction<Map<string, number>>>;
     leagueId: string;
     rosterId: number;
 };
@@ -3007,6 +3037,8 @@ function SuggestedMove({
     rerollMove,
     playerIdToAssetKey,
     setPlayerIdToAssetKey,
+    playerIdToDomainValue,
+    setPlayerIdToDomainValue,
     leagueId,
     rosterId,
 }: SuggestedMoveProps) {
@@ -3017,7 +3049,7 @@ function SuggestedMove({
     const [loadingAllThree, setLoadingAllThree] = useState(false);
     const [loadingRow, setLoadingRow] = useState(-1);
 
-    function populatePlayerIdToAssetKey(idea: TradeIdea) {
+    function populatePlayerIdMaps(idea: TradeIdea) {
         setPlayerIdToAssetKey(old => {
             const newPlayerIdToAssetKey = new Map<string, string>(old);
             idea.inAssets.forEach(asset => {
@@ -3026,6 +3058,15 @@ function SuggestedMove({
                 newPlayerIdToAssetKey.set(str, asset.assetKey);
             });
             return newPlayerIdToAssetKey;
+        });
+        setPlayerIdToDomainValue(old => {
+            const newPlayerIdToDomainValue = new Map<string, number>(old);
+            idea.inAssets.forEach(asset => {
+                const str = assetToString(asset);
+                if (newPlayerIdToDomainValue.has(str)) return;
+                newPlayerIdToDomainValue.set(str, asset.domainValue);
+            });
+            return newPlayerIdToDomainValue;
         });
     }
 
@@ -3070,7 +3111,20 @@ function SuggestedMove({
             : id;
     }
 
-    async function newCustomDowntier(rowIdx: number) {
+    function getPrimaryAsset(assetIds: string[]) {
+        return (
+            '' +
+            assetIds.reduce((max, current) => {
+                const currentValue = playerIdToDomainValue.get(current) || 0;
+                const maxValue = playerIdToDomainValue.get(max) || 0;
+                return currentValue > maxValue ? current : max;
+            }, assetIds[0])
+        );
+    }
+
+    // protectedRows === undefined means that this is a standalone move
+    // protectedRows === [] means no primary asset checking
+    async function newCustomDowntier(rowIdx: number, protectedRows?: number[]) {
         const tradeIdeas = await fetchCustomDowntier({
             leagueId,
             rosterId,
@@ -3082,7 +3136,7 @@ function SuggestedMove({
         const ideas = tradeIdeas
             .filter(idea => !!idea)
             .filter(idea => {
-                populatePlayerIdToAssetKey(idea);
+                populatePlayerIdMaps(idea);
                 const inAssetStrings = idea.inAssets.map(assetToString);
                 const targetRow = playerIdsToTarget[rowIdx];
                 return !targetRow.every(target =>
@@ -3091,11 +3145,27 @@ function SuggestedMove({
             });
         shuffle(ideas);
         const newPlayerIdsToTarget = [...playerIdsToTarget];
-        const assetStrings = ideas[0].inAssets.map(assetToString);
-        if (newPlayerIdsToTarget[rowIdx][0] === assetStrings[0]) {
-            newPlayerIdsToTarget[rowIdx] = assetStrings;
-        } else {
-            newPlayerIdsToTarget[rowIdx] = [assetStrings[1], assetStrings[0]];
+
+        const existingPrimaryAssets = (
+            !protectedRows
+                ? newPlayerIdsToTarget.map((row, idx) =>
+                      idx !== rowIdx ? getPrimaryAsset(row) : undefined
+                  ).slice(0, 3)
+                : protectedRows.map(idx =>
+                      getPrimaryAsset(newPlayerIdsToTarget[idx])
+                  )
+        ).filter(asset => asset !== undefined);
+
+        for (let ideaIdx = 0; ideaIdx < ideas.length; ideaIdx++) {
+            const playerIds = ideas[ideaIdx].inAssets.map(assetToString);
+            const suggestedPrimaryAsset = getPrimaryAsset(playerIds);
+            if (existingPrimaryAssets.includes(suggestedPrimaryAsset)) continue;
+            if (newPlayerIdsToTarget[rowIdx][0] === playerIds[0]) {
+                newPlayerIdsToTarget[rowIdx] = playerIds;
+            } else {
+                newPlayerIdsToTarget[rowIdx] = [playerIds[1], playerIds[0]];
+            }
+            break;
         }
 
         setPlayerIdsToTarget(newPlayerIdsToTarget);
@@ -3108,8 +3178,8 @@ function SuggestedMove({
                 downtierPinnedReturnAssets[rowIdx][0] !==
                 downtierPinnedReturnAssets[rowIdx][1]
             ) {
+                await newCustomDowntier(rowIdx, protectedRows);
                 protectedRows.push(rowIdx);
-                newCustomDowntier(rowIdx);
             } else if (downtierPinnedReturnAssets[rowIdx][0]) {
                 protectedRows.push(rowIdx);
             }
@@ -3122,12 +3192,35 @@ function SuggestedMove({
             rosterId,
             outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])!],
         });
-        ideas.forEach(populatePlayerIdToAssetKey);
+        ideas.forEach(populatePlayerIdMaps);
         shuffle(ideas);
         const newPlayerIdsToTarget = [...playerIdsToTarget];
-        for (let i = 0; i < 3 && i < ideas.length; i++) {
-            if (protectedRows.includes(i)) continue;
-            newPlayerIdsToTarget[i] = ideas[i].inAssets.map(assetToString);
+        let ideaIdx = 0;
+        let insertIdx = 0;
+        const isAssetAlreadyPlaced = (
+            asset: string,
+            upToIndex: number
+        ): boolean =>
+            Array.from({length: upToIndex}, (_, j) => j)
+                .concat(protectedRows)
+                .some(j => getPrimaryAsset(newPlayerIdsToTarget[j]) === asset);
+        while (insertIdx < 3) {
+            if (protectedRows.includes(insertIdx)) {
+                insertIdx++;
+                continue;
+            }
+
+            const inAssetIds = ideas[ideaIdx].inAssets.map(assetToString);
+            const suggestedPrimaryAsset = getPrimaryAsset(inAssetIds);
+
+            if (isAssetAlreadyPlaced(suggestedPrimaryAsset, insertIdx)) {
+                ideaIdx++;
+                continue;
+            }
+
+            newPlayerIdsToTarget[insertIdx] = inAssetIds;
+            ideaIdx++;
+            insertIdx++;
         }
         setPlayerIdsToTarget(newPlayerIdsToTarget);
     }
