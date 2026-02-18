@@ -3600,24 +3600,6 @@ function PinButton({
                 newDowntierPinnedReturnAssets[pinCoords[0]][pinCoords[1]] =
                     !downtierPinnedReturnAssets[pinCoords[0]][pinCoords[1]];
                 setDowntierPinnedReturnAssets(newDowntierPinnedReturnAssets);
-                // if (!downtierPinnedReturnAssets.includes(playerId)) {
-                //     setDowntierPinnedReturnAssets([
-                //         ...downtierPinnedReturnAssets,
-                //         playerId,
-                //     ]);
-                // } else {
-                //     setDowntierPinnedReturnAssets(
-                //         downtierPinnedReturnAssets.filter(
-                //             asset => asset !== playerId
-                //         )
-                //     );
-                // }
-
-                // if (pinnedReturnAsset === playerId) {
-                //     setPinnedReturnAsset('');
-                //     return;
-                // }
-                // setPinnedReturnAsset(playerId);
             }}
         >
             {downtierPinnedReturnAssets[pinCoords[0]][pinCoords[1]] ? (
