@@ -193,10 +193,12 @@ export default function SuggestedMove({
         for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
             if (
                 pinnedReturnAssets[rowIdx][0] !== pinnedReturnAssets[rowIdx][1]
-            ) { // if exactly one is pinned
+            ) {
+                // if exactly one is pinned
                 await newCustomDowntier(rowIdx, protectedRows);
                 protectedRows.push(rowIdx);
-            } else if (pinnedReturnAssets[rowIdx][0]) { // if both are pinned
+            } else if (pinnedReturnAssets[rowIdx][0]) {
+                // if both are pinned
                 protectedRows.push(rowIdx);
             }
         }
@@ -271,6 +273,58 @@ export default function SuggestedMove({
         ideas.forEach(populatePlayerIdMaps);
         shuffle(ideas);
 
+        const existingTargets: Set<string> = new Set();
+        for (let i = 0; i < 3; i++) {
+            if (i === rowIdx) continue;
+            existingTargets.add(playerIdsToTarget[i][0]);
+        }
+
+        const inAssets = ideas
+            .map(idea => idea.inAssets.map(assetToString))
+            .flat();
+        let ideaIdx = 0;
+        while (existingTargets.has(inAssets[ideaIdx])) {
+            ideaIdx++;
+        }
+
+        const newPlayerIdsToTarget = [...playerIdsToTarget];
+        newPlayerIdsToTarget[rowIdx] = [inAssets[ideaIdx], ''];
+        setPlayerIdsToTarget(newPlayerIdsToTarget);
+    }
+
+    async function newCustomUptierAllThree() {
+        const isAssetPinned = [0, 1, 2].map(idx => pinnedReturnAssets[idx][0]);
+        if (isAssetPinned.every(h => h)) return;
+        const ideas = await fetchCustomUptier({
+            leagueId,
+            rosterId,
+            outAssetKeys: playerIdsToTrade.map(
+                id => playerIdToAssetKey.get(id)!
+            ),
+        });
+        ideas.forEach(populatePlayerIdMaps);
+        shuffle(ideas);
+        const inAssets = ideas
+            .map(idea => idea.inAssets.map(assetToString))
+            .flat();
+        const newPlayerIdsToTarget = [...playerIdsToTarget];
+        for (let i = 0; i < 3; i++) {
+            if (isAssetPinned[i]) continue;
+            newPlayerIdsToTarget[i] = [inAssets[i], ''];
+        }
+        setPlayerIdsToTarget(newPlayerIdsToTarget);
+    }
+
+    async function newCustomUptier(rowIdx: number) {
+        const ideas = await fetchCustomUptier({
+            leagueId,
+            rosterId,
+            outAssetKeys: playerIdsToTrade.map(
+                id => playerIdToAssetKey.get(id)!
+            ),
+        });
+        ideas.forEach(populatePlayerIdMaps);
+        shuffle(ideas);
         const existingTargets: Set<string> = new Set();
         for (let i = 0; i < 3; i++) {
             if (i === rowIdx) continue;
@@ -508,6 +562,41 @@ export default function SuggestedMove({
                                     ]);
                                 }}
                             />
+                            <Tooltip
+                                title={`Find Uptiers for ${getDisplayValueFromId(
+                                    playerIdsToTrade[0]
+                                )} + ${getDisplayValueFromId(
+                                    playerIdsToTrade[1]
+                                )}`}
+                            >
+                                <IconButton
+                                    loading={loadingAllThree || loadingRow > -1}
+                                    sx={{
+                                        '&:hover': {
+                                            backgroundColor:
+                                                'rgba(255, 255, 255, 0.2)',
+                                        },
+                                        '&.Mui-disabled': {
+                                            opacity: 0.4,
+                                        },
+                                    }}
+                                    TouchRippleProps={{
+                                        style: {
+                                            color: 'white',
+                                        },
+                                    }}
+                                    onClick={() => {
+                                        setLoadingAllThree(true);
+                                        newCustomUptierAllThree().finally(
+                                            () => {
+                                                setLoadingAllThree(false);
+                                            }
+                                        );
+                                    }}
+                                >
+                                    <Casino sx={{color: 'white'}} />
+                                </IconButton>
+                            </Tooltip>
                         </>
                     )}
                 </div>
@@ -557,8 +646,12 @@ export default function SuggestedMove({
                                             },
                                         }}
                                         onClick={() => {
+                                            const newCustomTrade =
+                                                move === Move.PIVOT
+                                                    ? newCustomPivot
+                                                    : newCustomUptier;
                                             setLoadingRow(i);
-                                            newCustomPivot(i).finally(() =>
+                                            newCustomTrade(i).finally(() =>
                                                 setLoadingRow(-1)
                                             );
                                         }}
@@ -756,7 +849,7 @@ const fetchCustomDowntier = async ({
     const authToken = sessionStorage.getItem('authToken');
     const options = {
         method: 'POST',
-        url: `${AZURE_API_URL}/TradeRulesAdmin/customize`,
+        url: `${AZURE_API_URL}TradeRulesAdmin/customize`,
         data: {
             leagueId,
             rosterId,
@@ -787,7 +880,7 @@ const fetchCustomPivot = async ({
     const authToken = sessionStorage.getItem('authToken');
     const options = {
         method: 'POST',
-        url: `${AZURE_API_URL}/TradeRulesAdmin/customize`,
+        url: `${AZURE_API_URL}TradeRulesAdmin/customize`,
         data: {
             leagueId,
             rosterId,
@@ -795,6 +888,36 @@ const fetchCustomPivot = async ({
             weekId: 19,
             moveType: 1,
             outAssetKeys: [outAssetKey],
+            maxResults: 300,
+        },
+        headers: {
+            Authorization: `Bearer ${authToken}`,
+        },
+    };
+    const res = await axios.request(options);
+    return res.data as TradeIdea[];
+};
+
+const fetchCustomUptier = async ({
+    leagueId,
+    rosterId,
+    outAssetKeys,
+}: {
+    leagueId: string;
+    rosterId: number;
+    outAssetKeys: string[];
+}) => {
+    const authToken = sessionStorage.getItem('authToken');
+    const options = {
+        method: 'POST',
+        url: `${AZURE_API_URL}TradeRulesAdmin/customize`,
+        data: {
+            leagueId,
+            rosterId,
+            gradeRunVersionNumber: 1,
+            weekId: 19,
+            moveType: 3,
+            outAssetKeys,
             maxResults: 300,
         },
         headers: {
