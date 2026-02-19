@@ -23,7 +23,7 @@ type SuggestedMoveProps = {
     playerIdsToTrade: string[];
     setPlayerIdsToTrade: (playerIds: string[]) => void;
     playerIdsToTarget: string[][];
-    setPlayerIdsToTarget: Dispatch<SetStateAction<string[][]>>;
+    setPlayerIdsToTarget: (playerIds: string[][]) => void;
     rosterPlayers: Player[];
     moveNumber: number;
     rerollMove: () => void;
@@ -501,8 +501,8 @@ export default function SuggestedMove({
                                         key={i}
                                         selectedPlayer={playerIdsToTarget[i][0]}
                                         setSelectedPlayer={(player: string) => {
-                                            setPlayerIdsToTarget(prev =>
-                                                prev.map((entry, j) =>
+                                            setPlayerIdsToTarget(
+                                                playerIdsToTarget.map((entry, j) =>
                                                     j === i
                                                         ? [player, entry[1]]
                                                         : entry
