@@ -10,10 +10,14 @@ import {rookiePickIdToString} from '../NewV1/NewV1';
 export type DomainAutocompleteProps = {
     selectedPlayer: string;
     setSelectedPlayer: (player: string) => void;
+    numTeams: number;
 };
 
-export default function DomainAutocomplete(props: DomainAutocompleteProps) {
-    const {selectedPlayer, setSelectedPlayer} = props;
+export default function DomainAutocomplete({
+    selectedPlayer,
+    setSelectedPlayer,
+    numTeams,
+}: DomainAutocompleteProps) {
     const playerData = usePlayerData();
     const [allPlayers, setAllPlayers] = useState<Player[]>([]);
     const [inputValue, setInputValue] = useState('');
@@ -73,7 +77,7 @@ export default function DomainAutocomplete(props: DomainAutocompleteProps) {
                 options={opts}
                 getOptionLabel={option => {
                     if (isRookiePickId(option)) {
-                        return rookiePickIdToString(option);
+                        return rookiePickIdToString(option, numTeams);
                     }
                     const p = playerData[option];
                     return p ? `${p.first_name} ${p.last_name}` : '';

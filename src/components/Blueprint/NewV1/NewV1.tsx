@@ -199,13 +199,16 @@ export default function NewV1({
             />
             <TradeStrategyItem
                 trade={tradeStrategy[0]}
+                numTeams={numTeams}
                 style={{left: '300px', top: '558px'}}
             />
             <TradeStrategyItem
+                numTeams={numTeams}
                 trade={tradeStrategy[1]}
                 style={{left: '300px', top: '695px'}}
             />
             <TradeStrategyItem
+                numTeams={numTeams}
                 trade={tradeStrategy[2]}
                 style={{left: '300px', top: '832px'}}
             />
@@ -778,9 +781,11 @@ export function TopPriorities({
 
 export function TradeStrategyItem({
     trade,
+    numTeams,
     style,
 }: {
     trade: FullMove;
+    numTeams: number;
     style?: CSSProperties;
 }) {
     function getLabelFromMove(move: Move) {
@@ -801,11 +806,17 @@ export function TradeStrategyItem({
             >
                 {getLabelFromMove(trade.move)}
             </div>
-            <TradePlayerCard playerId={trade.playerIdsToTrade[0]} />
+            <TradePlayerCard
+                playerId={trade.playerIdsToTrade[0]}
+                numTeams={numTeams}
+            />
             {trade.move === Move.UPTIER && (
                 <>
                     <TradePlus />
-                    <TradePlayerCard playerId={trade.playerIdsToTrade[1]} />
+                    <TradePlayerCard
+                        playerId={trade.playerIdsToTrade[1]}
+                        numTeams={numTeams}
+                    />
                 </>
             )}
             <TradeArrow />
@@ -815,6 +826,7 @@ export function TradeStrategyItem({
                         <div className={styles.or}></div>
                         <TargetPlayerCard
                             playerId={trade.playerIdsToTarget[0][0]}
+                            numTeams={numTeams}
                         />
                     </div>
                     <DividerLine />
@@ -822,6 +834,7 @@ export function TradeStrategyItem({
                         <div className={styles.or}>OR</div>
                         <TargetPlayerCard
                             playerId={trade.playerIdsToTarget[1][0]}
+                            numTeams={numTeams}
                         />
                     </div>
                     <DividerLine />
@@ -829,17 +842,27 @@ export function TradeStrategyItem({
                         <div className={styles.or}>OR</div>
                         <TargetPlayerCard
                             playerId={trade.playerIdsToTarget[2][0]}
+                            numTeams={numTeams}
                         />
                     </div>
                 </div>
             )}
             {trade.move === Move.PIVOT && (
                 <>
-                    <TradePlayerCard playerId={trade.playerIdsToTarget[0][0]} />
+                    <TradePlayerCard
+                        playerId={trade.playerIdsToTarget[0][0]}
+                        numTeams={numTeams}
+                    />
                     <div className={styles.or}>OR</div>
-                    <TradePlayerCard playerId={trade.playerIdsToTarget[1][0]} />
+                    <TradePlayerCard
+                        playerId={trade.playerIdsToTarget[1][0]}
+                        numTeams={numTeams}
+                    />
                     <div className={styles.or}>OR</div>
-                    <TradePlayerCard playerId={trade.playerIdsToTarget[2][0]} />
+                    <TradePlayerCard
+                        playerId={trade.playerIdsToTarget[2][0]}
+                        numTeams={numTeams}
+                    />
                 </>
             )}
             {trade.move === Move.DOWNTIER && (
@@ -848,10 +871,12 @@ export function TradeStrategyItem({
                         <div className={styles.or}></div>
                         <TargetPlayerCard
                             playerId={trade.playerIdsToTarget[0][0]}
+                            numTeams={numTeams}
                         />
                         <TradePlus size={5} />
                         <TargetPlayerCard
                             playerId={trade.playerIdsToTarget[0][1]}
+                            numTeams={numTeams}
                         />
                     </div>
                     <DividerLine width={260} />
@@ -859,10 +884,12 @@ export function TradeStrategyItem({
                         <div className={styles.or}>OR</div>
                         <TargetPlayerCard
                             playerId={trade.playerIdsToTarget[1][0]}
+                            numTeams={numTeams}
                         />
                         <TradePlus size={5} />
                         <TargetPlayerCard
                             playerId={trade.playerIdsToTarget[1][1]}
+                            numTeams={numTeams}
                         />
                     </div>
                     <DividerLine width={260} />
@@ -870,10 +897,12 @@ export function TradeStrategyItem({
                         <div className={styles.or}>OR</div>
                         <TargetPlayerCard
                             playerId={trade.playerIdsToTarget[2][0]}
+                            numTeams={numTeams}
                         />
                         <TradePlus size={5} />
                         <TargetPlayerCard
                             playerId={trade.playerIdsToTarget[2][1]}
+                            numTeams={numTeams}
                         />
                     </div>
                 </div>
@@ -1049,7 +1078,13 @@ function TeamBackgroundGradient({
     );
 }
 
-function TradePlayerCard({playerId}: {playerId: string}) {
+function TradePlayerCard({
+    playerId,
+    numTeams,
+}: {
+    playerId: string;
+    numTeams: number;
+}) {
     const playerData = usePlayerData();
     if (!playerData) return null;
     const player = playerData[playerId];
@@ -1071,7 +1106,7 @@ function TradePlayerCard({playerId}: {playerId: string}) {
     if (playerId && isRookiePickId(playerId)) {
         return (
             <div className={styles.targetRookieCard}>
-                {rookiePickIdToString(playerId)}
+                {rookiePickIdToString(playerId, numTeams)}
             </div>
         );
     }
@@ -1131,7 +1166,7 @@ function TradePlayerCard({playerId}: {playerId: string}) {
     );
 }
 
-export function rookiePickIdToString(rookiePickId: string) {
+export function rookiePickIdToString(rookiePickId: string, numTeams: number) {
     if (!isRookiePickId(rookiePickId)) {
         throw new Error(
             `Expected rookie pick ID to begin with 'RP-', instead got '${rookiePickId}'`
@@ -1144,6 +1179,11 @@ export function rookiePickIdToString(rookiePickId: string) {
         const spl = rookiePickId.split('-');
         const year = spl[2];
         const round = spl[3];
+        const overallSlot = spl[4];
+        if (overallSlot) {
+            const slot = +overallSlot % numTeams || numTeams;
+            return `Rookie Pick ${round}.${slot < 10 ? '0' : ''}${slot}`;
+        }
         return `${year} Round ${round}`;
     }
     if (rookiePickId.substring(0, 3) === 'RP-') {
@@ -1152,7 +1192,13 @@ export function rookiePickIdToString(rookiePickId: string) {
     return rookiePickId;
 }
 
-function TargetPlayerCard({playerId}: {playerId: string}) {
+function TargetPlayerCard({
+    playerId,
+    numTeams,
+}: {
+    playerId: string;
+    numTeams: number;
+}) {
     const playerData = usePlayerData();
     if (!playerData) return null;
     const player = playerData[playerId];
@@ -1186,7 +1232,7 @@ function TargetPlayerCard({playerId}: {playerId: string}) {
     if (isRookiePickId(playerId)) {
         return (
             <div className={styles.targetRookieCard}>
-                {rookiePickIdToString(playerId)}
+                {rookiePickIdToString(playerId, numTeams)}
             </div>
         );
     }

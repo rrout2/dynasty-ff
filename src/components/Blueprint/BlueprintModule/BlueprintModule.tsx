@@ -2462,6 +2462,7 @@ export default function BlueprintModule({
                                 rosterId={
                                     getRosterIdFromUser(specifiedUser) + 1
                                 }
+                                numTeams={numTeams}
                             />
                         ))}
                     </div>
@@ -2515,6 +2516,7 @@ export default function BlueprintModule({
                                     rosterId={
                                         getRosterIdFromUser(specifiedUser) + 1
                                     }
+                                    numTeams={numTeams}
                                 />
                             ))}
                         </div>
@@ -2985,6 +2987,7 @@ type SuggestedMoveProps = {
     setPlayerIdToDomainValue: Dispatch<SetStateAction<Map<string, number>>>;
     leagueId: string;
     rosterId: number;
+    numTeams: number;
 };
 
 type TradeIdea = {
@@ -3041,10 +3044,11 @@ function SuggestedMove({
     setPlayerIdToDomainValue,
     leagueId,
     rosterId,
+    numTeams,
 }: SuggestedMoveProps) {
     const playerData = usePlayerData();
     const {getApiIdFromSleeperId} = useSleeperIdMap();
-    
+
     const [optionsToTrade, setOptionsToTrade] = useState<string[]>([]);
     const [downtierPinnedReturnAssets, setDowntierPinnedReturnAssets] =
         useState(playerIdsToTarget.map(row => row.map(() => false)));
@@ -3105,7 +3109,7 @@ function SuggestedMove({
     function getDisplayValueFromId(id: string) {
         if (!playerData) return id;
         if (isRookiePickId(id)) {
-            return rookiePickIdToString(id);
+            return rookiePickIdToString(id, numTeams);
         }
         if (!playerData[id]) return id;
         return !Number.isNaN(+id)
@@ -3150,9 +3154,11 @@ function SuggestedMove({
 
         const existingPrimaryAssets = (
             !protectedRows
-                ? newPlayerIdsToTarget.map((row, idx) =>
-                      idx !== rowIdx ? getPrimaryAsset(row) : undefined
-                  ).slice(0, 3)
+                ? newPlayerIdsToTarget
+                      .map((row, idx) =>
+                          idx !== rowIdx ? getPrimaryAsset(row) : undefined
+                      )
+                      .slice(0, 3)
                 : protectedRows.map(idx =>
                       getPrimaryAsset(newPlayerIdsToTarget[idx])
                   )
@@ -3427,6 +3433,7 @@ function SuggestedMove({
                                         playerIdsToTarget[2],
                                     ]);
                                 }}
+                                numTeams={numTeams}
                             />
                             <DomainAutocomplete
                                 selectedPlayer={playerIdsToTarget[1][0]}
@@ -3437,6 +3444,7 @@ function SuggestedMove({
                                         playerIdsToTarget[2],
                                     ]);
                                 }}
+                                numTeams={numTeams}
                             />
                             <DomainAutocomplete
                                 selectedPlayer={playerIdsToTarget[2][0]}
@@ -3447,6 +3455,7 @@ function SuggestedMove({
                                         [player, playerIdsToTarget[2][1]],
                                     ]);
                                 }}
+                                numTeams={numTeams}
                             />
                         </>
                     )}
@@ -3471,11 +3480,18 @@ function SuggestedMove({
                                             const newPlayerIdsToTarget = [
                                                 ...playerIdsToTarget,
                                             ];
-                                            const apiId = getApiIdFromSleeperId(player);
+                                            const apiId =
+                                                getApiIdFromSleeperId(player);
                                             if (apiId) {
                                                 setPlayerIdToAssetKey(old => {
-                                                    const newPlayerIdToAssetKey = new Map<string, string>(old);
-                                                    newPlayerIdToAssetKey.set(player, `player:${apiId}`);
+                                                    const newPlayerIdToAssetKey =
+                                                        new Map<string, string>(
+                                                            old
+                                                        );
+                                                    newPlayerIdToAssetKey.set(
+                                                        player,
+                                                        `player:${apiId}`
+                                                    );
                                                     return newPlayerIdToAssetKey;
                                                 });
                                             }
@@ -3485,6 +3501,7 @@ function SuggestedMove({
                                                 newPlayerIdsToTarget
                                             );
                                         }}
+                                        numTeams={numTeams}
                                     />
                                     <img
                                         src={sfIcon}
@@ -3508,11 +3525,18 @@ function SuggestedMove({
                                             const newPlayerIdsToTarget = [
                                                 ...playerIdsToTarget,
                                             ];
-                                            const apiId = getApiIdFromSleeperId(player);
+                                            const apiId =
+                                                getApiIdFromSleeperId(player);
                                             if (apiId) {
                                                 setPlayerIdToAssetKey(old => {
-                                                    const newPlayerIdToAssetKey = new Map<string, string>(old);
-                                                    newPlayerIdToAssetKey.set(player, `player:${apiId}`);
+                                                    const newPlayerIdToAssetKey =
+                                                        new Map<string, string>(
+                                                            old
+                                                        );
+                                                    newPlayerIdToAssetKey.set(
+                                                        player,
+                                                        `player:${apiId}`
+                                                    );
                                                     return newPlayerIdToAssetKey;
                                                 });
                                             }
@@ -3522,6 +3546,7 @@ function SuggestedMove({
                                                 newPlayerIdsToTarget
                                             );
                                         }}
+                                        numTeams={numTeams}
                                     />
                                     <IconButton
                                         loading={

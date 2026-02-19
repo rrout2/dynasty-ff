@@ -370,25 +370,31 @@ export default function Premium({
             <TradeStrategyItem
                 trade={tradeStrategy[0]}
                 style={{left: '280px', top: '578px', width: '420px'}}
+                numTeams={numTeams}
             />
             <TradeStrategyItem
                 trade={tradeStrategy[1]}
+                numTeams={numTeams}
                 style={{left: '280px', top: '725px', width: '420px'}}
             />
             <TradeStrategyItem
                 trade={tradeStrategy[2]}
+                numTeams={numTeams}
                 style={{left: '280px', top: '872px', width: '420px'}}
             />
             <TradeStrategyItem
                 trade={tradeStrategy[3]}
+                numTeams={numTeams}
                 style={{left: '700px', top: '578px', width: '420px'}}
             />
             <TradeStrategyItem
                 trade={tradeStrategy[4]}
+                numTeams={numTeams}
                 style={{left: '700px', top: '725px', width: '420px'}}
             />
             <TradeStrategyItem
                 trade={tradeStrategy[5]}
+                numTeams={numTeams}
                 style={{left: '700px', top: '872px', width: '420px'}}
             />
             <DraftStrategyItem
