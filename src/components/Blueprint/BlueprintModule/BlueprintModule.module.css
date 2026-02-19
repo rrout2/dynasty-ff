@@ -146,21 +146,6 @@
     overflow-x: auto;
 }
 
-.toTradeContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 1500px;
-
-    border-right: 1px solid #ccc;
-
-    padding: 20px;
-}
-
-.toTradeContainer:last-child {
-    border-right: none;
-    margin-right: 0px;
-}
 
 .tradeTitle {
     text-transform: uppercase;
@@ -172,48 +157,11 @@
     margin-bottom: 10px;
 }
 
-.toTradeRow {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-}
-
-.toTargetContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.downtierRow {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: center;
-}
-
 .suggestedMovesContainer {
     display: flex;
     flex-direction: row;
     
     justify-content: space-between;
-}
-
-.moveTitleContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.moveTitle {
-    text-transform: uppercase;
-    color: white;
-    font-family: 'Prohibition';
-    font-size: 30px;
-    text-align: center;
-
-    padding-bottom: 5px;
 }
 
 .topRightSection {
