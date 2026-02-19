@@ -193,10 +193,10 @@ export default function SuggestedMove({
         for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
             if (
                 pinnedReturnAssets[rowIdx][0] !== pinnedReturnAssets[rowIdx][1]
-            ) {
+            ) { // if exactly one is pinned
                 await newCustomDowntier(rowIdx, protectedRows);
                 protectedRows.push(rowIdx);
-            } else if (pinnedReturnAssets[rowIdx][0]) {
+            } else if (pinnedReturnAssets[rowIdx][0]) { // if both are pinned
                 protectedRows.push(rowIdx);
             }
         }
@@ -681,7 +681,7 @@ export default function SuggestedMove({
                                             );
                                         }}
                                         disabled={
-                                            pinnedReturnAssets[rowIdx][0] ===
+                                            pinnedReturnAssets[rowIdx][0] &&
                                             pinnedReturnAssets[rowIdx][1]
                                         }
                                     >
