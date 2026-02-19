@@ -58,8 +58,9 @@ export default function SuggestedMove({
     const {getApiIdFromSleeperId} = useSleeperIdMap();
 
     const [optionsToTrade, setOptionsToTrade] = useState<string[]>([]);
-    const [pinnedReturnAssets, setPinnedReturnAssets] =
-        useState(playerIdsToTarget.map(row => row.map(() => false)));
+    const [pinnedReturnAssets, setPinnedReturnAssets] = useState(
+        playerIdsToTarget.map(row => row.map(() => false))
+    );
     const [loadingAllThree, setLoadingAllThree] = useState(false);
     const [loadingRow, setLoadingRow] = useState(-1);
 
@@ -191,8 +192,7 @@ export default function SuggestedMove({
         const protectedRows: number[] = [];
         for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
             if (
-                pinnedReturnAssets[rowIdx][0] !==
-                pinnedReturnAssets[rowIdx][1]
+                pinnedReturnAssets[rowIdx][0] !== pinnedReturnAssets[rowIdx][1]
             ) {
                 await newCustomDowntier(rowIdx, protectedRows);
                 protectedRows.push(rowIdx);
@@ -259,6 +259,34 @@ export default function SuggestedMove({
             if (isAssetPinned[i]) continue;
             newPlayerIdsToTarget[i] = [inAssets[i], ''];
         }
+        setPlayerIdsToTarget(newPlayerIdsToTarget);
+    }
+
+    async function newCustomPivot(rowIdx: number) {
+        const ideas = await fetchCustomPivot({
+            leagueId,
+            rosterId,
+            outAssetKey: playerIdToAssetKey.get(playerIdsToTrade[0])!,
+        });
+        ideas.forEach(populatePlayerIdMaps);
+        shuffle(ideas);
+
+        const existingTargets: Set<string> = new Set();
+        for (let i = 0; i < 3; i++) {
+            if (i === rowIdx) continue;
+            existingTargets.add(playerIdsToTarget[i][0]);
+        }
+
+        const inAssets = ideas
+            .map(idea => idea.inAssets.map(assetToString))
+            .flat();
+        let ideaIdx = 0;
+        while (existingTargets.has(inAssets[ideaIdx])) {
+            ideaIdx++;
+        }
+
+        const newPlayerIdsToTarget = [...playerIdsToTarget];
+        newPlayerIdsToTarget[rowIdx] = [inAssets[ideaIdx], ''];
         setPlayerIdsToTarget(newPlayerIdsToTarget);
     }
 
@@ -490,9 +518,7 @@ export default function SuggestedMove({
                                 <div className={styles.downtierRow}>
                                     <PinButton
                                         pinCoords={[i, 0]}
-                                        pinnedReturnAssets={
-                                            pinnedReturnAssets
-                                        }
+                                        pinnedReturnAssets={pinnedReturnAssets}
                                         setPinnedReturnAssets={
                                             setPinnedReturnAssets
                                         }
@@ -502,15 +528,44 @@ export default function SuggestedMove({
                                         selectedPlayer={playerIdsToTarget[i][0]}
                                         setSelectedPlayer={(player: string) => {
                                             setPlayerIdsToTarget(
-                                                playerIdsToTarget.map((entry, j) =>
-                                                    j === i
-                                                        ? [player, entry[1]]
-                                                        : entry
+                                                playerIdsToTarget.map(
+                                                    (entry, j) =>
+                                                        j === i
+                                                            ? [player, entry[1]]
+                                                            : entry
                                                 )
                                             );
                                         }}
                                         numTeams={numTeams}
                                     />
+                                    <IconButton
+                                        loading={
+                                            loadingRow === i || loadingAllThree
+                                        }
+                                        sx={{
+                                            '&:hover': {
+                                                backgroundColor:
+                                                    'rgba(255, 255, 255, 0.2)',
+                                            },
+                                            '&.Mui-disabled': {
+                                                opacity: 0.4,
+                                            },
+                                        }}
+                                        TouchRippleProps={{
+                                            style: {
+                                                color: 'white',
+                                            },
+                                        }}
+                                        onClick={() => {
+                                            setLoadingRow(i);
+                                            newCustomPivot(i).finally(() =>
+                                                setLoadingRow(-1)
+                                            );
+                                        }}
+                                        disabled={pinnedReturnAssets[i][0]}
+                                    >
+                                        <Casino sx={{color: 'white'}} />
+                                    </IconButton>
                                 </div>
                             ))}
                         </>
@@ -521,9 +576,7 @@ export default function SuggestedMove({
                                 <div className={styles.downtierRow}>
                                     <PinButton
                                         pinCoords={[rowIdx, 0]}
-                                        pinnedReturnAssets={
-                                            pinnedReturnAssets
-                                        }
+                                        pinnedReturnAssets={pinnedReturnAssets}
                                         setPinnedReturnAssets={
                                             setPinnedReturnAssets
                                         }
@@ -566,9 +619,7 @@ export default function SuggestedMove({
                                     />
                                     <PinButton
                                         pinCoords={[rowIdx, 1]}
-                                        pinnedReturnAssets={
-                                            pinnedReturnAssets
-                                        }
+                                        pinnedReturnAssets={pinnedReturnAssets}
                                         setPinnedReturnAssets={
                                             setPinnedReturnAssets
                                         }
@@ -630,12 +681,8 @@ export default function SuggestedMove({
                                             );
                                         }}
                                         disabled={
-                                            pinnedReturnAssets[
-                                                rowIdx
-                                            ][0] ===
-                                            pinnedReturnAssets[
-                                                rowIdx
-                                            ][1]
+                                            pinnedReturnAssets[rowIdx][0] ===
+                                            pinnedReturnAssets[rowIdx][1]
                                         }
                                     >
                                         <Casino sx={{color: 'white'}} />
@@ -675,12 +722,10 @@ function PinButton({
                 },
             }}
             onClick={() => {
-                const newDowntierPinnedReturnAssets = [
-                    ...pinnedReturnAssets,
-                ];
-                newDowntierPinnedReturnAssets[pinCoords[0]][pinCoords[1]] =
+                const newPinnedReturnAssets = [...pinnedReturnAssets];
+                newPinnedReturnAssets[pinCoords[0]][pinCoords[1]] =
                     !pinnedReturnAssets[pinCoords[0]][pinCoords[1]];
-                setPinnedReturnAssets(newDowntierPinnedReturnAssets);
+                setPinnedReturnAssets(newPinnedReturnAssets);
             }}
         >
             {pinnedReturnAssets[pinCoords[0]][pinCoords[1]] ? (
