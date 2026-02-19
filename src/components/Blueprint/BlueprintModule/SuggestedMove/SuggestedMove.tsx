@@ -23,7 +23,7 @@ type SuggestedMoveProps = {
     playerIdsToTrade: string[];
     setPlayerIdsToTrade: (playerIds: string[]) => void;
     playerIdsToTarget: string[][];
-    setPlayerIdsToTarget: (playerIds: string[][]) => void;
+    setPlayerIdsToTarget: Dispatch<SetStateAction<string[][]>>;
     rosterPlayers: Player[];
     moveNumber: number;
     rerollMove: () => void;
@@ -58,7 +58,7 @@ export default function SuggestedMove({
     const {getApiIdFromSleeperId} = useSleeperIdMap();
 
     const [optionsToTrade, setOptionsToTrade] = useState<string[]>([]);
-    const [downtierPinnedReturnAssets, setDowntierPinnedReturnAssets] =
+    const [pinnedReturnAssets, setPinnedReturnAssets] =
         useState(playerIdsToTarget.map(row => row.map(() => false)));
     const [loadingAllThree, setLoadingAllThree] = useState(false);
     const [loadingRow, setLoadingRow] = useState(-1);
@@ -144,7 +144,7 @@ export default function SuggestedMove({
             rosterId,
             outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])!],
             inAssetKeys: playerIdsToTarget[rowIdx]
-                .filter((_, idx) => downtierPinnedReturnAssets[rowIdx][idx])
+                .filter((_, idx) => pinnedReturnAssets[rowIdx][idx])
                 .map(id => playerIdToAssetKey.get(id)!),
         });
         const ideas = tradeIdeas
@@ -191,12 +191,12 @@ export default function SuggestedMove({
         const protectedRows: number[] = [];
         for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
             if (
-                downtierPinnedReturnAssets[rowIdx][0] !==
-                downtierPinnedReturnAssets[rowIdx][1]
+                pinnedReturnAssets[rowIdx][0] !==
+                pinnedReturnAssets[rowIdx][1]
             ) {
                 await newCustomDowntier(rowIdx, protectedRows);
                 protectedRows.push(rowIdx);
-            } else if (downtierPinnedReturnAssets[rowIdx][0]) {
+            } else if (pinnedReturnAssets[rowIdx][0]) {
                 protectedRows.push(rowIdx);
             }
         }
@@ -237,6 +237,27 @@ export default function SuggestedMove({
             newPlayerIdsToTarget[insertIdx] = inAssetIds;
             ideaIdx++;
             insertIdx++;
+        }
+        setPlayerIdsToTarget(newPlayerIdsToTarget);
+    }
+
+    async function newCustomPivotAllThree() {
+        const isAssetPinned = [0, 1, 2].map(idx => pinnedReturnAssets[idx][0]);
+        if (isAssetPinned.every(h => h)) return;
+        const ideas = await fetchCustomPivot({
+            leagueId,
+            rosterId,
+            outAssetKey: playerIdToAssetKey.get(playerIdsToTrade[0])!,
+        });
+        ideas.forEach(populatePlayerIdMaps);
+        shuffle(ideas);
+        const inAssets = ideas
+            .map(idea => idea.inAssets.map(assetToString))
+            .flat();
+        const newPlayerIdsToTarget = [...playerIdsToTarget];
+        for (let i = 0; i < 3; i++) {
+            if (isAssetPinned[i]) continue;
+            newPlayerIdsToTarget[i] = [inAssets[i], ''];
         }
         setPlayerIdsToTarget(newPlayerIdsToTarget);
     }
@@ -365,6 +386,39 @@ export default function SuggestedMove({
                             </IconButton>
                         </Tooltip>
                     )}
+                    {move === Move.PIVOT && (
+                        <Tooltip
+                            title={`Find Pivots for ${getDisplayValueFromId(
+                                playerIdsToTrade[0]
+                            )}`}
+                        >
+                            <IconButton
+                                loading={loadingAllThree || loadingRow > -1}
+                                sx={{
+                                    '&:hover': {
+                                        backgroundColor:
+                                            'rgba(255, 255, 255, 0.2)',
+                                    },
+                                    '&.Mui-disabled': {
+                                        opacity: 0.4,
+                                    },
+                                }}
+                                TouchRippleProps={{
+                                    style: {
+                                        color: 'white',
+                                    },
+                                }}
+                                onClick={() => {
+                                    setLoadingAllThree(true);
+                                    newCustomPivotAllThree().finally(() => {
+                                        setLoadingAllThree(false);
+                                    });
+                                }}
+                            >
+                                <Casino sx={{color: 'white'}} />
+                            </IconButton>
+                        </Tooltip>
+                    )}
                     {move === Move.UPTIER && (
                         <>
                             <img
@@ -432,39 +486,33 @@ export default function SuggestedMove({
                 <div className={styles.toTargetContainer}>
                     {move !== Move.DOWNTIER && (
                         <>
-                            <DomainAutocomplete
-                                selectedPlayer={playerIdsToTarget[0][0]}
-                                setSelectedPlayer={(player: string) => {
-                                    setPlayerIdsToTarget([
-                                        [player, playerIdsToTarget[0][1]],
-                                        playerIdsToTarget[1],
-                                        playerIdsToTarget[2],
-                                    ]);
-                                }}
-                                numTeams={numTeams}
-                            />
-                            <DomainAutocomplete
-                                selectedPlayer={playerIdsToTarget[1][0]}
-                                setSelectedPlayer={(player: string) => {
-                                    setPlayerIdsToTarget([
-                                        playerIdsToTarget[0],
-                                        [player, playerIdsToTarget[1][1]],
-                                        playerIdsToTarget[2],
-                                    ]);
-                                }}
-                                numTeams={numTeams}
-                            />
-                            <DomainAutocomplete
-                                selectedPlayer={playerIdsToTarget[2][0]}
-                                setSelectedPlayer={(player: string) => {
-                                    setPlayerIdsToTarget([
-                                        playerIdsToTarget[0],
-                                        playerIdsToTarget[1],
-                                        [player, playerIdsToTarget[2][1]],
-                                    ]);
-                                }}
-                                numTeams={numTeams}
-                            />
+                            {[0, 1, 2].map(i => (
+                                <div className={styles.downtierRow}>
+                                    <PinButton
+                                        pinCoords={[i, 0]}
+                                        pinnedReturnAssets={
+                                            pinnedReturnAssets
+                                        }
+                                        setPinnedReturnAssets={
+                                            setPinnedReturnAssets
+                                        }
+                                    />
+                                    <DomainAutocomplete
+                                        key={i}
+                                        selectedPlayer={playerIdsToTarget[i][0]}
+                                        setSelectedPlayer={(player: string) => {
+                                            setPlayerIdsToTarget(prev =>
+                                                prev.map((entry, j) =>
+                                                    j === i
+                                                        ? [player, entry[1]]
+                                                        : entry
+                                                )
+                                            );
+                                        }}
+                                        numTeams={numTeams}
+                                    />
+                                </div>
+                            ))}
                         </>
                     )}
                     {move === Move.DOWNTIER && (
@@ -473,11 +521,11 @@ export default function SuggestedMove({
                                 <div className={styles.downtierRow}>
                                     <PinButton
                                         pinCoords={[rowIdx, 0]}
-                                        downtierPinnedReturnAssets={
-                                            downtierPinnedReturnAssets
+                                        pinnedReturnAssets={
+                                            pinnedReturnAssets
                                         }
-                                        setDowntierPinnedReturnAssets={
-                                            setDowntierPinnedReturnAssets
+                                        setPinnedReturnAssets={
+                                            setPinnedReturnAssets
                                         }
                                     />
                                     <DomainAutocomplete
@@ -518,11 +566,11 @@ export default function SuggestedMove({
                                     />
                                     <PinButton
                                         pinCoords={[rowIdx, 1]}
-                                        downtierPinnedReturnAssets={
-                                            downtierPinnedReturnAssets
+                                        pinnedReturnAssets={
+                                            pinnedReturnAssets
                                         }
-                                        setDowntierPinnedReturnAssets={
-                                            setDowntierPinnedReturnAssets
+                                        setPinnedReturnAssets={
+                                            setPinnedReturnAssets
                                         }
                                     />
                                     <DomainAutocomplete
@@ -582,10 +630,10 @@ export default function SuggestedMove({
                                             );
                                         }}
                                         disabled={
-                                            downtierPinnedReturnAssets[
+                                            pinnedReturnAssets[
                                                 rowIdx
                                             ][0] ===
-                                            downtierPinnedReturnAssets[
+                                            pinnedReturnAssets[
                                                 rowIdx
                                             ][1]
                                         }
@@ -603,14 +651,14 @@ export default function SuggestedMove({
 }
 
 type PinButtonProps = {
-    downtierPinnedReturnAssets: boolean[][];
-    setDowntierPinnedReturnAssets: (assets: boolean[][]) => void;
+    pinnedReturnAssets: boolean[][];
+    setPinnedReturnAssets: (assets: boolean[][]) => void;
     pinCoords: number[];
 };
 
 function PinButton({
-    downtierPinnedReturnAssets,
-    setDowntierPinnedReturnAssets,
+    pinnedReturnAssets,
+    setPinnedReturnAssets,
     pinCoords,
 }: PinButtonProps) {
     return (
@@ -628,14 +676,14 @@ function PinButton({
             }}
             onClick={() => {
                 const newDowntierPinnedReturnAssets = [
-                    ...downtierPinnedReturnAssets,
+                    ...pinnedReturnAssets,
                 ];
                 newDowntierPinnedReturnAssets[pinCoords[0]][pinCoords[1]] =
-                    !downtierPinnedReturnAssets[pinCoords[0]][pinCoords[1]];
-                setDowntierPinnedReturnAssets(newDowntierPinnedReturnAssets);
+                    !pinnedReturnAssets[pinCoords[0]][pinCoords[1]];
+                setPinnedReturnAssets(newDowntierPinnedReturnAssets);
             }}
         >
-            {downtierPinnedReturnAssets[pinCoords[0]][pinCoords[1]] ? (
+            {pinnedReturnAssets[pinCoords[0]][pinCoords[1]] ? (
                 <PushPin sx={{color: 'white'}} />
             ) : (
                 <PushPinOutlined sx={{color: 'white'}} />
@@ -672,6 +720,36 @@ const fetchCustomDowntier = async ({
             moveType: 2,
             outAssetKeys,
             inAssetKeys,
+            maxResults: 300,
+        },
+        headers: {
+            Authorization: `Bearer ${authToken}`,
+        },
+    };
+    const res = await axios.request(options);
+    return res.data as TradeIdea[];
+};
+
+const fetchCustomPivot = async ({
+    leagueId,
+    rosterId,
+    outAssetKey,
+}: {
+    leagueId: string;
+    rosterId: number;
+    outAssetKey: string;
+}) => {
+    const authToken = sessionStorage.getItem('authToken');
+    const options = {
+        method: 'POST',
+        url: `${AZURE_API_URL}/TradeRulesAdmin/customize`,
+        data: {
+            leagueId,
+            rosterId,
+            gradeRunVersionNumber: 1,
+            weekId: 19,
+            moveType: 1,
+            outAssetKeys: [outAssetKey],
             maxResults: 300,
         },
         headers: {
