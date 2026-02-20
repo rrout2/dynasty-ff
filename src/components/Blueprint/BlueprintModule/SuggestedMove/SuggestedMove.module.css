@@ -1,4 +1,4 @@
-.toTradeContainer {
+.suggestedMoveContainer {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -9,7 +9,7 @@
     padding: 20px;
 }
 
-.toTradeContainer:last-child {
+.suggestedMoveContainer:last-child {
     border-right: none;
     margin-right: 0px;
 }

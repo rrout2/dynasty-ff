@@ -454,7 +454,7 @@ export default function SuggestedMove({
 
     return (
         playerData && (
-            <div className={styles.toTradeContainer}>
+            <div className={styles.suggestedMoveContainer}>
                 <div className={styles.moveTitleContainer}>
                     <div className={styles.moveTitle}>MOVE #{moveNumber}</div>
                     <IconButton
