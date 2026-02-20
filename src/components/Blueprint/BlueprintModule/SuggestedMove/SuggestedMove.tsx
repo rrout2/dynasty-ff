@@ -65,6 +65,12 @@ export default function SuggestedMove({
     const [loadingRow, setLoadingRow] = useState(-1);
 
     useEffect(() => {
+        setPinnedReturnAssets(
+            playerIdsToTarget.map(row => row.map(() => false))
+        );
+    }, [move, leagueId, rosterId]);
+
+    useEffect(() => {
         const nonIdPlayerOptions: string[] = [];
         for (let j = 1; j < 5; j++) {
             for (let i = 1; i <= numTeams; i++) {
