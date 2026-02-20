@@ -254,7 +254,7 @@ export type FullMove = {
     priorityDescription: string;
 };
 
-export function assetToString(p: TradeAsset) {
+export function assetToPlayerId(p: TradeAsset) {
     if (p.playerSleeperId) {
         return '' + p.playerSleeperId;
     }
@@ -303,7 +303,7 @@ export default function BlueprintModule({
     const [numTeams, setNumTeams] = useState(12);
 
     const {blueprint, setBlueprint} = useBlueprint(blueprintId);
-    const {valueArchetype, setValueArchetype} = useTeamValueArchetype(
+    const {valueArchetype, setValueArchetype, error: valueArchetypeError} = useTeamValueArchetype(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
@@ -479,6 +479,13 @@ export default function BlueprintModule({
     const [playerIdToDomainValue, setPlayerIdToDomainValue] = useState<
         Map<string, number>
     >(new Map());
+
+    useEffect(() => {
+        if (!valueArchetypeError) return;
+        if (valueArchetypeError.message === 'Request failed with status code 401') {
+            submitLogout();
+        }
+    }, [valueArchetypeError])
 
     useEffect(() => {
         if (!blueprint || !playerData) return;
@@ -855,7 +862,7 @@ export default function BlueprintModule({
         );
 
         function assetToStringAndStore(p: TradeAsset) {
-            const str = assetToString(p);
+            const str = assetToPlayerId(p);
             newPlayerIdToAssetKey.set(str, p.assetKey);
             newPlayerIdToDomainValue.set(str, p.domainValue);
             return str;
@@ -1396,6 +1403,7 @@ export default function BlueprintModule({
     function submitLogout() {
         sessionStorage.removeItem('authToken');
         setLoggedIn(false);
+        setLoginModalOpen(true);
     }
 
     return (

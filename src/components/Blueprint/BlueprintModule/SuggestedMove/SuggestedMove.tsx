@@ -15,7 +15,7 @@ import {rookiePickIdToString} from '../../NewV1/NewV1';
 import DomainAutocomplete from '../../shared/DomainAutocomplete';
 import DomainDropdown from '../../shared/DomainDropdown';
 import {isRookiePickId} from '../../v1/modules/playerstotarget/PlayersToTargetModule';
-import {assetToString, Move, shuffle} from '../BlueprintModule';
+import {assetToPlayerId, Move, shuffle} from '../BlueprintModule';
 
 type SuggestedMoveProps = {
     move: Move;
@@ -98,7 +98,7 @@ export default function SuggestedMove({
         setPlayerIdToAssetKey(old => {
             const newPlayerIdToAssetKey = new Map<string, string>(old);
             idea.inAssets.forEach(asset => {
-                const str = assetToString(asset);
+                const str = assetToPlayerId(asset);
                 if (newPlayerIdToAssetKey.has(str)) return;
                 newPlayerIdToAssetKey.set(str, asset.assetKey);
             });
@@ -107,7 +107,7 @@ export default function SuggestedMove({
         setPlayerIdToDomainValue(old => {
             const newPlayerIdToDomainValue = new Map<string, number>(old);
             idea.inAssets.forEach(asset => {
-                const str = assetToString(asset);
+                const str = assetToPlayerId(asset);
                 if (newPlayerIdToDomainValue.has(str)) return;
                 newPlayerIdToDomainValue.set(str, asset.domainValue);
             });
@@ -185,7 +185,7 @@ export default function SuggestedMove({
             .filter(idea => !!idea)
             .filter(idea => {
                 populatePlayerIdMaps(idea);
-                const inAssetStrings = idea.inAssets.map(assetToString);
+                const inAssetStrings = idea.inAssets.map(assetToPlayerId);
                 const targetRow = playerIdsToTarget[rowIdx];
                 return !targetRow.every(target =>
                     inAssetStrings.includes(target)
@@ -207,7 +207,7 @@ export default function SuggestedMove({
         ).filter(asset => asset !== undefined);
 
         for (let ideaIdx = 0; ideaIdx < ideas.length; ideaIdx++) {
-            const playerIds = ideas[ideaIdx].inAssets.map(assetToString);
+            const playerIds = ideas[ideaIdx].inAssets.map(assetToPlayerId);
             const suggestedPrimaryAsset = getPrimaryAsset(playerIds);
             if (existingPrimaryAssets.includes(suggestedPrimaryAsset)) continue;
             if (newPlayerIdsToTarget[rowIdx][0] === playerIds[0]) {
@@ -261,7 +261,7 @@ export default function SuggestedMove({
                 continue;
             }
 
-            const inAssetIds = ideas[ideaIdx].inAssets.map(assetToString);
+            const inAssetIds = ideas[ideaIdx].inAssets.map(assetToPlayerId);
             const suggestedPrimaryAsset = getPrimaryAsset(inAssetIds);
 
             if (isAssetAlreadyPlaced(suggestedPrimaryAsset, insertIdx)) {
@@ -287,7 +287,7 @@ export default function SuggestedMove({
         ideas.forEach(populatePlayerIdMaps);
         shuffle(ideas);
         const inAssets = ideas
-            .map(idea => idea.inAssets.map(assetToString))
+            .map(idea => idea.inAssets.map(assetToPlayerId))
             .flat();
         const newPlayerIdsToTarget = [...playerIdsToTarget];
         for (let i = 0; i < 3; i++) {
@@ -313,7 +313,7 @@ export default function SuggestedMove({
         }
 
         const inAssets = ideas
-            .map(idea => idea.inAssets.map(assetToString))
+            .map(idea => idea.inAssets.map(assetToPlayerId))
             .flat();
         let ideaIdx = 0;
         while (existingTargets.has(inAssets[ideaIdx])) {
@@ -338,7 +338,7 @@ export default function SuggestedMove({
         ideas.forEach(populatePlayerIdMaps);
         shuffle(ideas);
         const inAssets = ideas
-            .map(idea => idea.inAssets.map(assetToString))
+            .map(idea => idea.inAssets.map(assetToPlayerId))
             .flat();
         const newPlayerIdsToTarget = [...playerIdsToTarget];
         for (let i = 0; i < 3; i++) {
@@ -365,7 +365,7 @@ export default function SuggestedMove({
         }
 
         const inAssets = ideas
-            .map(idea => idea.inAssets.map(assetToString))
+            .map(idea => idea.inAssets.map(assetToPlayerId))
             .flat();
         let ideaIdx = 0;
         while (existingTargets.has(inAssets[ideaIdx])) {

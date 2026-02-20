@@ -817,7 +817,7 @@ export function useTeamValueArchetype(leagueId: string, teamId: string) {
         ValueArchetype.None
     );
     const authToken = sessionStorage.getItem('authToken');
-    const {data} = useQuery({
+    const {data, error} = useQuery({
         queryKey: ['teamValueArchetype', leagueId, teamId, authToken],
         queryFn: async () => {
             const options = {
@@ -843,6 +843,7 @@ export function useTeamValueArchetype(leagueId: string, teamId: string) {
     return {
         valueArchetype,
         setValueArchetype,
+        error,
     };
 }
 
