@@ -51,7 +51,14 @@
     gap: 5px;
 }
 
-.downtierRow {
+.toTargetRow {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.moveSelectRow {
     display: flex;
     flex-direction: row;
     gap: 10px;

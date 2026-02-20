@@ -1817,7 +1817,7 @@ export default function BlueprintModule({
                                     TEP
                                 </div>
                             }
-                            options={[0, 0.5, 1.0, 1.5, 2]}
+                            options={[0, 0.5, 0.75, 1.0, 1.5, 2]}
                             value={tep}
                             onChange={e => {
                                 const {
@@ -3111,6 +3111,11 @@ export function getApiStartingLineup(
     ];
 }
 
+/**
+ * Shuffles an array in place, using the Fisher-Yates shuffle algorithm.
+ * Time complexity is O(n), where n is the length of the array.
+ * @param {any[]} array - The array to shuffle
+ */
 export function shuffle(array: any[]) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));

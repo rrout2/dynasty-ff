@@ -63,6 +63,7 @@ export default function SuggestedMove({
     );
     const [loadingAllThree, setLoadingAllThree] = useState(false);
     const [loadingRow, setLoadingRow] = useState(-1);
+    const [filterPositions, setFilterPositions] = useState<string[]>([]);
 
     useEffect(() => {
         setPinnedReturnAssets(
@@ -165,66 +166,32 @@ export default function SuggestedMove({
             : playerId;
     }
 
-    function getPrimaryAsset(assetIds: string[]) {
+    function getPrimaryAssetFromPlayerIds(playerIds: string[]) {
         return (
             '' +
-            assetIds.reduce((max, current) => {
+            playerIds.reduce((max, current) => {
                 const currentValue = playerIdToDomainValue.get(current) || 0;
                 const maxValue = playerIdToDomainValue.get(max) || 0;
                 return currentValue > maxValue ? current : max;
-            }, assetIds[0])
+            }, playerIds[0])
         );
     }
 
-    // protectedRows === undefined means that this is a standalone move
-    // protectedRows === [] means no primary asset checking
-    async function newCustomDowntier(rowIdx: number, protectedRows?: number[]) {
-        const tradeIdeas = await fetchCustomDowntier({
-            leagueId,
-            rosterId,
-            outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])!],
-            inAssetKeys: playerIdsToTarget[rowIdx]
-                .filter((_, idx) => pinnedReturnAssets[rowIdx][idx])
-                .map(id => playerIdToAssetKey.get(id)!),
+    function getPrimaryAsset(tradeAssets: TradeAsset[]) {
+        return tradeAssets.reduce((max, current) => {
+            const currentValue = current.domainValue;
+            const maxValue = max.domainValue;
+            return currentValue > maxValue ? current : max;
+        }, tradeAssets[0]);
+    }
+
+    function filterIdeasByPosition(ideas: TradeIdea[]) {
+        if (filterPositions.length === 0) return ideas;
+        return ideas.filter(idea => {
+            const primaryAsset = getPrimaryAsset(idea.inAssets);
+            if (!primaryAsset.position) return false;
+            return filterPositions.includes(primaryAsset.position);
         });
-        const ideas = tradeIdeas
-            .filter(idea => !!idea)
-            .filter(idea => {
-                populatePlayerIdMaps(idea);
-                const inAssetStrings = idea.inAssets.map(assetToPlayerId);
-                const targetRow = playerIdsToTarget[rowIdx];
-                return !targetRow.every(target =>
-                    inAssetStrings.includes(target)
-                );
-            });
-        shuffle(ideas);
-        const newPlayerIdsToTarget = [...playerIdsToTarget];
-
-        const existingPrimaryAssets = (
-            !protectedRows
-                ? newPlayerIdsToTarget
-                      .map((row, idx) =>
-                          idx !== rowIdx ? getPrimaryAsset(row) : undefined
-                      )
-                      .slice(0, 3)
-                : protectedRows.map(idx =>
-                      getPrimaryAsset(newPlayerIdsToTarget[idx])
-                  )
-        ).filter(asset => asset !== undefined);
-
-        for (let ideaIdx = 0; ideaIdx < ideas.length; ideaIdx++) {
-            const playerIds = ideas[ideaIdx].inAssets.map(assetToPlayerId);
-            const suggestedPrimaryAsset = getPrimaryAsset(playerIds);
-            if (existingPrimaryAssets.includes(suggestedPrimaryAsset)) continue;
-            if (newPlayerIdsToTarget[rowIdx][0] === playerIds[0]) {
-                newPlayerIdsToTarget[rowIdx] = playerIds;
-            } else {
-                newPlayerIdsToTarget[rowIdx] = [playerIds[1], playerIds[0]];
-            }
-            break;
-        }
-
-        setPlayerIdsToTarget(newPlayerIdsToTarget);
     }
 
     async function newCustomDowntierAllThree() {
@@ -251,6 +218,13 @@ export default function SuggestedMove({
         });
         ideas.forEach(populatePlayerIdMaps);
         shuffle(ideas);
+        const filteredIdeas = filterIdeasByPosition(ideas);
+        if (filteredIdeas.length < 3) {
+            alert(
+                `Not enough ideas to fill all three slots. Found ${filteredIdeas.length} idea(s). Try adjusting your filters.`
+            );
+        }
+
         const newPlayerIdsToTarget = [...playerIdsToTarget];
         let ideaIdx = 0;
         let insertIdx = 0;
@@ -260,15 +234,22 @@ export default function SuggestedMove({
         ): boolean =>
             Array.from({length: upToIndex}, (_, j) => j)
                 .concat(protectedRows)
-                .some(j => getPrimaryAsset(newPlayerIdsToTarget[j]) === asset);
-        while (insertIdx < 3) {
+                .some(
+                    j =>
+                        getPrimaryAssetFromPlayerIds(
+                            newPlayerIdsToTarget[j]
+                        ) === asset
+                );
+        while (insertIdx < 3 && ideaIdx < filteredIdeas.length) {
             if (protectedRows.includes(insertIdx)) {
                 insertIdx++;
                 continue;
             }
 
-            const inAssetIds = ideas[ideaIdx].inAssets.map(assetToPlayerId);
-            const suggestedPrimaryAsset = getPrimaryAsset(inAssetIds);
+            const inAssetIds =
+                filteredIdeas[ideaIdx].inAssets.map(assetToPlayerId);
+            const suggestedPrimaryAsset =
+                getPrimaryAssetFromPlayerIds(inAssetIds);
 
             if (isAssetAlreadyPlaced(suggestedPrimaryAsset, insertIdx)) {
                 ideaIdx++;
@@ -282,6 +263,68 @@ export default function SuggestedMove({
         setPlayerIdsToTarget(newPlayerIdsToTarget);
     }
 
+    // protectedRows === undefined means that this is a standalone move
+    // protectedRows === [] means no primary asset checking
+    async function newCustomDowntier(rowIdx: number, protectedRows?: number[]) {
+        const tradeIdeas = await fetchCustomDowntier({
+            leagueId,
+            rosterId,
+            outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])!],
+            inAssetKeys: playerIdsToTarget[rowIdx]
+                .filter((_, idx) => pinnedReturnAssets[rowIdx][idx])
+                .map(id => playerIdToAssetKey.get(id)!),
+        });
+        const ideas = tradeIdeas
+            .filter(idea => !!idea)
+            .filter(idea => {
+                populatePlayerIdMaps(idea);
+                const inAssetStrings = idea.inAssets.map(assetToPlayerId);
+                const targetRow = playerIdsToTarget[rowIdx];
+                return !targetRow.every(target =>
+                    inAssetStrings.includes(target)
+                );
+            });
+        shuffle(ideas);
+        const filteredIdeas = filterIdeasByPosition(ideas);
+        if (filteredIdeas.length < 1) {
+            alert(
+                'Found no ideas to fill this slot. Try adjusting your filters.'
+            );
+            return;
+        }
+        const newPlayerIdsToTarget = [...playerIdsToTarget];
+
+        const existingPrimaryAssets = (
+            !protectedRows
+                ? newPlayerIdsToTarget
+                      .map((row, idx) =>
+                          idx !== rowIdx
+                              ? getPrimaryAssetFromPlayerIds(row)
+                              : undefined
+                      )
+                      .slice(0, 3)
+                : protectedRows.map(idx =>
+                      getPrimaryAssetFromPlayerIds(newPlayerIdsToTarget[idx])
+                  )
+        ).filter(asset => asset !== undefined);
+
+        for (let ideaIdx = 0; ideaIdx < filteredIdeas.length; ideaIdx++) {
+            const playerIds =
+                filteredIdeas[ideaIdx].inAssets.map(assetToPlayerId);
+            const suggestedPrimaryAsset =
+                getPrimaryAssetFromPlayerIds(playerIds);
+            if (existingPrimaryAssets.includes(suggestedPrimaryAsset)) continue;
+            if (newPlayerIdsToTarget[rowIdx][0] === playerIds[0]) {
+                newPlayerIdsToTarget[rowIdx] = playerIds;
+            } else {
+                newPlayerIdsToTarget[rowIdx] = [playerIds[1], playerIds[0]];
+            }
+            break;
+        }
+
+        setPlayerIdsToTarget(newPlayerIdsToTarget);
+    }
+
     async function newCustomPivotAllThree() {
         const isAssetPinned = [0, 1, 2].map(idx => pinnedReturnAssets[idx][0]);
         if (isAssetPinned.every(h => h)) return;
@@ -292,11 +335,17 @@ export default function SuggestedMove({
         });
         ideas.forEach(populatePlayerIdMaps);
         shuffle(ideas);
-        const inAssets = ideas
+        const filteredIdeas = filterIdeasByPosition(ideas);
+        if (filteredIdeas.length < 3) {
+            alert(
+                `Not enough ideas to fill all three slots. Found ${filteredIdeas.length} idea(s). Try adjusting your filters.`
+            );
+        }
+        const inAssets = filteredIdeas
             .map(idea => idea.inAssets.map(assetToPlayerId))
             .flat();
         const newPlayerIdsToTarget = [...playerIdsToTarget];
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 3 && i < inAssets.length; i++) {
             if (isAssetPinned[i]) continue;
             newPlayerIdsToTarget[i] = [inAssets[i], ''];
         }
@@ -317,10 +366,17 @@ export default function SuggestedMove({
             if (i === rowIdx) continue;
             existingTargets.add(playerIdsToTarget[i][0]);
         }
-
-        const inAssets = ideas
+        const filteredIdeas = filterIdeasByPosition(ideas);
+        if (filteredIdeas.length < 1) {
+            alert(
+                'Found no ideas to fill this slot. Try adjusting your filters.'
+            );
+            return;
+        }
+        const inAssets = filteredIdeas
             .map(idea => idea.inAssets.map(assetToPlayerId))
             .flat();
+
         let ideaIdx = 0;
         while (existingTargets.has(inAssets[ideaIdx])) {
             ideaIdx++;
@@ -343,7 +399,13 @@ export default function SuggestedMove({
         });
         ideas.forEach(populatePlayerIdMaps);
         shuffle(ideas);
-        const inAssets = ideas
+        const filteredIdeas = filterIdeasByPosition(ideas);
+        if (filteredIdeas.length < 3) {
+            alert(
+                `Not enough ideas to fill all three slots. Found ${filteredIdeas.length} idea(s). Try adjusting your filters.`
+            );
+        }
+        const inAssets = filteredIdeas
             .map(idea => idea.inAssets.map(assetToPlayerId))
             .flat();
         const newPlayerIdsToTarget = [...playerIdsToTarget];
@@ -369,8 +431,15 @@ export default function SuggestedMove({
             if (i === rowIdx) continue;
             existingTargets.add(playerIdsToTarget[i][0]);
         }
+        const filteredIdeas = filterIdeasByPosition(ideas);
+        if (filteredIdeas.length < 1) {
+            alert(
+                'Found no ideas to fill this slot. Try adjusting your filters.'
+            );
+            return;
+        }
 
-        const inAssets = ideas
+        const inAssets = filteredIdeas
             .map(idea => idea.inAssets.map(assetToPlayerId))
             .flat();
         let ideaIdx = 0;
@@ -405,23 +474,45 @@ export default function SuggestedMove({
                         <Casino sx={{color: 'white'}} />
                     </IconButton>
                 </div>
-                <DomainDropdown
-                    renderValue={value => (
-                        <span
-                            style={{fontStyle: 'italic', fontWeight: 'normal'}}
-                        >{`${value}`}</span>
-                    )}
-                    options={[Move.DOWNTIER, Move.PIVOT, Move.UPTIER]}
-                    value={move}
-                    onChange={e => {
-                        const {
-                            target: {value},
-                        } = e;
-                        if (value) {
-                            setMove(value as Move);
-                        }
-                    }}
-                />
+                <div className={styles.moveSelectRow}>
+                    <DomainDropdown
+                        renderValue={value => (
+                            <span
+                                style={{
+                                    fontStyle: 'italic',
+                                    fontWeight: 'normal',
+                                }}
+                            >{`${value}`}</span>
+                        )}
+                        options={[Move.DOWNTIER, Move.PIVOT, Move.UPTIER]}
+                        value={move}
+                        onChange={e => {
+                            const {
+                                target: {value},
+                            } = e;
+                            if (value) {
+                                setMove(value as Move);
+                            }
+                        }}
+                    />
+                    <DomainDropdown
+                        renderValue={value => (
+                            <span
+                                style={{
+                                    fontStyle: 'italic',
+                                    fontWeight: 'normal',
+                                    textTransform: 'uppercase',
+                                }}
+                            >{`${value}`}</span>
+                        )}
+                        options={['QB', 'RB', 'WR', 'TE']}
+                        multiple={true}
+                        value={filterPositions}
+                        onChange={e => {
+                            setFilterPositions(e.target.value as string[]);
+                        }}
+                    />
+                </div>
                 <div className={styles.toTradeRow}>
                     <DomainDropdown
                         renderValue={value => (
@@ -439,11 +530,11 @@ export default function SuggestedMove({
                                 ? getDisplayValueFromId(playerIdsToTrade[0])
                                 : ''
                         }
-                        onChange={e => {
+                        onChange={e =>
                             onToTradeChange(e, (id: string) =>
                                 setPlayerIdsToTrade([id, playerIdsToTrade[1]])
-                            );
-                        }}
+                            )
+                        }
                     />
                     {move === Move.DOWNTIER && (
                         <Tooltip
@@ -587,7 +678,7 @@ export default function SuggestedMove({
                     {move !== Move.DOWNTIER && (
                         <>
                             {[0, 1, 2].map(i => (
-                                <div className={styles.downtierRow}>
+                                <div className={styles.toTargetRow}>
                                     <PinButton
                                         pinCoords={[i, 0]}
                                         pinnedReturnAssets={pinnedReturnAssets}
@@ -649,7 +740,7 @@ export default function SuggestedMove({
                     {move === Move.DOWNTIER && (
                         <>
                             {[0, 1, 2].map(rowIdx => (
-                                <div className={styles.downtierRow}>
+                                <div className={styles.toTargetRow}>
                                     <PinButton
                                         pinCoords={[rowIdx, 0]}
                                         pinnedReturnAssets={pinnedReturnAssets}
