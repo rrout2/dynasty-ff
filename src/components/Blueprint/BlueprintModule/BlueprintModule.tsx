@@ -777,8 +777,26 @@ export default function BlueprintModule({
                 `player:${getApiIdFromSleeperId(playerId)}`
             );
         });
-        setPlayerIdToAssetKey(newPlayerIdToAssetKey);
-    }, [roster?.players, getApiIdFromSleeperId]);
+        setPlayerIdToAssetKey(old => {
+            const newPlayerIdToAssetKey = new Map<string, string>(old);
+            roster.players.forEach(playerId => {
+                newPlayerIdToAssetKey.set(
+                    playerId,
+                    `player:${getApiIdFromSleeperId(playerId)}`
+                );
+            });
+            for (let round = 1; round <= 3; round++) {
+                for (let pick = 1; pick <= numTeams; pick++) {
+                    const overallSlot = (round - 1) * numTeams + pick;
+                    newPlayerIdToAssetKey.set(
+                        `RP-API-2026-${round}-${overallSlot}`,
+                        `pick:2026:overall:${overallSlot}`
+                    );
+                }
+            }
+            return newPlayerIdToAssetKey;
+        });
+    }, [roster?.players, getApiIdFromSleeperId, numTeams]);
 
     useEffect(() => {
         if (!myPicks) return;

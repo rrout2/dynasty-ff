@@ -1,6 +1,6 @@
 import styles from './SuggestedMove.module.css';
 import {Casino, PushPin, PushPinOutlined} from '@mui/icons-material';
-import {IconButton, Tooltip} from '@mui/material';
+import {IconButton, SelectChangeEvent, Tooltip} from '@mui/material';
 import axios from 'axios';
 import {Dispatch, SetStateAction, useState, useEffect} from 'react';
 import {sfIcon} from '../../../../consts/images';
@@ -64,31 +64,10 @@ export default function SuggestedMove({
     const [loadingAllThree, setLoadingAllThree] = useState(false);
     const [loadingRow, setLoadingRow] = useState(-1);
 
-    function populatePlayerIdMaps(idea: TradeIdea) {
-        setPlayerIdToAssetKey(old => {
-            const newPlayerIdToAssetKey = new Map<string, string>(old);
-            idea.inAssets.forEach(asset => {
-                const str = assetToString(asset);
-                if (newPlayerIdToAssetKey.has(str)) return;
-                newPlayerIdToAssetKey.set(str, asset.assetKey);
-            });
-            return newPlayerIdToAssetKey;
-        });
-        setPlayerIdToDomainValue(old => {
-            const newPlayerIdToDomainValue = new Map<string, number>(old);
-            idea.inAssets.forEach(asset => {
-                const str = assetToString(asset);
-                if (newPlayerIdToDomainValue.has(str)) return;
-                newPlayerIdToDomainValue.set(str, asset.domainValue);
-            });
-            return newPlayerIdToDomainValue;
-        });
-    }
-
     useEffect(() => {
         const nonIdPlayerOptions: string[] = [];
-        for (let i = 1; i < 15; i++) {
-            for (let j = 1; j < 5; j++) {
+        for (let j = 1; j < 5; j++) {
+            for (let i = 1; i <= numTeams; i++) {
                 nonIdPlayerOptions.push(
                     `Rookie Pick ${j}.${i < 10 ? `0${i}` : `${i}`}`
                 );
@@ -115,15 +94,69 @@ export default function SuggestedMove({
         ]);
     }, [rosterPlayers, playerData]);
 
-    function getDisplayValueFromId(id: string) {
-        if (!playerData) return id;
-        if (isRookiePickId(id)) {
-            return rookiePickIdToString(id, numTeams);
+    function populatePlayerIdMaps(idea: TradeIdea) {
+        setPlayerIdToAssetKey(old => {
+            const newPlayerIdToAssetKey = new Map<string, string>(old);
+            idea.inAssets.forEach(asset => {
+                const str = assetToString(asset);
+                if (newPlayerIdToAssetKey.has(str)) return;
+                newPlayerIdToAssetKey.set(str, asset.assetKey);
+            });
+            return newPlayerIdToAssetKey;
+        });
+        setPlayerIdToDomainValue(old => {
+            const newPlayerIdToDomainValue = new Map<string, number>(old);
+            idea.inAssets.forEach(asset => {
+                const str = assetToString(asset);
+                if (newPlayerIdToDomainValue.has(str)) return;
+                newPlayerIdToDomainValue.set(str, asset.domainValue);
+            });
+            return newPlayerIdToDomainValue;
+        });
+    }
+
+    function onToTradeChange(
+        e: SelectChangeEvent<unknown>,
+        setValue: (id: string) => void
+    ) {
+        const {
+            target: {value},
+        } = e;
+        if (!value) return;
+        if ((value as string).includes(' Round ')) {
+            const spl = (value as string).split(' ');
+            const year = spl[0];
+            const round = spl[2];
+            setValue(`RP-API-${year}-${round}`);
+            return;
         }
-        if (!playerData[id]) return id;
-        return !Number.isNaN(+id)
-            ? `${playerData[id].first_name} ${playerData[id].last_name}`
-            : id;
+        if ((value as string).startsWith('Rookie Pick ')) {
+            const pickString = (value as string).replace('Rookie Pick ', '');
+            const round = +pickString.substring(0, 1);
+            const pick = +pickString.substring(2, 4);
+            const overallSlot = (round - 1) * numTeams + pick;
+            setValue(`RP-API-2026-${round}-${overallSlot}`);
+            return;
+        }
+        for (const p of rosterPlayers) {
+            if (!p) continue;
+            if (`${p.first_name} ${p.last_name}` === value) {
+                setValue(p.player_id);
+                return;
+            }
+        }
+        setValue(value as string);
+    }
+
+    function getDisplayValueFromId(playerId: string) {
+        if (!playerData) return playerId;
+        if (isRookiePickId(playerId)) {
+            return rookiePickIdToString(playerId, numTeams);
+        }
+        if (!playerData[playerId]) return playerId;
+        return !Number.isNaN(+playerId)
+            ? `${playerData[playerId].first_name} ${playerData[playerId].last_name}`
+            : playerId;
     }
 
     function getPrimaryAsset(assetIds: string[]) {
@@ -401,38 +434,9 @@ export default function SuggestedMove({
                                 : ''
                         }
                         onChange={e => {
-                            const {
-                                target: {value},
-                            } = e;
-                            if (value) {
-                                if ((value as string).includes(' Round ')) {
-                                    const spl = (value as string).split(' ');
-                                    const year = spl[0];
-                                    const round = spl[2];
-                                    setPlayerIdsToTrade([
-                                        `RP-API-${year}-${round}`,
-                                        playerIdsToTrade[1],
-                                    ]);
-                                    return;
-                                }
-                                for (const p of rosterPlayers) {
-                                    if (!p) continue;
-                                    if (
-                                        `${p.first_name} ${p.last_name}` ===
-                                        value
-                                    ) {
-                                        setPlayerIdsToTrade([
-                                            p.player_id,
-                                            playerIdsToTrade[1],
-                                        ]);
-                                        return;
-                                    }
-                                }
-                                setPlayerIdsToTrade([
-                                    value as string,
-                                    playerIdsToTrade[1],
-                                ]);
-                            }
+                            onToTradeChange(e, (id: string) =>
+                                setPlayerIdsToTrade([id, playerIdsToTrade[1]])
+                            );
                         }}
                     />
                     {move === Move.DOWNTIER && (
@@ -527,39 +531,12 @@ export default function SuggestedMove({
                                         : ''
                                 )}
                                 onChange={e => {
-                                    const {
-                                        target: {value},
-                                    } = e;
-                                    if (!value) return;
-                                    if ((value as string).includes(' Round ')) {
-                                        const spl = (value as string).split(
-                                            ' '
-                                        );
-                                        const year = spl[0];
-                                        const round = spl[2];
+                                    onToTradeChange(e, (id: string) =>
                                         setPlayerIdsToTrade([
                                             playerIdsToTrade[0],
-                                            `RP-API-${year}-${round}`,
-                                        ]);
-                                        return;
-                                    }
-                                    for (const p of rosterPlayers) {
-                                        if (!p) continue;
-                                        if (
-                                            `${p.first_name} ${p.last_name}` ===
-                                            value
-                                        ) {
-                                            setPlayerIdsToTrade([
-                                                playerIdsToTrade[0],
-                                                p.player_id,
-                                            ]);
-                                            return;
-                                        }
-                                    }
-                                    setPlayerIdsToTrade([
-                                        playerIdsToTrade[0],
-                                        value as string,
-                                    ]);
+                                            id,
+                                        ])
+                                    );
                                 }}
                             />
                             <Tooltip
