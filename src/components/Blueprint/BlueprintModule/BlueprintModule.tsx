@@ -269,6 +269,7 @@ export default function BlueprintModule({
     const [loggedIn, setLoggedIn] = useState(
         sessionStorage.getItem('authToken') !== null
     );
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
     const [loginEmail, setLoginEmail] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
     const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -303,7 +304,11 @@ export default function BlueprintModule({
     const [numTeams, setNumTeams] = useState(12);
 
     const {blueprint, setBlueprint} = useBlueprint(blueprintId);
-    const {valueArchetype, setValueArchetype, error: valueArchetypeError} = useTeamValueArchetype(
+    const {
+        valueArchetype,
+        setValueArchetype,
+        error: valueArchetypeError,
+    } = useTeamValueArchetype(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
@@ -482,10 +487,13 @@ export default function BlueprintModule({
 
     useEffect(() => {
         if (!valueArchetypeError) return;
-        if (valueArchetypeError.message === 'Request failed with status code 401') {
+        if (
+            valueArchetypeError.message ===
+            'Request failed with status code 401'
+        ) {
             submitLogout();
         }
-    }, [valueArchetypeError])
+    }, [valueArchetypeError]);
 
     useEffect(() => {
         if (!blueprint || !playerData) return;
@@ -1518,16 +1526,29 @@ export default function BlueprintModule({
                             label="Email"
                             value={loginEmail}
                             onChange={e => setLoginEmail(e.target.value)}
-                            onKeyUp={e => e.key === 'Enter' && submitLogin()}
+                            onKeyUp={e => {
+                                if (e.key !== 'Enter') return;
+                                setIsLoggingIn(true);
+                                submitLogin().finally(() => {
+                                    setIsLoggingIn(false);
+                                });
+                            }}
                         />
                         <DomainTextField
                             type={'password'}
                             label="Password"
                             value={loginPassword}
                             onChange={e => setLoginPassword(e.target.value)}
-                            onKeyUp={e => e.key === 'Enter' && submitLogin()}
+                            onKeyUp={e => {
+                                if (e.key !== 'Enter') return;
+                                setIsLoggingIn(true);
+                                submitLogin().finally(() => {
+                                    setIsLoggingIn(false);
+                                });
+                            }}
                         />
                         <Button
+                            loading={isLoggingIn}
                             sx={{
                                 fontFamily: 'Prohibition',
                                 '&:disabled': {
@@ -1536,7 +1557,10 @@ export default function BlueprintModule({
                             }}
                             variant="contained"
                             onClick={() => {
-                                submitLogin();
+                                setIsLoggingIn(true);
+                                submitLogin().finally(() => {
+                                    setIsLoggingIn(false);
+                                });
                             }}
                             disabled={
                                 !loginEmail.trim() || !loginPassword.trim()
