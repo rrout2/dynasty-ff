@@ -321,8 +321,11 @@ export default function BlueprintModule({
         '' + getRosterIdFromUser(specifiedUser)
     );
     const {tradeSuggestions: apiTradeSuggestions} = useTradeSuggestions(
-        leagueId,
-        '' + getRosterIdFromUser(specifiedUser)
+        blueprint?.leagueId || leagueId,
+        '' +
+            (blueprint
+                ? blueprint.rosterId - 1
+                : getRosterIdFromUser(specifiedUser))
     );
     const [fullMoves, setFullMoves] = useState<FullMove[]>([
         {
@@ -420,7 +423,7 @@ export default function BlueprintModule({
     const [tep, setTep] = useState(0.5);
     const [addPickRound, setAddPickRound] = useState(1);
     const [addPickSlot, setAddPickSlot] = useState(1);
-    const {myPicks} = useGetPicks(leagueId, roster?.owner_id);
+    const {myPicks, setMyPicks} = useGetPicks(leagueId, roster?.owner_id);
     const {startingLineup} = useProjectedLineup(
         rosterSettings,
         roster?.players
@@ -438,14 +441,23 @@ export default function BlueprintModule({
         setValueSharePercent,
         setLeagueRank: setValueShareRank,
         qbValueSharePercent,
+        setQbValueSharePercent,
         rbValueSharePercent,
+        setRbValueSharePercent,
         wrValueSharePercent,
+        setWrValueSharePercent,
         teValueSharePercent,
+        setTeValueSharePercent,
         qbValueProportionPercent,
+        setQbValueProportionPercent,
         rbValueProportionPercent,
+        setRbValueProportionPercent,
         wrValueProportionPercent,
+        setWrValueProportionPercent,
         teValueProportionPercent,
+        setTeValueProportionPercent,
         pickValueProportionPercent,
+        setPickValueProportionPercent,
     } = useTeamValueShare(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser),
@@ -466,7 +478,7 @@ export default function BlueprintModule({
         '' + getRosterIdFromUser(specifiedUser),
         isSleeperLeague
     );
-    const {domainTrueRanks} = useDomainTrueRanks(
+    const {domainTrueRanks, setDomainTrueRanks} = useDomainTrueRanks(
         leagueId,
         '' + getRosterIdFromUser(specifiedUser)
     );
@@ -516,23 +528,68 @@ export default function BlueprintModule({
                 .map(o => o.outlook)
                 .map(convertStringToOutlookOption)
         );
+        const qbPosGrade = blueprint.positionalGrades.find(g => g.position === QB)!;
+        const rbPosGrade = blueprint.positionalGrades.find(g => g.position === RB)!;
+        const wrPosGrade = blueprint.positionalGrades.find(g => g.position === WR)!;
+        const tePosGrade = blueprint.positionalGrades.find(g => g.position === TE)!;
         setQb(
-            blueprint.positionalGrades.find(g => g.position === QB)?.grade ?? 0
+            qbPosGrade.grade ?? 0
+        );
+        setQbValueSharePercent(
+            Math.round(
+                (qbPosGrade
+                    .valueSharePercentage +
+                    Number.EPSILON) *
+                    10
+            ) / 10
         );
         setRb(
-            blueprint.positionalGrades.find(g => g.position === RB)?.grade ?? 0
+            rbPosGrade.grade ?? 0
+        );
+        setRbValueSharePercent(
+            Math.round(
+                (rbPosGrade
+                    .valueSharePercentage +
+                    Number.EPSILON) *
+                    10
+            ) / 10
         );
         setWr(
-            blueprint.positionalGrades.find(g => g.position === WR)?.grade ?? 0
+            wrPosGrade.grade ?? 0
+        );
+        setWrValueSharePercent(
+            Math.round(
+                (wrPosGrade
+                    .valueSharePercentage +
+                    Number.EPSILON) *
+                    10
+            ) / 10
         );
         setTe(
-            blueprint.positionalGrades.find(g => g.position === TE)?.grade ?? 0
+            tePosGrade.grade ?? 0
+        );
+        setTeValueSharePercent(
+            Math.round(
+                (tePosGrade
+                    .valueSharePercentage *
+                    10 +
+                    Number.EPSILON) /
+                    10
+            )
+        );
+        setDepth(
+            blueprint.positionalGrades.find(g => g.position === 'BENCH')
+                ?.grade ?? 0
+        );
+        setDraftCapitalScore(
+            blueprint.positionalGrades.find(g => g.position === 'DRAFT_CAPITAL')
+                ?.grade ?? 0
         );
         setLeaguePowerRanks(
-            blueprint.powerRankings.map(p => {
+            blueprint.premiumFeatures.powerRankings.map(p => {
                 return {
                     teamName: p.teamName,
-                    overallRank: p.teamRank,
+                    overallRank: p.rank,
                 } as PowerRank;
             })
         );
@@ -545,27 +602,56 @@ export default function BlueprintModule({
                 team_name: '',
             },
         });
-        setStartingQbAge(
-            blueprint.averageStarterAges.find(g => g.position === QB)
-                ?.averageAge ?? 0
-        );
-        setStartingRbAge(
-            blueprint.averageStarterAges.find(g => g.position === RB)
-                ?.averageAge ?? 0
-        );
-        setStartingWrAge(
-            blueprint.averageStarterAges.find(g => g.position === WR)
-                ?.averageAge ?? 0
-        );
-        setStartingTeAge(
-            blueprint.averageStarterAges.find(g => g.position === TE)
-                ?.averageAge ?? 0
-        );
+        setStartingQbAge(blueprint.premiumFeatures.averageStarterAgeQb ?? 0);
+        setStartingRbAge(blueprint.premiumFeatures.averageStarterAgeRb ?? 0);
+        setStartingWrAge(blueprint.premiumFeatures.averageStarterAgeWr ?? 0);
+        setStartingTeAge(blueprint.premiumFeatures.averageStarterAgeTe ?? 0);
         const newMakeup = new Map<string, number>();
-        for (const rmu of blueprint.rosterMakeup) {
-            newMakeup.set(rmu.assetCategory, rmu.percentage);
+        for (const rmu of blueprint.premiumFeatures.rosterMakeup) {
+            newMakeup.set(rmu.category, rmu.percentage);
         }
         setMakeup(newMakeup);
+        setQbValueProportionPercent(
+            blueprint.premiumFeatures.valueProportionQb ?? 0
+        );
+        setRbValueProportionPercent(
+            blueprint.premiumFeatures.valueProportionRb ?? 0
+        );
+        setWrValueProportionPercent(
+            blueprint.premiumFeatures.valueProportionWr ?? 0
+        );
+        setTeValueProportionPercent(
+            blueprint.premiumFeatures.valueProportionTe ?? 0
+        );
+        setPickValueProportionPercent(
+            blueprint.premiumFeatures.valueProportionDc ?? 0
+        );
+        setMyPicks(
+            blueprint.draftPicks.map(dp => ({
+                pick_name: `${dp.season} Round ${dp.round}${
+                    dp.pickNumber ? `, Pick ${dp.pickNumber}` : ''
+                }`,
+                round: dp.round,
+                season: '' + dp.season,
+                slot: dp.pickNumber,
+            }))
+        );
+        setDomainTrueRanks(
+            blueprint.rosterPlayers.map(p => ({
+                playerId: p.playerId,
+                playerSleeperId: +p.playerSleeperBotId,
+                playerName: p.playerName,
+                nflPosition: p.position,
+                teamAbbreviation: p.teamAbbreviation,
+                insulationScore: p.insulationScore,
+                productionScore: p.productionScore,
+                situationalScore: p.situationalScore,
+                // CMC is manually set to ShortTermLeagueWinner.
+                dynastyAssetCategory: p.playerId === 2605 ? 'ShortTermLeagueWinner' : p.assetCategory,
+                compositePosRank: p.compositePositionRank,
+            }))
+        );
+
         const qbs = blueprint.rosterPlayers.filter(p => p.position === QB);
         const numQbs = qbs.length;
         const rbs = blueprint.rosterPlayers.filter(p => p.position === RB);
@@ -916,6 +1002,7 @@ export default function BlueprintModule({
             .map(i => i[0])
             .map(i => getUserFromRosterId(i - 1)!)
             .slice(0, 2);
+        console.log('mostCommonTargetRosterId', mostCommonTargetRosterId);
         setTradePartners(mostCommonTargetRosterId);
 
         const apiSuggestions = collatedTrades
@@ -2503,9 +2590,11 @@ export default function BlueprintModule({
                                 setPlayerIdToDomainValue={
                                     setPlayerIdToDomainValue
                                 }
-                                leagueId={leagueId}
+                                leagueId={blueprint?.leagueId || leagueId}
                                 rosterId={
-                                    getRosterIdFromUser(specifiedUser) + 1
+                                    blueprint
+                                        ? blueprint.rosterId
+                                        : getRosterIdFromUser(specifiedUser)
                                 }
                                 numTeams={numTeams}
                             />
@@ -2557,9 +2646,11 @@ export default function BlueprintModule({
                                     setPlayerIdToDomainValue={
                                         setPlayerIdToDomainValue
                                     }
-                                    leagueId={leagueId}
+                                    leagueId={blueprint?.leagueId || leagueId}
                                     rosterId={
-                                        getRosterIdFromUser(specifiedUser) + 1
+                                        blueprint
+                                            ? blueprint.rosterId
+                                            : getRosterIdFromUser(specifiedUser)
                                     }
                                     numTeams={numTeams}
                                 />

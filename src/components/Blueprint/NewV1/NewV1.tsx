@@ -82,6 +82,7 @@ export default function NewV1({
     draftCapitalScore,
     twoYearOutlook,
     rosterPlayers,
+    apiRosterPlayers,
     getStartingPosition,
     productionShare,
     valueShare,
@@ -177,7 +178,7 @@ export default function NewV1({
             />
             <Roster
                 rosterPlayers={rosterPlayers}
-                apiRosterPlayers={[]}
+                apiRosterPlayers={apiRosterPlayers}
                 getStartingPosition={getStartingPosition}
                 style={{left: '62px', top: '207px'}}
             />
@@ -409,7 +410,39 @@ export function PlayerCard({
         }
     }
 
-    // TODO: return for apiPlayer
+    if (apiPlayer) {
+        return (
+            <div
+                className={styles.playerCard}
+                style={getApiCardStyle(apiPlayer)}
+            >
+                <div className={styles.playerInfo}>
+                    {logoImage(apiPlayer.teamAbbreviation, styles.teamLogo)}
+                    <img
+                        src={
+                            apiPlayer.playerSleeperBotId === NONE_PLAYER_ID
+                                ? nflSilhouette
+                                : `https://sleepercdn.com/content/nfl/players/${apiPlayer.playerSleeperBotId}.jpg`
+                        }
+                        onError={({currentTarget}) => {
+                            currentTarget.onerror = null;
+                            currentTarget.src =
+                                'https://sleepercdn.com/images/v2/icons/player_default.webp';
+                        }}
+                        className={styles.headshot}
+                    />
+                    <div className={styles.playerName}>
+                        {apiPlayer.playerName}
+                    </div>
+                </div>
+                <div
+                    style={{color: getColorFromAdp(posAdp), paddingTop: '3px'}}
+                >
+                    {posAdp === Infinity ? '-' : posAdp}
+                </div>
+            </div>
+        );
+    }
     return (
         player && (
             <div className={styles.playerCard} style={getCardStyle(player)}>

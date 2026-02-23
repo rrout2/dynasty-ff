@@ -136,25 +136,58 @@ type Blueprint = {
         id: number;
         position: string;
         grade: number;
-        ownershipPercentage: number;
+        valueSharePercentage: number;
+        insulationScoreGrade: number;
+        productionScoreGrade: number;
+        situationalScoreGrade: number;
     }>;
-    draftPicks: Array<any>;
+    draftPicks: Array<{
+        id: number;
+        season: number;
+        round: number;
+        pickNumber: number;
+    }>;
     tradeStrategies: Array<any>;
     topPriorities: Array<any>;
-    averageStarterAges: Array<{
-        position: string;
-        averageAge: number;
+    infiniteFeatures: InfiniteFeatures;
+    premiumFeatures: PremiumFeatures;
+    createdUtc: string;
+};
+
+type PremiumFeatures = {
+    id: number;
+    averageStarterAgeQb: number;
+    averageStarterAgeRb: number;
+    averageStarterAgeWr: number;
+    averageStarterAgeTe: number;
+    blueprintPercentile: number;
+    archetypeBuildPercentage: number;
+    valueProportionQb: number;
+    valueProportionRb: number;
+    valueProportionWr: number;
+    valueProportionTe: number;
+    valueProportionDc: number;
+    draftStrategies: Array<{
+        id: number;
+        season: string;
+        firstRoundPickCount: number;
+        secondRoundPickCount: number;
+        strategyType: string;
+        recommendationText: string;
+        sortOrder: number;
+    }>;
+    rosterMakeup: Array<{
+        id: number;
+        category: string;
+        percentage: number;
+        sortOrder: number;
     }>;
     powerRankings: Array<{
         teamName: string;
-        teamRank: number;
+        rank: number;
+        isCurrentTeam: boolean;
+        rosterId: number;
     }>;
-    rosterMakeup: Array<{
-        assetCategory: string;
-        percentage: number;
-    }>;
-    infiniteFeatures: InfiniteFeatures;
-    createdUtc: string;
 };
 
 type InfiniteFeatures = {
@@ -1153,7 +1186,7 @@ export function useGetPicks(leagueId: string, userId?: string) {
         if (!allPicks) return;
         setHasDraftOccurred(allPicks.hasDraftOccurred);
     }, [allPicks]);
-    return {allPicks, myPicks, hasDraftOccurred};
+    return {allPicks, myPicks, hasDraftOccurred, setMyPicks};
 }
 
 export function useArchetype(
