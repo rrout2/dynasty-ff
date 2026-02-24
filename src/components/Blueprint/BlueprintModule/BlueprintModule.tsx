@@ -528,53 +528,40 @@ export default function BlueprintModule({
                 .map(o => o.outlook)
                 .map(convertStringToOutlookOption)
         );
-        const qbPosGrade = blueprint.positionalGrades.find(g => g.position === QB)!;
-        const rbPosGrade = blueprint.positionalGrades.find(g => g.position === RB)!;
-        const wrPosGrade = blueprint.positionalGrades.find(g => g.position === WR)!;
-        const tePosGrade = blueprint.positionalGrades.find(g => g.position === TE)!;
-        setQb(
-            qbPosGrade.grade ?? 0
-        );
+        const qbPosGrade = blueprint.positionalGrades.find(
+            g => g.position === QB
+        )!;
+        const rbPosGrade = blueprint.positionalGrades.find(
+            g => g.position === RB
+        )!;
+        const wrPosGrade = blueprint.positionalGrades.find(
+            g => g.position === WR
+        )!;
+        const tePosGrade = blueprint.positionalGrades.find(
+            g => g.position === TE
+        )!;
+        setQb(qbPosGrade.grade ?? 0);
         setQbValueSharePercent(
             Math.round(
-                (qbPosGrade
-                    .valueSharePercentage +
-                    Number.EPSILON) *
-                    10
+                (qbPosGrade.valueSharePercentage + Number.EPSILON) * 10
             ) / 10
         );
-        setRb(
-            rbPosGrade.grade ?? 0
-        );
+        setRb(rbPosGrade.grade ?? 0);
         setRbValueSharePercent(
             Math.round(
-                (rbPosGrade
-                    .valueSharePercentage +
-                    Number.EPSILON) *
-                    10
+                (rbPosGrade.valueSharePercentage + Number.EPSILON) * 10
             ) / 10
         );
-        setWr(
-            wrPosGrade.grade ?? 0
-        );
+        setWr(wrPosGrade.grade ?? 0);
         setWrValueSharePercent(
             Math.round(
-                (wrPosGrade
-                    .valueSharePercentage +
-                    Number.EPSILON) *
-                    10
+                (wrPosGrade.valueSharePercentage + Number.EPSILON) * 10
             ) / 10
         );
-        setTe(
-            tePosGrade.grade ?? 0
-        );
+        setTe(tePosGrade.grade ?? 0);
         setTeValueSharePercent(
             Math.round(
-                (tePosGrade
-                    .valueSharePercentage *
-                    10 +
-                    Number.EPSILON) /
-                    10
+                (tePosGrade.valueSharePercentage * 10 + Number.EPSILON) / 10
             )
         );
         setDepth(
@@ -647,7 +634,10 @@ export default function BlueprintModule({
                 productionScore: p.productionScore,
                 situationalScore: p.situationalScore,
                 // CMC is manually set to ShortTermLeagueWinner.
-                dynastyAssetCategory: p.playerId === 2605 ? 'ShortTermLeagueWinner' : p.assetCategory,
+                dynastyAssetCategory:
+                    p.playerId === 2605
+                        ? 'ShortTermLeagueWinner'
+                        : p.assetCategory,
                 compositePosRank: p.compositePositionRank,
             }))
         );
@@ -742,7 +732,11 @@ export default function BlueprintModule({
             getApiStartingLineup(leagueSettings, blueprint.rosterPlayers)
         );
 
-        setTradePartners(blueprint.idealTradePartners.map(partner => partner.teamName));
+        setTradePartners(
+            blueprint.idealTradePartners
+                .map(partner => partner.teamName)
+                .slice(0, 2)
+        );
     }, [blueprint, playerData]);
 
     useEffect(() => {
@@ -1112,7 +1106,7 @@ export default function BlueprintModule({
             .map(u => getDisplayName(u))
             .slice(0, 2);
         setTradePartners(mostCommonTeamNames);
-    }, [apiTradeSuggestions, blueprint])
+    }, [apiTradeSuggestions, blueprint]);
 
     useEffect(() => {
         if (searchParams.has(TOP_PRIORITIES)) {
@@ -1408,10 +1402,7 @@ export default function BlueprintModule({
             searchParams.set(VALUE_ARCHETYPE, valueArchetype);
             searchParams.set(ROSTER_ARCHETYPE, rosterArchetype);
             searchParams.set(TOP_PRIORITIES, topPriorities.join('|'));
-            searchParams.set(
-                TRADE_PARTNERS,
-                tradePartners.join('-')
-            );
+            searchParams.set(TRADE_PARTNERS, tradePartners.join('-'));
             fullMoves.forEach((move, idx) => {
                 searchParams.set(`${MOVE}_${idx}`, move.move);
                 // these are em dashes! to prevent breaking up rookie pick IDs
@@ -1440,8 +1431,7 @@ export default function BlueprintModule({
                 RosterArchetype.None
         );
         setTopPriorities((searchParams.get(TOP_PRIORITIES) || '').split('|'));
-        setTradePartners((searchParams.get(TRADE_PARTNERS) || '')
-                    .split('-'));
+        setTradePartners((searchParams.get(TRADE_PARTNERS) || '').split('-'));
         setTwoYearOutlook(
             (searchParams.get(TWO_YEAR_OUTLOOK) || '')
                 .split('-')
@@ -2802,12 +2792,11 @@ export default function BlueprintModule({
                                 )}
                                 options={[
                                     'Choose a team',
-                                    ...leaguePowerRanks.map(rank => rank.teamName),
+                                    ...leaguePowerRanks.map(
+                                        rank => rank.teamName
+                                    ),
                                 ]}
-                                value={
-                                    tradePartners[0]
-                                        ?? 'Choose a team'
-                                }
+                                value={tradePartners[0] ?? 'Choose a team'}
                                 onChange={e => {
                                     const {
                                         target: {value},
@@ -2848,12 +2837,11 @@ export default function BlueprintModule({
                                 )}
                                 options={[
                                     'Choose a team',
-                                    ...leaguePowerRanks.map(rank => rank.teamName),
+                                    ...leaguePowerRanks.map(
+                                        rank => rank.teamName
+                                    ),
                                 ]}
-                                value={
-                                    tradePartners[1]
-                                        ?? 'Choose a team'
-                                }
+                                value={tradePartners[1] ?? 'Choose a team'}
                                 onChange={e => {
                                     const {
                                         target: {value},
