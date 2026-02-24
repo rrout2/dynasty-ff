@@ -2019,6 +2019,10 @@ export default function BlueprintModule({
                                         ? apiRosterPlayers
                                               .filter(
                                                   p => p && p.position === QB
+                                              ).sort(
+                                                  (a, b) =>
+                                                      +a.compositePositionRank.slice(2) -
+                                                      +b.compositePositionRank.slice(2)
                                               )
                                               .map((p, idx) => {
                                                   const fullName = p.playerName;
@@ -2106,6 +2110,10 @@ export default function BlueprintModule({
                                         ? apiRosterPlayers
                                               .filter(
                                                   p => p && p.position === RB
+                                              ).sort(
+                                                  (a, b) =>
+                                                      +a.compositePositionRank.slice(2) -
+                                                      +b.compositePositionRank.slice(2)
                                               )
                                               .map((p, idx) => {
                                                   const fullName = p.playerName;
@@ -2193,6 +2201,10 @@ export default function BlueprintModule({
                                         ? apiRosterPlayers
                                               .filter(
                                                   p => p && p.position === WR
+                                              ).sort(
+                                                  (a, b) =>
+                                                      +a.compositePositionRank.slice(2) -
+                                                      +b.compositePositionRank.slice(2)
                                               )
                                               .map((p, idx) => {
                                                   const fullName = p.playerName;
@@ -2280,6 +2292,10 @@ export default function BlueprintModule({
                                         ? apiRosterPlayers
                                               .filter(
                                                   p => p && p.position === TE
+                                              ).sort(
+                                                  (a, b) =>
+                                                      +a.compositePositionRank.slice(2) -
+                                                      +b.compositePositionRank.slice(2)
                                               )
                                               .map((p, idx) => {
                                                   const fullName = p.playerName;

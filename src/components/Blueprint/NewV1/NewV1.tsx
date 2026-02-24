@@ -233,7 +233,7 @@ export function Roster({
     getStartingPosition: (playerName: string) => string | undefined;
     style?: CSSProperties;
 }) {
-    const positionDisplayLimit = 9;
+    const POSITION_DISPLAY_LIMIT = 9;
     return (
         <div className={styles.roster} style={style}>
             {[QB, RB, WR, TE].map(pos => (
@@ -241,7 +241,12 @@ export function Roster({
                     {apiRosterPlayers.length
                         ? apiRosterPlayers
                               .filter(p => p && p.position === pos)
-                              .slice(0, positionDisplayLimit)
+                              .sort(
+                                    (a, b) =>
+                                        +a.compositePositionRank.slice(2) -
+                                        +b.compositePositionRank.slice(2)
+                                )
+                              .slice(0, POSITION_DISPLAY_LIMIT)
                               .map((p, idx) => (
                                   <PlayerCard
                                       key={idx}
@@ -251,7 +256,7 @@ export function Roster({
                               ))
                         : rosterPlayers
                               .filter(p => p && p.position === pos)
-                              .slice(0, positionDisplayLimit)
+                              .slice(0, POSITION_DISPLAY_LIMIT)
                               .map((p, idx) => (
                                   <PlayerCard
                                       key={idx}
