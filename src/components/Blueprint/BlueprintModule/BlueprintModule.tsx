@@ -88,6 +88,7 @@ import Premium from '../Premium/Premium';
 import {useSearchParams} from 'react-router-dom';
 import axios from 'axios';
 import SuggestedMove from './SuggestedMove/SuggestedMove';
+import NewRookieDraft from '../NewRookieDraft/NewRookieDraft';
 
 export const PCT_OPTIONS = [
     '0%',
@@ -275,6 +276,7 @@ export default function BlueprintModule({
     const [loginModalOpen, setLoginModalOpen] = useState(false);
     const [newLeagueModalOpen, setNewLeagueModalOpen] = useState(false);
     const [previewModalOpen, setPreviewModalOpen] = useState(false);
+    const [rookiePreviewModalOpen, setRookiePreviewModalOpen] = useState(false);
     const [newLeagueId, setNewLeagueId] = useState('');
     const [newBlueprintId, setNewBlueprintId] = useState('');
     const [blueprintId, setBlueprintId] = useParamFromUrl(BLUEPRINT_ID);
@@ -1708,6 +1710,44 @@ export default function BlueprintModule({
                     >
                         SHOW PREVIEW
                     </Button>
+                    {blueprintId && (
+                        <Button
+                            variant="outlined"
+                            endIcon={<Preview />}
+                            sx={{
+                                ...bpActionButtonStyle,
+                                color: '#F47F20',
+                            }}
+                            onClick={() => {
+                                setRookiePreviewModalOpen(true);
+                            }}
+                        >
+                            SHOW ROOKIE
+                        </Button>
+                    )}
+                    <Modal
+                        open={rookiePreviewModalOpen}
+                        onClose={() => {
+                            setRookiePreviewModalOpen(false);
+                        }}
+                    >
+                        <div
+                            className={styles.previewModal}
+                            style={{width: '1400px'}}
+                        >
+                            <NewRookieDraft
+                                teamName={getDisplayName(specifiedUser)}
+                                numTeams={numTeams}
+                                valueArchetype={valueArchetype}
+                                rosterArchetype={rosterArchetype}
+                                qbGrade={qb}
+                                rbGrade={rb}
+                                wrGrade={wr}
+                                teGrade={te}
+                                myPicks={myPicks}
+                            />
+                        </div>
+                    </Modal>
                     <Modal
                         open={previewModalOpen}
                         onClose={() => {

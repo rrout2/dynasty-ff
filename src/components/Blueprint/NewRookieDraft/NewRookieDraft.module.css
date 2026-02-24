@@ -1,0 +1,181 @@
+.fullBlueprint {
+    width: 1400px;
+    position: relative;
+}
+
+.backgroundImg {
+    width: 1400px;
+}
+
+.teamName {
+    color: #FFF;
+    font-family: Prohibition;
+    font-size: 50px;
+    font-weight: 400;
+
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    position: absolute;
+    left: 120px;
+    top: 25px;
+}
+
+.valueArchetype {
+    color: var(--dd-light-blue-rb, #00B1FF);
+    text-align: center;
+    font-family: Erbaum;
+    font-size: 25px;
+    font-weight: 700;
+    width: 200px;
+
+    position: absolute;
+    left: 592px;
+    top: 60px;
+}
+
+.rosterArchetype {
+    color: #1AE069;
+    text-align: center;
+    font-family: Erbaum;
+    font-size: 25px;
+    font-weight: 700;
+    width: 200px;
+
+    position: absolute;
+    left: 828px;
+    top: 60px;
+}
+
+.teamNeedSection {
+    position: absolute;
+    left: 1050px;
+    top: 57px;
+
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    align-items: center;
+}
+
+.teamNeedCard {
+    position: relative;
+
+    width: 75.5px;
+    height: 80.8px;
+
+    border-radius: 10px;
+
+    .rank {
+        position: absolute;
+        top: 4px;
+        left: 0;
+
+        color: rgba(255, 255, 255, 0.30);
+        text-align: center;
+        font-family: Erbaum;
+        font-size: 88.8px;
+        font-weight: 1000;
+        line-height: 0.8;
+
+        width: inherit;
+    }
+
+    .position {
+        position: absolute;
+        top: 10px;
+        left: 0;
+
+        color: #FFF;
+        text-align: center;
+        font-family: Erbaum;
+        font-size: 24.85px;
+        font-weight: 1000;
+
+        width: inherit;
+    }
+
+    .grade {
+        position: absolute;
+        top: 50px;
+        left: 0;
+
+        color: #FFF;
+        text-align: center;
+        font-family: "Acumin Pro Condensed";
+        font-size: 22.83px;
+        font-weight: 1000;
+
+        width: inherit;
+    }
+}
+
+.pickTitles {
+    position: absolute;
+    left: 40px;
+    top: 225px;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 495px;
+    justify-content: space-between;
+}
+
+.pickTitle {
+    color: #28ABE2;
+    text-align: center;
+    font-family: Prohibition;
+    font-size: 28.5px;
+    font-weight: 500;
+
+    transform: rotate(-90deg);
+}
+
+.pickProfiles {
+    position: absolute;
+    left: 150px;
+    top: 197px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 62px;
+}
+
+.pickProfile {
+    color: #FFF;
+    font-family: "Acumin Pro Condensed";
+    font-size: 17px;
+    font-weight: 700;
+
+    line-height: 0.85;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .lastTenClasses {
+        font-family: 'Acumin Pro ExtraCondensed';
+        font-style: italic;
+    }
+
+    .rank,
+    .zScore,
+    .tier,
+    .marketValue,
+    .domainVerdict {
+        font-family: Prohibition;
+        line-height: 0.5;
+        font-weight: 400;
+    }
+
+    .rank {
+        color: #00B1FF;
+    }
+
+    .zScore {
+        color: #EABA10;
+    }
+}
