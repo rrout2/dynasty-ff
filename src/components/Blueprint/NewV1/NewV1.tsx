@@ -242,10 +242,10 @@ export function Roster({
                         ? apiRosterPlayers
                               .filter(p => p && p.position === pos)
                               .sort(
-                                    (a, b) =>
-                                        +a.compositePositionRank.slice(2) -
-                                        +b.compositePositionRank.slice(2)
-                                )
+                                  (a, b) =>
+                                      +a.compositePositionRank.slice(2) -
+                                      +b.compositePositionRank.slice(2)
+                              )
                               .slice(0, POSITION_DISPLAY_LIMIT)
                               .map((p, idx) => (
                                   <PlayerCard
