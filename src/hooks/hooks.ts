@@ -242,14 +242,6 @@ type InfiniteFeatures = {
     }>;
 };
 
-interface PositionalScores {
-    [position: string]: number;
-}
-
-interface TradeTargets {
-    [position: string]: number;
-}
-
 export function useNewInfiniteBuysSells(blueprint: Blueprint | undefined) {
     const [buys, setBuys] = useState<BuySellPlayerProps[]>([]);
     const [sells, setSells] = useState<BuySellPlayerProps[]>([]);
