@@ -112,7 +112,7 @@ type PremiumProps = {
     productionShareRank: number;
     valueShareRank: number;
     draftCapitalNotes: Map<number, string>;
-    tradePartners: (User | undefined)[];
+    tradePartners: (string | undefined)[];
     topPriorities: string[];
     tradeStrategy: FullMove[];
     draftStrategy: DraftStrategyLabel[];

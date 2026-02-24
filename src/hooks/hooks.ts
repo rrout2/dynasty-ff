@@ -149,6 +149,12 @@ type Blueprint = {
     }>;
     tradeStrategies: Array<any>;
     topPriorities: Array<any>;
+    idealTradePartners: Array<{
+        id: number;
+        teamName: string;
+        partnerRosterId: number;
+        sortOrder: number;
+    }>;
     infiniteFeatures: InfiniteFeatures;
     premiumFeatures: PremiumFeatures;
     createdUtc: string;

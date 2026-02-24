@@ -54,7 +54,7 @@ type NewV1Props = {
     productionShareRank: number;
     valueShareRank: number;
     draftCapitalNotes: Map<number, string>;
-    tradePartners: (User | undefined)[];
+    tradePartners: (string | undefined)[];
     topPriorities: string[];
     tradeStrategy: FullMove[];
 };
@@ -1323,14 +1323,14 @@ export function TradePartners({
     tradePartners,
     style,
 }: {
-    tradePartners: (User | undefined)[];
+    tradePartners: (string | undefined)[];
     style?: CSSProperties;
 }) {
     return (
         <div className={styles.tradePartners} style={style}>
             {tradePartners.map((tp, idx) => (
                 <div key={idx} className={styles.tradePartner}>
-                    {getDisplayName(tp)}
+                    {tp}
                 </div>
             ))}
         </div>

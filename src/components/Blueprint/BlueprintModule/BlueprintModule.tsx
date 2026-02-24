@@ -285,7 +285,7 @@ export default function BlueprintModule({
     const [specifiedUser, setSpecifiedUser] = useState<User>();
 
     const [isSleeperLeague, setIsSleeperLeague] = useState(true);
-    const [tradePartners, setTradePartners] = useState<(User | undefined)[]>([
+    const [tradePartners, setTradePartners] = useState<(string | undefined)[]>([
         undefined,
         undefined,
     ]);
@@ -741,6 +741,8 @@ export default function BlueprintModule({
         setApiStartingLineup(
             getApiStartingLineup(leagueSettings, blueprint.rosterPlayers)
         );
+
+        setTradePartners(blueprint.idealTradePartners.map(partner => partner.teamName));
     }, [blueprint, playerData]);
 
     useEffect(() => {
@@ -997,13 +999,13 @@ export default function BlueprintModule({
         }
 
         // find the 2 most common targetRosterIds
-        const mostCommonTargetRosterId = [...targetRosterCounts.entries()]
-            .sort((a, b) => b[1] - a[1])
-            .map(i => i[0])
-            .map(i => getUserFromRosterId(i - 1)!)
-            .slice(0, 2);
-        console.log('mostCommonTargetRosterId', mostCommonTargetRosterId);
-        setTradePartners(mostCommonTargetRosterId);
+        // const mostCommonTargetRosterId = [...targetRosterCounts.entries()]
+        //     .sort((a, b) => b[1] - a[1])
+        //     .map(i => i[0])
+        //     .map(i => getUserFromRosterId(i - 1)!)
+        //     .slice(0, 2);
+        // console.log('mostCommonTargetRosterId', mostCommonTargetRosterId);
+        // setTradePartners(mostCommonTargetRosterId);
 
         const apiSuggestions = collatedTrades
             .entries()
@@ -1087,6 +1089,30 @@ export default function BlueprintModule({
         setPlayerIdToAssetKey(newPlayerIdToAssetKey);
         setPlayerIdToDomainValue(newPlayerIdToDomainValue);
     }, [apiTradeSuggestions, searchParams]);
+
+    useEffect(() => {
+        if (blueprint) return;
+        const targetRosterCounts = new Map<number, number>();
+        for (const suggestion of apiTradeSuggestions) {
+            const target = suggestion.targetRosterId;
+            if (!targetRosterCounts.has(target)) {
+                targetRosterCounts.set(target, 1);
+            } else {
+                targetRosterCounts.set(
+                    target,
+                    targetRosterCounts.get(target)! + 1
+                );
+            }
+        }
+        const sortedRosterIds = [...targetRosterCounts.entries()]
+            .sort((a, b) => b[1] - a[1])
+            .map(i => i[0]);
+        const mostCommonTeamNames = sortedRosterIds
+            .map(i => getUserFromRosterId(i - 1)!)
+            .map(u => getDisplayName(u))
+            .slice(0, 2);
+        setTradePartners(mostCommonTeamNames);
+    }, [apiTradeSuggestions, blueprint])
 
     useEffect(() => {
         if (searchParams.has(TOP_PRIORITIES)) {
@@ -1384,7 +1410,7 @@ export default function BlueprintModule({
             searchParams.set(TOP_PRIORITIES, topPriorities.join('|'));
             searchParams.set(
                 TRADE_PARTNERS,
-                tradePartners.map(p => p?.user_id || '').join('-')
+                tradePartners.join('-')
             );
             fullMoves.forEach((move, idx) => {
                 searchParams.set(`${MOVE}_${idx}`, move.move);
@@ -1414,13 +1440,8 @@ export default function BlueprintModule({
                 RosterArchetype.None
         );
         setTopPriorities((searchParams.get(TOP_PRIORITIES) || '').split('|'));
-        setTradePartners(
-            allUsers.filter(u =>
-                (searchParams.get(TRADE_PARTNERS) || '')
-                    .split('-')
-                    .includes(u.user_id)
-            )
-        );
+        setTradePartners((searchParams.get(TRADE_PARTNERS) || '')
+                    .split('-'));
         setTwoYearOutlook(
             (searchParams.get(TWO_YEAR_OUTLOOK) || '')
                 .split('-')
@@ -2781,12 +2802,11 @@ export default function BlueprintModule({
                                 )}
                                 options={[
                                     'Choose a team',
-                                    ...allUsers.map(u => getDisplayName(u)),
+                                    ...leaguePowerRanks.map(rank => rank.teamName),
                                 ]}
                                 value={
                                     tradePartners[0]
-                                        ? getDisplayName(tradePartners[0])
-                                        : 'Choose a team'
+                                        ?? 'Choose a team'
                                 }
                                 onChange={e => {
                                     const {
@@ -2799,14 +2819,10 @@ export default function BlueprintModule({
                                         ]);
                                         return;
                                     }
-                                    allUsers.forEach(u => {
-                                        if (getDisplayName(u) === value) {
-                                            setTradePartners([
-                                                u,
-                                                tradePartners[1],
-                                            ]);
-                                        }
-                                    });
+                                    setTradePartners([
+                                        value as string,
+                                        tradePartners[1],
+                                    ]);
                                 }}
                             />
                             <DomainDropdown
@@ -2832,12 +2848,11 @@ export default function BlueprintModule({
                                 )}
                                 options={[
                                     'Choose a team',
-                                    ...allUsers.map(u => getDisplayName(u)),
+                                    ...leaguePowerRanks.map(rank => rank.teamName),
                                 ]}
                                 value={
                                     tradePartners[1]
-                                        ? getDisplayName(tradePartners[1])
-                                        : 'Choose a team'
+                                        ?? 'Choose a team'
                                 }
                                 onChange={e => {
                                     const {
@@ -2850,14 +2865,10 @@ export default function BlueprintModule({
                                         ]);
                                         return;
                                     }
-                                    allUsers.forEach(u => {
-                                        if (getDisplayName(u) === value) {
-                                            setTradePartners([
-                                                tradePartners[0],
-                                                u,
-                                            ]);
-                                        }
-                                    });
+                                    setTradePartners([
+                                        tradePartners[0],
+                                        value as string,
+                                    ]);
                                 }}
                             />
                         </div>
