@@ -169,11 +169,11 @@ function PickProfile({
     }
     function getColorFromMarketValue() {
         switch (marketValue) {
-            case 'CORRECTLY VALUED':
-                return '#1AE069';
-            case 'OVERVALUED':
-                return '#EABA10';
             case 'UNDERVALUED':
+                return '#1AE069';
+            case 'CORRECTLY VALUED':
+                return '#EABA10';
+            case 'OVERVALUED':
                 return '#DB2335';
         }
     }
