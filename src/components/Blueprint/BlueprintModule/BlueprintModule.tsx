@@ -2737,7 +2737,9 @@ export default function BlueprintModule({
                                     rosterId={
                                         blueprint
                                             ? blueprint.rosterId
-                                            : getRosterIdFromUser(specifiedUser) + 1
+                                            : getRosterIdFromUser(
+                                                  specifiedUser
+                                              ) + 1
                                     }
                                     numTeams={numTeams}
                                 />

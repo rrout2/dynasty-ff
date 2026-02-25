@@ -27,7 +27,6 @@ import {
     WR_RB_FLEX,
     WR_TE_FLEX,
 } from '../../../consts/fantasy';
-import {getDisplayName} from '../../Team/TeamPage/TeamPage';
 import {isRookiePickId} from '../v1/modules/playerstotarget/PlayersToTargetModule';
 
 type NewV1Props = {
@@ -638,7 +637,10 @@ export function Ppr({ppr, style}: {ppr: number; style?: CSSProperties}) {
 
 export function Tep({tep, style}: {tep: number; style?: CSSProperties}) {
     return (
-        <div className={styles.tep} style={style}>
+        <div
+            className={styles.tep}
+            style={{...style, fontSize: tep === 0.75 ? '18px' : ''}}
+        >
             {tep}
         </div>
     );
