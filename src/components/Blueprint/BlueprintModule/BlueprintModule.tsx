@@ -1745,6 +1745,7 @@ export default function BlueprintModule({
                                 wrGrade={wr}
                                 teGrade={te}
                                 myPicks={myPicks}
+                                players={apiRosterPlayers}
                             />
                         </div>
                     </Modal>

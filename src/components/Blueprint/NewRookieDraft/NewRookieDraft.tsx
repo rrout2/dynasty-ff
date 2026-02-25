@@ -8,6 +8,8 @@ import {CSSProperties, useEffect, useState} from 'react';
 import {QB, RB, TE, WR} from '../../../consts/fantasy';
 import {getPositionalOrder} from '../infinite/BuySellHold/BuySellHold';
 import {FinalPickData} from '../../../sleeper-api/picks';
+import {PlayerCard} from '../NewV1/NewV1';
+import {RosterPlayer} from '../../../hooks/hooks';
 
 type NewRookieDraftProps = {
     teamName: string;
@@ -19,6 +21,7 @@ type NewRookieDraftProps = {
     wrGrade: number;
     teGrade: number;
     myPicks: FinalPickData[];
+    players: RosterPlayer[];
 };
 
 function getFontSize(teamName: string) {
@@ -37,6 +40,7 @@ export default function NewRookieDraft({
     wrGrade,
     teGrade,
     myPicks,
+    players,
 }: NewRookieDraftProps) {
     const [teamNeed, setTeamNeed] = useState<('QB' | 'RB' | 'WR' | 'TE')[]>([]);
     useEffect(
@@ -101,7 +105,42 @@ export default function NewRookieDraft({
                     />
                 ))}
             </div>
+            <div className={styles.autoAcceptRejectColumn}>
+                {myPicks.slice(0, 4).map((pick, idx) => (
+                    <AutoAcceptReject
+                        key={idx}
+                        autoAcceptPlayer={players[idx * 2]}
+                        autoRejectPlayer={players[idx * 2 + 1]}
+                    />
+                ))}
+            </div>
+            <div className={styles.rookieDraftStrategySection}>
+                <RookieDraftStrategy />
+            </div>
             <img src={newRookieBg} className={styles.backgroundImg} />
+        </div>
+    );
+}
+
+function AutoAcceptReject({
+    autoAcceptPlayer,
+    autoRejectPlayer,
+}: {
+    autoAcceptPlayer: RosterPlayer;
+    autoRejectPlayer: RosterPlayer;
+}) {
+    return (
+        <div className={styles.autoAcceptReject}>
+            <PlayerCard
+                apiPlayer={autoAcceptPlayer}
+                getStartingPosition={() => autoAcceptPlayer.position}
+                hideAdp
+            />
+            <PlayerCard
+                apiPlayer={autoRejectPlayer}
+                getStartingPosition={() => autoRejectPlayer.position}
+                hideAdp
+            />
         </div>
     );
 }
@@ -254,6 +293,22 @@ function PickProfile({
                 >
                     {domainVerdict}
                 </span>
+            </div>
+        </div>
+    );
+}
+
+function RookieDraftStrategy() {
+    return (
+        <div className={styles.rookieDraftStrategy}>
+            <div className={styles.rookieDraftStrategyTitle}>Youth Infusion</div>
+            <div className={styles.rookieDraftStrategyText}>
+                Here is a sentence that goes right here. Its gonna tell you all
+                about how this is the right draft strategy for you. Be amazed at
+                this mind-blowing knowledge that DOMAIN has given to you. Now
+                you can go win your drafts. Wow. Isn’t that super awesome? This
+                is me trying to fill the paragraph box with words cause Figma
+                doesn’t do Lorem Ipsum.
             </div>
         </div>
     );

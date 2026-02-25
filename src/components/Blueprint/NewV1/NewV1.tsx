@@ -273,10 +273,12 @@ export function PlayerCard({
     player,
     apiPlayer,
     getStartingPosition,
+    hideAdp = false,
 }: {
     player?: Player;
     apiPlayer?: RosterPlayer;
     getStartingPosition: (playerName: string) => string | undefined;
+    hideAdp?: boolean;
 }) {
     const {getPositionalAdp} = useAdpData();
 
@@ -439,11 +441,16 @@ export function PlayerCard({
                         {apiPlayer.playerName}
                     </div>
                 </div>
-                <div
-                    style={{color: getColorFromAdp(posAdp), paddingTop: '3px'}}
-                >
-                    {posAdp === Infinity ? '-' : posAdp}
-                </div>
+                {!hideAdp && (
+                    <div
+                        style={{
+                            color: getColorFromAdp(posAdp),
+                            paddingTop: '3px',
+                        }}
+                    >
+                        {posAdp === Infinity ? '-' : posAdp}
+                    </div>
+                )}
             </div>
         );
     }
@@ -469,11 +476,16 @@ export function PlayerCard({
                         {player.first_name} {player.last_name}
                     </div>
                 </div>
-                <div
-                    style={{color: getColorFromAdp(posAdp), paddingTop: '3px'}}
-                >
-                    {posAdp === Infinity ? '-' : posAdp}
-                </div>
+                {!hideAdp && (
+                    <div
+                        style={{
+                            color: getColorFromAdp(posAdp),
+                            paddingTop: '3px',
+                        }}
+                    >
+                        {posAdp === Infinity ? '-' : posAdp}
+                    </div>
+                )}
             </div>
         )
     );

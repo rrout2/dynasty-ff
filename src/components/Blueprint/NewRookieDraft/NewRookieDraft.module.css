@@ -179,3 +179,49 @@
         color: #EABA10;
     }
 }
+
+.autoAcceptRejectColumn {
+    position: absolute;
+    left: 1050px;
+    top: 206px;
+
+    transform-origin: top left;
+    scale: 1.5;
+
+    display: flex;
+    flex-direction: column;
+    gap: 40.5px;
+}
+
+.autoAcceptReject {
+    display: flex;
+    flex-direction: column;
+
+    gap: 32px;
+}
+
+.rookieDraftStrategySection {
+    position: absolute;
+
+    top: 845px;
+    left: 990px;
+}
+
+.rookieDraftStrategyTitle {
+    color: #00B1FF;
+    font-family: Erbaum;
+    font-size: 30.6px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    
+    line-height: 0.97;
+}
+
+.rookieDraftStrategyText {
+    color: #FFF;
+    font-family: "Acumin Pro Condensed";
+    font-size: 16.5px;
+    font-style: italic;
+    width: 370px;
+}
