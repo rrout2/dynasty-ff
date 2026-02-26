@@ -148,6 +148,14 @@ export default function SuggestedMove({
         for (const p of rosterPlayers) {
             if (!p) continue;
             if (`${p.first_name} ${p.last_name}` === value) {
+                const apiId = getApiIdFromSleeperId(p.player_id);
+                if (apiId) {
+                    setPlayerIdToAssetKey(old => {
+                        const newPlayerIdToAssetKey = new Map<string, string>(old);
+                        newPlayerIdToAssetKey.set(p.player_id, `player:${apiId}`);
+                        return newPlayerIdToAssetKey;
+                    });
+                }
                 setValue(p.player_id);
                 return;
             }
@@ -1001,3 +1009,4 @@ const fetchCustomUptier = async ({
     const res = await axios.request(options);
     return res.data as TradeIdea[];
 };
+

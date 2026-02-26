@@ -867,15 +867,6 @@ export default function BlueprintModule({
 
     useEffect(() => {
         if (!roster?.players) return;
-        const newPlayerIdToAssetKey = new Map<string, string>(
-            playerIdToAssetKey
-        );
-        roster.players.forEach(playerId => {
-            newPlayerIdToAssetKey.set(
-                playerId,
-                `player:${getApiIdFromSleeperId(playerId)}`
-            );
-        });
         setPlayerIdToAssetKey(old => {
             const newPlayerIdToAssetKey = new Map<string, string>(old);
             roster.players.forEach(playerId => {

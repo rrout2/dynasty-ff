@@ -711,9 +711,8 @@ function LeaguePowerRanks({
             </div>
             <div className={styles.powerRankColumn}>
                 {col1.map((powerRank, idx) => (
-                    <div className={styles.powerRankRow}>
+                    <div className={styles.powerRankRow} key={idx}>
                         <div
-                            key={idx}
                             className={styles.powerRankCard}
                             style={getCellStyle(powerRank)}
                         >
@@ -725,9 +724,8 @@ function LeaguePowerRanks({
             </div>
             <div className={styles.powerRankColumn}>
                 {col2.map((powerRank, idx) => (
-                    <div className={styles.powerRankRow}>
+                    <div className={styles.powerRankRow} key={idx}>
                         <div
-                            key={idx}
                             className={styles.powerRankCard}
                             style={getCellStyle(powerRank)}
                         >
