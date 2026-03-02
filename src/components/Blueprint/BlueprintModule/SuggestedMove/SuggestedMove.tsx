@@ -151,8 +151,13 @@ export default function SuggestedMove({
                 const apiId = getApiIdFromSleeperId(p.player_id);
                 if (apiId) {
                     setPlayerIdToAssetKey(old => {
-                        const newPlayerIdToAssetKey = new Map<string, string>(old);
-                        newPlayerIdToAssetKey.set(p.player_id, `player:${apiId}`);
+                        const newPlayerIdToAssetKey = new Map<string, string>(
+                            old
+                        );
+                        newPlayerIdToAssetKey.set(
+                            p.player_id,
+                            `player:${apiId}`
+                        );
                         return newPlayerIdToAssetKey;
                     });
                 }
@@ -1009,4 +1014,3 @@ const fetchCustomUptier = async ({
     const res = await axios.request(options);
     return res.data as TradeIdea[];
 };
-

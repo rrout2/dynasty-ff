@@ -1,4 +1,7 @@
-import {useState} from 'react';
+import {Button, TextField} from '@mui/material';
+import {useQuery} from '@tanstack/react-query';
+import axios from 'axios';
+import {useEffect, useState} from 'react';
 
 type BuySellHoldApiRow = {
     PlayerId: number;
@@ -32,7 +35,49 @@ const MANUAL_OVERRIDE_OPTIONS = [
 
 const API_BASE_URL = 'https://domainffapi.azurewebsites.net';
 
+type Week = {
+    weekId: number;
+    weekNumber: number;
+    seasonYear: number;
+    startDate: string;
+    endDate: string;
+};
+
+function useWeeks() {
+    const [weeks, setWeeks] = useState<Week[]>([]);
+    const authToken = sessionStorage.getItem('authToken');
+    const {data} = useQuery({
+        queryKey: ['weeks'],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${API_BASE_URL}/api/Weeks/season/2026`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            };
+            const res = await axios.request(options);
+            return res.data as Week[];
+        },
+        retry: false,
+        enabled: !!authToken,
+    });
+    useEffect(() => {
+        if (!data) return;
+        setWeeks(data);
+    }, [data]);
+
+    return {weeks};
+}
+
 const BuySellHoldOverrides: React.FC = () => {
+    const [loggedIn, setLoggedIn] = useState(
+        sessionStorage.getItem('authToken') !== null
+    );
+    const [loginEmail, setLoginEmail] = useState('');
+    const [loginPassword, setLoginPassword] = useState('');
+    const {weeks} = useWeeks();
+
     const [weekId, setWeekId] = useState<number>(1);
     const [rows, setRows] = useState<BuySellHoldRow[]>([]);
 
@@ -55,14 +100,26 @@ const BuySellHoldOverrides: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [message, setMessage] = useState<string | null>(null);
 
+    useEffect(() => {
+        if (weeks.length > 0) {
+            setWeekId(weeks[0].weekId);
+        }
+    }, [weeks]);
+
     const loadWeek = async () => {
         setIsLoading(true);
         setError(null);
         setMessage(null);
 
         try {
+            const authToken = sessionStorage.getItem('authToken');
             const resp = await fetch(
-                `${API_BASE_URL}/api/BuySellHold/${weekId}`
+                `${API_BASE_URL}/api/BuySellHold/${weekId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${authToken}`,
+                    },
+                }
             );
             if (!resp.ok) {
                 throw new Error(
@@ -158,11 +215,13 @@ const BuySellHoldOverrides: React.FC = () => {
 
         setIsSaving(true);
         try {
+            const authToken = sessionStorage.getItem('authToken');
             const resp = await fetch(
                 `${API_BASE_URL}/api/BuySellHold/overrides?weekId=${weekId}`,
                 {
                     method: 'POST',
                     headers: {
+                        Authorization: `Bearer ${authToken}`,
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(cleanedPayload),
@@ -200,8 +259,55 @@ const BuySellHoldOverrides: React.FC = () => {
         }
     };
 
+    const handleLogin = async () => {
+        const options = {
+            method: 'POST',
+            url: 'https://domainffapi.azurewebsites.net/api/Auth/login',
+            headers: {'Content-Type': 'application/json'},
+            data: {email: loginEmail, password: loginPassword},
+        };
+        const res = await axios.request(options);
+        const token = res.data.token;
+        sessionStorage.setItem('authToken', token);
+        const options2 = {
+            method: 'GET',
+            url: 'https://domainffapi.azurewebsites.net/api/Auth/me',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        const res2 = await axios.request(options2);
+        setLoggedIn(res2.data.isAuthenticated);
+    };
+
+    const handleLogout = () => {
+        sessionStorage.removeItem('authToken');
+        setLoggedIn(false);
+    };
+
     return (
         <div style={{padding: '1rem', maxWidth: 900, margin: '0 auto'}}>
+            {!loggedIn && (
+                <>
+                    <TextField
+                        label="Email"
+                        value={loginEmail}
+                        onChange={e => setLoginEmail(e.target.value)}
+                    />
+                    <TextField
+                        label="Password"
+                        type="password"
+                        value={loginPassword}
+                        onChange={e => setLoginPassword(e.target.value)}
+                    />
+                </>
+            )}
+            <Button
+                onClick={!loggedIn ? handleLogin : handleLogout}
+                variant="outlined"
+            >
+                {loggedIn ? 'Logout' : 'Login'}
+            </Button>
             <h2>Buy / Sell / Hold Manual Overrides</h2>
             <div
                 style={{
@@ -217,11 +323,10 @@ const BuySellHoldOverrides: React.FC = () => {
                     value={weekId}
                     onChange={e => setWeekId(Number(e.target.value))}
                 >
-                    {Array.from({length: 22}).map((_, idx) => {
-                        const w = idx + 1;
+                    {weeks.map((weekObj, idx) => {
                         return (
-                            <option key={w} value={w}>
-                                Week {w}
+                            <option key={idx} value={weekObj.weekId}>
+                                Week {weekObj.weekNumber}
                             </option>
                         );
                     })}

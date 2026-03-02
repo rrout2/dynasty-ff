@@ -301,7 +301,9 @@ function PickProfile({
 function RookieDraftStrategy() {
     return (
         <div className={styles.rookieDraftStrategy}>
-            <div className={styles.rookieDraftStrategyTitle}>Youth Infusion</div>
+            <div className={styles.rookieDraftStrategyTitle}>
+                Youth Infusion
+            </div>
             <div className={styles.rookieDraftStrategyText}>
                 Here is a sentence that goes right here. Its gonna tell you all
                 about how this is the right draft strategy for you. Be amazed at
