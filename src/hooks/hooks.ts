@@ -160,6 +160,30 @@ type Blueprint = {
     createdUtc: string;
 };
 
+export type TradeStrategy = {
+    moveType: number;
+    sortOrder: number;
+    assetsOut: Array<{
+        draftPickNumber: number | null;
+        draftPickRound: number | null;
+        draftPickSeason: number | null;
+        isDraftPick: boolean;
+        playerId: number | null;
+        sortOrder: number;
+    }>;
+    targetGroups: Array<{
+        sortOrder: number;
+        assetsIn: Array<{
+            draftPickNumber: number | null;
+            draftPickRound: number | null;
+            draftPickSeason: number | null;
+            isDraftPick: boolean;
+            playerId: number | null;
+            sortOrder: number;
+        }>;
+    }>;
+};
+
 type PremiumFeatures = {
     id: number;
     averageStarterAgeQb: number;
@@ -843,6 +867,29 @@ export function convertStringToValueArchetype(str: string): ValueArchetype {
     }
 }
 
+export function convertValueArchetypeToInt(
+    valueArchetype: ValueArchetype
+): number {
+    switch (valueArchetype) {
+        case ValueArchetype.EliteValue:
+            return 0;
+        case ValueArchetype.EnhancedValue:
+            return 1;
+        case ValueArchetype.StandardValue:
+            return 3;
+        case ValueArchetype.FutureValue:
+            return 2;
+        case ValueArchetype.AgingValue:
+            return 4;
+        case ValueArchetype.OneYearReload:
+            return 5;
+        case ValueArchetype.HardRebuild:
+            return 6;
+        default:
+            return -1;
+    }
+}
+
 export function useTeamValueArchetype(leagueId: string, teamId: string) {
     const [valueArchetype, setValueArchetype] = useState<ValueArchetype>(
         ValueArchetype.None
@@ -897,6 +944,27 @@ export function convertStringToRosterArchetype(str: string): RosterArchetype {
     }
 }
 
+export function convertRosterArchetypeToInt(
+    rosterArchetype: RosterArchetype
+): number {
+    switch (rosterArchetype) {
+        case RosterArchetype.WellRounded:
+            return 0;
+        case RosterArchetype.WRFactory:
+            return 3;
+        case RosterArchetype.RBHeavy:
+            return 2;
+        case RosterArchetype.DualEliteQB:
+            return 1;
+        case RosterArchetype.EliteQBTE:
+            return 4;
+        case RosterArchetype.PlayerDeficient:
+            return 5;
+        default:
+            return -1;
+    }
+}
+
 export function useTeamRosterArchetype(leagueId: string, teamId: string) {
     const [rosterArchetype, setRosterArchetype] = useState<RosterArchetype>(
         RosterArchetype.None
@@ -942,6 +1010,19 @@ export function convertStringToOutlookOption(str: string): OutlookOption {
             return OutlookOption.Contend;
         default:
             return OutlookOption.Reload;
+    }
+}
+
+export function convertOutlookOptionToInt(outlook: OutlookOption): number {
+    switch (outlook) {
+        case OutlookOption.Rebuild:
+            return 2;
+        case OutlookOption.Reload:
+            return 1;
+        case OutlookOption.Contend:
+            return 0;
+        default:
+            return -1;
     }
 }
 

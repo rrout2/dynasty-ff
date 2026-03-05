@@ -9,13 +9,18 @@ import {
     tepIcon,
 } from '../../../consts/images';
 import {
+    AZURE_API_URL,
+    convertOutlookOptionToInt,
+    convertRosterArchetypeToInt,
     convertStringToOutlookOption,
     convertStringToRosterArchetype,
     convertStringToValueArchetype,
+    convertValueArchetypeToInt,
     LeagueSettings,
     PowerRank,
     RosterPlayer,
     TradeAsset,
+    TradeStrategy,
     useAdpData,
     useBlueprint,
     useDomainTrueRanks,
@@ -80,6 +85,7 @@ import {
     AddCircleOutline,
     FileDownload,
     Preview,
+    Publish,
     Save,
 } from '@mui/icons-material';
 import NewV1 from '../NewV1/NewV1';
@@ -498,6 +504,7 @@ export default function BlueprintModule({
     const [playerIdToDomainValue, setPlayerIdToDomainValue] = useState<
         Map<string, number>
     >(new Map());
+    const [isPublishing, setIsPublishing] = useState(false);
 
     useEffect(() => {
         if (!valueArchetypeError) return;
@@ -1505,6 +1512,150 @@ export default function BlueprintModule({
         setLoginModalOpen(true);
     }
 
+    function sleeperIdToTradeAsset(
+        sleeperId: string,
+        sortOrder: number
+    ): {
+        draftPickNumber: number | null;
+        draftPickRound: number | null;
+        draftPickSeason: number | null;
+        isDraftPick: boolean;
+        playerId: number | null;
+        sortOrder: number;
+    } | null {
+        const assetKey = playerIdToAssetKey.get(sleeperId);
+        if (!assetKey) {
+            console.warn('unknown sleeperId', sleeperId);
+            return null;
+        }
+        if (assetKey.startsWith('player:')) {
+            return {
+                draftPickNumber: null,
+                draftPickRound: null,
+                draftPickSeason: null,
+                isDraftPick: false,
+                playerId: +assetKey.split(':')[1],
+                sortOrder,
+            };
+        }
+        const spl = sleeperId.split('-'); // RP-API-2026-2-15 -> 2026 2.03 for 12 teams
+        let draftPickNumber: number | null = null;
+        if (spl.length >= 5 && spl[4] !== 'null' && spl[4] !== 'undefined') {
+            const overallPickNumber = +spl[4];
+            draftPickNumber = ((overallPickNumber - 1) % numTeams) + 1;
+        }
+        return {
+            draftPickNumber,
+            draftPickRound: +spl[3],
+            draftPickSeason: +spl[2],
+            isDraftPick: true,
+            playerId: null,
+            sortOrder,
+        };
+    }
+
+    async function publishBlueprint() {
+        if (!blueprint) return;
+        const tradeStrategies = fullMoves.map((move, idx) => ({
+            moveType: convertMoveToInt(move.move),
+            sortOrder: idx + 1,
+            assetsOut: move.playerIdsToTrade
+                .map((sleeperId, i) => sleeperIdToTradeAsset(sleeperId, i + 1))
+                .filter(asset => !!asset),
+            targetGroups: move.playerIdsToTarget.map((sleeperIds, i) => ({
+                sortOrder: i + 1,
+                assetsIn: sleeperIds
+                    .map((sleeperId, j) =>
+                        sleeperIdToTradeAsset(sleeperId, j + 1)
+                    )
+                    .filter(asset => !!asset),
+            })),
+        })) as TradeStrategy[];
+        const authToken = sessionStorage.getItem('authToken');
+        const options = {
+            method: 'PUT',
+            url: `${AZURE_API_URL}/Blueprints/${blueprintId}`,
+            data: {
+                id: blueprintId,
+                // idealTradePartners: tradePartners,
+                draftPicks: myPicks.map(pick => ({
+                    pickNumber: pick.slot,
+                    round: pick.round,
+                    season: +pick.season,
+                })),
+                leagueSettings: {
+                    ...blueprint?.leagueSettings,
+                    numberOfTeams: numTeams,
+                    pointsPerReception: ppr,
+                    tightEndPremium: tep,
+                    isSuperFlex: isSuperFlex,
+                },
+                outlooks: twoYearOutlook.map((o, i) => ({
+                    outlook: convertOutlookOptionToInt(o),
+                    yearNumber: i + 1,
+                })),
+                overallGrade: overall,
+                positionalGrades: [
+                    {
+                        ...blueprint.positionalGrades.find(
+                            g => g.position === QB
+                        )!,
+                        grade: qb,
+                    },
+                    {
+                        ...blueprint.positionalGrades.find(
+                            g => g.position === RB
+                        )!,
+                        grade: rb,
+                    },
+                    {
+                        ...blueprint.positionalGrades.find(
+                            g => g.position === WR
+                        )!,
+                        grade: wr,
+                    },
+                    {
+                        ...blueprint.positionalGrades.find(
+                            g => g.position === TE
+                        )!,
+                        grade: te,
+                    },
+                    {
+                        ...blueprint.positionalGrades.find(
+                            g => g.position === 'BENCH'
+                        )!,
+                        grade: depth,
+                    },
+                    {
+                        ...blueprint.positionalGrades.find(
+                            g => g.position === 'DRAFT_CAPITAL'
+                        )!,
+                        grade: draftCapitalScore,
+                    },
+                ],
+                premiumFeatures: blueprint.premiumFeatures,
+                productionShareLeagueRank: productionShareRank,
+                productionSharePercentage: productionSharePercent,
+                rosterArchetype: convertRosterArchetypeToInt(rosterArchetype),
+                rosterPlayers: blueprint.rosterPlayers,
+                teamName: blueprint.teamName,
+                topPriorities: topPriorities.map((tp, i) => ({
+                    text: tp,
+                    sortOrder: i + 1,
+                    iconKey: 'image.png',
+                })),
+                tradeStrategies,
+                valueArchetype: convertValueArchetypeToInt(valueArchetype),
+                valueShareLeagueRank: valueShareRank,
+                valueSharePercentage: valueSharePercent,
+            },
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+            },
+        };
+        const res = await axios.request(options);
+    }
+
     return (
         <div style={{backgroundColor: DARK_BLUE}}>
             <div className={styles.headerContainer}>
@@ -1662,21 +1813,45 @@ export default function BlueprintModule({
                     </Box>
                 </Modal>
                 <div className={styles.bpActions}>
-                    <Button
-                        loading={isDownloading}
-                        variant="outlined"
-                        endIcon={<FileDownload />}
-                        sx={{
-                            ...bpActionButtonStyle,
-                            color: '#1AE069',
-                            '.MuiButton-loadingIndicator': {
+                    {!blueprint && (
+                        <Button
+                            loading={isDownloading}
+                            variant="outlined"
+                            endIcon={<FileDownload />}
+                            sx={{
+                                ...bpActionButtonStyle,
                                 color: '#1AE069',
-                            },
-                        }}
-                        onClick={() => handleExport()}
-                    >
-                        DOWNLOAD BP
-                    </Button>
+                                '.MuiButton-loadingIndicator': {
+                                    color: '#1AE069',
+                                },
+                            }}
+                            onClick={() => handleExport()}
+                        >
+                            DOWNLOAD BP
+                        </Button>
+                    )}
+                    {!!blueprint && (
+                        <Button
+                            loading={isPublishing}
+                            variant="outlined"
+                            endIcon={<Publish />}
+                            sx={{
+                                ...bpActionButtonStyle,
+                                color: '#1AE069',
+                                '.MuiButton-loadingIndicator': {
+                                    color: '#1AE069',
+                                },
+                            }}
+                            onClick={() => {
+                                setIsPublishing(true);
+                                publishBlueprint().finally(() => {
+                                    setIsPublishing(false);
+                                });
+                            }}
+                        >
+                            PUBLISH BP
+                        </Button>
+                    )}
                     <Button
                         variant="outlined"
                         endIcon={<Save />}
@@ -3175,6 +3350,20 @@ export enum Move {
     UPTIER = 'UPTIER',
     PIVOT = 'PIVOT',
 }
+
+function convertMoveToInt(move: Move): number {
+    switch (move) {
+        case Move.PIVOT:
+            return 0;
+        case Move.DOWNTIER:
+            return 1;
+        case Move.UPTIER:
+            return 2;
+        default:
+            return -1;
+    }
+}
+
 export function getApiStartingLineup(
     leagueSettings: LeagueSettings,
     rosterPlayers: RosterPlayer[]
