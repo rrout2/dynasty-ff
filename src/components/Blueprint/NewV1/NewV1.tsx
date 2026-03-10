@@ -1181,7 +1181,6 @@ function TradePlayerCard({
 
         return longName;
     }
-    console.log(getDisplayName(), player.team);
 
     return (
         <div className={styles.tradePlayerCard}>
