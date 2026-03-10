@@ -1025,6 +1025,9 @@ function TradePlus({size = 11.35}: {size?: number}) {
 }
 
 function getStopGradient(team: string) {
+    if (!team) {
+        return 'none';
+    }
     switch (team.toUpperCase()) {
         case 'ARI':
             return 'none';
@@ -1178,6 +1181,7 @@ function TradePlayerCard({
 
         return longName;
     }
+    console.log(getDisplayName(), player.team);
 
     return (
         <div className={styles.tradePlayerCard}>
