@@ -3,6 +3,7 @@ import {
     new1_0Background,
     newNflBg,
     newTeamBackgrounds,
+    nflLogo,
     nflSilhouette,
 } from '../../../consts/images';
 import {
@@ -13,7 +14,7 @@ import {
     ValueArchetype,
 } from '../BlueprintModule/BlueprintModule';
 import {CSSProperties} from 'react';
-import {Player, User} from '../../../sleeper-api/sleeper-api';
+import {Player} from '../../../sleeper-api/sleeper-api';
 import {NONE_PLAYER_ID} from '../v2/modules/CornerstonesModule/CornerstonesModule';
 import {logoImage} from '../shared/Utilities';
 import {RosterPlayer, useAdpData, usePlayerData} from '../../../hooks/hooks';
@@ -423,7 +424,7 @@ export function PlayerCard({
                 style={getApiCardStyle(apiPlayer)}
             >
                 <div className={styles.playerInfo}>
-                    {logoImage(apiPlayer.teamAbbreviation, styles.teamLogo)}
+                    {logoImage(apiPlayer.teamAbbreviation, styles.teamLogo, nflLogo)}
                     <img
                         src={
                             apiPlayer.playerSleeperBotId === NONE_PLAYER_ID
@@ -458,7 +459,7 @@ export function PlayerCard({
         player && (
             <div className={styles.playerCard} style={getCardStyle(player)}>
                 <div className={styles.playerInfo}>
-                    {logoImage(player.team, styles.teamLogo)}
+                    {logoImage(player.team, styles.teamLogo, nflLogo)}
                     <img
                         src={
                             player.player_id === NONE_PLAYER_ID
