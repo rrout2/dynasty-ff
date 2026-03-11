@@ -16,6 +16,7 @@ import DomainAutocomplete from '../../shared/DomainAutocomplete';
 import DomainDropdown from '../../shared/DomainDropdown';
 import {isRookiePickId} from '../../v1/modules/playerstotarget/PlayersToTargetModule';
 import {assetToPlayerId, Move, shuffle} from '../BlueprintModule';
+import {TradeIdea, useCustomTradeFinder} from './CustomTradeFinder';
 
 type SuggestedMoveProps = {
     move: Move;
@@ -55,6 +56,7 @@ export default function SuggestedMove({
     numTeams,
 }: SuggestedMoveProps) {
     const playerData = usePlayerData();
+    const tradeFinder = useCustomTradeFinder(leagueId, rosterId);
     const {getApiIdFromSleeperId} = useSleeperIdMap();
 
     const [optionsToTrade, setOptionsToTrade] = useState<string[]>([]);
@@ -208,6 +210,7 @@ export default function SuggestedMove({
     }
 
     async function newCustomDowntierAllThree() {
+        if (!tradeFinder) return;
         const protectedRows: number[] = [];
         for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
             if (
@@ -224,11 +227,9 @@ export default function SuggestedMove({
 
         if (protectedRows.length === 3) return;
 
-        const ideas = await fetchCustomDowntier({
-            leagueId,
-            rosterId,
-            outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])!],
-        });
+        const ideas = await tradeFinder.fetchCustomDowntier([
+            playerIdToAssetKey.get(playerIdsToTrade[0])!,
+        ]);
         ideas.forEach(populatePlayerIdMaps);
         shuffle(ideas);
         const filteredIdeas = filterIdeasByPosition(ideas);
@@ -279,14 +280,13 @@ export default function SuggestedMove({
     // protectedRows === undefined means that this is a standalone move
     // protectedRows === [] means no primary asset checking
     async function newCustomDowntier(rowIdx: number, protectedRows?: number[]) {
-        const tradeIdeas = await fetchCustomDowntier({
-            leagueId,
-            rosterId,
-            outAssetKeys: [playerIdToAssetKey.get(playerIdsToTrade[0])!],
-            inAssetKeys: playerIdsToTarget[rowIdx]
+        if (!tradeFinder) return;
+        const tradeIdeas = await tradeFinder.fetchCustomDowntier(
+            [playerIdToAssetKey.get(playerIdsToTrade[0])!],
+            playerIdsToTarget[rowIdx]
                 .filter((_, idx) => pinnedReturnAssets[rowIdx][idx])
-                .map(id => playerIdToAssetKey.get(id)!),
-        });
+                .map(id => playerIdToAssetKey.get(id)!)
+        );
         const ideas = tradeIdeas
             .filter(idea => !!idea)
             .filter(idea => {
@@ -340,12 +340,10 @@ export default function SuggestedMove({
 
     async function newCustomPivotAllThree() {
         const isAssetPinned = [0, 1, 2].map(idx => pinnedReturnAssets[idx][0]);
-        if (isAssetPinned.every(h => h)) return;
-        const ideas = await fetchCustomPivot({
-            leagueId,
-            rosterId,
-            outAssetKey: playerIdToAssetKey.get(playerIdsToTrade[0])!,
-        });
+        if (!tradeFinder || isAssetPinned.every(h => h)) return;
+        const ideas = await tradeFinder.fetchCustomPivot(
+            playerIdToAssetKey.get(playerIdsToTrade[0])!
+        );
         ideas.forEach(populatePlayerIdMaps);
         shuffle(ideas);
         const filteredIdeas = filterIdeasByPosition(ideas);
@@ -366,11 +364,10 @@ export default function SuggestedMove({
     }
 
     async function newCustomPivot(rowIdx: number) {
-        const ideas = await fetchCustomPivot({
-            leagueId,
-            rosterId,
-            outAssetKey: playerIdToAssetKey.get(playerIdsToTrade[0])!,
-        });
+        if (!tradeFinder) return;
+        const ideas = await tradeFinder.fetchCustomPivot(
+            playerIdToAssetKey.get(playerIdsToTrade[0])!
+        );
         ideas.forEach(populatePlayerIdMaps);
         shuffle(ideas);
 
@@ -401,15 +398,12 @@ export default function SuggestedMove({
     }
 
     async function newCustomUptierAllThree() {
+        if (!tradeFinder) return;
         const isAssetPinned = [0, 1, 2].map(idx => pinnedReturnAssets[idx][0]);
         if (isAssetPinned.every(h => h)) return;
-        const ideas = await fetchCustomUptier({
-            leagueId,
-            rosterId,
-            outAssetKeys: playerIdsToTrade.map(
-                id => playerIdToAssetKey.get(id)!
-            ),
-        });
+        const ideas = await tradeFinder.fetchCustomUptier(
+            playerIdsToTrade.map(id => playerIdToAssetKey.get(id)!)
+        );
         ideas.forEach(populatePlayerIdMaps);
         shuffle(ideas);
         const filteredIdeas = filterIdeasByPosition(ideas);
@@ -430,13 +424,10 @@ export default function SuggestedMove({
     }
 
     async function newCustomUptier(rowIdx: number) {
-        const ideas = await fetchCustomUptier({
-            leagueId,
-            rosterId,
-            outAssetKeys: playerIdsToTrade.map(
-                id => playerIdToAssetKey.get(id)!
-            ),
-        });
+        if (!tradeFinder) return;
+        const ideas = await tradeFinder.fetchCustomUptier(
+            playerIdsToTrade.map(id => playerIdToAssetKey.get(id)!)
+        );
         ideas.forEach(populatePlayerIdMaps);
         shuffle(ideas);
         const existingTargets: Set<string> = new Set();
@@ -916,101 +907,3 @@ function PinButton({
         </IconButton>
     );
 }
-
-type TradeIdea = {
-    inAssets: TradeAsset[];
-    outAssets: TradeAsset[];
-};
-
-const fetchCustomDowntier = async ({
-    leagueId,
-    rosterId,
-    outAssetKeys,
-    inAssetKeys = [],
-}: {
-    leagueId: string;
-    rosterId: number;
-    outAssetKeys: string[];
-    inAssetKeys?: string[];
-}) => {
-    const authToken = sessionStorage.getItem('authToken');
-    const options = {
-        method: 'POST',
-        url: `${AZURE_API_URL}TradeRulesAdmin/customize`,
-        data: {
-            leagueId,
-            rosterId,
-            gradeRunVersionNumber: 1,
-            weekId: 19,
-            moveType: 2,
-            outAssetKeys,
-            inAssetKeys,
-            maxResults: 300,
-        },
-        headers: {
-            Authorization: `Bearer ${authToken}`,
-        },
-    };
-    const res = await axios.request(options);
-    return res.data as TradeIdea[];
-};
-
-const fetchCustomPivot = async ({
-    leagueId,
-    rosterId,
-    outAssetKey,
-}: {
-    leagueId: string;
-    rosterId: number;
-    outAssetKey: string;
-}) => {
-    const authToken = sessionStorage.getItem('authToken');
-    const options = {
-        method: 'POST',
-        url: `${AZURE_API_URL}TradeRulesAdmin/customize`,
-        data: {
-            leagueId,
-            rosterId,
-            gradeRunVersionNumber: 1,
-            weekId: 19,
-            moveType: 1,
-            outAssetKeys: [outAssetKey],
-            maxResults: 300,
-        },
-        headers: {
-            Authorization: `Bearer ${authToken}`,
-        },
-    };
-    const res = await axios.request(options);
-    return res.data as TradeIdea[];
-};
-
-const fetchCustomUptier = async ({
-    leagueId,
-    rosterId,
-    outAssetKeys,
-}: {
-    leagueId: string;
-    rosterId: number;
-    outAssetKeys: string[];
-}) => {
-    const authToken = sessionStorage.getItem('authToken');
-    const options = {
-        method: 'POST',
-        url: `${AZURE_API_URL}TradeRulesAdmin/customize`,
-        data: {
-            leagueId,
-            rosterId,
-            gradeRunVersionNumber: 1,
-            weekId: 19,
-            moveType: 3,
-            outAssetKeys,
-            maxResults: 300,
-        },
-        headers: {
-            Authorization: `Bearer ${authToken}`,
-        },
-    };
-    const res = await axios.request(options);
-    return res.data as TradeIdea[];
-};
