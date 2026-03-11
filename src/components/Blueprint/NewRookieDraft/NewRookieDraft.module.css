@@ -229,7 +229,7 @@
 .targetCards {
     position: absolute;
     top: 165px;
-    left: 412px;
+    left: 412.5px;
 
     display: flex;
     flex-direction: column;
