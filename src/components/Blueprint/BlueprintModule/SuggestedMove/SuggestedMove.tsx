@@ -1,11 +1,9 @@
 import styles from './SuggestedMove.module.css';
 import {Casino, PushPin, PushPinOutlined} from '@mui/icons-material';
 import {IconButton, SelectChangeEvent, Tooltip} from '@mui/material';
-import axios from 'axios';
 import {Dispatch, SetStateAction, useState, useEffect} from 'react';
 import {sfIcon} from '../../../../consts/images';
 import {
-    AZURE_API_URL,
     TradeAsset,
     usePlayerData,
     useSleeperIdMap,
