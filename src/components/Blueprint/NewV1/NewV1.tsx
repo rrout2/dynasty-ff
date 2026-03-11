@@ -424,7 +424,11 @@ export function PlayerCard({
                 style={getApiCardStyle(apiPlayer)}
             >
                 <div className={styles.playerInfo}>
-                    {logoImage(apiPlayer.teamAbbreviation, styles.teamLogo, nflLogo)}
+                    {logoImage(
+                        apiPlayer.teamAbbreviation,
+                        styles.teamLogo,
+                        nflLogo
+                    )}
                     <img
                         src={
                             apiPlayer.playerSleeperBotId === NONE_PLAYER_ID

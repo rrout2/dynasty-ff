@@ -1,5 +1,5 @@
 import styles from './NewRookieDraft.module.css';
-import {newRookieBg} from '../../../consts/images';
+import {newRookieBg, newRookieCardMap} from '../../../consts/images';
 import {
     ValueArchetype,
     RosterArchetype,
@@ -9,19 +9,16 @@ import {QB, RB, TE, WR} from '../../../consts/fantasy';
 import {getPositionalOrder} from '../infinite/BuySellHold/BuySellHold';
 import {FinalPickData} from '../../../sleeper-api/picks';
 import {PlayerCard} from '../NewV1/NewV1';
-import {RosterPlayer} from '../../../hooks/hooks';
+import {PickProfile as Pick, RosterPlayer} from '../../../hooks/hooks';
 
 type NewRookieDraftProps = {
     teamName: string;
     numTeams: number;
     valueArchetype: ValueArchetype;
     rosterArchetype: RosterArchetype;
-    qbGrade: number;
-    rbGrade: number;
-    wrGrade: number;
-    teGrade: number;
-    myPicks: FinalPickData[];
-    players: RosterPlayer[];
+    myPicks: Pick[];
+    strategyName: string;
+    strategyStatement: string;
 };
 
 function getFontSize(teamName: string) {
@@ -35,27 +32,10 @@ export default function NewRookieDraft({
     numTeams,
     valueArchetype,
     rosterArchetype,
-    qbGrade,
-    rbGrade,
-    wrGrade,
-    teGrade,
     myPicks,
-    players,
+    strategyName,
+    strategyStatement,
 }: NewRookieDraftProps) {
-    const [teamNeed, setTeamNeed] = useState<('QB' | 'RB' | 'WR' | 'TE')[]>([]);
-    useEffect(
-        () =>
-            setTeamNeed(
-                getPositionalOrder({
-                    qbGrade,
-                    rbGrade,
-                    wrGrade,
-                    teGrade,
-                })
-            ),
-        [qbGrade, rbGrade, wrGrade, teGrade]
-    );
-
     return (
         <div className={styles.fullBlueprint}>
             <div
@@ -66,46 +46,42 @@ export default function NewRookieDraft({
             </div>
             <div className={styles.valueArchetype}>{valueArchetype}</div>
             <div className={styles.rosterArchetype}>{rosterArchetype}</div>
-            <div className={styles.teamNeedSection}>
-                {teamNeed.map((pos, idx) => (
-                    <TeamNeedCard
-                        key={idx}
-                        position={pos}
-                        grade={
-                            pos === QB
-                                ? qbGrade
-                                : pos === RB
-                                ? rbGrade
-                                : pos === WR
-                                ? wrGrade
-                                : teGrade
-                        }
-                        rank={idx + 1}
-                    />
-                ))}
-            </div>
             <div className={styles.pickTitles}>
                 {myPicks.slice(0, 4).map((pick, idx) => (
                     <div key={idx} className={styles.pickTitle}>
-                        {`Pick ${pick.round}.${pick.slot < 10 ? '0' : ''}${
-                            pick.slot
-                        }`}
+                        {`Pick ${pick.round}.${
+                            pick.pickNumber < 10 ? '0' : ''
+                        }${pick.pickNumber}`}
                     </div>
                 ))}
             </div>
             <div className={styles.pickProfiles}>
                 {myPicks.slice(0, 4).map((pick, idx) => (
-                    <PickProfile
-                        key={idx}
-                        tier={idx + 1}
-                        zScore={idx * 1.25 + 1.1}
-                        historicalRank={idx + 1}
-                        marketValue={'CORRECTLY VALUED'}
-                        domainVerdict={'SELL'}
-                    />
+                    <PickProfile key={idx} pick={pick} />
                 ))}
             </div>
-            <div className={styles.autoAcceptRejectColumn}>
+            <div className={styles.targetCards}>
+                {myPicks.slice(0, 4).map((pick, idx) => (
+                    <div key={idx} className={styles.targetCardRow}>
+                        {pick.targets.map((target, idx) =>
+                            newRookieCardMap.has(target.playerName) ? (
+                                <img
+                                    key={idx}
+                                    src={
+                                        newRookieCardMap.get(target.playerName)!
+                                    }
+                                    className={styles.targetCard}
+                                />
+                            ) : (
+                                <div key={idx} className={styles.targetCard}>
+                                    {target.playerName} is missing rookie card
+                                </div>
+                            )
+                        )}
+                    </div>
+                ))}
+            </div>
+            {/* <div className={styles.autoAcceptRejectColumn}>
                 {myPicks.slice(0, 4).map((pick, idx) => (
                     <AutoAcceptReject
                         key={idx}
@@ -113,9 +89,12 @@ export default function NewRookieDraft({
                         autoRejectPlayer={players[idx * 2 + 1]}
                     />
                 ))}
-            </div>
+            </div> */}
             <div className={styles.rookieDraftStrategySection}>
-                <RookieDraftStrategy />
+                <RookieDraftStrategy
+                    strategyName={strategyName}
+                    strategyStatement={strategyStatement}
+                />
             </div>
             <img src={newRookieBg} className={styles.backgroundImg} />
         </div>
@@ -182,42 +161,31 @@ function TeamNeedCard({
 }
 
 type PickProfileProps = {
-    tier: number;
-    zScore: number;
-    historicalRank: number;
-    marketValue: 'CORRECTLY VALUED' | 'OVERVALUED' | 'UNDERVALUED';
-    domainVerdict: 'BUY' | 'HOLD' | 'SELL';
+    pick: Pick;
 };
 
-function PickProfile({
-    tier,
-    zScore,
-    historicalRank,
-    marketValue,
-    domainVerdict,
-}: PickProfileProps) {
-    function getColorFromVerdict() {
-        switch (domainVerdict) {
-            case 'BUY':
-                return '#1AE069';
-            case 'HOLD':
-                return '#EABA10';
-            case 'SELL':
-                return '#DB2335';
-        }
-    }
+function PickProfile({pick}: PickProfileProps) {
     function getColorFromMarketValue() {
-        switch (marketValue) {
+        switch (pick.marketValue.toUpperCase()) {
             case 'UNDERVALUED':
                 return '#1AE069';
-            case 'CORRECTLY VALUED':
+            case 'CORRECTLYVALUED':
                 return '#EABA10';
             case 'OVERVALUED':
                 return '#DB2335';
         }
+        return '';
+    }
+    function getMarketValueDisplay() {
+        switch (pick.marketValue.toUpperCase()) {
+            case 'CORRECTLYVALUED':
+                return 'CORRECTLY VALUED';
+            default:
+                return pick.marketValue.toUpperCase();
+        }
     }
     function getRankSuffix() {
-        const abs = Math.abs(historicalRank);
+        const abs = Math.abs(pick.historicalRank);
         const lastTwo = abs % 100;
         const lastOne = abs % 10;
 
@@ -235,7 +203,7 @@ function PickProfile({
         }
     }
     function getColorFromTier() {
-        switch (tier) {
+        switch (pick.tier) {
             case 1:
                 return '#CD00FF';
             case 2:
@@ -261,18 +229,23 @@ function PickProfile({
                     className={styles.tier}
                     style={{color: getColorFromTier()}}
                 >
-                    {tier}
+                    {pick.tier}
                 </span>
             </div>
             <div>
-                Bakery Z-Score: <span className={styles.zScore}>{zScore}</span>
+                Bakery Tier:{' '}
+                <span className={styles.zScore}>{pick.bakeryZScore}</span>
+            </div>
+            <div>
+                Bakery Z-Score:{' '}
+                <span className={styles.zScore}>{pick.bakeryZScore}</span>
             </div>
             <div>
                 Historical Rank{' '}
                 <span className={styles.lastTenClasses}>(Last 10 Classes)</span>
                 :{' '}
                 <span className={styles.rank}>
-                    {historicalRank}
+                    {pick.historicalRank}
                     {getRankSuffix()}
                 </span>
             </div>
@@ -282,35 +255,27 @@ function PickProfile({
                     className={styles.marketValue}
                     style={{color: getColorFromMarketValue()}}
                 >
-                    {marketValue}
-                </span>
-            </div>
-            <div>
-                Domain Verdict:{' '}
-                <span
-                    className={styles.domainVerdict}
-                    style={{color: getColorFromVerdict()}}
-                >
-                    {domainVerdict}
+                    {getMarketValueDisplay()}
                 </span>
             </div>
         </div>
     );
 }
 
-function RookieDraftStrategy() {
+function RookieDraftStrategy({
+    strategyName,
+    strategyStatement,
+}: {
+    strategyName: string;
+    strategyStatement: string;
+}) {
     return (
         <div className={styles.rookieDraftStrategy}>
             <div className={styles.rookieDraftStrategyTitle}>
-                Youth Infusion
+                {strategyName}
             </div>
             <div className={styles.rookieDraftStrategyText}>
-                Here is a sentence that goes right here. Its gonna tell you all
-                about how this is the right draft strategy for you. Be amazed at
-                this mind-blowing knowledge that DOMAIN has given to you. Now
-                you can go win your drafts. Wow. Isn’t that super awesome? This
-                is me trying to fill the paragraph box with words cause Figma
-                doesn’t do Lorem Ipsum.
+                {strategyStatement}
             </div>
         </div>
     );

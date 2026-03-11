@@ -68,6 +68,7 @@ import {
     LEAGUE_ID,
     MOVE,
     NONE_TEAM_ID,
+    ROOKIE_BP_ID,
     ROSTER_ARCHETYPE,
     TEAM_ID,
     TO_TARGET,
@@ -286,6 +287,7 @@ export default function BlueprintModule({
     const [newLeagueId, setNewLeagueId] = useState('');
     const [newBlueprintId, setNewBlueprintId] = useState('');
     const [blueprintId, setBlueprintId] = useParamFromUrl(BLUEPRINT_ID);
+    const [rookieBpId, setRookieBpId] = useParamFromUrl(ROOKIE_BP_ID);
     const [leagueId, setLeagueId] = useLeagueIdFromUrl();
     const [teamId, setTeamId] = useTeamIdFromUrl();
     const {data: rosters} = useFetchRosters(leagueId);
@@ -312,6 +314,7 @@ export default function BlueprintModule({
     const [numTeams, setNumTeams] = useState(12);
 
     const {blueprint, setBlueprint} = useBlueprint(blueprintId);
+    const {blueprint: rookieBlueprint} = useBlueprint(rookieBpId);
     const {
         valueArchetype,
         setValueArchetype,
@@ -1861,7 +1864,7 @@ export default function BlueprintModule({
                         }}
                         onClick={() => saveToUrl()}
                     >
-                        SAVE
+                        SAVE TO URL
                     </Button>
                     <Button
                         variant="outlined"
@@ -1876,7 +1879,7 @@ export default function BlueprintModule({
                     >
                         SHOW PREVIEW
                     </Button>
-                    {blueprintId && (
+                    {rookieBlueprint && (
                         <Button
                             variant="outlined"
                             endIcon={<Preview />}
@@ -1902,16 +1905,26 @@ export default function BlueprintModule({
                             style={{width: '1400px'}}
                         >
                             <NewRookieDraft
-                                teamName={getDisplayName(specifiedUser)}
+                                teamName={rookieBlueprint?.teamName || ''}
                                 numTeams={numTeams}
-                                valueArchetype={valueArchetype}
-                                rosterArchetype={rosterArchetype}
-                                qbGrade={qb}
-                                rbGrade={rb}
-                                wrGrade={wr}
-                                teGrade={te}
-                                myPicks={myPicks}
-                                players={apiRosterPlayers}
+                                valueArchetype={convertStringToValueArchetype(
+                                    rookieBlueprint?.valueArchetype || ''
+                                )}
+                                rosterArchetype={convertStringToRosterArchetype(
+                                    rookieBlueprint?.rosterArchetype || ''
+                                )}
+                                myPicks={
+                                    rookieBlueprint?.rookieDraftFeatures
+                                        ?.pickProfiles || []
+                                }
+                                strategyName={
+                                    rookieBlueprint?.rookieDraftFeatures
+                                        ?.strategyName || ''
+                                }
+                                strategyStatement={
+                                    rookieBlueprint?.rookieDraftFeatures
+                                        ?.strategyStatement || ''
+                                }
                             />
                         </div>
                     </Modal>

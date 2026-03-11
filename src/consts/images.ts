@@ -195,10 +195,10 @@ import blankRookie from '../assets/rookieDraft/2025/rookie_bp_blank.png';
 import ashtonJeanty from '../assets/rookieDraft/2025/rookieCards/ashtonJeanty.png';
 import brashardSmith from '../assets/rookieDraft/2025/rookieCards/brashardSmith.png';
 import bhayshulTuten from '../assets/rookieDraft/2025/rookieCards/bhayshulTuten.png';
-import cadeKlubnik from '../assets/rookieDraft/2025/rookieCards/cadeKlubnik.png';
+// import cadeKlubnik from '../assets/rookieDraft/2025/rookieCards/cadeKlubnik.png';
 import camSkattebo from '../assets/rookieDraft/2025/rookieCards/camSkattebo.png';
 import camWard from '../assets/rookieDraft/2025/rookieCards/camWard.png';
-import carsonBeck from '../assets/rookieDraft/2025/rookieCards/carsonBeck.png';
+// import carsonBeck from '../assets/rookieDraft/2025/rookieCards/carsonBeck.png';
 import colstonLoveland from '../assets/rookieDraft/2025/rookieCards/colstonLoveland.png';
 import damienMartinez from '../assets/rookieDraft/2025/rookieCards/damienMartinez.png';
 import devinNeal from '../assets/rookieDraft/2025/rookieCards/devinNeal.png';
@@ -236,7 +236,7 @@ import lukeLachey from '../assets/rookieDraft/2025/rookieCards/lukeLachey.png';
 import lutherBurden from '../assets/rookieDraft/2025/rookieCards/lutherBurden.png';
 import masonTaylor from '../assets/rookieDraft/2025/rookieCards/masonTaylor.png';
 import matthewGolden from '../assets/rookieDraft/2025/rookieCards/matthewGolden.png';
-import nicSingleton from '../assets/rookieDraft/2025/rookieCards/nicSingleton.png';
+// import nicSingleton from '../assets/rookieDraft/2025/rookieCards/nicSingleton.png';
 import ollieGordon from '../assets/rookieDraft/2025/rookieCards/ollieGordon.png';
 import omarionHampton from '../assets/rookieDraft/2025/rookieCards/omarionHampton.png';
 import orondeGadsden from '../assets/rookieDraft/2025/rookieCards/orondeGadsden.png';
@@ -346,6 +346,131 @@ import flockDomainLogo from '../assets/blueprintDashboard/flock-domain-logo.png'
 
 // New Rookie Draft BP
 import newRookieBg from '../assets/rookieDraft/2026/newRookieBg.png';
+import rookieCornerstone from '../assets/rookieDraft/2026/bakeryTiers/cornerstone.png';
+import rookieElite from '../assets/rookieDraft/2026/bakeryTiers/elite.png';
+import rookieEliteLite from '../assets/rookieDraft/2026/bakeryTiers/eliteLite.png';
+import rookieEliteUpside from '../assets/rookieDraft/2026/bakeryTiers/eliteUpside.png';
+import rookieOutlier from '../assets/rookieDraft/2026/bakeryTiers/outlier.png';
+import rookieOutlierLite from '../assets/rookieDraft/2026/bakeryTiers/outlierLite.png';
+import rookiePurgatory from '../assets/rookieDraft/2026/bakeryTiers/purgatory.png';
+import rookieUpside from '../assets/rookieDraft/2026/bakeryTiers/upside.png';
+import rookieUpsideLite from '../assets/rookieDraft/2026/bakeryTiers/upsideLite.png';
+
+import aaronAnderson from '../assets/rookieDraft/2026/rookieCards/Aaron Anderson.png';
+import antonioWilliams from '../assets/rookieDraft/2026/rookieCards/Antonio Williams.png';
+import barionBrown from '../assets/rookieDraft/2026/rookieCards/Barion Brown.png';
+import brenenThompson from '../assets/rookieDraft/2026/rookieCards/Brenen Thompson.png';
+import bryceLance from '../assets/rookieDraft/2026/rookieCards/Bryce Lance.png';
+import cadeKlubnik from '../assets/rookieDraft/2026/rookieCards/Cade Klubnik.png';
+import carnellTate from '../assets/rookieDraft/2026/rookieCards/Carnell Tate.png';
+import carsonBeck from '../assets/rookieDraft/2026/rookieCards/Carson Beck.png';
+import chrisBell from '../assets/rookieDraft/2026/rookieCards/Chris Bell.png';
+import chrisBrazzellIi from '../assets/rookieDraft/2026/rookieCards/Chris Brazzell II.png';
+import dezhaunStribling from "../assets/rookieDraft/2026/rookieCards/De'Zhaun Stribling.png";
+import deanConnors from '../assets/rookieDraft/2026/rookieCards/Dean Connors.png';
+import deionBurks from '../assets/rookieDraft/2026/rookieCards/Deion Burks.png';
+import demondClaiborne from '../assets/rookieDraft/2026/rookieCards/Demond Claiborne.png';
+import denzelBoston from '../assets/rookieDraft/2026/rookieCards/Denzel Boston.png';
+import desmondReid from '../assets/rookieDraft/2026/rookieCards/Desmond Reid.png';
+import drewAllar from '../assets/rookieDraft/2026/rookieCards/Drew Allar.png';
+import eliHeidenreich from '../assets/rookieDraft/2026/rookieCards/Eli Heidenreich.png';
+import eliStowers from '../assets/rookieDraft/2026/rookieCards/Eli Stowers.png';
+import elijahSarratt from '../assets/rookieDraft/2026/rookieCards/Elijah Sarratt.png';
+import emmettJohnson from '../assets/rookieDraft/2026/rookieCards/Emmett Johnson.png';
+import ericMcalister from '../assets/rookieDraft/2026/rookieCards/Eric McAlister.png';
+import fernandoMendoza from '../assets/rookieDraft/2026/rookieCards/Fernando Mendoza.png';
+import garrettNussmeier from '../assets/rookieDraft/2026/rookieCards/Garrett Nussmeier.png';
+import germieBernard from '../assets/rookieDraft/2026/rookieCards/Germie Bernard.png';
+import jakobiLane from "../assets/rookieDraft/2026/rookieCards/Ja'Kobi Lane.png";
+import jackEndries from '../assets/rookieDraft/2026/rookieCards/Jack Endries.png';
+import jadarianPrice from '../assets/rookieDraft/2026/rookieCards/Jadarian Price.png';
+import jeffCaldwell from '../assets/rookieDraft/2026/rookieCards/Jeff Caldwell.png';
+import jeremiyahLove from '../assets/rookieDraft/2026/rookieCards/Jeremiyah Love.png';
+import jonahColeman from '../assets/rookieDraft/2026/rookieCards/Jonah Coleman.png';
+import jordynTyson from '../assets/rookieDraft/2026/rookieCards/Jordyn Tyson.png';
+import kcConcepcion from '../assets/rookieDraft/2026/rookieCards/KC Concepcion.png';
+import kaelonBlack from '../assets/rookieDraft/2026/rookieCards/Kaelon Black.png';
+import kaytronAllen from '../assets/rookieDraft/2026/rookieCards/Kaytron Allen.png';
+import kenyonSadiq from '../assets/rookieDraft/2026/rookieCards/Kenyon Sadiq.png';
+import leveonMoss from "../assets/rookieDraft/2026/rookieCards/Le'Veon Moss.png";
+import makaiLemon from '../assets/rookieDraft/2026/rookieCards/Makai Lemon.png';
+import malachiFields from '../assets/rookieDraft/2026/rookieCards/Malachi Fields.png';
+import maxKlare from '../assets/rookieDraft/2026/rookieCards/Max Klare.png';
+import michaelTrigg from '../assets/rookieDraft/2026/rookieCards/Michael Trigg.png';
+import mikeWashington from '../assets/rookieDraft/2026/rookieCards/Mike Washington.png';
+import nicSingleton from '../assets/rookieDraft/2026/rookieCards/Nic Singleton.png';
+import omarCooper from '../assets/rookieDraft/2026/rookieCards/Omar Cooper.png';
+import romanHemby from '../assets/rookieDraft/2026/rookieCards/Roman Hemby.png';
+import skylerBell from '../assets/rookieDraft/2026/rookieCards/Skyler Bell.png';
+import tedHurst from '../assets/rookieDraft/2026/rookieCards/Ted Hurst.png';
+import tySimpson from '../assets/rookieDraft/2026/rookieCards/Ty Simpson.png';
+import zachariahBranch from '../assets/rookieDraft/2026/rookieCards/Zachariah Branch.png';
+import zavionThomas from '../assets/rookieDraft/2026/rookieCards/Zavion Thomas.png';
+
+const newRookieCardMap = new Map<string, string>([
+    ['Aaron Anderson', aaronAnderson],
+    ['Antonio Williams', antonioWilliams],
+    ['Barion Brown', barionBrown],
+    ['Brenen Thompson', brenenThompson],
+    ['Bryce Lance', bryceLance],
+    ['Cade Klubnik', cadeKlubnik],
+    ['Carnell Tate', carnellTate],
+    ['Carson Beck', carsonBeck],
+    ['Chris Bell', chrisBell],
+    ['Chris Brazzell II', chrisBrazzellIi],
+    ["De'Zhaun Stribling", dezhaunStribling],
+    ['Dean Connors', deanConnors],
+    ['Deion Burks', deionBurks],
+    ['Demond Claiborne', demondClaiborne],
+    ['Denzel Boston', denzelBoston],
+    ['Desmond Reid', desmondReid],
+    ['Drew Allar', drewAllar],
+    ['Eli Heidenreich', eliHeidenreich],
+    ['Eli Stowers', eliStowers],
+    ['Elijah Sarratt', elijahSarratt],
+    ['Emmett Johnson', emmettJohnson],
+    ['Eric McAlister', ericMcalister],
+    ['Fernando Mendoza', fernandoMendoza],
+    ['Garrett Nussmeier', garrettNussmeier],
+    ['Germie Bernard', germieBernard],
+    ["Ja'Kobi Lane", jakobiLane],
+    ['Jack Endries', jackEndries],
+    ['Jadarian Price', jadarianPrice],
+    ['Jeff Caldwell', jeffCaldwell],
+    ['Jeremiyah Love', jeremiyahLove],
+    ['Jonah Coleman', jonahColeman],
+    ['Jordyn Tyson', jordynTyson],
+    ['KC Concepcion', kcConcepcion],
+    ['Kaelon Black', kaelonBlack],
+    ['Kaytron Allen', kaytronAllen],
+    ['Kenyon Sadiq', kenyonSadiq],
+    ["Le'Veon Moss", leveonMoss],
+    ['Makai Lemon', makaiLemon],
+    ['Malachi Fields', malachiFields],
+    ['Max Klare', maxKlare],
+    ['Michael Trigg', michaelTrigg],
+    ['Mike Washington', mikeWashington],
+    ['Nic Singleton', nicSingleton],
+    ['Omar Cooper', omarCooper],
+    ['Roman Hemby', romanHemby],
+    ['Skyler Bell', skylerBell],
+    ['Ted Hurst', tedHurst],
+    ['Ty Simpson', tySimpson],
+    ['Zachariah Branch', zachariahBranch],
+    ['Zavion Thomas', zavionThomas],
+]);
+
+const rookieTiers: Map<string, string> = new Map([
+    ['cornerstone', rookieCornerstone],
+    ['elite', rookieElite],
+    ['eliteLite', rookieEliteLite],
+    ['eliteUpside', rookieEliteUpside],
+    ['outlier', rookieOutlier],
+    ['outlierLite', rookieOutlierLite],
+    ['purgatory', rookiePurgatory],
+    ['upside', rookieUpside],
+    ['upsideLite', rookieUpsideLite],
+]);
 
 const newTeamBackgrounds: Map<string, string> = new Map([
     ['ARI', newAriBg],
@@ -816,4 +941,6 @@ export {
     flockDomainLogo,
     bakeryCard2,
     newRookieBg,
+    rookieTiers,
+    newRookieCardMap,
 };

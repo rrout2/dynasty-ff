@@ -54,6 +54,7 @@ export const TO_TRADE = 'toTrade';
 export const TO_TARGET = 'toTarget';
 export const TWO_YEAR_OUTLOOK = 'twoYearOutlook';
 export const BLUEPRINT_ID = 'blueprintId';
+export const ROOKIE_BP_ID = 'rookieBpId';
 
 // New V2 (TODO)
 export const DRAFT_STRATEGY = 'draftStrategy';

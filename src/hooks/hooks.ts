@@ -158,6 +158,45 @@ type Blueprint = {
     infiniteFeatures: InfiniteFeatures;
     premiumFeatures: PremiumFeatures;
     createdUtc: string;
+    rookieDraftFeatures: RookieDraftFeatures | null;
+};
+
+export type RookieDraftFeatures = {
+    id: number;
+    strategyName: string;
+    strategyStatement: string;
+    pickProfiles: Array<PickProfile>;
+};
+
+export type PickProfile = {
+    id: number;
+    round: number;
+    pickNumber: number;
+    overallPick: number;
+    sortOrder: number;
+    tier: number;
+    bakeryZScore: number | null;
+    historicalRank: number;
+    marketValue: string;
+    domainVerdict: string;
+    autoAcceptPlayerName: string;
+    autoRejectPlayerName: string;
+    targets: Array<{
+        id: number;
+        playerName: string;
+        position: string;
+        sortOrder: number;
+        playerId: number | null;
+    }>;
+    cliffMap: Array<{
+        id: number;
+        round: number;
+        pickNumber: number;
+        overallPick: number;
+        tier: number;
+        playerName: string;
+        position: string;
+    }>;
 };
 
 export type TradeStrategy = {

@@ -225,3 +225,32 @@
     font-style: italic;
     width: 370px;
 }
+
+.targetCards {
+    position: absolute;
+    top: 165px;
+    left: 412px;
+
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: space-around;
+
+    height: 610px;
+}
+
+.targetCardRow {
+    display: flex;
+    flex-direction: row;
+    gap: 34px;
+}
+
+.targetCard {
+    width: 160px;
+    height: auto;
+
+    color: #FFF;
+    font-family: "Acumin Pro Condensed";
+    font-size: 14px;
+    font-weight: 700
+}
