@@ -36,7 +36,8 @@ export default function DomainAutocomplete({
     }, [playerData]);
     useEffect(() => {
         if (!playerData) return;
-        if (sleeperPlayerIds.length === 0) { // non-sleeper
+        if (sleeperPlayerIds.length === 0) {
+            // non-sleeper
             const newOpts = allPlayers
                 .filter(p => !!p.team)
                 .sort(sortBySearchRank)
@@ -53,9 +54,7 @@ export default function DomainAutocomplete({
             return;
         }
         const filteredPlayerIds = sleeperPlayerIds.filter(p => !!playerData[p]);
-        setOpts(
-            Array.from(new Set([...filteredPlayerIds, ...pickIds]))
-        );
+        setOpts(Array.from(new Set([...filteredPlayerIds, ...pickIds])));
     }, [sleeperPlayerIds, pickIds, allPlayers, playerData]);
 
     if (!playerData) return <>no player data yet</>;
