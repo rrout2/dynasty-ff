@@ -408,6 +408,136 @@ export function useBlueprint(blueprintId: string) {
     return {blueprint, setBlueprint};
 }
 
+type SleeperRosterDto = {
+    rosterId: number;
+    leagueId: string;
+    ownerId: string;
+    players: string[];
+    starters: string[];
+    reserve: string[];
+    taxi: string[];
+    wins: number;
+    losses: number;
+    ties: number;
+    fantasyPoints: number;
+    fantasyPointsDecimal: number;
+    fantasyPointsAgainst: number;
+    fantasyPointsAgainstDecimal: number;
+    waiverPosition: number;
+    waiverBudgetUsed: number;
+    totalFantasyPoints: number;
+    totalFantasyPointsAgainst: number;
+};
+
+type DraftPick = {
+    season: string;
+    round: number;
+    originalRosterId: number;
+    currentRosterId: number;
+    displayName: string;
+    slot: number | null;
+    overallPickIndex: number | null;
+    pickNumber: string | null;
+};
+
+type RosterPickInfo = {
+    ownerId: string;
+    rosterId: number;
+    teamName: string;
+    currentSeasonPicks: Array<DraftPick>;
+    nextYearPicks: Array<DraftPick>;
+};
+
+export function useAllTargetableIdsFromSleeperLeague(
+    leagueId: string,
+    rosterId: number
+) {
+    const [sleeperRosterDtos, setSleeperRosterDtos] = useState<
+        Array<SleeperRosterDto>
+    >([]);
+    const [rosterPicks, setRosterPicks] = useState<Array<RosterPickInfo>>([]);
+    const [sleeperPlayerIds, setSleeperPlayerIds] = useState<Array<string>>([]);
+    const [pickIds, setPickIds] = useState<Array<string>>([]);
+    const authToken = sessionStorage.getItem('authToken');
+    const {data} = useQuery({
+        queryKey: ['AllPlayersFromSleeperLeague', leagueId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Sleeper/league/${leagueId}/rosters`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            };
+            const res = await axios.request(options);
+            return res.data.sleeperRosterDtos as SleeperRosterDto[];
+        },
+        retry: false,
+        enabled: !!leagueId,
+    });
+    const {data: rosterPicksData} = useQuery({
+        queryKey: ['AllPicksFromSleeperLeague', leagueId],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}Sleeper/leagues/${leagueId}/draft-capital`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            };
+            const res = await axios.request(options);
+            return res.data as RosterPickInfo[];
+        },
+        retry: false,
+        enabled: !!leagueId,
+    });
+    useEffect(() => {
+        if (!data) return;
+        setSleeperRosterDtos(data);
+        setSleeperPlayerIds(
+            data
+                .filter(r => r.rosterId !== rosterId)
+                .flatMap(roster => roster.players)
+        );
+    }, [data]);
+    useEffect(() => {
+        if (!rosterPicksData) return;
+        setRosterPicks(rosterPicksData);
+        setPickIds(
+            rosterPicksData
+                .filter(r => r.rosterId !== rosterId)
+                .flatMap(roster => [
+                    ...roster.currentSeasonPicks,
+                    ...roster.nextYearPicks,
+                ])
+                .sort((a, b) => {
+                    if (a.season !== b.season) {
+                        return a.season > b.season ? 1 : -1;
+                    }
+                    if (a.round !== b.round) {
+                        return a.round > b.round ? 1 : -1;
+                    }
+                    if (a.overallPickIndex && !b.overallPickIndex) {
+                        return -1;
+                    }
+                    if (!a.overallPickIndex && b.overallPickIndex) {
+                        return 1;
+                    }
+                    if (a.overallPickIndex && b.overallPickIndex) {
+                        return a.overallPickIndex - b.overallPickIndex;
+                    }
+                    return 0;
+                })
+                .map(p =>
+                    p.overallPickIndex
+                        ? `RP-API-${p.season}-${p.round}-${p.overallPickIndex}`
+                        : `RP-API-${p.season}-${p.round}`
+                )
+        );
+    }, [rosterPicksData]);
+    return {sleeperPlayerIds, pickIds};
+}
+
 type TradeSuggestion = {
     targetRosterId: number;
     rule: {

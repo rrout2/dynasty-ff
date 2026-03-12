@@ -5,6 +5,7 @@ import {Dispatch, SetStateAction, useState, useEffect} from 'react';
 import {sfIcon} from '../../../../consts/images';
 import {
     TradeAsset,
+    useAllTargetableIdsFromSleeperLeague,
     usePlayerData,
     useSleeperIdMap,
 } from '../../../../hooks/hooks';
@@ -55,6 +56,10 @@ export default function SuggestedMove({
 }: SuggestedMoveProps) {
     const playerData = usePlayerData();
     const tradeFinder = useCustomTradeFinder(leagueId, rosterId);
+    const {sleeperPlayerIds, pickIds} = useAllTargetableIdsFromSleeperLeague(
+        leagueId,
+        rosterId
+    );
     const {getApiIdFromSleeperId} = useSleeperIdMap();
 
     const [optionsToTrade, setOptionsToTrade] = useState<string[]>([]);
@@ -702,6 +707,8 @@ export default function SuggestedMove({
                                             );
                                         }}
                                         numTeams={numTeams}
+                                        sleeperPlayerIds={sleeperPlayerIds}
+                                        pickIds={pickIds}
                                     />
                                     <IconButton
                                         loading={
@@ -780,6 +787,8 @@ export default function SuggestedMove({
                                             );
                                         }}
                                         numTeams={numTeams}
+                                        sleeperPlayerIds={sleeperPlayerIds}
+                                        pickIds={pickIds}
                                     />
                                     <img
                                         src={sfIcon}
@@ -823,6 +832,8 @@ export default function SuggestedMove({
                                             );
                                         }}
                                         numTeams={numTeams}
+                                        sleeperPlayerIds={sleeperPlayerIds}
+                                        pickIds={pickIds}
                                     />
                                     <IconButton
                                         loading={

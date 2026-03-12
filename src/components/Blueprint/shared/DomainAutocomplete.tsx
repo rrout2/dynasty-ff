@@ -11,36 +11,22 @@ export type DomainAutocompleteProps = {
     selectedPlayer: string;
     setSelectedPlayer: (player: string) => void;
     numTeams: number;
+    sleeperPlayerIds: string[];
+    pickIds: string[];
 };
 
 export default function DomainAutocomplete({
     selectedPlayer,
     setSelectedPlayer,
     numTeams,
+    sleeperPlayerIds,
+    pickIds,
 }: DomainAutocompleteProps) {
     const playerData = usePlayerData();
-    const [allPlayers, setAllPlayers] = useState<Player[]>([]);
     const [inputValue, setInputValue] = useState('');
-    useEffect(() => {
-        const players: Player[] = [];
-        for (const playerId in playerData) {
-            const player = playerData[playerId];
-            players.push(player);
-        }
-        setAllPlayers(players);
-    }, [playerData]);
-    const opts = allPlayers
-        .filter(p => !!p.team)
-        .sort(sortBySearchRank)
-        .map(p => p.player_id);
-    opts.push('RP-2026');
-    opts.push('RP-2027');
-    opts.push('RP-FIRST-2026');
-    opts.push('RP-FIRST-2027');
-    for (let i = 0; i < 4; i++) {
-        opts.push(`RP-API-2026-${i + 1}`);
-        opts.push(`RP-API-2027-${i + 1}`);
-    }
+    const [opts] = useState(
+        Array.from(new Set([...sleeperPlayerIds, ...pickIds]))
+    );
     if (!playerData) return <>no player data yet</>;
     return (
         <FormControl
