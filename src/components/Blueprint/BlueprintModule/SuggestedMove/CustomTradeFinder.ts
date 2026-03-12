@@ -58,7 +58,6 @@ class CustomTradeFinder {
             data: {
                 leagueId: this.leagueId,
                 rosterId: this.rosterId,
-                gradeRunVersionNumber: 1,
                 weekId: WEEK_ID,
                 moveType: 2,
                 outAssetKeys,
@@ -90,7 +89,6 @@ class CustomTradeFinder {
             data: {
                 leagueId: this.leagueId,
                 rosterId: this.rosterId,
-                gradeRunVersionNumber: 1,
                 weekId: WEEK_ID,
                 moveType: 1,
                 outAssetKeys: [outAssetKey],
@@ -122,7 +120,6 @@ class CustomTradeFinder {
             data: {
                 leagueId: this.leagueId,
                 rosterId: this.rosterId,
-                gradeRunVersionNumber: 1,
                 weekId: WEEK_ID,
                 moveType: 3,
                 outAssetKeys,

@@ -590,7 +590,6 @@ export function useTradeSuggestions(leagueId: string, teamId: string) {
                 data: {
                     leagueId: leagueId,
                     rosterId: +teamId + 1,
-                    gradeRunVersionNumber: 1,
                     maxFairnessPercentageDifference: 5,
                     perSlotCandidateLimit: 25,
                     maxResults: 300,
@@ -758,7 +757,7 @@ export function useThreeFactorGrades(leagueId: string, teamId: string) {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/insulation-grades?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
-                }&gradeRunVersionNumber=1`,
+                }`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -777,7 +776,7 @@ export function useThreeFactorGrades(leagueId: string, teamId: string) {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/production-grades?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
-                }&gradeRunVersionNumber=1`,
+                }`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -796,7 +795,7 @@ export function useThreeFactorGrades(leagueId: string, teamId: string) {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/situational-grades?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
-                }&gradeRunVersionNumber=1`,
+                }`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -863,7 +862,7 @@ export function useDomainTrueRanks(leagueId: string, teamId: string) {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/domain-true-ranks?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
-                }&gradeRunVersionNumber=1`,
+                }`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -998,7 +997,7 @@ export function useTeamProductionShare(
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/team-production-share?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
-                }&isSleeperLeague=${isSleeperLeague}&gradeRunVersionNumber=1`,
+                }&isSleeperLeague=${isSleeperLeague}`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -1077,7 +1076,7 @@ export function useTeamValueArchetype(leagueId: string, teamId: string) {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/team-value-archetype?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
-                }&gradeRunVersionNumber=1`,
+                }`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -1153,7 +1152,7 @@ export function useTeamRosterArchetype(leagueId: string, teamId: string) {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/team-roster-archetype?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
-                }&gradeRunVersionNumber=1`,
+                }`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -1215,7 +1214,7 @@ export function useTwoYearOutlook(leagueId: string, teamId: string) {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/two-year-outlook?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
-                }&gradeRunVersionNumber=1`,
+                }`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -1251,7 +1250,7 @@ export function usePositionalValueGrades(leagueId: string, teamId: string) {
                 method: 'GET',
                 url: `${AZURE_API_URL}Grades/positional-value-grades?leagueId=${leagueId}&rosterId=${
                     +teamId + 1
-                }&gradeRunVersionNumber=1`,
+                }`,
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
