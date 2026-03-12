@@ -23,11 +23,36 @@ export default function DomainAutocomplete({
     pickIds,
 }: DomainAutocompleteProps) {
     const playerData = usePlayerData();
+    const [allPlayers, setAllPlayers] = useState<Player[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [opts, setOpts] = useState<string[]>([]);
     useEffect(() => {
+        const players: Player[] = [];
+        for (const playerId in playerData) {
+            const player = playerData[playerId];
+            players.push(player);
+        }
+        setAllPlayers(players);
+    }, [playerData]);
+    useEffect(() => {
+        if (sleeperPlayerIds.length === 0) {
+            const newOpts = allPlayers
+                .filter(p => !!p.team)
+                .sort(sortBySearchRank)
+                .map(p => p.player_id);
+            newOpts.push('RP-2026');
+            newOpts.push('RP-2027');
+            newOpts.push('RP-FIRST-2026');
+            newOpts.push('RP-FIRST-2027');
+            for (let i = 0; i < 4; i++) {
+                newOpts.push(`RP-API-2026-${i + 1}`);
+                newOpts.push(`RP-API-2027-${i + 1}`);
+            }
+            setOpts(newOpts);
+            return;
+        }
         setOpts(Array.from(new Set([...sleeperPlayerIds, ...pickIds])));
-    }, [sleeperPlayerIds, pickIds]);
+    }, [sleeperPlayerIds, pickIds, allPlayers]);
 
     if (!playerData) return <>no player data yet</>;
     return (
