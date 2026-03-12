@@ -24,9 +24,11 @@ export default function DomainAutocomplete({
 }: DomainAutocompleteProps) {
     const playerData = usePlayerData();
     const [inputValue, setInputValue] = useState('');
-    const [opts] = useState(
-        Array.from(new Set([...sleeperPlayerIds, ...pickIds]))
-    );
+    const [opts, setOpts] = useState<string[]>([]);
+    useEffect(() => {
+        setOpts(Array.from(new Set([...sleeperPlayerIds, ...pickIds])));
+    }, [sleeperPlayerIds, pickIds]);
+
     if (!playerData) return <>no player data yet</>;
     return (
         <FormControl
