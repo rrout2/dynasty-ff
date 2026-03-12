@@ -498,6 +498,7 @@ export function useAllTargetableIdsFromSleeperLeague(
             data
                 .filter(r => r.rosterId !== rosterId)
                 .flatMap(roster => roster.players)
+                .filter(playerId => isNumber(playerId))
         );
     }, [data]);
     useEffect(() => {
@@ -535,6 +536,11 @@ export function useAllTargetableIdsFromSleeperLeague(
                 )
         );
     }, [rosterPicksData]);
+
+    function isNumber(value: string) {
+        return /^-?\d+(\.\d+)?$/.test(value);
+    }
+
     return {sleeperPlayerIds, pickIds};
 }
 

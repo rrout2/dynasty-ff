@@ -35,6 +35,7 @@ export default function DomainAutocomplete({
         setAllPlayers(players);
     }, [playerData]);
     useEffect(() => {
+        if (!playerData) return;
         if (sleeperPlayerIds.length === 0) {
             const newOpts = allPlayers
                 .filter(p => !!p.team)
@@ -51,8 +52,11 @@ export default function DomainAutocomplete({
             setOpts(newOpts);
             return;
         }
-        setOpts(Array.from(new Set([...sleeperPlayerIds, ...pickIds])));
-    }, [sleeperPlayerIds, pickIds, allPlayers]);
+        const filteredPlayerIds = sleeperPlayerIds.filter(p => !!playerData[p]);
+        setOpts(
+            Array.from(new Set([...filteredPlayerIds, ...pickIds]))
+        );
+    }, [sleeperPlayerIds, pickIds, allPlayers, playerData]);
 
     if (!playerData) return <>no player data yet</>;
     return (
@@ -93,7 +97,7 @@ export default function DomainAutocomplete({
                         return rookiePickIdToString(option, numTeams);
                     }
                     const p = playerData[option];
-                    return p ? `${p.first_name} ${p.last_name}` : '';
+                    return p ? `${p.first_name} ${p.last_name}` : option;
                 }}
                 autoHighlight
                 value={selectedPlayer}
