@@ -81,5 +81,7 @@ export default function PlayerSearch() {
 }
 
 export function sortBySearchRank(a: Player, b: Player) {
+    if (a.search_rank && !b.search_rank) return -1;
+    if (!a.search_rank && b.search_rank) return 1;
     return a.search_rank - b.search_rank;
 }

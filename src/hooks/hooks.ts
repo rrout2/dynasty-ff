@@ -536,6 +536,10 @@ export function useAllTargetableIdsFromSleeperLeague(
                 )
         );
     }, [rosterPicksData]);
+    useEffect(() => {
+        setSleeperPlayerIds([]);
+        setPickIds([]);
+    }, [leagueId, rosterId]);
 
     function isNumber(value: string) {
         return /^-?\d+(\.\d+)?$/.test(value);

@@ -23,25 +23,24 @@ export default function DomainAutocomplete({
     pickIds,
 }: DomainAutocompleteProps) {
     const playerData = usePlayerData();
-    const [allPlayers, setAllPlayers] = useState<Player[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [opts, setOpts] = useState<string[]>([]);
-    useEffect(() => {
-        const players: Player[] = [];
-        for (const playerId in playerData) {
-            const player = playerData[playerId];
-            players.push(player);
-        }
-        setAllPlayers(players);
-    }, [playerData]);
+
     useEffect(() => {
         if (!playerData) return;
         if (sleeperPlayerIds.length === 0) {
             // non-sleeper
-            const newOpts = allPlayers
-                .filter(p => !!p.team)
+            const players: Player[] = [];
+            for (const playerId in playerData) {
+                const player = playerData[playerId];
+                players.push(player);
+            }
+            const newOpts = players
+                .filter(p => p.status === 'Active')
+                .filter(p => !!p.search_rank)
                 .sort(sortBySearchRank)
-                .map(p => p.player_id);
+                .map(p => p.player_id)
+                .slice(0, 700); // cap to help dropdown search
             newOpts.push('RP-2026');
             newOpts.push('RP-2027');
             newOpts.push('RP-FIRST-2026');
@@ -55,8 +54,7 @@ export default function DomainAutocomplete({
         }
         const filteredPlayerIds = sleeperPlayerIds.filter(p => !!playerData[p]);
         setOpts(Array.from(new Set([...filteredPlayerIds, ...pickIds])));
-    }, [sleeperPlayerIds, pickIds, allPlayers, playerData]);
-
+    }, [sleeperPlayerIds, pickIds, playerData]);
     if (!playerData) return <>no player data yet</>;
     return (
         <FormControl

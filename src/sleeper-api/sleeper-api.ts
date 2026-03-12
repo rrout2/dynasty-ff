@@ -195,6 +195,7 @@ export function getTeamName(user?: User) {
 }
 
 export type Player = {
+    active: boolean;
     hashtag: string;
     depth_chart_position: number;
     status: string;
