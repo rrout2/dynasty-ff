@@ -260,6 +260,7 @@ export type FullMove = {
     playerIdsToTrade: string[];
     playerIdsToTarget: string[][];
     priorityDescription: string;
+    targetRosterIds: number[];
 };
 
 export function assetToPlayerId(p: TradeAsset) {
@@ -306,7 +307,7 @@ export default function BlueprintModule({
         []
     );
     const playerData = usePlayerData();
-    const {getApiIdFromSleeperId} = useSleeperIdMap();
+    const {getApiIdFromSleeperId, getSleeperIdFromApiId} = useSleeperIdMap();
     const {sortByAdp, getPositionalAdp} = useAdpData();
     const league = useLeague(leagueId);
     const rosterSettings = useRosterSettingsFromId(leagueId);
@@ -348,6 +349,7 @@ export default function BlueprintModule({
                 ['', ''],
             ],
             priorityDescription: '',
+            targetRosterIds: [-1, -1, -1],
         },
         {
             move: Move.PIVOT,
@@ -358,6 +360,7 @@ export default function BlueprintModule({
                 ['', ''],
             ],
             priorityDescription: '',
+            targetRosterIds: [-1, -1, -1],
         },
         {
             move: Move.UPTIER,
@@ -368,6 +371,7 @@ export default function BlueprintModule({
                 ['', ''],
             ],
             priorityDescription: '',
+            targetRosterIds: [-1, -1, -1],
         },
         {
             move: Move.DOWNTIER,
@@ -378,6 +382,7 @@ export default function BlueprintModule({
                 ['', ''],
             ],
             priorityDescription: '',
+            targetRosterIds: [-1, -1, -1],
         },
         {
             move: Move.PIVOT,
@@ -388,6 +393,7 @@ export default function BlueprintModule({
                 ['', ''],
             ],
             priorityDescription: '',
+            targetRosterIds: [-1, -1, -1],
         },
         {
             move: Move.UPTIER,
@@ -398,6 +404,7 @@ export default function BlueprintModule({
                 ['', ''],
             ],
             priorityDescription: '',
+            targetRosterIds: [-1, -1, -1],
         },
     ]);
     const [draftCapitalNotes2026, setDraftCapitalNotes2026] = useState('');
@@ -584,14 +591,48 @@ export default function BlueprintModule({
             blueprint.positionalGrades.find(g => g.position === 'DRAFT_CAPITAL')
                 ?.grade ?? 0
         );
-        setLeaguePowerRanks(
-            blueprint.premiumFeatures.powerRankings.map(p => {
-                return {
-                    teamName: p.teamName,
-                    overallRank: p.rank,
-                } as PowerRank;
-            })
-        );
+        if (blueprint.premiumFeatures) {
+            setLeaguePowerRanks(
+                blueprint.premiumFeatures.powerRankings.map(p => {
+                    return {
+                        teamName: p.teamName,
+                        overallRank: p.rank,
+                    } as PowerRank;
+                })
+            );
+            setStartingQbAge(
+                blueprint.premiumFeatures.averageStarterAgeQb ?? 0
+            );
+            setStartingRbAge(
+                blueprint.premiumFeatures.averageStarterAgeRb ?? 0
+            );
+            setStartingWrAge(
+                blueprint.premiumFeatures.averageStarterAgeWr ?? 0
+            );
+            setStartingTeAge(
+                blueprint.premiumFeatures.averageStarterAgeTe ?? 0
+            );
+            const newMakeup = new Map<string, number>();
+            for (const rmu of blueprint.premiumFeatures.rosterMakeup) {
+                newMakeup.set(rmu.category, rmu.percentage);
+            }
+            setMakeup(newMakeup);
+            setQbValueProportionPercent(
+                blueprint.premiumFeatures.valueProportionQb ?? 0
+            );
+            setRbValueProportionPercent(
+                blueprint.premiumFeatures.valueProportionRb ?? 0
+            );
+            setWrValueProportionPercent(
+                blueprint.premiumFeatures.valueProportionWr ?? 0
+            );
+            setTeValueProportionPercent(
+                blueprint.premiumFeatures.valueProportionTe ?? 0
+            );
+            setPickValueProportionPercent(
+                blueprint.premiumFeatures.valueProportionDc ?? 0
+            );
+        }
         setSpecifiedUser({
             display_name: blueprint.teamName,
             user_id: '',
@@ -601,30 +642,6 @@ export default function BlueprintModule({
                 team_name: '',
             },
         });
-        setStartingQbAge(blueprint.premiumFeatures.averageStarterAgeQb ?? 0);
-        setStartingRbAge(blueprint.premiumFeatures.averageStarterAgeRb ?? 0);
-        setStartingWrAge(blueprint.premiumFeatures.averageStarterAgeWr ?? 0);
-        setStartingTeAge(blueprint.premiumFeatures.averageStarterAgeTe ?? 0);
-        const newMakeup = new Map<string, number>();
-        for (const rmu of blueprint.premiumFeatures.rosterMakeup) {
-            newMakeup.set(rmu.category, rmu.percentage);
-        }
-        setMakeup(newMakeup);
-        setQbValueProportionPercent(
-            blueprint.premiumFeatures.valueProportionQb ?? 0
-        );
-        setRbValueProportionPercent(
-            blueprint.premiumFeatures.valueProportionRb ?? 0
-        );
-        setWrValueProportionPercent(
-            blueprint.premiumFeatures.valueProportionWr ?? 0
-        );
-        setTeValueProportionPercent(
-            blueprint.premiumFeatures.valueProportionTe ?? 0
-        );
-        setPickValueProportionPercent(
-            blueprint.premiumFeatures.valueProportionDc ?? 0
-        );
         setMyPicks(
             blueprint.draftPicks.map(dp => ({
                 pick_name: `${dp.season} Round ${dp.round}${
@@ -749,6 +766,120 @@ export default function BlueprintModule({
                 .map(partner => partner.teamName)
                 .slice(0, 2)
         );
+
+        if (blueprint.tradeStrategies.length > 0) {
+            const collatedTrades = new Map<string, string[]>();
+            const priorityDescriptions = new Map<string, string>();
+            const targetRosters = new Map<string, number>();
+            const targetRosterCounts = new Map<number, number>();
+            const newPlayerIdToAssetKey = new Map<string, string>(
+                playerIdToAssetKey
+            );
+            const newPlayerIdToDomainValue = new Map<string, number>(
+                playerIdToDomainValue
+            );
+            function assetToStringAndStore(p: {
+                draftPickNumber: number | null;
+                draftPickRound: number | null;
+                draftPickSeason: number | null;
+                isDraftPick: boolean;
+                playerId: number | null;
+                sortOrder: number;
+            }) {
+                if (p.playerId) {
+                    const sleeperId = getSleeperIdFromApiId(p.playerId);
+                    if (sleeperId) {
+                        newPlayerIdToAssetKey.set(
+                            sleeperId,
+                            `player:${p.playerId}`
+                        );
+                        // newPlayerIdToDomainValue.set(sleeperId, p.domainValue);
+                        return sleeperId;
+                    }
+                }
+                const pickId = `RP-API-${p.draftPickSeason}-${p.draftPickRound}-${p.draftPickNumber}`;
+                newPlayerIdToAssetKey.set(
+                    pickId,
+                    `pick:${p.draftPickSeason}:overall:${p.draftPickNumber}`
+                );
+                // newPlayerIdToDomainValue.set(str, p.domainValue);
+                return pickId;
+            }
+            for (const suggestion of blueprint.tradeStrategies) {
+                let key = suggestion.assetsOut
+                    .map(assetToStringAndStore)
+                    .sort()
+                    .join(',');
+                key += `,${suggestion.moveType}`; // to differentiate between pivot and downtier
+                const value = suggestion.targetGroups[0].assetsIn
+                    .map(assetToStringAndStore)
+                    .sort()
+                    .join(',');
+                if (!collatedTrades.has(key)) {
+                    collatedTrades.set(key, [value]);
+                } else if (!collatedTrades.get(key)!.includes(value)) {
+                    // don't add duplicates
+                    collatedTrades.get(key)!.push(value);
+                }
+                if (!priorityDescriptions.has(key)) {
+                    priorityDescriptions.set(
+                        key,
+                        suggestion.priorityDescription!
+                    );
+                }
+            }
+
+            const apiSuggestions = collatedTrades
+                .entries()
+                .map(([key, values]) => ({
+                    outPlayerIds: key.split(',').slice(0, -1), // remove move type
+                    returnPackages: values.map(v => v.split(',')),
+                    type: key.split(',').slice(-1)[0],
+                    priorityDescription: priorityDescriptions.get(key)!,
+                    targetRosterIds: values.map(v => targetRosters.get(v)!),
+                }))
+                .map(
+                    ({
+                        outPlayerIds,
+                        returnPackages,
+                        type,
+                        priorityDescription,
+                        targetRosterIds,
+                    }) => {
+                        let move: Move;
+                        if (type === 'Pivot') {
+                            move = Move.PIVOT;
+                        } else if (type === 'Downtier') {
+                            move = Move.DOWNTIER;
+                        } else {
+                            move = Move.UPTIER;
+                        }
+                        // make sure all arrays have 2 players per return package
+                        for (let i = 0; i < returnPackages.length; i++) {
+                            if (returnPackages[i].length === 1) {
+                                returnPackages[i].push('');
+                            }
+                        }
+                        // make sure at least three return packages
+                        while (returnPackages.length < 3) {
+                            returnPackages.push(['', '']);
+                        }
+                        while (targetRosterIds.length < 3) {
+                            targetRosterIds.push(-1);
+                        }
+                        return {
+                            move,
+                            playerIdsToTrade: outPlayerIds,
+                            playerIdsToTarget: returnPackages,
+                            priorityDescription,
+                            targetRosterIds,
+                        } as FullMove;
+                    }
+                )
+                .toArray();
+            setPlayerIdToAssetKey(newPlayerIdToAssetKey);
+            setFullMoves(apiSuggestions);
+        }
     }, [blueprint, playerData]);
 
     useEffect(() => {
@@ -940,12 +1071,15 @@ export default function BlueprintModule({
     useEffect(() => {
         if (
             apiTradeSuggestions.length === 0 ||
-            searchParams.has(`${TO_TRADE}_0`)
+            searchParams.has(`${TO_TRADE}_0`) ||
+            !!blueprint?.tradeStrategies.length
         ) {
             return;
         }
+        
         const collatedTrades = new Map<string, string[]>();
         const priorityDescriptions = new Map<string, string>();
+        const targetRosters = new Map<string, number>();
         const targetRosterCounts = new Map<number, number>();
         const newPlayerIdToAssetKey = new Map<string, string>(
             playerIdToAssetKey
@@ -985,6 +1119,9 @@ export default function BlueprintModule({
             }
 
             const target = suggestion.targetRosterId;
+            if (!targetRosters.has(value)) {
+                targetRosters.set(value, target);
+            }
             if (!targetRosterCounts.has(target)) {
                 targetRosterCounts.set(target, 1);
             } else {
@@ -1011,9 +1148,16 @@ export default function BlueprintModule({
                 returnPackages: values.map(v => v.split(',')),
                 type: key.split(',').slice(-1)[0],
                 priorityDescription: priorityDescriptions.get(key)!,
+                targetRosterIds: values.map(v => targetRosters.get(v)!),
             }))
             .map(
-                ({outPlayerIds, returnPackages, type, priorityDescription}) => {
+                ({
+                    outPlayerIds,
+                    returnPackages,
+                    type,
+                    priorityDescription,
+                    targetRosterIds,
+                }) => {
                     let move: Move;
                     if (type === 'Pivot') {
                         move = Move.PIVOT;
@@ -1032,11 +1176,15 @@ export default function BlueprintModule({
                     while (returnPackages.length < 3) {
                         returnPackages.push(['', '']);
                     }
+                    while (targetRosterIds.length < 3) {
+                        targetRosterIds.push(-1);
+                    }
                     return {
                         move,
                         playerIdsToTrade: outPlayerIds,
                         playerIdsToTarget: returnPackages,
                         priorityDescription,
+                        targetRosterIds,
                     } as FullMove;
                 }
             )
@@ -1060,6 +1208,7 @@ export default function BlueprintModule({
                     ['', ''],
                 ],
                 priorityDescription: '',
+                targetRosterIds: [-1, -1, -1],
             });
         }
         // sort by number of complete return packages
@@ -1085,10 +1234,11 @@ export default function BlueprintModule({
         );
         setPlayerIdToAssetKey(newPlayerIdToAssetKey);
         setPlayerIdToDomainValue(newPlayerIdToDomainValue);
-    }, [apiTradeSuggestions, searchParams]);
+    }, [apiTradeSuggestions, searchParams, blueprint]);
 
     useEffect(() => {
         if (blueprint) return;
+        if (apiTradeSuggestions.length < 1) return;
         const targetRosterCounts = new Map<number, number>();
         for (const suggestion of apiTradeSuggestions) {
             const target = suggestion.targetRosterId;
@@ -1318,6 +1468,7 @@ export default function BlueprintModule({
                     ['', ''],
                 ],
                 priorityDescription: '',
+                targetRosterIds: [-1, -1, -1],
             },
             {
                 move: Move.PIVOT,
@@ -1328,6 +1479,7 @@ export default function BlueprintModule({
                     ['', ''],
                 ],
                 priorityDescription: '',
+                targetRosterIds: [-1, -1, -1],
             },
             {
                 move: Move.UPTIER,
@@ -1338,6 +1490,7 @@ export default function BlueprintModule({
                     ['', ''],
                 ],
                 priorityDescription: '',
+                targetRosterIds: [-1, -1, -1],
             },
             {
                 move: Move.DOWNTIER,
@@ -1348,6 +1501,7 @@ export default function BlueprintModule({
                     ['', ''],
                 ],
                 priorityDescription: '',
+                targetRosterIds: [-1, -1, -1],
             },
             {
                 move: Move.PIVOT,
@@ -1358,6 +1512,7 @@ export default function BlueprintModule({
                     ['', ''],
                 ],
                 priorityDescription: '',
+                targetRosterIds: [-1, -1, -1],
             },
             {
                 move: Move.UPTIER,
@@ -1368,6 +1523,7 @@ export default function BlueprintModule({
                     ['', ''],
                 ],
                 priorityDescription: '',
+                targetRosterIds: [-1, -1, -1],
             },
         ]);
         setDraftStrategy([DraftStrategyLabel.None, DraftStrategyLabel.None]);
@@ -1453,6 +1609,7 @@ export default function BlueprintModule({
                     .split('|')
                     .map(p => p.split('—')),
                 priorityDescription: '',
+                targetRosterIds: [-1, -1, -1],
             });
         }
         setFullMoves(moves);
@@ -1513,6 +1670,47 @@ export default function BlueprintModule({
         sessionStorage.removeItem('authToken');
         setLoggedIn(false);
         setLoginModalOpen(true);
+    }
+
+    function getMoveTypeInt(move: FullMove): number {
+        switch (move.move) {
+            case Move.DOWNTIER:
+                return 2;
+            case Move.UPTIER:
+                return 3;
+            case Move.PIVOT:
+                return 1;
+        }
+    }
+
+    function addTradeStrategies() {
+        console.log(fullMoves);
+        const huh1 = fullMoves.slice(0, premium ? 6 : 3).flatMap(move =>
+            move.playerIdsToTarget.map((targetIds, i) => ({
+                priorityDescription: move.priorityDescription,
+                // partnerRosterId: move.targetRosterIds[i],
+                outAssets: move.playerIdsToTrade
+                    .filter(id => id !== '')
+                    .map(id => ({
+                        assetKey: playerIdToAssetKey.get(id)!,
+                    })),
+                inAssets: targetIds
+                    .filter(id => id !== '')
+                    .map(id => {
+                        if (!playerIdToAssetKey.has(id)) {
+                            console.warn('missing player id', id);
+                        }
+                        return {
+                            assetKey: playerIdToAssetKey.get(id)!,
+                        };
+                    }),
+                moveType: getMoveTypeInt(move),
+            }))
+        );
+        console.log(huh1);
+        addTradeStrategiesRequest(blueprintId, huh1).then(something => {
+            console.log(something);
+        });
     }
 
     function sleeperIdToTradeAsset(
@@ -2240,15 +2438,23 @@ export default function BlueprintModule({
                                               .filter(
                                                   p => p && p.position === QB
                                               )
-                                              .sort(
-                                                  (a, b) =>
-                                                      +a.compositePositionRank.slice(
-                                                          2
-                                                      ) -
-                                                      +b.compositePositionRank.slice(
-                                                          2
-                                                      )
-                                              )
+                                              .sort((a, b) => {
+                                                  const aRank =
+                                                      a.compositePositionRank ===
+                                                      null
+                                                          ? Infinity
+                                                          : +a.compositePositionRank.slice(
+                                                                2
+                                                            );
+                                                  const bRank =
+                                                      b.compositePositionRank ===
+                                                      null
+                                                          ? Infinity
+                                                          : +b.compositePositionRank.slice(
+                                                                2
+                                                            );
+                                                  return aRank - bRank;
+                                              })
                                               .map((p, idx) => {
                                                   const fullName = p.playerName;
                                                   return (
@@ -2270,9 +2476,11 @@ export default function BlueprintModule({
                                                                   styles.adp
                                                               }
                                                           >
-                                                              {p.compositePositionRank.slice(
-                                                                  2
-                                                              )}
+                                                              {p.compositePositionRank
+                                                                  ? p.compositePositionRank.slice(
+                                                                        2
+                                                                    )
+                                                                  : '-'}
                                                           </div>
                                                       </div>
                                                   );
@@ -2336,15 +2544,23 @@ export default function BlueprintModule({
                                               .filter(
                                                   p => p && p.position === RB
                                               )
-                                              .sort(
-                                                  (a, b) =>
-                                                      +a.compositePositionRank.slice(
-                                                          2
-                                                      ) -
-                                                      +b.compositePositionRank.slice(
-                                                          2
-                                                      )
-                                              )
+                                              .sort((a, b) => {
+                                                  const aRank =
+                                                      a.compositePositionRank ===
+                                                      null
+                                                          ? Infinity
+                                                          : +a.compositePositionRank.slice(
+                                                                2
+                                                            );
+                                                  const bRank =
+                                                      b.compositePositionRank ===
+                                                      null
+                                                          ? Infinity
+                                                          : +b.compositePositionRank.slice(
+                                                                2
+                                                            );
+                                                  return aRank - bRank;
+                                              })
                                               .map((p, idx) => {
                                                   const fullName = p.playerName;
                                                   return (
@@ -2366,9 +2582,11 @@ export default function BlueprintModule({
                                                                   styles.adp
                                                               }
                                                           >
-                                                              {p.compositePositionRank.slice(
-                                                                  2
-                                                              )}
+                                                              {p.compositePositionRank
+                                                                  ? p.compositePositionRank.slice(
+                                                                        2
+                                                                    )
+                                                                  : '-'}
                                                           </div>
                                                       </div>
                                                   );
@@ -2432,15 +2650,23 @@ export default function BlueprintModule({
                                               .filter(
                                                   p => p && p.position === WR
                                               )
-                                              .sort(
-                                                  (a, b) =>
-                                                      +a.compositePositionRank.slice(
-                                                          2
-                                                      ) -
-                                                      +b.compositePositionRank.slice(
-                                                          2
-                                                      )
-                                              )
+                                              .sort((a, b) => {
+                                                  const aRank =
+                                                      a.compositePositionRank ===
+                                                      null
+                                                          ? Infinity
+                                                          : +a.compositePositionRank.slice(
+                                                                2
+                                                            );
+                                                  const bRank =
+                                                      b.compositePositionRank ===
+                                                      null
+                                                          ? Infinity
+                                                          : +b.compositePositionRank.slice(
+                                                                2
+                                                            );
+                                                  return aRank - bRank;
+                                              })
                                               .map((p, idx) => {
                                                   const fullName = p.playerName;
                                                   return (
@@ -2462,9 +2688,11 @@ export default function BlueprintModule({
                                                                   styles.adp
                                                               }
                                                           >
-                                                              {p.compositePositionRank.slice(
-                                                                  2
-                                                              )}
+                                                              {p.compositePositionRank
+                                                                  ? p.compositePositionRank.slice(
+                                                                        2
+                                                                    )
+                                                                  : '-'}
                                                           </div>
                                                       </div>
                                                   );
@@ -2528,15 +2756,23 @@ export default function BlueprintModule({
                                               .filter(
                                                   p => p && p.position === TE
                                               )
-                                              .sort(
-                                                  (a, b) =>
-                                                      +a.compositePositionRank.slice(
-                                                          2
-                                                      ) -
-                                                      +b.compositePositionRank.slice(
-                                                          2
-                                                      )
-                                              )
+                                              .sort((a, b) => {
+                                                  const aRank =
+                                                      a.compositePositionRank ===
+                                                      null
+                                                          ? Infinity
+                                                          : +a.compositePositionRank.slice(
+                                                                2
+                                                            );
+                                                  const bRank =
+                                                      b.compositePositionRank ===
+                                                      null
+                                                          ? Infinity
+                                                          : +b.compositePositionRank.slice(
+                                                                2
+                                                            );
+                                                  return aRank - bRank;
+                                              })
                                               .map((p, idx) => {
                                                   const fullName = p.playerName;
                                                   return (
@@ -2558,9 +2794,11 @@ export default function BlueprintModule({
                                                                   styles.adp
                                                               }
                                                           >
-                                                              {p.compositePositionRank.slice(
-                                                                  2
-                                                              )}
+                                                              {p.compositePositionRank
+                                                                  ? p.compositePositionRank.slice(
+                                                                        2
+                                                                    )
+                                                                  : '-'}
                                                           </div>
                                                       </div>
                                                   );
@@ -2822,6 +3060,21 @@ export default function BlueprintModule({
             <div className={styles.bottomSection}>
                 <div className={styles.tradeContainer}>
                     <div className={styles.tradeTitle}>Trade Strategy</div>
+                    <IconButton
+                        sx={{
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                            },
+                        }}
+                        TouchRippleProps={{
+                            style: {
+                                color: 'white',
+                            },
+                        }}
+                        onClick={addTradeStrategies}
+                    >
+                        <Save sx={{color: 'white'}} />
+                    </IconButton>
                     <div className={styles.suggestedMovesContainer}>
                         {[0, 1, 2].map(i => (
                             <SuggestedMove
@@ -2846,6 +3099,12 @@ export default function BlueprintModule({
                                 ) => {
                                     const newMoves = [...fullMoves];
                                     newMoves[i].playerIdsToTarget = playerIds;
+                                    setFullMoves(newMoves);
+                                }}
+                                targetRosterIds={fullMoves[i].targetRosterIds}
+                                setTargetRosterIds={(rosterIds: number[]) => {
+                                    const newMoves = [...fullMoves];
+                                    newMoves[i].targetRosterIds = rosterIds;
                                     setFullMoves(newMoves);
                                 }}
                                 rosterPlayers={rosterPlayers}
@@ -2898,6 +3157,16 @@ export default function BlueprintModule({
                                         const newMoves = [...fullMoves];
                                         newMoves[i].playerIdsToTarget =
                                             playerIds;
+                                        setFullMoves(newMoves);
+                                    }}
+                                    targetRosterIds={
+                                        fullMoves[i].targetRosterIds
+                                    }
+                                    setTargetRosterIds={(
+                                        rosterIds: number[]
+                                    ) => {
+                                        const newMoves = [...fullMoves];
+                                        newMoves[i].targetRosterIds = rosterIds;
                                         setFullMoves(newMoves);
                                     }}
                                     rosterPlayers={rosterPlayers}
@@ -3483,4 +3752,18 @@ export function shuffle(array: any[]) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
+}
+
+async function addTradeStrategiesRequest(blueprintId: string, body: any) {
+    const authToken = sessionStorage.getItem('authToken');
+    const options = {
+        method: 'POST',
+        url: `${AZURE_API_URL}Blueprints/${blueprintId}/trade-strategies`,
+        data: body,
+        headers: {
+            Authorization: `Bearer ${authToken}`,
+        },
+    };
+    const res = await axios.request(options);
+    return res.data;
 }

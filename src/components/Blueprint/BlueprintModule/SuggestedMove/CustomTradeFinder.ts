@@ -12,6 +12,10 @@ const DEFAULT_OPTIONS = {
 export type TradeIdea = {
     inAssets: TradeAsset[];
     outAssets: TradeAsset[];
+    targetRosterId: number;
+    rule: {
+        priorityDescription: string;
+    };
 };
 
 export function useCustomTradeFinder(leagueId: string, rosterId: number) {

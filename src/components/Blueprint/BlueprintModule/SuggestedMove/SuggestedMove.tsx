@@ -34,6 +34,8 @@ type SuggestedMoveProps = {
     leagueId: string;
     rosterId: number;
     numTeams: number;
+    targetRosterIds: number[];
+    setTargetRosterIds: (rosterIds: number[]) => void;
 };
 
 export default function SuggestedMove({
@@ -53,13 +55,13 @@ export default function SuggestedMove({
     leagueId,
     rosterId,
     numTeams,
+    targetRosterIds,
+    setTargetRosterIds,
 }: SuggestedMoveProps) {
     const playerData = usePlayerData();
     const tradeFinder = useCustomTradeFinder(leagueId, rosterId);
-    const {sleeperPlayerIds, pickIds} = useAllTargetableIdsFromSleeperLeague(
-        leagueId,
-        rosterId
-    );
+    const {sleeperPlayerIds, pickIds, findRosterId} =
+        useAllTargetableIdsFromSleeperLeague(leagueId, rosterId);
     const {getApiIdFromSleeperId} = useSleeperIdMap();
 
     const [optionsToTrade, setOptionsToTrade] = useState<string[]>([]);
@@ -243,6 +245,7 @@ export default function SuggestedMove({
         }
 
         const newPlayerIdsToTarget = [...playerIdsToTarget];
+        const newTargetRosterIds = [...targetRosterIds];
         let ideaIdx = 0;
         let insertIdx = 0;
         const isAssetAlreadyPlaced = (
@@ -274,10 +277,13 @@ export default function SuggestedMove({
             }
 
             newPlayerIdsToTarget[insertIdx] = inAssetIds;
+            newTargetRosterIds[insertIdx] =
+                filteredIdeas[ideaIdx].targetRosterId;
             ideaIdx++;
             insertIdx++;
         }
         setPlayerIdsToTarget(newPlayerIdsToTarget);
+        setTargetRosterIds(newTargetRosterIds);
     }
 
     // protectedRows === undefined means that this is a standalone move
@@ -309,6 +315,7 @@ export default function SuggestedMove({
             return;
         }
         const newPlayerIdsToTarget = [...playerIdsToTarget];
+        const newTargetRosterIds = [...targetRosterIds];
 
         const existingPrimaryAssets = (
             !protectedRows
@@ -335,10 +342,12 @@ export default function SuggestedMove({
             } else {
                 newPlayerIdsToTarget[rowIdx] = [playerIds[1], playerIds[0]];
             }
+            newTargetRosterIds[rowIdx] = filteredIdeas[ideaIdx].targetRosterId;
             break;
         }
 
         setPlayerIdsToTarget(newPlayerIdsToTarget);
+        setTargetRosterIds(newTargetRosterIds);
     }
 
     async function newCustomPivotAllThree() {
@@ -359,11 +368,14 @@ export default function SuggestedMove({
             .map(idea => idea.inAssets.map(assetToPlayerId))
             .flat();
         const newPlayerIdsToTarget = [...playerIdsToTarget];
+        const newTargetRosterIds = [...targetRosterIds];
         for (let i = 0; i < 3 && i < inAssets.length; i++) {
             if (isAssetPinned[i]) continue;
             newPlayerIdsToTarget[i] = [inAssets[i], ''];
+            newTargetRosterIds[i] = filteredIdeas[i].targetRosterId;
         }
         setPlayerIdsToTarget(newPlayerIdsToTarget);
+        setTargetRosterIds(newTargetRosterIds);
     }
 
     async function newCustomPivot(rowIdx: number) {
@@ -396,8 +408,11 @@ export default function SuggestedMove({
         }
 
         const newPlayerIdsToTarget = [...playerIdsToTarget];
+        const newTargetRosterIds = [...targetRosterIds];
         newPlayerIdsToTarget[rowIdx] = [inAssets[ideaIdx], ''];
+        newTargetRosterIds[rowIdx] = filteredIdeas[ideaIdx].targetRosterId;
         setPlayerIdsToTarget(newPlayerIdsToTarget);
+        setTargetRosterIds(newTargetRosterIds);
     }
 
     async function newCustomUptierAllThree() {
@@ -419,11 +434,14 @@ export default function SuggestedMove({
             .map(idea => idea.inAssets.map(assetToPlayerId))
             .flat();
         const newPlayerIdsToTarget = [...playerIdsToTarget];
+        const newTargetRosterIds = [...targetRosterIds];
         for (let i = 0; i < 3; i++) {
             if (isAssetPinned[i]) continue;
             newPlayerIdsToTarget[i] = [inAssets[i], ''];
+            newTargetRosterIds[i] = filteredIdeas[i].targetRosterId;
         }
         setPlayerIdsToTarget(newPlayerIdsToTarget);
+        setTargetRosterIds(newTargetRosterIds);
     }
 
     async function newCustomUptier(rowIdx: number) {
@@ -455,8 +473,11 @@ export default function SuggestedMove({
         }
 
         const newPlayerIdsToTarget = [...playerIdsToTarget];
+        const newTargetRosterIds = [...targetRosterIds];
         newPlayerIdsToTarget[rowIdx] = [inAssets[ideaIdx], ''];
+        newTargetRosterIds[rowIdx] = filteredIdeas[ideaIdx].targetRosterId;
         setPlayerIdsToTarget(newPlayerIdsToTarget);
+        setTargetRosterIds(newTargetRosterIds);
     }
 
     return (
@@ -705,6 +726,16 @@ export default function SuggestedMove({
                                                             : entry
                                                 )
                                             );
+                                            setTargetRosterIds(
+                                                targetRosterIds.map(
+                                                    (entry, j) =>
+                                                        j === i
+                                                            ? findRosterId(
+                                                                  player
+                                                              )
+                                                            : entry
+                                                )
+                                            );
                                         }}
                                         numTeams={numTeams}
                                         sleeperPlayerIds={sleeperPlayerIds}
@@ -785,6 +816,16 @@ export default function SuggestedMove({
                                             setPlayerIdsToTarget(
                                                 newPlayerIdsToTarget
                                             );
+                                            setTargetRosterIds(
+                                                targetRosterIds.map(
+                                                    (entry, j) =>
+                                                        j === rowIdx
+                                                            ? findRosterId(
+                                                                  player
+                                                              )
+                                                            : entry
+                                                )
+                                            );
                                         }}
                                         numTeams={numTeams}
                                         sleeperPlayerIds={sleeperPlayerIds}
@@ -829,6 +870,16 @@ export default function SuggestedMove({
                                                 player;
                                             setPlayerIdsToTarget(
                                                 newPlayerIdsToTarget
+                                            );
+                                            setTargetRosterIds(
+                                                targetRosterIds.map(
+                                                    (entry, j) =>
+                                                        j === rowIdx
+                                                            ? findRosterId(
+                                                                  player
+                                                              )
+                                                            : entry
+                                                )
                                             );
                                         }}
                                         numTeams={numTeams}

@@ -241,11 +241,17 @@ export function Roster({
                     {apiRosterPlayers.length
                         ? apiRosterPlayers
                               .filter(p => p && p.position === pos)
-                              .sort(
-                                  (a, b) =>
-                                      +a.compositePositionRank.slice(2) -
-                                      +b.compositePositionRank.slice(2)
-                              )
+                              .sort((a, b) => {
+                                  const aRank =
+                                      a.compositePositionRank === null
+                                          ? Infinity
+                                          : +a.compositePositionRank.slice(2);
+                                  const bRank =
+                                      b.compositePositionRank === null
+                                          ? Infinity
+                                          : +b.compositePositionRank.slice(2);
+                                  return aRank - bRank;
+                              })
                               .slice(0, POSITION_DISPLAY_LIMIT)
                               .map((p, idx) => (
                                   <PlayerCard
@@ -286,7 +292,9 @@ export function PlayerCard({
     if (!player && !apiPlayer) return null;
     const posAdp = player
         ? getPositionalAdp(`${player.first_name} ${player.last_name}`)
-        : +apiPlayer!.compositePositionRank.slice(2);
+        : apiPlayer?.compositePositionRank
+        ? +apiPlayer!.compositePositionRank.slice(2)
+        : -1;
     function getColorFromAdp(adp: number) {
         if (adp <= 20) return '#1AFF00';
         if (adp <= 35) return '#F1BA4C';
@@ -855,6 +863,7 @@ export function TradeStrategyItem({
                 return 'PIVOT';
         }
     }
+    if (!trade) return null;
     return (
         <div className={styles.tradeStrategyItem} style={style}>
             <div

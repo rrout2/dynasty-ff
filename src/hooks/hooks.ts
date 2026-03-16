@@ -147,8 +147,13 @@ type Blueprint = {
         round: number;
         pickNumber: number;
     }>;
-    tradeStrategies: Array<any>;
-    topPriorities: Array<any>;
+    tradeStrategies: Array<TradeStrategy>;
+    topPriorities: Array<{
+        id: number;
+        sortOrder: number;
+        text: string;
+        iconKey: string;
+    }>;
     idealTradePartners: Array<{
         id: number;
         teamName: string;
@@ -200,7 +205,7 @@ export type PickProfile = {
 };
 
 export type TradeStrategy = {
-    moveType: number;
+    moveType: number | string;
     sortOrder: number;
     assetsOut: Array<{
         draftPickNumber: number | null;
@@ -221,6 +226,7 @@ export type TradeStrategy = {
             sortOrder: number;
         }>;
     }>;
+    priorityDescription?: string;
 };
 
 type PremiumFeatures = {
@@ -541,11 +547,47 @@ export function useAllTargetableIdsFromSleeperLeague(
         setPickIds([]);
     }, [leagueId, rosterId]);
 
+    const findRosterId = useCallback(
+        (playerOrPickId: string) => {
+            for (const r of sleeperRosterDtos) {
+                if (r.players.includes(playerOrPickId)) return r.rosterId;
+            }
+            const spl = playerOrPickId.split('-');
+            const season = spl[2];
+            const round = +spl[3];
+            const overallPickIndex = spl.length >= 5 ? +spl[4] : null;
+            for (const r of rosterPicks) {
+                for (const p of r.currentSeasonPicks) {
+                    if (
+                        p.season === season &&
+                        p.round === round &&
+                        p.overallPickIndex === overallPickIndex
+                    ) {
+                        return r.rosterId;
+                    }
+                }
+                for (const p of r.nextYearPicks) {
+                    if (
+                        p.season === season &&
+                        p.round === round &&
+                        p.overallPickIndex === overallPickIndex
+                    ) {
+                        return r.rosterId;
+                    }
+                }
+            }
+
+            console.warn('missing player id', playerOrPickId);
+            return -1;
+        },
+        [sleeperRosterDtos]
+    );
+
     function isNumber(value: string) {
         return /^-?\d+(\.\d+)?$/.test(value);
     }
 
-    return {sleeperPlayerIds, pickIds};
+    return {sleeperPlayerIds, pickIds, findRosterId};
 }
 
 type TradeSuggestion = {
@@ -586,7 +628,7 @@ export function useTradeSuggestions(leagueId: string, teamId: string) {
     );
     const authToken = sessionStorage.getItem('authToken');
     const {data} = useQuery({
-        queryKey: ['tradeSuggestions', leagueId, teamId, authToken],
+        queryKey: ['tradeSuggestions', leagueId, teamId],
         queryFn: async () => {
             const options = {
                 method: 'POST',
@@ -607,7 +649,7 @@ export function useTradeSuggestions(leagueId: string, teamId: string) {
             return res.data as TradeSuggestion[];
         },
         retry: false,
-        enabled: +teamId > -1,
+        enabled: +teamId > -1 && !!authToken,
     });
     useEffect(() => {
         if (!data) return;
@@ -2240,7 +2282,19 @@ export function useSleeperIdMap() {
         [sleeperIdMap]
     );
 
-    return {sleeperIdMap, getApiIdFromSleeperId};
+    const getSleeperIdFromApiId = useCallback(
+        (apiId: number) => {
+            for (const sleeperId in sleeperIdMap) {
+                if (sleeperIdMap[sleeperId] === apiId) {
+                    return sleeperId;
+                }
+            }
+            return null;
+        },
+        [sleeperIdMap]
+    );
+
+    return {sleeperIdMap, getApiIdFromSleeperId, getSleeperIdFromApiId};
 }
 
 export interface PlayerData {
