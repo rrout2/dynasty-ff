@@ -1076,7 +1076,7 @@ export default function BlueprintModule({
         ) {
             return;
         }
-        
+
         const collatedTrades = new Map<string, string[]>();
         const priorityDescriptions = new Map<string, string>();
         const targetRosters = new Map<string, number>();
@@ -1707,7 +1707,6 @@ export default function BlueprintModule({
                 moveType: getMoveTypeInt(move),
             }))
         );
-        console.log(huh1);
         addTradeStrategiesRequest(blueprintId, huh1).then(something => {
             console.log(something);
         });
@@ -1757,21 +1756,30 @@ export default function BlueprintModule({
 
     async function publishBlueprint() {
         if (!blueprint) return;
-        const tradeStrategies = fullMoves.map((move, idx) => ({
-            moveType: convertMoveToInt(move.move),
-            sortOrder: idx + 1,
-            assetsOut: move.playerIdsToTrade
-                .map((sleeperId, i) => sleeperIdToTradeAsset(sleeperId, i + 1))
-                .filter(asset => !!asset),
-            targetGroups: move.playerIdsToTarget.map((sleeperIds, i) => ({
-                sortOrder: i + 1,
-                assetsIn: sleeperIds
-                    .map((sleeperId, j) =>
-                        sleeperIdToTradeAsset(sleeperId, j + 1)
-                    )
-                    .filter(asset => !!asset),
-            })),
-        })) as TradeStrategy[];
+        const tradeStrategies = fullMoves
+            .slice(0, premium ? 6 : 3)
+            .flatMap(move =>
+                move.playerIdsToTarget.map((targetIds, i) => ({
+                    priorityDescription: move.priorityDescription,
+                    // partnerRosterId: move.targetRosterIds[i],
+                    outAssets: move.playerIdsToTrade
+                        .filter(id => id !== '')
+                        .map(id => ({
+                            assetKey: playerIdToAssetKey.get(id)!,
+                        })),
+                    inAssets: targetIds
+                        .filter(id => id !== '')
+                        .map(id => {
+                            if (!playerIdToAssetKey.has(id)) {
+                                console.warn('missing player id', id);
+                            }
+                            return {
+                                assetKey: playerIdToAssetKey.get(id)!,
+                            };
+                        }),
+                    moveType: getMoveTypeInt(move),
+                }))
+            );
         const authToken = sessionStorage.getItem('authToken');
         const options = {
             method: 'PUT',
