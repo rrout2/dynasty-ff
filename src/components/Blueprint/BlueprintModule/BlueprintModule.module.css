@@ -410,3 +410,10 @@
     border-left: 1px solid #ccc;
 
 }
+
+.tradeTitleContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

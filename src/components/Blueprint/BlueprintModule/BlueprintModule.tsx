@@ -3078,22 +3078,24 @@ export default function BlueprintModule({
             </div>
             <div className={styles.bottomSection}>
                 <div className={styles.tradeContainer}>
-                    <div className={styles.tradeTitle}>Trade Strategy</div>
-                    <IconButton
-                        sx={{
-                            '&:hover': {
-                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                            },
-                        }}
-                        TouchRippleProps={{
-                            style: {
-                                color: 'white',
-                            },
-                        }}
-                        onClick={addTradeStrategies}
-                    >
-                        <Save sx={{color: 'white'}} />
-                    </IconButton>
+                    <div className={styles.tradeTitleContainer}>
+                        <div className={styles.tradeTitle}>Trade Strategy</div>
+                        <IconButton
+                            sx={{
+                                '&:hover': {
+                                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                },
+                            }}
+                            TouchRippleProps={{
+                                style: {
+                                    color: 'white',
+                                },
+                            }}
+                            onClick={addTradeStrategies}
+                        >
+                            <Save sx={{color: 'white'}} />
+                        </IconButton>
+                    </div>
                     <div className={styles.suggestedMovesContainer}>
                         {[0, 1, 2].map(i => (
                             <SuggestedMove
