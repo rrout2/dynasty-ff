@@ -1862,7 +1862,18 @@ export default function BlueprintModule({
                 Authorization: `Bearer ${authToken}`,
             },
         };
-        const res = await axios.request(options);
+        axios.request(options).then(() => {
+            const options2 = {
+                method: 'PATCH',
+                url: `${AZURE_API_URL}Blueprints/${blueprintId}/delivery-status`,
+                data: 2,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                    'Content-Type': 'application/json',
+                },
+            };
+            axios.request(options2);
+        });
     }
 
     return (
