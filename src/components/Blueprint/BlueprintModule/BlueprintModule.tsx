@@ -2123,7 +2123,7 @@ export default function BlueprintModule({
                         >
                             <NewRookieDraft
                                 teamName={rookieBlueprint?.teamName || ''}
-                                numTeams={numTeams}
+                                numTeams={rookieBlueprint?.leagueSettings.numberOfTeams || 0}
                                 valueArchetype={convertStringToValueArchetype(
                                     rookieBlueprint?.valueArchetype || ''
                                 )}
@@ -2142,6 +2142,7 @@ export default function BlueprintModule({
                                     rookieBlueprint?.rookieDraftFeatures
                                         ?.strategyStatement || ''
                                 }
+                                isSuperFlex={rookieBlueprint?.leagueSettings.isSuperFlex || true}
                             />
                         </div>
                     </Modal>

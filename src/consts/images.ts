@@ -356,6 +356,15 @@ import rookiePurgatory from '../assets/rookieDraft/2026/bakeryTiers/purgatory.pn
 import rookieUpside from '../assets/rookieDraft/2026/bakeryTiers/upside.png';
 import rookieUpsideLite from '../assets/rookieDraft/2026/bakeryTiers/upsideLite.png';
 
+import oneQb8TeamCliffMap from '../assets/rookieDraft/2026/cliffMaps/1QB 8 TEAM.png';
+import oneQb10TeamCliffMap from '../assets/rookieDraft/2026/cliffMaps/1QB 10 TEAM.png';
+import oneQb12TeamCliffMap from '../assets/rookieDraft/2026/cliffMaps/1QB 12 TEAM.png';
+import oneQb14TeamCliffMap from '../assets/rookieDraft/2026/cliffMaps/1QB 14 TEAM.png';
+import sf8TeamCliffMap from '../assets/rookieDraft/2026/cliffMaps/SF 8 TEAM.png';
+import sf10TeamCliffMap from '../assets/rookieDraft/2026/cliffMaps/SF 10 TEAM.png';
+import sf12TeamCliffMap from '../assets/rookieDraft/2026/cliffMaps/SF 12 TEAM.png';
+import sf14TeamCliffMap from '../assets/rookieDraft/2026/cliffMaps/SF 14 TEAM.png';
+
 import aaronAnderson from '../assets/rookieDraft/2026/rookieCards/Aaron Anderson.png';
 import antonioWilliams from '../assets/rookieDraft/2026/rookieCards/Antonio Williams.png';
 import barionBrown from '../assets/rookieDraft/2026/rookieCards/Barion Brown.png';
@@ -943,4 +952,12 @@ export {
     newRookieBg,
     rookieTiers,
     newRookieCardMap,
+    oneQb8TeamCliffMap,
+    oneQb10TeamCliffMap,
+    oneQb12TeamCliffMap,
+    oneQb14TeamCliffMap,
+    sf10TeamCliffMap,
+    sf8TeamCliffMap,
+    sf12TeamCliffMap,
+    sf14TeamCliffMap,
 };

@@ -181,11 +181,14 @@ export type PickProfile = {
     sortOrder: number;
     tier: number;
     bakeryZScore: number | null;
+    projectedPlayerCategory: string;
     historicalRank: number;
     marketValue: string;
     domainVerdict: string;
     autoAcceptPlayerName: string;
     autoRejectPlayerName: string;
+    autoAcceptPlayerSleeperId: number;
+    autoRejectPlayerSleeperId: number;
     targets: Array<{
         id: number;
         playerName: string;

@@ -254,3 +254,12 @@
     font-size: 14px;
     font-weight: 700
 }
+
+.cliffMap {
+    position: absolute;
+    top: 800px;
+    left: 60px;
+
+    width: 900px;
+    height: auto;
+}

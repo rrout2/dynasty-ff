@@ -1,5 +1,5 @@
 import styles from './NewRookieDraft.module.css';
-import {newRookieBg, newRookieCardMap} from '../../../consts/images';
+import {newRookieBg, newRookieCardMap, oneQb10TeamCliffMap, oneQb12TeamCliffMap, oneQb14TeamCliffMap, oneQb8TeamCliffMap, sf10TeamCliffMap, sf12TeamCliffMap, sf14TeamCliffMap, sf8TeamCliffMap} from '../../../consts/images';
 import {
     ValueArchetype,
     RosterArchetype,
@@ -9,7 +9,8 @@ import {QB, RB, TE, WR} from '../../../consts/fantasy';
 import {getPositionalOrder} from '../infinite/BuySellHold/BuySellHold';
 import {FinalPickData} from '../../../sleeper-api/picks';
 import {PlayerCard} from '../NewV1/NewV1';
-import {PickProfile as Pick, RosterPlayer} from '../../../hooks/hooks';
+import {PickProfile as Pick, RosterPlayer, usePlayerData} from '../../../hooks/hooks';
+import { Player } from '../../../sleeper-api/sleeper-api';
 
 type NewRookieDraftProps = {
     teamName: string;
@@ -19,6 +20,7 @@ type NewRookieDraftProps = {
     myPicks: Pick[];
     strategyName: string;
     strategyStatement: string;
+    isSuperFlex: boolean;
 };
 
 function getFontSize(teamName: string) {
@@ -35,7 +37,37 @@ export default function NewRookieDraft({
     myPicks,
     strategyName,
     strategyStatement,
+    isSuperFlex,
 }: NewRookieDraftProps) {
+    const playerData = usePlayerData();
+    if (!playerData) return <></>;
+
+    function getCliffMap() {
+        if (isSuperFlex) {
+            switch (numTeams) {
+                case 8:
+                    return sf8TeamCliffMap;
+                case 10:
+                    return sf10TeamCliffMap;
+                case 12:
+                    return sf12TeamCliffMap;
+                case 14:
+                    return sf14TeamCliffMap;
+            }
+        } else {
+            switch (numTeams) {
+                case 8:
+                    return oneQb8TeamCliffMap;
+                case 10:
+                    return oneQb10TeamCliffMap;
+                case 12:
+                    return oneQb12TeamCliffMap;
+                case 14:
+                    return oneQb14TeamCliffMap;
+            }
+        }
+        return '';
+}
     return (
         <div className={styles.fullBlueprint}>
             <div
@@ -81,21 +113,22 @@ export default function NewRookieDraft({
                     </div>
                 ))}
             </div>
-            {/* <div className={styles.autoAcceptRejectColumn}>
+            <div className={styles.autoAcceptRejectColumn}>
                 {myPicks.slice(0, 4).map((pick, idx) => (
                     <AutoAcceptReject
                         key={idx}
-                        autoAcceptPlayer={players[idx * 2]}
-                        autoRejectPlayer={players[idx * 2 + 1]}
+                        autoAcceptPlayer={playerData[pick.autoAcceptPlayerSleeperId]}
+                        autoRejectPlayer={playerData[pick.autoRejectPlayerSleeperId]}
                     />
                 ))}
-            </div> */}
+            </div>
             <div className={styles.rookieDraftStrategySection}>
                 <RookieDraftStrategy
                     strategyName={strategyName}
                     strategyStatement={strategyStatement}
                 />
             </div>
+            <img src={getCliffMap()} className={styles.cliffMap} />
             <img src={newRookieBg} className={styles.backgroundImg} />
         </div>
     );
@@ -105,18 +138,18 @@ function AutoAcceptReject({
     autoAcceptPlayer,
     autoRejectPlayer,
 }: {
-    autoAcceptPlayer: RosterPlayer;
-    autoRejectPlayer: RosterPlayer;
+    autoAcceptPlayer: Player;
+    autoRejectPlayer: Player;
 }) {
     return (
         <div className={styles.autoAcceptReject}>
             <PlayerCard
-                apiPlayer={autoAcceptPlayer}
+                player={autoAcceptPlayer}
                 getStartingPosition={() => autoAcceptPlayer.position}
                 hideAdp
             />
             <PlayerCard
-                apiPlayer={autoRejectPlayer}
+                player={autoRejectPlayer}
                 getStartingPosition={() => autoRejectPlayer.position}
                 hideAdp
             />
@@ -233,12 +266,12 @@ function PickProfile({pick}: PickProfileProps) {
                 </span>
             </div>
             <div>
-                Bakery Tier:{' '}
+                Bakery Z-Score:{' '}
                 <span className={styles.zScore}>{pick.bakeryZScore}</span>
             </div>
             <div>
-                Bakery Z-Score:{' '}
-                <span className={styles.zScore}>{pick.bakeryZScore}</span>
+                Proj. Player Category:{' '}
+                <span className={styles.zScore}>{pick.projectedPlayerCategory}</span>
             </div>
             <div>
                 Historical Rank{' '}
