@@ -365,6 +365,19 @@ import sf10TeamCliffMap from '../assets/rookieDraft/2026/cliffMaps/SF 10 TEAM.pn
 import sf12TeamCliffMap from '../assets/rookieDraft/2026/cliffMaps/SF 12 TEAM.png';
 import sf14TeamCliffMap from '../assets/rookieDraft/2026/cliffMaps/SF 14 TEAM.png';
 
+import cornerstoneCategory from '../assets/rookieDraft/2026/playerCategories/Cornerstone.svg';
+import foundationalCategory from '../assets/rookieDraft/2026/playerCategories/Foundational.svg';
+import jagDevelopmentalCategory from '../assets/rookieDraft/2026/playerCategories/JAG Developmental.svg';
+import jagInsuranceCategory from '../assets/rookieDraft/2026/playerCategories/JAG Insurance.svg';
+import mainstayCategory from '../assets/rookieDraft/2026/playerCategories/Mainstay.svg';
+import productiveVetCategory from '../assets/rookieDraft/2026/playerCategories/Productive Vet.svg';
+import replaceableCategory from '../assets/rookieDraft/2026/playerCategories/Replaceable.svg';
+import serviceableCategory from '../assets/rookieDraft/2026/playerCategories/Serviceable.svg';
+import shortTermLeagueWinnersCategory from '../assets/rookieDraft/2026/playerCategories/Short Term League Winners.svg';
+import shortTermProductionCategory from '../assets/rookieDraft/2026/playerCategories/Short Term Production.svg';
+import upsidePremierCategory from '../assets/rookieDraft/2026/playerCategories/Upside Premier.svg';
+import upsideShotCategory from '../assets/rookieDraft/2026/playerCategories/Upside Shot.svg';
+
 import aaronAnderson from '../assets/rookieDraft/2026/rookieCards/Aaron Anderson.png';
 import antonioWilliams from '../assets/rookieDraft/2026/rookieCards/Antonio Williams.png';
 import barionBrown from '../assets/rookieDraft/2026/rookieCards/Barion Brown.png';
@@ -960,4 +973,16 @@ export {
     sf8TeamCliffMap,
     sf12TeamCliffMap,
     sf14TeamCliffMap,
+    cornerstoneCategory,
+    foundationalCategory,
+    jagDevelopmentalCategory,
+    jagInsuranceCategory,
+    mainstayCategory,
+    productiveVetCategory,
+    replaceableCategory,
+    serviceableCategory,
+    shortTermLeagueWinnersCategory,
+    shortTermProductionCategory,
+    upsidePremierCategory,
+    upsideShotCategory,
 };

@@ -1,5 +1,28 @@
 import styles from './NewRookieDraft.module.css';
-import {newRookieBg, newRookieCardMap, oneQb10TeamCliffMap, oneQb12TeamCliffMap, oneQb14TeamCliffMap, oneQb8TeamCliffMap, sf10TeamCliffMap, sf12TeamCliffMap, sf14TeamCliffMap, sf8TeamCliffMap} from '../../../consts/images';
+import {
+    cornerstoneCategory,
+    foundationalCategory,
+    jagDevelopmentalCategory,
+    jagInsuranceCategory,
+    mainstayCategory,
+    newRookieBg,
+    newRookieCardMap,
+    oneQb10TeamCliffMap,
+    oneQb12TeamCliffMap,
+    oneQb14TeamCliffMap,
+    oneQb8TeamCliffMap,
+    productiveVetCategory,
+    replaceableCategory,
+    serviceableCategory,
+    sf10TeamCliffMap,
+    sf12TeamCliffMap,
+    sf14TeamCliffMap,
+    sf8TeamCliffMap,
+    shortTermLeagueWinnersCategory,
+    shortTermProductionCategory,
+    upsidePremierCategory,
+    upsideShotCategory,
+} from '../../../consts/images';
 import {
     ValueArchetype,
     RosterArchetype,
@@ -9,8 +32,12 @@ import {QB, RB, TE, WR} from '../../../consts/fantasy';
 import {getPositionalOrder} from '../infinite/BuySellHold/BuySellHold';
 import {FinalPickData} from '../../../sleeper-api/picks';
 import {PlayerCard} from '../NewV1/NewV1';
-import {PickProfile as Pick, RosterPlayer, usePlayerData} from '../../../hooks/hooks';
-import { Player } from '../../../sleeper-api/sleeper-api';
+import {
+    PickProfile as Pick,
+    RosterPlayer,
+    usePlayerData,
+} from '../../../hooks/hooks';
+import {Player} from '../../../sleeper-api/sleeper-api';
 
 type NewRookieDraftProps = {
     teamName: string;
@@ -67,7 +94,7 @@ export default function NewRookieDraft({
             }
         }
         return '';
-}
+    }
     return (
         <div className={styles.fullBlueprint}>
             <div
@@ -117,8 +144,12 @@ export default function NewRookieDraft({
                 {myPicks.slice(0, 4).map((pick, idx) => (
                     <AutoAcceptReject
                         key={idx}
-                        autoAcceptPlayer={playerData[pick.autoAcceptPlayerSleeperId]}
-                        autoRejectPlayer={playerData[pick.autoRejectPlayerSleeperId]}
+                        autoAcceptPlayer={
+                            playerData[pick.autoAcceptPlayerSleeperId]
+                        }
+                        autoRejectPlayer={
+                            playerData[pick.autoRejectPlayerSleeperId]
+                        }
                     />
                 ))}
             </div>
@@ -198,6 +229,36 @@ type PickProfileProps = {
 };
 
 function PickProfile({pick}: PickProfileProps) {
+    function getPlayerCategoryImg() {
+        switch (pick.projectedPlayerCategory) {
+            case 'Cornerstone':
+                return cornerstoneCategory;
+            case 'Foundational':
+                return foundationalCategory;
+            case 'JAGDevelopmental':
+                return jagDevelopmentalCategory;
+            case 'JAGInsurance':
+                return jagInsuranceCategory;
+            case 'Mainstay':
+                return mainstayCategory;
+            case 'ProductiveVet':
+                return productiveVetCategory;
+            case 'Replaceable':
+                return replaceableCategory;
+            case 'Serviceable':
+                return serviceableCategory;
+            case 'ShortTermLeagueWinners':
+                return shortTermLeagueWinnersCategory;
+            case 'ShortTermProduction':
+                return shortTermProductionCategory;
+            case 'UpsidePremier':
+                return upsidePremierCategory;
+            case 'UpsideShot':
+                return upsideShotCategory;
+        }
+        return '';
+    }
+
     function getColorFromMarketValue() {
         switch (pick.marketValue.toUpperCase()) {
             case 'UNDERVALUED':
@@ -271,7 +332,14 @@ function PickProfile({pick}: PickProfileProps) {
             </div>
             <div>
                 Proj. Player Category:{' '}
-                <span className={styles.zScore}>{pick.projectedPlayerCategory}</span>
+                {getPlayerCategoryImg() ? (
+                    <img
+                        src={getPlayerCategoryImg()}
+                        className={styles.playerCategory}
+                    />
+                ) : (
+                    pick.projectedPlayerCategory
+                )}
             </div>
             <div>
                 Historical Rank{' '}
