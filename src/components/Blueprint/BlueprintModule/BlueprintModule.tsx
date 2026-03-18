@@ -671,79 +671,43 @@ export default function BlueprintModule({
             }))
         );
 
-        const qbs = blueprint.rosterPlayers.filter(p => p.position === QB);
-        const numQbs = qbs.length;
-        const rbs = blueprint.rosterPlayers.filter(p => p.position === RB);
-        const numRbs = rbs.length;
-        const wrs = blueprint.rosterPlayers.filter(p => p.position === WR);
-        const numWrs = wrs.length;
-        const tes = blueprint.rosterPlayers.filter(p => p.position === TE);
-        const numTes = tes.length;
         setThreeFactorGrades({
             qbInsulationScoreGrade:
-                Math.round(
-                    qbs.map(p => p.insulationScore).reduce((a, b) => a + b, 0) /
-                        numQbs
-                ) / 10,
+                blueprint.positionalGrades.find(g => g.position === QB)
+                    ?.insulationScoreGrade || 0,
             rbInsulationScoreGrade:
-                Math.round(
-                    rbs.map(p => p.insulationScore).reduce((a, b) => a + b, 0) /
-                        numRbs
-                ) / 10,
+                blueprint.positionalGrades.find(g => g.position === RB)
+                    ?.insulationScoreGrade || 0,
             wrInsulationScoreGrade:
-                Math.round(
-                    wrs.map(p => p.insulationScore).reduce((a, b) => a + b, 0) /
-                        numWrs
-                ) / 10,
+                blueprint.positionalGrades.find(g => g.position === WR)
+                    ?.insulationScoreGrade || 0,
             teInsulationScoreGrade:
-                Math.round(
-                    tes.map(p => p.insulationScore).reduce((a, b) => a + b, 0) /
-                        numTes
-                ) / 10,
+                blueprint.positionalGrades.find(g => g.position === TE)
+                    ?.insulationScoreGrade || 0,
             qbProductionScoreGrade:
-                Math.round(
-                    qbs.map(p => p.productionScore).reduce((a, b) => a + b, 0) /
-                        numQbs
-                ) / 10,
+                blueprint.positionalGrades.find(g => g.position === QB)
+                    ?.productionScoreGrade || 0,
             rbProductionScoreGrade:
-                Math.round(
-                    rbs.map(p => p.productionScore).reduce((a, b) => a + b, 0) /
-                        numRbs
-                ) / 10,
+                blueprint.positionalGrades.find(g => g.position === RB)
+                    ?.productionScoreGrade || 0,
             wrProductionScoreGrade:
-                Math.round(
-                    wrs.map(p => p.productionScore).reduce((a, b) => a + b, 0) /
-                        numWrs
-                ) / 10,
+                blueprint.positionalGrades.find(g => g.position === WR)
+                    ?.productionScoreGrade || 0,
             teProductionScoreGrade:
-                Math.round(
-                    tes.map(p => p.productionScore).reduce((a, b) => a + b, 0) /
-                        numTes
-                ) / 10,
+                blueprint.positionalGrades.find(g => g.position === TE)
+                    ?.productionScoreGrade || 0,
             qbSituationalScoreGrade:
-                Math.round(
-                    qbs
-                        .map(p => p.situationalScore)
-                        .reduce((a, b) => a + b, 0) / numQbs
-                ) / 10,
+                blueprint.positionalGrades.find(g => g.position === QB)
+                    ?.situationalScoreGrade || 0,
             rbSituationalScoreGrade:
-                Math.round(
-                    rbs
-                        .map(p => p.situationalScore)
-                        .reduce((a, b) => a + b, 0) / numRbs
-                ) / 10,
+                blueprint.positionalGrades.find(g => g.position === RB)
+                    ?.situationalScoreGrade || 0,
             wrSituationalScoreGrade:
-                Math.round(
-                    wrs
-                        .map(p => p.situationalScore)
-                        .reduce((a, b) => a + b, 0) / numWrs
-                ) / 10,
+                blueprint.positionalGrades.find(g => g.position === WR)
+                    ?.situationalScoreGrade || 0,
             teSituationalScoreGrade:
-                Math.round(
-                    tes
-                        .map(p => p.situationalScore)
-                        .reduce((a, b) => a + b, 0) / numTes
-                ) / 10,
+                blueprint.positionalGrades.find(g => g.position === TE)
+                    ?.situationalScoreGrade || 0,
         });
         setRosterPlayers(
             blueprint.rosterPlayers.map(p => playerData[p.playerSleeperBotId])
@@ -1825,11 +1789,13 @@ export default function BlueprintModule({
                     moveType: getMoveTypeInt(move),
                 }))
             );
-        const premiumFeatures = premium ? {
-            ...blueprint.premiumFeatures,
-            blueprintPercentile: +percentile,
-            archetypeBuildPercentage: +buildPercentage,
-        } : undefined;
+        const premiumFeatures = premium
+            ? {
+                  ...blueprint.premiumFeatures,
+                  blueprintPercentile: +percentile,
+                  archetypeBuildPercentage: +buildPercentage,
+              }
+            : undefined;
         const authToken = sessionStorage.getItem('authToken');
         const options = {
             method: 'PUT',
@@ -3031,7 +2997,7 @@ export default function BlueprintModule({
                                             }
                                             value={percentile}
                                             onChange={e => {
-                                                let val = +e.target.value;
+                                                const val = +e.target.value;
                                                 if (Number.isNaN(val)) {
                                                     console.log(
                                                         e.target.value,
@@ -3039,9 +3005,7 @@ export default function BlueprintModule({
                                                     );
                                                     return;
                                                 }
-                                                setPercentile(
-                                                    val
-                                                );
+                                                setPercentile(val);
                                             }}
                                         />
                                         <DomainTextField
@@ -3052,7 +3016,7 @@ export default function BlueprintModule({
                                             }
                                             value={buildPercentage}
                                             onChange={e => {
-                                                let val = +e.target.value;
+                                                const val = +e.target.value;
                                                 if (Number.isNaN(val)) {
                                                     console.log(
                                                         e.target.value,
@@ -3060,9 +3024,7 @@ export default function BlueprintModule({
                                                     );
                                                     return;
                                                 }
-                                                setBuildPercentage(
-                                                    val
-                                                );
+                                                setBuildPercentage(val);
                                             }}
                                         />
                                     </>
