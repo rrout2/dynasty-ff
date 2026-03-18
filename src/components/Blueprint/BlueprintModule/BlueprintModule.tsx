@@ -1016,7 +1016,7 @@ export default function BlueprintModule({
                     `player:${getApiIdFromSleeperId(playerId)}`
                 );
             });
-            for (let round = 1; round <= 3; round++) {
+            for (let round = 1; round <= 4; round++) {
                 for (let pick = 1; pick <= numTeams; pick++) {
                     const overallSlot = (round - 1) * numTeams + pick;
                     newPlayerIdToAssetKey.set(
@@ -1028,6 +1028,29 @@ export default function BlueprintModule({
             return newPlayerIdToAssetKey;
         });
     }, [roster?.players, getApiIdFromSleeperId, numTeams]);
+
+    useEffect(() => {
+        if (!blueprint?.rosterPlayers) return;
+        setPlayerIdToAssetKey(old => {
+            const newPlayerIdToAssetKey = new Map<string, string>(old);
+            blueprint.rosterPlayers.forEach(player => {
+                newPlayerIdToAssetKey.set(
+                    player.playerSleeperBotId,
+                    `player:${player.playerId}`
+                );
+            });
+            for (let round = 1; round <= 4; round++) {
+                for (let pick = 1; pick <= numTeams; pick++) {
+                    const overallSlot = (round - 1) * numTeams + pick;
+                    newPlayerIdToAssetKey.set(
+                        `RP-API-2026-${round}-${overallSlot}`,
+                        `pick:2026:overall:${overallSlot}`
+                    );
+                }
+            }
+            return newPlayerIdToAssetKey;
+        });
+    }, [blueprint?.rosterPlayers, numTeams]);
 
     useEffect(() => {
         if (!myPicks) return;
@@ -1684,32 +1707,35 @@ export default function BlueprintModule({
     }
 
     function addTradeStrategies() {
-        console.log(fullMoves);
-        const huh1 = fullMoves.slice(0, premium ? 6 : 3).flatMap(move =>
-            move.playerIdsToTarget.map((targetIds, i) => ({
-                priorityDescription: move.priorityDescription,
-                // partnerRosterId: move.targetRosterIds[i],
-                outAssets: move.playerIdsToTrade
-                    .filter(id => id !== '')
-                    .map(id => ({
-                        assetKey: playerIdToAssetKey.get(id)!,
-                    })),
-                inAssets: targetIds
-                    .filter(id => id !== '')
-                    .map(id => {
-                        if (!playerIdToAssetKey.has(id)) {
-                            console.warn('missing player id', id);
-                        }
-                        return {
+        const tradeStrategiesReq = fullMoves
+            .slice(0, premium ? 6 : 3)
+            .flatMap(move =>
+                move.playerIdsToTarget.slice(0, 3).map(targetIds => ({
+                    priorityDescription: move.priorityDescription,
+                    // partnerRosterId: move.targetRosterIds[i],
+                    outAssets: move.playerIdsToTrade
+                        .filter(id => id !== '')
+                        .map(id => ({
                             assetKey: playerIdToAssetKey.get(id)!,
-                        };
-                    }),
-                moveType: getMoveTypeInt(move),
-            }))
+                        })),
+                    inAssets: targetIds
+                        .filter(id => id !== '')
+                        .map(id => {
+                            if (!playerIdToAssetKey.has(id)) {
+                                console.warn('missing player id', id);
+                            }
+                            return {
+                                assetKey: playerIdToAssetKey.get(id)!,
+                            };
+                        }),
+                    moveType: getMoveTypeInt(move),
+                }))
+            );
+        addTradeStrategiesRequest(blueprintId, tradeStrategiesReq).then(
+            resp => {
+                console.log(resp);
+            }
         );
-        addTradeStrategiesRequest(blueprintId, huh1).then(something => {
-            console.log(something);
-        });
     }
 
     function sleeperIdToTradeAsset(
