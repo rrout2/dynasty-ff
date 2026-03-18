@@ -425,8 +425,8 @@ export default function BlueprintModule({
         numTeams,
         /* roundOverall= */ false
     );
-    const [percentile, setPercentile] = useState('69th');
-    const [buildPercentage, setBuildPercentage] = useState('23%');
+    const [percentile, setPercentile] = useState(69);
+    const [buildPercentage, setBuildPercentage] = useState(23);
     const {qb, setQb, rb, setRb, wr, setWr, te, setTe} =
         usePositionalValueGrades(
             leagueId,
@@ -1387,6 +1387,25 @@ export default function BlueprintModule({
 
     // -------------------------- End of hooks --------------------------
 
+    function getPercentileSuffix() {
+        const abs = Math.abs(+percentile || 0);
+        const lastTwo = abs % 100;
+        const lastOne = abs % 10;
+
+        if (lastTwo >= 11 && lastTwo <= 13) return 'th';
+
+        switch (lastOne) {
+            case 1:
+                return 'st';
+            case 2:
+                return 'nd';
+            case 3:
+                return 'rd';
+            default:
+                return 'th';
+        }
+    }
+
     function getRosterIdFromUser(user?: User) {
         if (!rosters || !user) return -1;
         return rosters.findIndex(r => r.owner_id === user.user_id) ?? -1;
@@ -1868,7 +1887,11 @@ export default function BlueprintModule({
                         grade: draftCapitalScore,
                     },
                 ],
-                premiumFeatures: blueprint.premiumFeatures,
+                premiumFeatures: {
+                    ...blueprint.premiumFeatures,
+                    blueprintPercentile: +percentile,
+                    archetypeBuildPercentage: +buildPercentage,
+                },
                 productionShareLeagueRank: productionShareRank,
                 productionSharePercentage: productionSharePercent,
                 rosterArchetype: convertRosterArchetypeToInt(rosterArchetype),
@@ -2254,8 +2277,8 @@ export default function BlueprintModule({
                                     rbValueSharePercent={rbValueSharePercent}
                                     wrValueSharePercent={wrValueSharePercent}
                                     teValueSharePercent={teValueSharePercent}
-                                    percentile={percentile}
-                                    buildPercentage={buildPercentage}
+                                    percentile={`${percentile}${getPercentileSuffix()}`}
+                                    buildPercentage={`${buildPercentage}%`}
                                     valueProportion={{
                                         qb: qbValueProportionPercent,
                                         wr: wrValueProportionPercent,
@@ -3007,8 +3030,16 @@ export default function BlueprintModule({
                                             }
                                             value={percentile}
                                             onChange={e => {
+                                                let val = +e.target.value;
+                                                if (Number.isNaN(val)) {
+                                                    console.log(
+                                                        e.target.value,
+                                                        'is not a number'
+                                                    );
+                                                    return;
+                                                }
                                                 setPercentile(
-                                                    '' + e.target.value
+                                                    val
                                                 );
                                             }}
                                         />
@@ -3020,8 +3051,16 @@ export default function BlueprintModule({
                                             }
                                             value={buildPercentage}
                                             onChange={e => {
+                                                let val = +e.target.value;
+                                                if (Number.isNaN(val)) {
+                                                    console.log(
+                                                        e.target.value,
+                                                        'is not a number'
+                                                    );
+                                                    return;
+                                                }
                                                 setBuildPercentage(
-                                                    '' + e.target.value
+                                                    val
                                                 );
                                             }}
                                         />
@@ -3659,8 +3698,8 @@ export default function BlueprintModule({
                             rbValueSharePercent={rbValueSharePercent}
                             wrValueSharePercent={wrValueSharePercent}
                             teValueSharePercent={teValueSharePercent}
-                            percentile={percentile}
-                            buildPercentage={buildPercentage}
+                            percentile={`${percentile}${getPercentileSuffix()}`}
+                            buildPercentage={`${buildPercentage}%`}
                             valueProportion={{
                                 qb: qbValueProportionPercent,
                                 wr: wrValueProportionPercent,
