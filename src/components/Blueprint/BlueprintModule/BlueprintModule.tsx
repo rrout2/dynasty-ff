@@ -1825,6 +1825,11 @@ export default function BlueprintModule({
                     moveType: getMoveTypeInt(move),
                 }))
             );
+        const premiumFeatures = premium ? {
+            ...blueprint.premiumFeatures,
+            blueprintPercentile: +percentile,
+            archetypeBuildPercentage: +buildPercentage,
+        } : undefined;
         const authToken = sessionStorage.getItem('authToken');
         const options = {
             method: 'PUT',
@@ -1887,11 +1892,7 @@ export default function BlueprintModule({
                         grade: draftCapitalScore,
                     },
                 ],
-                premiumFeatures: {
-                    ...blueprint.premiumFeatures,
-                    blueprintPercentile: +percentile,
-                    archetypeBuildPercentage: +buildPercentage,
-                },
+                premiumFeatures: premiumFeatures,
                 productionShareLeagueRank: productionShareRank,
                 productionSharePercentage: productionSharePercent,
                 rosterArchetype: convertRosterArchetypeToInt(rosterArchetype),
