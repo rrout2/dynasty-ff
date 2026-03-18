@@ -392,7 +392,7 @@ export function useBlueprintsForDomainUser() {
 
 export function useBlueprint(blueprintId: string) {
     const [blueprint, setBlueprint] = useState<Blueprint>();
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {data} = useQuery({
         queryKey: ['blueprint', blueprintId],
         queryFn: async () => {
@@ -467,7 +467,7 @@ export function useAllTargetableIdsFromSleeperLeague(
     const [rosterPicks, setRosterPicks] = useState<Array<RosterPickInfo>>([]);
     const [sleeperPlayerIds, setSleeperPlayerIds] = useState<Array<string>>([]);
     const [pickIds, setPickIds] = useState<Array<string>>([]);
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {data} = useQuery({
         queryKey: ['AllPlayersFromSleeperLeague', leagueId],
         queryFn: async () => {
@@ -629,7 +629,7 @@ export function useTradeSuggestions(leagueId: string, teamId: string) {
     const [tradeSuggestions, setTradeSuggestions] = useState<TradeSuggestion[]>(
         []
     );
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {data} = useQuery({
         queryKey: ['tradeSuggestions', leagueId, teamId],
         queryFn: async () => {
@@ -663,7 +663,7 @@ export function useTradeSuggestions(leagueId: string, teamId: string) {
 
 export function useDraftCapitalGrade(leagueId: string, teamId: string) {
     const [draftCapitalGrade, setDraftCapitalGrade] = useState<number>(0);
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {data} = useQuery({
         queryKey: ['draftCapital', leagueId, teamId, authToken],
         queryFn: async () => {
@@ -698,7 +698,7 @@ export type PowerRank = {
 
 export function useLeaguePowerRanks(leagueId: string) {
     const [leaguePowerRanks, setLeaguePowerRanks] = useState<PowerRank[]>([]);
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {data} = useQuery({
         queryKey: ['insulationGrades', leagueId, authToken],
         queryFn: async () => {
@@ -797,7 +797,7 @@ export function useThreeFactorGrades(leagueId: string, teamId: string) {
         teSituationalScoreGrade,
     ]);
 
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
 
     const {data: insulationData} = useQuery({
         queryKey: ['insulationGrades', leagueId, teamId, authToken],
@@ -903,7 +903,7 @@ export function useDomainTrueRanks(leagueId: string, teamId: string) {
     const [domainTrueRanks, setDomainTrueRanks] = useState<DomainTrueRank[]>(
         []
     );
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {data} = useQuery({
         queryKey: ['domainTrueRanks', leagueId, teamId, authToken],
         queryFn: async () => {
@@ -958,7 +958,7 @@ export function useTeamValueShare(
     const [pickValueProportionPercent, setPickValueProportionPercent] =
         useState(1);
     const [leagueRank, setLeagueRank] = useState(1);
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {data} = useQuery({
         queryKey: [
             'teamValueShare',
@@ -1032,7 +1032,7 @@ export function useTeamProductionShare(
 ) {
     const [productionSharePercent, setProductionSharePercent] = useState(1);
     const [leagueRank, setLeagueRank] = useState(1);
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {data} = useQuery({
         queryKey: [
             'teamProductionShare',
@@ -1117,7 +1117,7 @@ export function useTeamValueArchetype(leagueId: string, teamId: string) {
     const [valueArchetype, setValueArchetype] = useState<ValueArchetype>(
         ValueArchetype.None
     );
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {data, error} = useQuery({
         queryKey: ['teamValueArchetype', leagueId, teamId, authToken],
         queryFn: async () => {
@@ -1192,7 +1192,7 @@ export function useTeamRosterArchetype(leagueId: string, teamId: string) {
     const [rosterArchetype, setRosterArchetype] = useState<RosterArchetype>(
         RosterArchetype.None
     );
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
 
     const {data} = useQuery({
         queryKey: ['teamRosterArchetype', leagueId, teamId, authToken],
@@ -1254,7 +1254,7 @@ export function useTwoYearOutlook(leagueId: string, teamId: string) {
         OutlookOption.Rebuild,
         OutlookOption.Reload,
     ]);
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
 
     const {data} = useQuery({
         queryKey: ['twoYearOutlook', leagueId, teamId, authToken],
@@ -1291,7 +1291,7 @@ export function usePositionalValueGrades(leagueId: string, teamId: string) {
     const [rb, setRb] = useState(0);
     const [wr, setWr] = useState(0);
     const [te, setTe] = useState(0);
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {data} = useQuery({
         queryKey: ['positionalValueGrades', leagueId, teamId, authToken],
         queryFn: async () => {
@@ -1331,7 +1331,7 @@ export function usePositionalValueGrades(leagueId: string, teamId: string) {
 function useApiRisersFallers() {
     const currListId = 200;
     const prevListId = 194;
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {data: risersFallers} = useQuery({
         queryKey: ['risersFallers', currListId, prevListId, authToken],
         queryFn: async () => {
@@ -1967,7 +1967,7 @@ export type BuySellHoldSchema = {
 };
 
 function useBuySellHoldApi(week: string | number = 17) {
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {data: buySells, isLoading} = useQuery({
         queryKey: ['buySells', week, authToken],
         queryFn: async () => {
@@ -2449,7 +2449,7 @@ type Rank = {
 };
 
 function useRankingsApi(week: string | number = 17) {
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {data: rankings, isLoading} = useQuery({
         queryKey: ['rankings', week, authToken],
         queryFn: async () => {
@@ -3172,7 +3172,7 @@ export function useRosterSettingsFromId(leagueId?: string) {
 function useWeeklyLineupsApi() {
     // TODO: better way to get this
     const listId = 202;
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const {
         data: weeklyLineups,
         error,

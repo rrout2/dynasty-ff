@@ -276,7 +276,7 @@ export default function BlueprintModule({
     // Hooks
     useTitle(premium ? 'Premium Blueprint Module' : 'Blueprint Module');
     const [loggedIn, setLoggedIn] = useState(
-        sessionStorage.getItem('authToken') !== null
+        localStorage.getItem('authToken') !== null
     );
     const [isLoggingIn, setIsLoggingIn] = useState(false);
     const [loginEmail, setLoginEmail] = useState('');
@@ -1659,7 +1659,7 @@ export default function BlueprintModule({
         };
         const res = await axios.request(options);
         const token = res.data.token;
-        sessionStorage.setItem('authToken', token);
+        localStorage.setItem('authToken', token);
         const options2 = {
             method: 'GET',
             url: 'https://domainffapi.azurewebsites.net/api/Auth/me',
@@ -1673,7 +1673,7 @@ export default function BlueprintModule({
     }
 
     function submitLogout() {
-        sessionStorage.removeItem('authToken');
+        localStorage.removeItem('authToken');
         setLoggedIn(false);
         setLoginModalOpen(true);
     }
@@ -1796,7 +1796,7 @@ export default function BlueprintModule({
                   archetypeBuildPercentage: +buildPercentage,
               }
             : undefined;
-        const authToken = sessionStorage.getItem('authToken');
+        const authToken = localStorage.getItem('authToken');
         const options = {
             method: 'PUT',
             url: `${AZURE_API_URL}/Blueprints/${blueprintId}`,
@@ -3811,7 +3811,7 @@ export function shuffle(array: any[]) {
 }
 
 async function addTradeStrategiesRequest(blueprintId: string, body: any) {
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = localStorage.getItem('authToken');
     const options = {
         method: 'POST',
         url: `${AZURE_API_URL}Blueprints/${blueprintId}/trade-strategies`,
