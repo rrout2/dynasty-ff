@@ -82,6 +82,7 @@ import {getDisplayName} from '../../Team/TeamPage/TeamPage';
 import {getPicksInfo} from '../../../sleeper-api/picks';
 import DomainTextField from '../shared/DomainTextField';
 import {Box, Button, IconButton, Modal} from '@mui/material';
+import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
 import {
     AddCircleOutline,
     FileDownload,
@@ -287,6 +288,8 @@ export default function BlueprintModule({
     const [rookiePreviewModalOpen, setRookiePreviewModalOpen] = useState(false);
     const [confirmPublishModalOpen, setConfirmPublishModalOpen] =
         useState(false);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
     const [newLeagueId, setNewLeagueId] = useState('');
     const [newBlueprintId, setNewBlueprintId] = useState('');
     const [blueprintId, setBlueprintId] = useParamFromUrl(BLUEPRINT_ID);
@@ -517,6 +520,7 @@ export default function BlueprintModule({
         Map<string, number>
     >(new Map());
     const [isPublishing, setIsPublishing] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
         if (!valueArchetypeError) return;
@@ -1942,6 +1946,32 @@ export default function BlueprintModule({
                 >
                     NEW LEAGUE
                 </Button>
+                <Snackbar
+                    anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+                    open={snackbarOpen}
+                    autoHideDuration={5000}
+                    onClose={(
+                        _event: React.SyntheticEvent | Event,
+                        reason?: SnackbarCloseReason,
+                    ) => {
+                        if (reason === 'clickaway') {
+                            return;
+                        }
+                        setSnackbarOpen(false);
+                    }}
+                    message={snackbarMessage}
+                    slotProps={{
+                        content: {
+                            sx: {
+                                '& .MuiSnackbarContent-message': {
+                                    fontSize: '20px',
+                                    fontFamily: 'Acumin Pro Condensed',
+                                    color: '#fff',
+                                }
+                            }
+                        }
+                    }}
+                />
                 <Modal
                     open={newLeagueModalOpen}
                     onClose={() => {
@@ -2088,6 +2118,7 @@ export default function BlueprintModule({
                         </Button>
                     )}
                     <Button
+                        loading={isSaving}
                         variant="outlined"
                         endIcon={<Save />}
                         sx={{
@@ -2096,7 +2127,18 @@ export default function BlueprintModule({
                         }}
                         onClick={() => {
                             if (blueprint) {
-                                saveBlueprint(/* publish = */ false);
+                                setIsSaving(true);
+                                saveBlueprint(/* publish = */ false).then(() => {
+                                    setSnackbarMessage('Succesfully saved blueprint!');
+                                }).catch(
+                                    (e: Error) => {
+                                        console.error(e);
+                                        setSnackbarMessage('Failed to save blueprint: ' + e.message);
+                                    }
+                                ).finally(() => {
+                                    setSnackbarOpen(true);
+                                    setIsSaving(false);
+                                });
                             } else {
                                 saveToUrl();
                             }
@@ -2148,7 +2190,15 @@ export default function BlueprintModule({
                                     loading={isPublishing}
                                     onClick={() => {
                                         setIsPublishing(true);
-                                        saveBlueprint(/* publish = */ true).finally(() => {
+                                        saveBlueprint(/* publish = */ true).then(() => {
+                                            setSnackbarMessage('Succesfully published blueprint!');
+                                        }).catch(
+                                            (e: Error) => {
+                                                console.error(e);
+                                                setSnackbarMessage('Failed to publish blueprint: ' + e.message);
+                                            }
+                                        ).finally(() => {
+                                            setSnackbarOpen(true);
                                             setIsPublishing(false);
                                             setConfirmPublishModalOpen(false);
                                         });

@@ -427,13 +427,17 @@
     padding: 20px;
 
     background-color: #04121C;
+    border: 1px solid #ccc;
+    border-radius: 10px;
 }
 
 .confirmPublishModalText {
     color: white;
     font-family: 'Acumin Pro Condensed';
 
-    font-size: 30px;;
+    font-size: 30px;
+
+    margin-bottom: 15px;
 }
 
 .confirmPublishModalButtons {
