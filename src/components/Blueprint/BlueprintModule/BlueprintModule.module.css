@@ -417,3 +417,27 @@
     align-items: center;
     justify-content: center;
 }
+
+.confirmPublishModal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 20px;
+
+    background-color: #04121C;
+}
+
+.confirmPublishModalText {
+    color: white;
+    font-family: 'Acumin Pro Condensed';
+
+    font-size: 30px;;
+}
+
+.confirmPublishModalButtons {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}

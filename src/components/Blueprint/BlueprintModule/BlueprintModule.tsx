@@ -285,6 +285,8 @@ export default function BlueprintModule({
     const [newLeagueModalOpen, setNewLeagueModalOpen] = useState(false);
     const [previewModalOpen, setPreviewModalOpen] = useState(false);
     const [rookiePreviewModalOpen, setRookiePreviewModalOpen] = useState(false);
+    const [confirmPublishModalOpen, setConfirmPublishModalOpen] =
+        useState(false);
     const [newLeagueId, setNewLeagueId] = useState('');
     const [newBlueprintId, setNewBlueprintId] = useState('');
     const [blueprintId, setBlueprintId] = useParamFromUrl(BLUEPRINT_ID);
@@ -1763,7 +1765,7 @@ export default function BlueprintModule({
         };
     }
 
-    async function publishBlueprint() {
+    async function saveBlueprint(publish = false) {
         if (!blueprint) return;
         const tradeStrategies = fullMoves
             .slice(0, premium ? 6 : 3)
@@ -1878,7 +1880,8 @@ export default function BlueprintModule({
                 Authorization: `Bearer ${authToken}`,
             },
         };
-        axios.request(options).then(() => {
+        await axios.request(options).then(async () => {
+            if (!publish) return;
             const options2 = {
                 method: 'PATCH',
                 url: `${AZURE_API_URL}Blueprints/${blueprintId}/delivery-status`,
@@ -1888,7 +1891,7 @@ export default function BlueprintModule({
                     'Content-Type': 'application/json',
                 },
             };
-            axios.request(options2);
+            await axios.request(options2);
         });
     }
 
@@ -2068,7 +2071,6 @@ export default function BlueprintModule({
                     )}
                     {!!blueprint && (
                         <Button
-                            loading={isPublishing}
                             variant="outlined"
                             endIcon={<Publish />}
                             sx={{
@@ -2079,10 +2081,7 @@ export default function BlueprintModule({
                                 },
                             }}
                             onClick={() => {
-                                setIsPublishing(true);
-                                publishBlueprint().finally(() => {
-                                    setIsPublishing(false);
-                                });
+                                setConfirmPublishModalOpen(true);
                             }}
                         >
                             PUBLISH BP
@@ -2095,9 +2094,15 @@ export default function BlueprintModule({
                             ...bpActionButtonStyle,
                             color: '#FABF4A',
                         }}
-                        onClick={() => saveToUrl()}
+                        onClick={() => {
+                            if (blueprint) {
+                                saveBlueprint(/* publish = */ false);
+                            } else {
+                                saveToUrl();
+                            }
+                        }}
                     >
-                        SAVE TO URL
+                        {blueprint ? 'SAVE' : 'SAVE TO URL'}
                     </Button>
                     <Button
                         variant="outlined"
@@ -2127,6 +2132,50 @@ export default function BlueprintModule({
                             SHOW ROOKIE
                         </Button>
                     )}
+                    <Modal
+                        open={confirmPublishModalOpen}
+                        onClose={() => {
+                            setConfirmPublishModalOpen(false);
+                        }}
+                    >
+                        <div className={styles.confirmPublishModal}>
+                            <div className={styles.confirmPublishModalText}>
+                                Are you sure you want to publish this blueprint?
+                            </div>
+                            <div className={styles.confirmPublishModalButtons}>
+                                <Button
+                                    variant="contained"
+                                    loading={isPublishing}
+                                    onClick={() => {
+                                        setIsPublishing(true);
+                                        saveBlueprint(/* publish = */ true).finally(() => {
+                                            setIsPublishing(false);
+                                            setConfirmPublishModalOpen(false);
+                                        });
+                                    }}
+                                    sx={{
+                                        ...bpActionButtonStyle,
+                                        '.MuiButton-loadingIndicator': {
+                                            color: '#1AE069',
+                                        },
+                                    }}
+                                >
+                                    Yes
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => {
+                                        setConfirmPublishModalOpen(false);
+                                    }}
+                                    sx={{
+                                        ...bpActionButtonStyle,
+                                    }}
+                                >
+                                    No
+                                </Button>
+                            </div>
+                        </div>
+                    </Modal>
                     <Modal
                         open={rookiePreviewModalOpen}
                         onClose={() => {
