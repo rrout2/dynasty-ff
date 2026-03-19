@@ -306,7 +306,8 @@ export default function BlueprintModule({
         undefined,
         undefined,
     ]);
-    const {topPriorityOptions, error: topPriorityOptionsError} = useTopPriorityOptions();
+    const {topPriorityOptions, error: topPriorityOptionsError} =
+        useTopPriorityOptions();
     const [topPriorities, setTopPriorities] = useState<string[]>(['', '', '']);
     const [roster, setRoster] = useState<Roster>();
     const [rosterPlayers, setRosterPlayers] = useState<Player[]>([]);
@@ -1808,7 +1809,8 @@ export default function BlueprintModule({
                         .filter(id => id !== '')
                         .map(id => ({
                             assetKey: playerIdToAssetKey.get(id)!,
-                        })),
+                        }))
+                        .slice(0, move.move !== Move.UPTIER ? 1 : 2), // uptier has 2 out assets, pivot and downtier 2
                     inAssets: targetIds
                         .filter(id => id !== '')
                         .map(id => {
@@ -2052,7 +2054,7 @@ export default function BlueprintModule({
                         setNewLeagueModalOpen(true);
                     }}
                 >
-                    NEW LEAGUE
+                    NEW BLUEPRINT
                 </Button>
                 <Snackbar
                     anchorOrigin={{vertical: 'top', horizontal: 'right'}}
@@ -2104,7 +2106,7 @@ export default function BlueprintModule({
                             }}
                         />
                         <DomainTextField
-                            label="New BP ID (in progress)"
+                            label="New BP ID"
                             value={newBlueprintId}
                             onChange={e => {
                                 setNewBlueprintId(e.target.value);
