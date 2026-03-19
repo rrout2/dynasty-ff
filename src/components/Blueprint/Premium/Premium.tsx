@@ -661,6 +661,7 @@ function LeaguePowerRanks({
         const base = {
             borderColor: isMatch(powerRank) ? '#00FF06' : '',
             color: powerRank.teamName === teamName ? '#00FF06' : '',
+            fontSize: leaguePowerRanks.length === 16 ? '13px' : undefined,
         };
         if (powerRank.overallRank === 1) {
             return {
