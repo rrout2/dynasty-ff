@@ -44,6 +44,7 @@ import {
     useTeamValueShare,
     useThreeFactorGrades,
     useTitle,
+    useTopPriorityOptions,
     useTradeSuggestions,
     useTwoYearOutlook,
 } from '../../../hooks/hooks';
@@ -305,6 +306,7 @@ export default function BlueprintModule({
         undefined,
         undefined,
     ]);
+    const {topPriorityOptions} = useTopPriorityOptions();
     const [topPriorities, setTopPriorities] = useState<string[]>(['', '', '']);
     const [roster, setRoster] = useState<Roster>();
     const [rosterPlayers, setRosterPlayers] = useState<Player[]>([]);
@@ -765,7 +767,8 @@ export default function BlueprintModule({
                 }
                 const pickId = `RP-API-${p.draftPickSeason}-${p.draftPickRound}-${p.draftPickNumber}`;
                 if (p.draftPickRound && p.draftPickNumber) {
-                    const overallSlot = (p.draftPickRound - 1) * numTeams + p.draftPickNumber;
+                    const overallSlot =
+                        (p.draftPickRound - 1) * numTeams + p.draftPickNumber;
                     newPlayerIdToAssetKey.set(
                         pickId,
                         `pick:${p.draftPickSeason}:overall:${overallSlot}`
@@ -2221,6 +2224,9 @@ export default function BlueprintModule({
                         sx={{
                             ...bpActionButtonStyle,
                             color: '#FABF4A',
+                            '.MuiButton-loadingIndicator': {
+                                color: '#FABF4A',
+                            },
                         }}
                         onClick={() => {
                             if (blueprint) {
@@ -3669,11 +3675,14 @@ export default function BlueprintModule({
                                 >{`${value}`}</span>
                             )}
                             value={topPriorities[0]}
-                            options={
-                                valueArchetype === ValueArchetype.EliteValue
-                                    ? ELITE_PRIORITY_OPTIONS
-                                    : PRIORITY_OPTIONS
-                            }
+                            options={topPriorityOptions
+                                .filter(
+                                    opt =>
+                                        convertStringToValueArchetype(
+                                            opt.valueArchetype
+                                        ) === valueArchetype
+                                )
+                                .map(opt => opt.statement)}
                             onChange={e => {
                                 const {
                                     target: {value},
@@ -3696,11 +3705,14 @@ export default function BlueprintModule({
                                 >{`${value}`}</span>
                             )}
                             value={topPriorities[1]}
-                            options={
-                                valueArchetype === ValueArchetype.EliteValue
-                                    ? ELITE_PRIORITY_OPTIONS
-                                    : PRIORITY_OPTIONS
-                            }
+                            options={topPriorityOptions
+                                .filter(
+                                    opt =>
+                                        convertStringToValueArchetype(
+                                            opt.valueArchetype
+                                        ) === valueArchetype
+                                )
+                                .map(opt => opt.statement)}
                             onChange={e => {
                                 const {
                                     target: {value},
@@ -3723,11 +3735,14 @@ export default function BlueprintModule({
                                 >{`${value}`}</span>
                             )}
                             value={topPriorities[2]}
-                            options={
-                                valueArchetype === ValueArchetype.EliteValue
-                                    ? ELITE_PRIORITY_OPTIONS
-                                    : PRIORITY_OPTIONS
-                            }
+                            options={topPriorityOptions
+                                .filter(
+                                    opt =>
+                                        convertStringToValueArchetype(
+                                            opt.valueArchetype
+                                        ) === valueArchetype
+                                )
+                                .map(opt => opt.statement)}
                             onChange={e => {
                                 const {
                                     target: {value},

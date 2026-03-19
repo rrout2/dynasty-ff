@@ -77,6 +77,43 @@ import {
 
 export const AZURE_API_URL = 'https://domainffapi.azurewebsites.net/api/';
 
+export type TopPriorityOption = {
+    id: number;
+    valueArchetype: string;
+    priority: number;
+    statement: string;
+};
+
+export function useTopPriorityOptions() {
+    const [topPriorityOptions, setTopPriorityOptions] = useState<
+        TopPriorityOption[]
+    >([]);
+
+    const authToken = localStorage.getItem('authToken');
+    const {data} = useQuery({
+        queryKey: ['topPriorities'],
+        queryFn: async () => {
+            const options = {
+                method: 'GET',
+                url: `${AZURE_API_URL}TopPriorities`,
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            };
+            const res = await axios.request(options);
+            return res.data as TopPriorityOption[];
+        },
+        retry: false,
+        enabled: !!authToken,
+    });
+    useEffect(() => {
+        if (!data) return;
+        setTopPriorityOptions(data);
+    }, [data]);
+
+    return {topPriorityOptions, setTopPriorityOptions};
+}
+
 export type LeagueSettings = {
     numberOfTeams: number;
     isSuperFlex: boolean;
