@@ -764,10 +764,13 @@ export default function BlueprintModule({
                     }
                 }
                 const pickId = `RP-API-${p.draftPickSeason}-${p.draftPickRound}-${p.draftPickNumber}`;
-                newPlayerIdToAssetKey.set(
-                    pickId,
-                    `pick:${p.draftPickSeason}:overall:${p.draftPickNumber}`
-                );
+                if (p.draftPickRound && p.draftPickNumber) {
+                    const overallSlot = (p.draftPickRound - 1) * numTeams + p.draftPickNumber;
+                    newPlayerIdToAssetKey.set(
+                        pickId,
+                        `pick:${p.draftPickSeason}:overall:${overallSlot}`
+                    );
+                }
                 // newPlayerIdToDomainValue.set(str, p.domainValue);
                 return pickId;
             }
