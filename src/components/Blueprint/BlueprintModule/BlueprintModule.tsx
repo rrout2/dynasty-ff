@@ -306,7 +306,7 @@ export default function BlueprintModule({
         undefined,
         undefined,
     ]);
-    const {topPriorityOptions} = useTopPriorityOptions();
+    const {topPriorityOptions, error: topPriorityOptionsError} = useTopPriorityOptions();
     const [topPriorities, setTopPriorities] = useState<string[]>(['', '', '']);
     const [roster, setRoster] = useState<Roster>();
     const [rosterPlayers, setRosterPlayers] = useState<Player[]>([]);
@@ -523,16 +523,17 @@ export default function BlueprintModule({
     >(new Map());
     const [isPublishing, setIsPublishing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [isAddingTrades, setIsAddingTrades] = useState(false);
 
     useEffect(() => {
-        if (!valueArchetypeError) return;
+        if (!topPriorityOptionsError) return;
         if (
-            valueArchetypeError.message ===
+            topPriorityOptionsError.message ===
             'Request failed with status code 401'
         ) {
             submitLogout();
         }
-    }, [valueArchetypeError]);
+    }, [topPriorityOptionsError]);
 
     useEffect(() => {
         if (!blueprint || !playerData) return;
@@ -1797,13 +1798,12 @@ export default function BlueprintModule({
         }
     }
 
-    function addTradeStrategies() {
+    async function addTradeStrategies() {
         const tradeStrategiesReq = fullMoves
             .slice(0, premium ? 6 : 3)
             .flatMap(move =>
                 move.playerIdsToTarget.slice(0, 3).map(targetIds => ({
                     priorityDescription: move.priorityDescription,
-                    // partnerRosterId: move.targetRosterIds[i],
                     outAssets: move.playerIdsToTrade
                         .filter(id => id !== '')
                         .map(id => ({
@@ -1822,11 +1822,17 @@ export default function BlueprintModule({
                     moveType: getMoveTypeInt(move),
                 }))
             );
-        addTradeStrategiesRequest(blueprintId, tradeStrategiesReq).then(
-            resp => {
-                console.log(resp);
-            }
-        );
+        await addTradeStrategiesRequest(blueprintId, tradeStrategiesReq)
+            .then(() => {
+                setSnackbarMessage('Succesfully added trade strategies!');
+            })
+            .catch((e: Error) => {
+                console.error(e);
+                setSnackbarMessage('Failed to save blueprint: ' + e.message);
+            })
+            .finally(() => {
+                setSnackbarOpen(true);
+            });
     }
 
     function sleeperIdToTradeAsset(
@@ -3334,6 +3340,7 @@ export default function BlueprintModule({
                     <div className={styles.tradeTitleContainer}>
                         <div className={styles.tradeTitle}>Trade Strategy</div>
                         <IconButton
+                            loading={isAddingTrades}
                             sx={{
                                 '&:hover': {
                                     backgroundColor: 'rgba(255, 255, 255, 0.2)',
@@ -3344,7 +3351,12 @@ export default function BlueprintModule({
                                     color: 'white',
                                 },
                             }}
-                            onClick={addTradeStrategies}
+                            onClick={() => {
+                                setIsAddingTrades(true);
+                                addTradeStrategies().finally(() => {
+                                    setIsAddingTrades(false);
+                                });
+                            }}
                         >
                             <Save sx={{color: 'white'}} />
                         </IconButton>

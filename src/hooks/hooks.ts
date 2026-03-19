@@ -90,7 +90,7 @@ export function useTopPriorityOptions() {
     >([]);
 
     const authToken = localStorage.getItem('authToken');
-    const {data} = useQuery({
+    const {data, error} = useQuery({
         queryKey: ['topPriorities'],
         queryFn: async () => {
             const options = {
@@ -111,7 +111,7 @@ export function useTopPriorityOptions() {
         setTopPriorityOptions(data);
     }, [data]);
 
-    return {topPriorityOptions, setTopPriorityOptions};
+    return {topPriorityOptions, setTopPriorityOptions, error};
 }
 
 export type LeagueSettings = {
