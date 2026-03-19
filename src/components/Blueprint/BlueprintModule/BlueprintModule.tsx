@@ -82,7 +82,7 @@ import {getDisplayName} from '../../Team/TeamPage/TeamPage';
 import {getPicksInfo} from '../../../sleeper-api/picks';
 import DomainTextField from '../shared/DomainTextField';
 import {Box, Button, IconButton, Modal} from '@mui/material';
-import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
+import Snackbar, {SnackbarCloseReason} from '@mui/material/Snackbar';
 import {
     AddCircleOutline,
     FileDownload,
@@ -741,12 +741,8 @@ export default function BlueprintModule({
             const collatedTrades = new Map<string, string[]>();
             const priorityDescriptions = new Map<string, string>();
             const targetRosters = new Map<string, number>();
-            const targetRosterCounts = new Map<number, number>();
             const newPlayerIdToAssetKey = new Map<string, string>(
                 playerIdToAssetKey
-            );
-            const newPlayerIdToDomainValue = new Map<string, number>(
-                playerIdToDomainValue
             );
             function assetToStringAndStore(p: {
                 draftPickNumber: number | null;
@@ -774,6 +770,11 @@ export default function BlueprintModule({
                 );
                 // newPlayerIdToDomainValue.set(str, p.domainValue);
                 return pickId;
+            }
+            function assetToStringAndStore2(p: TradeAsset) {
+                const str = assetToPlayerId(p);
+                newPlayerIdToAssetKey.set(str, p.assetKey);
+                return str;
             }
             for (const suggestion of blueprint.tradeStrategies) {
                 let key = suggestion.assetsOut
@@ -847,10 +848,103 @@ export default function BlueprintModule({
                     }
                 )
                 .toArray();
+
+            // append processed stuff from apiTradeSuggestions
+            const collatedTrades2 = new Map<string, string[]>();
+            const priorityDescriptions2 = new Map<string, string>();
+            const targetRosters2 = new Map<string, number>();
+            const targetRosterCounts = new Map<number, number>();
+
+            for (const suggestion of apiTradeSuggestions) {
+                let key = suggestion.outAssets
+                    .map(assetToStringAndStore2)
+                    .sort()
+                    .join(',');
+                key += `,${suggestion.rule.moveType}`; // to differentiate between pivot and downtier
+                const value = suggestion.inAssets
+                    .map(assetToStringAndStore2)
+                    .sort()
+                    .join(',');
+                if (!collatedTrades2.has(key)) {
+                    collatedTrades2.set(key, [value]);
+                } else if (!collatedTrades2.get(key)!.includes(value)) {
+                    // don't add duplicates
+                    collatedTrades2.get(key)!.push(value);
+                }
+                if (!priorityDescriptions2.has(key)) {
+                    priorityDescriptions2.set(
+                        key,
+                        suggestion.rule.priorityDescription
+                    );
+                }
+
+                const target = suggestion.targetRosterId;
+                if (!targetRosters2.has(value)) {
+                    targetRosters2.set(value, target);
+                }
+                if (!targetRosterCounts.has(target)) {
+                    targetRosterCounts.set(target, 1);
+                } else {
+                    targetRosterCounts.set(
+                        target,
+                        targetRosterCounts.get(target)! + 1
+                    );
+                }
+            }
+
+            const apiSuggestions2 = collatedTrades2
+                .entries()
+                .map(([key, values]) => ({
+                    outPlayerIds: key.split(',').slice(0, -1), // remove move type
+                    returnPackages: values.map(v => v.split(',')),
+                    type: key.split(',').slice(-1)[0],
+                    priorityDescription: priorityDescriptions2.get(key)!,
+                    targetRosterIds: values.map(v => targetRosters2.get(v)!),
+                }))
+                .map(
+                    ({
+                        outPlayerIds,
+                        returnPackages,
+                        type,
+                        priorityDescription,
+                        targetRosterIds,
+                    }) => {
+                        let move: Move;
+                        if (type === 'Pivot') {
+                            move = Move.PIVOT;
+                        } else if (type === 'Downtier') {
+                            move = Move.DOWNTIER;
+                        } else {
+                            move = Move.UPTIER;
+                        }
+                        // make sure all arrays have 2 players per return package
+                        for (let i = 0; i < returnPackages.length; i++) {
+                            if (returnPackages[i].length === 1) {
+                                returnPackages[i].push('');
+                            }
+                        }
+                        // make sure at least three return packages
+                        while (returnPackages.length < 3) {
+                            returnPackages.push(['', '']);
+                        }
+                        while (targetRosterIds.length < 3) {
+                            targetRosterIds.push(-1);
+                        }
+                        return {
+                            move,
+                            playerIdsToTrade: outPlayerIds,
+                            playerIdsToTarget: returnPackages,
+                            priorityDescription,
+                            targetRosterIds,
+                        } as FullMove;
+                    }
+                )
+                .toArray();
+
             setPlayerIdToAssetKey(newPlayerIdToAssetKey);
-            setFullMoves(apiSuggestions);
+            setFullMoves([...apiSuggestions, ...apiSuggestions2]);
         }
-    }, [blueprint, playerData]);
+    }, [blueprint, playerData, apiTradeSuggestions]);
 
     useEffect(() => {
         if (!domainTrueRanks || domainTrueRanks.length === 0 || blueprint) {
@@ -1952,7 +2046,7 @@ export default function BlueprintModule({
                     autoHideDuration={5000}
                     onClose={(
                         _event: React.SyntheticEvent | Event,
-                        reason?: SnackbarCloseReason,
+                        reason?: SnackbarCloseReason
                     ) => {
                         if (reason === 'clickaway') {
                             return;
@@ -1967,9 +2061,9 @@ export default function BlueprintModule({
                                     fontSize: '20px',
                                     fontFamily: 'Acumin Pro Condensed',
                                     color: '#fff',
-                                }
-                            }
-                        }
+                                },
+                            },
+                        },
                     }}
                 />
                 <Modal
@@ -2128,17 +2222,23 @@ export default function BlueprintModule({
                         onClick={() => {
                             if (blueprint) {
                                 setIsSaving(true);
-                                saveBlueprint(/* publish = */ false).then(() => {
-                                    setSnackbarMessage('Succesfully saved blueprint!');
-                                }).catch(
-                                    (e: Error) => {
+                                saveBlueprint(/* publish = */ false)
+                                    .then(() => {
+                                        setSnackbarMessage(
+                                            'Succesfully saved blueprint!'
+                                        );
+                                    })
+                                    .catch((e: Error) => {
                                         console.error(e);
-                                        setSnackbarMessage('Failed to save blueprint: ' + e.message);
-                                    }
-                                ).finally(() => {
-                                    setSnackbarOpen(true);
-                                    setIsSaving(false);
-                                });
+                                        setSnackbarMessage(
+                                            'Failed to save blueprint: ' +
+                                                e.message
+                                        );
+                                    })
+                                    .finally(() => {
+                                        setSnackbarOpen(true);
+                                        setIsSaving(false);
+                                    });
                             } else {
                                 saveToUrl();
                             }
@@ -2190,18 +2290,26 @@ export default function BlueprintModule({
                                     loading={isPublishing}
                                     onClick={() => {
                                         setIsPublishing(true);
-                                        saveBlueprint(/* publish = */ true).then(() => {
-                                            setSnackbarMessage('Succesfully published blueprint!');
-                                        }).catch(
-                                            (e: Error) => {
+                                        saveBlueprint(/* publish = */ true)
+                                            .then(() => {
+                                                setSnackbarMessage(
+                                                    'Succesfully published blueprint!'
+                                                );
+                                            })
+                                            .catch((e: Error) => {
                                                 console.error(e);
-                                                setSnackbarMessage('Failed to publish blueprint: ' + e.message);
-                                            }
-                                        ).finally(() => {
-                                            setSnackbarOpen(true);
-                                            setIsPublishing(false);
-                                            setConfirmPublishModalOpen(false);
-                                        });
+                                                setSnackbarMessage(
+                                                    'Failed to publish blueprint: ' +
+                                                        e.message
+                                                );
+                                            })
+                                            .finally(() => {
+                                                setSnackbarOpen(true);
+                                                setIsPublishing(false);
+                                                setConfirmPublishModalOpen(
+                                                    false
+                                                );
+                                            });
                                     }}
                                     sx={{
                                         ...bpActionButtonStyle,

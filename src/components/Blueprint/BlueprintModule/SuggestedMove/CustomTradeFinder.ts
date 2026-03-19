@@ -56,7 +56,7 @@ class CustomTradeFinder {
         if (this.downtierCache.has(cacheKey)) {
             return this.downtierCache.get(cacheKey)!;
         }
-        const authToken = sessionStorage.getItem('authToken');
+        const authToken = localStorage.getItem('authToken');
         const options = {
             ...DEFAULT_OPTIONS,
             data: {
@@ -87,7 +87,7 @@ class CustomTradeFinder {
         if (this.pivotCache.has(outAssetKey)) {
             return this.pivotCache.get(outAssetKey)!;
         }
-        const authToken = sessionStorage.getItem('authToken');
+        const authToken = localStorage.getItem('authToken');
         const options = {
             ...DEFAULT_OPTIONS,
             data: {
@@ -118,7 +118,7 @@ class CustomTradeFinder {
         if (this.uptierCache.has(cacheKey)) {
             return this.uptierCache.get(cacheKey)!;
         }
-        const authToken = sessionStorage.getItem('authToken');
+        const authToken = localStorage.getItem('authToken');
         const options = {
             ...DEFAULT_OPTIONS,
             data: {
