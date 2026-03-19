@@ -679,6 +679,8 @@ export default function BlueprintModule({
             }))
         );
 
+        setTopPriorities(blueprint.topPriorities.map(p => p.text));
+
         setThreeFactorGrades({
             qbInsulationScoreGrade:
                 blueprint.positionalGrades.find(g => g.position === QB)
@@ -1355,7 +1357,7 @@ export default function BlueprintModule({
     }, [apiTradeSuggestions, blueprint]);
 
     useEffect(() => {
-        if (searchParams.has(TOP_PRIORITIES)) {
+        if (searchParams.has(TOP_PRIORITIES) || blueprint) {
             return;
         }
         if (valueArchetype !== ValueArchetype.EliteValue) {
@@ -1380,7 +1382,7 @@ export default function BlueprintModule({
         }
         shuffle(ELITE_PRIORITY_OPTIONS);
         setTopPriorities(ELITE_PRIORITY_OPTIONS.slice(0, 3));
-    }, [fullMoves, valueArchetype, twoYearOutlook, searchParams]);
+    }, [fullMoves, valueArchetype, twoYearOutlook, searchParams, blueprint]);
 
     useEffect(() => {
         setOverall(
@@ -3664,96 +3666,38 @@ export default function BlueprintModule({
                         <div className={styles.topPrioritiesTitle}>
                             Top Priorities
                         </div>
-                        <DomainDropdown
-                            style={{width: '600px'}}
-                            renderValue={value => (
-                                <span
-                                    style={{
-                                        fontStyle: 'italic',
-                                        fontWeight: 'normal',
-                                    }}
-                                >{`${value}`}</span>
-                            )}
-                            value={topPriorities[0]}
-                            options={topPriorityOptions
-                                .filter(
-                                    opt =>
-                                        convertStringToValueArchetype(
-                                            opt.valueArchetype
-                                        ) === valueArchetype
-                                )
-                                .map(opt => opt.statement)}
-                            onChange={e => {
-                                const {
-                                    target: {value},
-                                } = e;
-                                setTopPriorities([
-                                    value as string,
-                                    topPriorities[1],
-                                    topPriorities[2],
-                                ]);
-                            }}
-                        />
-                        <DomainDropdown
-                            style={{width: '600px'}}
-                            renderValue={value => (
-                                <span
-                                    style={{
-                                        fontStyle: 'italic',
-                                        fontWeight: 'normal',
-                                    }}
-                                >{`${value}`}</span>
-                            )}
-                            value={topPriorities[1]}
-                            options={topPriorityOptions
-                                .filter(
-                                    opt =>
-                                        convertStringToValueArchetype(
-                                            opt.valueArchetype
-                                        ) === valueArchetype
-                                )
-                                .map(opt => opt.statement)}
-                            onChange={e => {
-                                const {
-                                    target: {value},
-                                } = e;
-                                setTopPriorities([
-                                    topPriorities[0],
-                                    value as string,
-                                    topPriorities[2],
-                                ]);
-                            }}
-                        />
-                        <DomainDropdown
-                            style={{width: '600px'}}
-                            renderValue={value => (
-                                <span
-                                    style={{
-                                        fontStyle: 'italic',
-                                        fontWeight: 'normal',
-                                    }}
-                                >{`${value}`}</span>
-                            )}
-                            value={topPriorities[2]}
-                            options={topPriorityOptions
-                                .filter(
-                                    opt =>
-                                        convertStringToValueArchetype(
-                                            opt.valueArchetype
-                                        ) === valueArchetype
-                                )
-                                .map(opt => opt.statement)}
-                            onChange={e => {
-                                const {
-                                    target: {value},
-                                } = e;
-                                setTopPriorities([
-                                    topPriorities[0],
-                                    topPriorities[1],
-                                    value as string,
-                                ]);
-                            }}
-                        />
+                        {[0, 1, 2].map(idx => (
+                            <DomainDropdown
+                                style={{width: '600px'}}
+                                renderValue={value => (
+                                    <span
+                                        style={{
+                                            fontStyle: 'italic',
+                                            fontWeight: 'normal',
+                                        }}
+                                    >{`${value}`}</span>
+                                )}
+                                value={topPriorities[idx]}
+                                options={topPriorityOptions
+                                    .filter(
+                                        opt =>
+                                            convertStringToValueArchetype(
+                                                opt.valueArchetype
+                                            ) === valueArchetype
+                                    )
+                                    .map(opt => opt.statement)}
+                                onChange={e => {
+                                    const {
+                                        target: {value},
+                                    } = e;
+                                    setTopPriorities(
+                                        topPriorities.map((p, i) =>
+                                            i === idx ? (value as string) : p
+                                        )
+                                    );
+                                }}
+                            />
+                        ))}
                     </div>
                     {premium && (
                         <div className={styles.draftStrategyContainer}>
